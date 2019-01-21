@@ -1,0 +1,21 @@
+{
+	"nuortenideat":{
+		"base":"https://www.nuortenideat.fi/",
+		"ideas":"api/open/0.1/ideas/",
+		"organizations":"api/open/0.1/organizations/",
+		"surveys":"api/open/0.1/surveys/",
+		"tags":"api/open/0.1/tags/"
+	},
+	"lausuntopalvelu":{
+		"base":"https://www.lausuntopalvelu.fi/",
+		"proposals":"api/v1/Lausuntopalvelu.svc/Proposals"
+	},
+	"kansalaisaloite":{
+		"base":"https://www.kansalaisaloite.fi/",
+		"initiatives":"api/v1/initiatives"
+	},
+	"kuntalaisaloite":{
+		"base":"https://www.kuntalaisaloite.fi/",
+		"initiatives":"api/v1/initiatives"
+	}
+}
