@@ -9,6 +9,11 @@ sys.path.append(os.path.join(MYDIR, "req", "xmltodict"))
 
 import xmltodict
 
+"""
+Virtual Council data getter for services:
+	-Nuortenideat.fi
+	-Lausuntopalvelut.fi
+"""
 class VC_data_getter:
 	def __init__(self):
 		
@@ -25,7 +30,10 @@ class VC_data_getter:
 			print("Something went wrong (read_common_urls):", e)
 			
 		return data
-	
+
+	"""
+	Fetches all idea data from nuortenideat
+	"""
 	def get_nuortenideat_all(self):
 		url = os.path.join(	self.urls["nuortenideat"]["base"], 
 							self.urls["nuortenideat"]["ideas"])

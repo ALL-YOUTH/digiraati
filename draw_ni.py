@@ -2,6 +2,8 @@ import requests
 import matplotlib.pyplot as plt
 from VC_data_getter import VC_data_getter
 import numpy as np
+from matplotlib import colors as mcolors
+import random
 
 vdg = VC_data_getter()
 
@@ -37,14 +39,19 @@ try:
 except Exception as e:
 	print("Error:", e)
 
-
 """
 Plot the nuortenideat by tags bar chart
 """
-y_pos = np.arange(len(tags_fi))
+
+"""BARCHART"""
+"""y_pos = np.arange(len(tags_fi))
 plt.barh(y_pos, num_ideas_tags, align="center", alpha=0.5)
 plt.yticks(y_pos, tags_fi)
 plt.xlabel("Number of ideas")
-plt.title("Number of ideas for each tag in nuortenideat")
+plt.title("Number of ideas for each tag in nuortenideat")"""
+
+"""PIECHART"""
+plt.pie(num_ideas_tags, labels=tags_fi, autopct='%1.1f%%', shadow=True, startangle=90)
+plt.axis('equal')
 
 plt.show()
