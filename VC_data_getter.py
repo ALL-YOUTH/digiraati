@@ -48,6 +48,21 @@ class VC_data_getter:
 		url += TO_JSON_SUFFIX
 		return self.get_request_json(url)
 		
+	def get_nuortenideat_tags(self):
+		url = os.path.join( self.urls["nuortenideat"]["base"],
+							self.urls["nuortenideat"]["tags"])
+		url += TO_JSON_SUFFIX
+		return self.get_request_json(url)
+		
+	def get_nuortenideat_by_tag(self, tag, page=1):
+		url = os.path.join( self.urls["nuortenideat"]["base"],
+							self.urls["nuortenideat"]["tags"],
+							str(tag))
+		url += "/ideas/"
+		url += TO_JSON_SUFFIX
+		url += "&page=" + str(page)
+		return self.get_request_json(url)
+		
 	def get_lausuntopalvelu_all(self):
 		url = os.path.join(	self.urls["lausuntopalvelu"]["base"], 
 							self.urls["lausuntopalvelu"]["proposals"])
@@ -57,7 +72,9 @@ class VC_data_getter:
 		
 	def get_request_json(self, url):		
 		r = requests.get(url, headers=self.headers)
-		return r.json()["results"]
+		if(r.status_code == 404):
+			return -1
+		return r.json()
 		
 	def get_request_text(self, url):
 		r = requests.get(url)
