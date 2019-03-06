@@ -4,13 +4,13 @@ from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
 import tkinter
 
-
 def receive():
     """Handles receiving of messages."""
     while True:
         try:
             msg = client_socket.recv(BUFSIZ).decode("utf8")
             msg_list.insert(tkinter.END, msg)
+            msg_list.yview_moveto( 1 )
         except OSError:  # Possibly client has left the chat.
             break
 
@@ -33,15 +33,16 @@ def on_closing(event=None):
 top = tkinter.Tk()
 top.title("Virtual Council")
 
-messages_frame = tkinter.Frame(top)
+messages_frame = tkinter.Canvas(top)
 my_msg = tkinter.StringVar()  # For the messages to be sent.
-my_msg.set("Type your messages here.")
+my_msg.set("First message is the nickname you choose")
 scrollbar = tkinter.Scrollbar(messages_frame)  # To navigate through past messages.
 # Following will contain the messages.
-msg_list = tkinter.Listbox(messages_frame, height=15, width=200, yscrollcommand=scrollbar.set)
+msg_list = tkinter.Listbox(messages_frame, height=15, width=150, yscrollcommand=scrollbar.set)
 scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 msg_list.pack(side=tkinter.LEFT, fill=tkinter.BOTH)
 msg_list.pack()
+
 messages_frame.pack()
 
 entry_field = tkinter.Entry(top, textvariable=my_msg, width=100)
@@ -53,7 +54,7 @@ send_button.pack()
 top.protocol("WM_DELETE_WINDOW", on_closing)
 
 #----Now comes the sockets part----
-"""HOST = input('Enter host: ')
+HOST = input('Enter host: ')
 PORT = input('Enter port: ')
 if not HOST:
 	HOST = "localhost"
@@ -64,6 +65,7 @@ else:
 """
 HOST = "localhost"
 PORT = 33000
+"""
 BUFSIZ = 1024
 ADDR = (HOST, PORT)
 

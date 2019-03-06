@@ -2,7 +2,7 @@
 """Server for multithreaded (asynchronous) chat application."""
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
-
+import time
 
 def accept_incoming_connections():
     """Sets up handling for incoming clients."""
@@ -24,8 +24,8 @@ def handle_client(client):  # Takes client socket as argument.
     broadcast(bytes(msg, "utf8"))
     clients[client] = name
     for msg in all_messages:
-        client.send(bytes(msg["name"] + ": ", "utf8") + msg["msg"] + bytes("\n", "utf8"))
-
+        client.send(bytes(msg["name"] + ": ", "utf8") + msg["msg"] )
+        time.sleep(0.01)
     while True:
         msg = client.recv(BUFSIZ)
         if msg != bytes("{quit}", "utf8"):
@@ -42,21 +42,28 @@ def handle_client(client):  # Takes client socket as argument.
 
 def broadcast(msg, prefix=""):  # prefix is for name identification.
     """Broadcasts a message to all the clients."""
-    for sock in clients:
-        sock.send(bytes(prefix, "utf8")+msg)
-
+    print(clients)
+    try:
+        for sock in clients:
+            sock.send(bytes(prefix, "utf8")+msg)
+    except Exception as e:
+        sock.close()
+        del clients[client]
+        print(e)
         
 clients = {}
 addresses = {}
 all_messages = []
 
-HOST = ''
+HOST = "192.168.1.100"
 PORT = 33000
 BUFSIZ = 1024
 ADDR = (HOST, PORT)
 
 SERVER = socket(AF_INET, SOCK_STREAM)
 SERVER.bind(ADDR)
+
+print(SERVER)
 
 if __name__ == "__main__":
     SERVER.listen(5)
