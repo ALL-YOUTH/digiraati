@@ -2,12 +2,16 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
-var host = "127.0.0.1";
+var host = "localhost";
 
 var chatters = [];
 
+app.get('/chat', function(req, res){
+  res.sendFile(__dirname + '/chat.html');
+});
+
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/home.html');
 });
 
 io.on('connection', function(socket){
@@ -24,27 +28,29 @@ io.on('connection', function(socket){
     console.log("Client submitted a name", name);
     for(i = 0; i < chatters.length; ++i){
       //nickname used
-      if(chatters[i][1] == name){
+      if(chatters[i][1].toLowerCase() == name.toLowerCase()){
         console.log("Name already taken");
         socket.emit('invalid nickname');
         return;
       }
     }
-    console.log("Adding new nickname to chatters", name);
     chatters.push([client, name]);
     socket.emit('chat message', "Welcome to the chat " + name);
-    console.log(chatters);
+    socket.broadcast.emit('chat message', name + " joined the chat!");
   });
 
+
+  //SENDING A MESSAGE PART
   socket.on('chat message', function(msg){
-    console.log("Message was sent", msg);
+    client = socket["client"]["id"];
+    console.log("Message was sent \"", msg + "\"");
     send_msg = get_name(client) + ": " + msg;
     io.emit('chat message', send_msg);
   });
 });
 
-http.listen(port, host, function(){
-  console.log('Running on: http://:' + host + ":" + port);
+http.listen(port, function(){
+  console.log('Running on: http://' + host + ":" + port);
 });
 
 

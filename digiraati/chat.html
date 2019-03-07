@@ -36,7 +36,7 @@
           var txt;
           var person = prompt("Hello new user. \nPlease enter your name:", "Teemu Teekkari");
           if (person == null || person == "") {
-            alert("User cancelled the prompt.");
+            window.location = "/";
           }
           else{
             socket.emit('name submit', person);
