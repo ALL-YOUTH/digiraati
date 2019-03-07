@@ -35,8 +35,8 @@ io.on('connection', function(socket){
       }
     }
     chatters.push([client, name]);
-    socket.emit('chat message', "Welcome to the chat " + name);
-    socket.broadcast.emit('chat message', name + " joined the chat!");
+    socket.emit('chat message', "Digiraati: Welcome to the chat " + name);
+    socket.broadcast.emit('chat message', "Digiraati: " + name + " joined the chat!");
   });
 
 
