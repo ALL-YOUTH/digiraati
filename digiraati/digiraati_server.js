@@ -23,9 +23,9 @@ app.get('/', function(req, res){
 //Connection
 io.on('connection', function(socket){
   client = socket.request.connection.remoteAddress;
+  console.log(client);
   if(get_name(client) == -1){
     //New user entered the channel
-    console.log("New user");
     socket.emit('new user');
   }
   else{
@@ -36,9 +36,8 @@ io.on('connection', function(socket){
   socket.on('name submit', function(name){
     console.log("Client submitted a name", name);
     for(i = 0; i < chatters.length; ++i){
-      //nickname used
+      //Submitted nickname already taken
       if(chatters[i][1].toLowerCase() == name.toLowerCase()){
-        //console.log("Name already taken");
         socket.emit('invalid nickname');
         return;
       }
@@ -46,8 +45,15 @@ io.on('connection', function(socket){
     chatters.push([client, name]);
     socket.emit('chat message', "Digiraati: Welcome to the chat " + name);
     socket.broadcast.emit('chat message', "Digiraati: " + name + " joined the chat!");
+    print_msgs(socket, MESSAGES2PRINT);
   });
 
+  //User logged out of the chat
+  socket.on('user logout', function(){
+    client = socket.request.connection.remoteAddress;
+    remove_client(client);
+    console.log("Removed client", client);
+  });
 
   //SENDING A MESSAGE PART
   socket.on('chat message', function(msg){
@@ -73,6 +79,15 @@ function get_name(id){
   return -1;
 }
 
+function get_client(id){
+  for(i = 0; i < chatters.length; ++i){
+    if(chatters[i][0] == id){
+      return chatters[i];
+    }
+  }
+  return -1;
+}
+
 function print_msgs(socket, num_to_print){
   if(messages.length <= num_to_print){
     for(i = 0; i < messages.length; ++i){
@@ -82,6 +97,14 @@ function print_msgs(socket, num_to_print){
   else{
     for(i = messages.length - num_to_print - 1; i < messages.length; ++i){
       socket.emit('chat message', messages[i]);
+    }
+  }
+}
+
+function remove_client(id){
+  for(i = 0; i < chatters.length; ++i){
+    if(chatters[i][0] == id){
+      chatters.splice(i, 1);
     }
   }
 }
