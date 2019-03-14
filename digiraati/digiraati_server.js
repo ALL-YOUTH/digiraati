@@ -12,14 +12,17 @@ var MESSAGES2PRINT = 10;
 
 //Chat page getter
 app.get('/chat', function(req, res){
-  res.sendFile(__dirname + '/chat.html');
+  res.sendFile(__dirname + '/html/chat.html');
 });
 
 //Home page getter
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/home.html');
+  res.sendFile(__dirname + '/html/home.html');
 });
 
+app.get('/lakiteksti', function(req, res){
+  res.sendFile(__dirname + '/html/lakiteksti.html');
+});
 //Connection
 io.on('connection', function(socket){
   client = socket.request.connection.remoteAddress;

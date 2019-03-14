@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Digiraati Chat</title>
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div class="row" id="navbar">
+        <span>
+          <button onclick="home()" id="home">Home</button>
+          <button onclick="profile()" id="profile">My Profile</button>
+          <button id="exit" style="float:right">Exit</button>
+        </span>
+    </div>
+    <div class="row">
+      <div style="border-style:solid; width:10%; float:left">
+        <ul id="lakilista" style="list-style-type:circle;">
+          <li id="/2015/609">Ilmastolaki</li>
+          <li id="/1987/990">Ydinenergialaki</li>
+          <li id="/1998/628">Perusopetuslaki</li>
+          <li id="/1995/1774">Eläkesäätiölaki</li>
+        </ul>
+      </div>
+      <div id="lakiteksti_container" style="border-style:solid; width:60%; float:left;">
+        <div id="lakiteksti_title">
+          <h2>Lakiteksti</h2>
+        </div>
+        <div id="lakiteksti" style="margin:5px;">
+        </div>
+      </div>
+      <div id="kommentti_container" style="border-style:solid; width:29%; float:left;">
+        <div id="kommentti_title">
+          <h2>Kommentit</h2>
+        </div>
+      </div>
+    </div>
+    <div id='cntnr'>
+      <input type="text"></input>
+      <hr>
+      <ul>
+        <li id='options'>Lisää Kommentti</li>
+        <hr>
+        <li id='options'>Peru</li>
+      </ul>
+    </div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var listItems = document.querySelectorAll("#lakilista li"); // this returns an array of each li
+      var finlex_base = "http://data.finlex.fi/eli/sd";
+      var headers = {"Accept":"application/ld+json"};
+
+      listItems.forEach(function(item) {
+        item.onclick = function(e) {
+          display_text(this.id); // this returns clicked li's value
+        }
+      });
+
+      function display_text(id){
+        text = get_text(id);
+        document.getElementById("lakiteksti").innerHTML = text;
+
+      }
+      function get_text(id){
+        url = finlex_base + id;
+        var r = new XMLHttpRequest();
+        r.open( "GET", url, false );
+        r.setRequestHeader("Accept", "application/ld+json");
+        r.send( null );
+        var data = JSON.parse(r["response"]);
+        return data["temporalVersion"]["languageVersion"]["hasFormat"]["content_fi"];
+      }
+
+      function getSelectionText() {
+        var text = "";
+        if (window.getSelection) {
+          text = window.getSelection().toString();
+        }
+          return text;
+      }
+
+      $(document).bind("contextmenu",function(e){
+        e.preventDefault();
+        $("#cntnr").css("left",e.pageX);
+        $("#cntnr").css("top",e.pageY);
+        $("#cntnr").fadeIn(200,startFocusOut());
+      });
+
+
+      function startFocusOut(){
+        $("#cancel_comment").on("click",function(){
+          $("#cntnr").hide();
+          $(document).off("click");
+        });
+      }
+
+      $("#items > li").click(function(){
+        console.log("Added comment");
+      });
+    </script>
+  </body>
+</html>
