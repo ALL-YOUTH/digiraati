@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Digiraati Chat</title>
+    <title>Lakiteksti kommentointi</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
     <meta charset="UTF-8">
   </head>
@@ -29,29 +29,31 @@
         <div id="lakiteksti" style="margin:5px;">
         </div>
       </div>
-      <div id="kommentti_container" style="border-style:solid; width:29%; float:left;">
-        <div id="kommentti_title">
+      <div id="comment_container" style="border-style:solid; width:29%; float:left;">
+        <div id="comment_title">
           <h2>Kommentit</h2>
         </div>
       </div>
     </div>
-    <div id='cntnr'>
-      <input type="text"></input>
+    <div id='rclickmenu'>
+      <div id="comment_quote">
+      </div>
+      <input id="comment_text" type="text" style="resize:both;"></input>
       <hr>
       <ul>
-        <li id='options'>Lisää Kommentti</li>
+        <li id='options' onclick="comment()">Lisää Kommentti</li>
         <hr>
-        <li id='options'>Peru</li>
+        <li id='options' onclick="cancel_comment()">Peru</li>
       </ul>
     </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var listItems = document.querySelectorAll("#lakilista li"); // this returns an array of each li
+      var lawList = document.querySelectorAll("#lakilista li"); // this returns an array of each li
       var finlex_base = "http://data.finlex.fi/eli/sd";
       var headers = {"Accept":"application/ld+json"};
 
-      listItems.forEach(function(item) {
+      lawList.forEach(function(item) {
         item.onclick = function(e) {
           display_text(this.id); // this returns clicked li's value
         }
@@ -80,24 +82,55 @@
           return text;
       }
 
-      $(document).bind("contextmenu",function(e){
-        e.preventDefault();
-        $("#cntnr").css("left",e.pageX);
-        $("#cntnr").css("top",e.pageY);
-        $("#cntnr").fadeIn(200,startFocusOut());
+      $("#lakiteksti_container").mouseup(function(e){
+        console.log("Now check the selection");
+        selected_text = getSelectionText();
+        console.log(e);
+        if(selected_text.length == 0){
+          hide_context_menu();
+          return;
+        }
+        else {
+          open_context_menu(e);
+        }
       });
 
+      function open_context_menu(e){
+        var rclickmenu = document.getElementById("rclickmenu");
+        var quote = getSelectionText();
+        document.getElementById("comment_quote").innerHTML = "Commenting: " + quote;
+        rclickmenu.style.left = e.pageX +"px";
+        rclickmenu.style.top = e.pageY +"px";
+        rclickmenu.style.display = "block";
+      }
+
+      function hide_context_menu(e){
+        document.getElementById("rclickmenu").style.display = "none";
+      }
 
       function startFocusOut(){
         $("#cancel_comment").on("click",function(){
-          $("#cntnr").hide();
+          $("#rclickmenu").hide();
           $(document).off("click");
         });
       }
 
-      $("#items > li").click(function(){
-        console.log("Added comment");
-      });
+      function comment(){
+        console.log("Adding a new comment");
+        comment_area = getSelectionText();
+        comment_text = document.getElementById("comment_text").value;
+        var new_comment = document.createElement("p");
+        new_comment.innerHTML = comment_text;
+        comment_list = document.getElementById("comment_container");
+        //TODO tee lisää juttuja että kommentit näyttää siistimmiltä
+        comment_list.appendChild(new_comment);
+        document.getElementById('rclickmenu').style.display = "none";
+      }
+
+      function cancel_comment(){
+        console.log("cancelling comment");
+        document.getElementById('rclickmenu').style.display = "none";
+      }
     </script>
   </body>
 </html>
