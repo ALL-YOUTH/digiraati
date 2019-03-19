@@ -3,13 +3,15 @@
   <head>
     <title>Digiraati Chat</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="../js/login.js"></script>
   </head>
   <body>
     <div class="row" id="navbar">
         <span>
           <button onclick="home()" id="home">Home</button>
           <button onclick="profile()" id="profile">My Profile</button>
-          <button id="exit" style="float:right">Exit</button>
+          <button id="exit" style="float:right">Logout</button>
         </span>
     </div>
     <ul id="messages"></ul>
@@ -17,10 +19,9 @@
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
 
-      $(function () {
+
+    <!--/*  $(function () {
         var socket = io();
         //When submit is pressed
         $('form').submit(function(){
@@ -55,8 +56,9 @@
           else{
             socket.emit('name submit', person);
           }
-        });
-
+        });-->
+      <script>
+        var socket = io();
         //When server emits a message we go here
         socket.on('chat message', function(msg){
           try{
@@ -80,10 +82,10 @@
             window.scrollTo(0, document.body.scrollHeight);
           }
         });
-      });
-      function home(){
-        window.location = "/";
-      }
+
+        function home(){
+          window.location = "/";
+        }
     </script>
   </body>
 </html>

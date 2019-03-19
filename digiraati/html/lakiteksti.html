@@ -145,23 +145,22 @@
         var text_element = document.getElementById("lakiteksti");
         text = text_element.innerHTML;
         var i = text.indexOf(e.value);
-        var text_length = e.value.length;
-        var temp_text = text.substr(0, i) + "<b>";
-        temp_text = temp_text + text.substr(i, text_length);
-        temp_text = temp_text + "</b> " + text.substr(text_length + i);
-        text_element.innerHTML = temp_text;
+        console.log(text.indexOf(e.value));
+        console.log(e.value);
+        if(i > -1){
+          var text_length = e.value.length;
+          var temp_text = text.substr(0, i) + "<b>";
+          temp_text = temp_text + text.substr(i, text_length);
+          temp_text = temp_text + "</b>" + text.substr(text_length + i);
+          text_element.innerHTML = temp_text;
+        }
       }
 
       function unbold_commented(e){
         console.log("unbolding comment");
         var text_element = document.getElementById("lakiteksti");
         var temp_text = text_element.innerHTML;
-        console.log(temp_text.indexOf("<b>"));
-        console.log(temp_text.indexOf("</b>"));
-        temp_text.replace(/(<([^>]+)>)/ig,"");
-        //temp_text.replace("</b>", "");
         text_element.innerHTML = temp_text;
-
       }
     </script>
 

@@ -15,6 +15,14 @@ app.get('/chat', function(req, res){
   res.sendFile(__dirname + '/html/chat.html');
 });
 
+app.get('/js/login.js', function(req, res) {
+    res.sendFile(path.join(__dirname + '/js/login.js'));
+});
+
+app.get('/css/style.css', function(req, res) {
+    res.sendFile(path.join(__dirname + '/css/style.css'));
+});
+
 //Home page getter
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/html/home.html');
