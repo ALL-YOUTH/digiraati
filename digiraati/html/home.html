@@ -3,28 +3,27 @@
   <head>
     <title>Digiraati Chat</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="../js/home.js"></script>
     <meta charset="UTF-8">
   </head>
   <body>
-    <div id="title" style="width:100%; height:auto">
+    <div class="row" id="title" style="width:100%; height:auto">
       <img src="../res/digiraati_title.png"/>
     </div>
-    <button onclick="startChat()">DigiRaati</button>
-    <button class="disabled" onclick="startForum()">DigiFoorumi</button>
-    <button class="disabled" onclick="startProfile()">Oma profiili</button>
-    <button onclick="startLakiteksti()">Lakitekstit</button>
-    <button style="float:right" onclick="login()">Kirjaudu sisään</button>
+    <div class="row" id="user-logged-in" style="display:none;float:right;">
+    </div><br>
+    <div class="row">
+      <button onclick="startChat()">DigiRaati</button>
+      <button class="disabled" onclick="startForum()">DigiFoorumi</button>
+      <button class="disabled" onclick="startProfile()">Oma profiili</button>
+      <button onclick="startLakiteksti()">Lakitekstit</button>
+      <button id="login_btn" style="float:right;display:none;" onclick="login()">Kirjaudu sisään</button>
+      <button id="logout_btn" style="float:right;display:none;" onclick="logout()">Kirjaudu ulos</button>
+    </div>
     <script>
-      function startChat() {
-          window.location = "chat";
-        }
-      function startLakiteksti(){
-          window.location = "lakiteksti";
-      }
-      function login(){
 
-
-      }
     </script>
   </body>
 </html>

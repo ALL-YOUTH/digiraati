@@ -1,8 +1,11 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var path = require("path");
+
 var port = process.env.PORT || 3000;
 var host = "localhost";
+
 
 //Chatters are arrays of [socketID, name]
 var chatters = [];
@@ -10,19 +13,26 @@ var chatters = [];
 var messages = [];
 var MESSAGES2PRINT = 10;
 
-//Chat page getter
+//Digiraati pages
 app.get('/chat', function(req, res){
   res.sendFile(__dirname + '/html/chat.html');
 });
 
-app.get('/js/login.js', function(req, res) {
-    res.sendFile(path.join(__dirname + '/js/login.js'));
+app.get('/js/chat.js', function(req, res) {
+    res.sendFile(path.join(__dirname + '/js/chat.js'));
 });
 
 app.get('/css/style.css', function(req, res) {
     res.sendFile(path.join(__dirname + '/css/style.css'));
 });
 
+app.get('/res/digiraati_title.png', function(req, res) {
+    res.sendFile(path.join(__dirname + '/res/digiraati_title.png'));
+});
+
+app.get('/js/home.js', function(req, res) {
+    res.sendFile(path.join(__dirname + '/js/home.js'));
+});
 //Home page getter
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/html/home.html');
@@ -31,18 +41,26 @@ app.get('/', function(req, res){
 app.get('/lakiteksti', function(req, res){
   res.sendFile(__dirname + '/html/lakiteksti.html');
 });
+
+
+//===================================================================
+//===================================================================
+//===================================================================
+//===================================================================
+//===================================================================
+//===================================================================
+
+
 //Connection
 io.on('connection', function(socket){
   client = socket.request.connection.remoteAddress;
-  console.log(client);
-  if(get_name(client) == -1){
-    //New user entered the channel
-    socket.emit('new user');
+  name = get_name(client);
+  if(name == -1){
+    //Connected user is not logged inspect
+    socket.emit('not logged');
   }
   else{
-    chatter = get_name(client);
-    socket.emit('chat message', "Welcome back, " + chatter);
-    print_msgs(socket, MESSAGES2PRINT);
+    socket.emit('logged', name);
   }
   socket.on('name submit', function(name){
     console.log("Client submitted a name", name);
@@ -54,16 +72,10 @@ io.on('connection', function(socket){
       }
     }
     chatters.push([client, name]);
-    socket.emit('chat message', "Digiraati: Welcome to the chat " + name);
-    socket.broadcast.emit('chat message', "Digiraati: " + name + " joined the chat!");
-    print_msgs(socket, MESSAGES2PRINT);
-  });
-
-  //User logged out of the chat
-  socket.on('user logout', function(){
-    client = socket.request.connection.remoteAddress;
-    remove_client(client);
-    console.log("Removed client", client);
+    //socket.emit('chat message', "Digiraati: Welcome to the chat " + name);
+    //socket.broadcast.emit('chat message', "Digiraati: " + name + " joined the chat!");
+    //print_msgs(socket, MESSAGES2PRINT);
+    socket.emit('login success');
   });
 
   //SENDING A MESSAGE PART
@@ -74,6 +86,17 @@ io.on('connection', function(socket){
     io.emit('chat message', send_msg);
     messages.push(send_msg);
   });
+  //User logged out of the chat
+  socket.on('user logout', function(){
+    client = socket.request.connection.remoteAddress;
+    remove_client(client);
+    console.log("Removed client", client);
+  });
+
+  socket.on('get prev messages', function(){
+    print_msgs(socket, MESSAGES2PRINT);
+  });
+
 });
 
 http.listen(port, function(){

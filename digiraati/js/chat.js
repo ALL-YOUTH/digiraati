@@ -1,42 +1,17 @@
 $(function () {
   var socket = io();
-  //When submit is pressed
+  socket.emit('get prev messages');
+  //When server emits a message we go here
+  //SENDING A MESSAGE PART
   $('form').submit(function(){
+    console.log("submit");
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
     return false;
   });
 
-  //Quit pressed
-  $('#exit').click(function(){
-    socket.emit('user logout');
-    window.location = "/";
-  });
-
-  socket.on('new user', function(){
-    var txt;
-    var person = prompt("Hello new user. \nPlease enter your name:", "");
-    if (person == null || person == "") {
-      window.location = "/";
-    }
-    else{
-      socket.emit('name submit', person);
-    }
-  });
-
-  socket.on('invalid nickname', function(){
-    var txt;
-    var person = prompt("Name already in use. Try another");
-    if (person == null || person == "") {
-      alert("User cancelled the prompt.");
-    }
-    else{
-      socket.emit('name submit', person);
-    }
-  });
-
-  //When server emits a message we go here
   socket.on('chat message', function(msg){
+    console.log("server send message answer");
     try{
       previous_msg = document.getElementById("messages").lastChild.innerHTML;
     }
