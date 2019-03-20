@@ -1,5 +1,6 @@
+var socket = io();
 $(function () {
-  var socket = io();
+
   socket.emit('get prev messages');
   //When server emits a message we go here
   //SENDING A MESSAGE PART
@@ -34,6 +35,12 @@ $(function () {
     }
   });
 });
+
 function home(){
-  window.location = "/";
+  goToPage("/");
+}
+
+function logout(){
+  socket.emit('user logout');
+  home();
 }

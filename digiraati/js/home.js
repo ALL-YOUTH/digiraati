@@ -1,11 +1,12 @@
 var socket = io();
 var logged_in = false;
+var redirect = "/";
 
 $(function(){
   //Quit pressed
   $('#logout').click(function(){
     socket.emit('user logout');
-    refresh();
+    goToPage();
   });
 
   socket.on('invalid nickname', function(){
@@ -20,7 +21,7 @@ $(function(){
   });
 
   socket.on('login success', function(){
-    refresh();
+    goToPage(redirect);
   });
 
   socket.on('not logged', function(){
@@ -41,15 +42,17 @@ $(function(){
 
 function startChat() {
     if(!logged_in){
+      redirect = "chat";
       login();
     }
     else{
-      window.location = "chat";
+      goToPage("chat");
     }
   }
 function startLakiteksti(){
-    window.location = "lakiteksti";
+    goToPage("lakiteksti");
 }
+
 function login(){
   var txt;
   var person = prompt("Hello new user. \nPlease enter your name:", "");
@@ -59,13 +62,4 @@ function login(){
   else{
     socket.emit('name submit', person);
   }
-}
-
-function logout(){
-  socket.emit('user logout');
-  refresh();
-}
-
-function refresh(){
-  window.location = "/";
 }

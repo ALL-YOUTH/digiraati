@@ -14,34 +14,38 @@ var messages = [];
 var MESSAGES2PRINT = 10;
 
 //Digiraati pages
-app.get('/chat', function(req, res){
-  res.sendFile(__dirname + '/html/chat.html');
+//HOME
+app.get('/js/home.js', function(req, res) {
+    res.sendFile(path.join(__dirname + '/js/home.js'));
 });
-
-app.get('/js/chat.js', function(req, res) {
-    res.sendFile(path.join(__dirname + '/js/chat.js'));
+app.get('/js/common.js', function(req, res) {
+    res.sendFile(path.join(__dirname + '/js/common.js'));
 });
-
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/html/home.html');
+});
 app.get('/css/style.css', function(req, res) {
     res.sendFile(path.join(__dirname + '/css/style.css'));
 });
-
 app.get('/res/digiraati_title.png', function(req, res) {
     res.sendFile(path.join(__dirname + '/res/digiraati_title.png'));
 });
 
-app.get('/js/home.js', function(req, res) {
-    res.sendFile(path.join(__dirname + '/js/home.js'));
+//DigiRaatiChat
+app.get('/chat', function(req, res){
+  res.sendFile(__dirname + '/html/chat.html');
 });
-//Home page getter
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/html/home.html');
+app.get('/js/chat.js', function(req, res) {
+    res.sendFile(path.join(__dirname + '/js/chat.js'));
 });
 
+//Lakiteksti
 app.get('/lakiteksti', function(req, res){
   res.sendFile(__dirname + '/html/lakiteksti.html');
 });
-
+app.get('/js/lakiteksti.js', function(req, res){
+  res.sendFile(__dirname + '/js/lakiteksti.js');
+});
 
 //===================================================================
 //===================================================================
