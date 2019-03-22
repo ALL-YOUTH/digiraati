@@ -50,7 +50,35 @@ li{
   cursor:pointer;
 }
 
+.comment{
+  background-color: darkgray;
+  border: 2px;
+  color: black;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+}
+
 .comment:hover{
   font-weight: bold;
   cursor:pointer;
+  background-color: black;
+  color: white;
+}
+
+#navbar{
+  padding: 3px;
+}
+
+#login_btn{
+  float:right;
+  padding:10px;
+}
+#logout_btn{
+  float:right;
+  padding:10px;
 }

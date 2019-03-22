@@ -5,7 +5,7 @@ var headers = {"Accept":"application/ld+json"};
 var num_comments = 0;
 var current_comment = "";
 var logged_in = false;
-
+var original = "";
 
 lawList.forEach(function(item) {
   item.onclick = function(e) {
@@ -16,7 +16,8 @@ lawList.forEach(function(item) {
 
 function display_text(id){
   text = get_text(id);
-  document.getElementById("lakiteksti").innerHTML = text;
+  original = text;
+  document.getElementById("lakiteksti").innerHTML = original;
 }
 
 function get_text(id){
@@ -71,20 +72,23 @@ function startFocusOut(){
   });
 }
 
-function comment(){
-  console.log("Adding a new comment");
-  comment_text = document.getElementById("comment_text").value;
+function create_single_comment_element(text){
   var new_comment = document.createElement("a");
   new_comment.classList.add("comment");
-  new_comment.innerHTML = comment_text;
+  new_comment.innerHTML = text;
   new_comment.id = "comment-" + num_comments;
   new_comment.value = current_comment;
   new_comment.onmouseover = function(){bold_commented(this)};
   new_comment.onmouseout = function(){unbold_commented(this)};
   comment_list = document.getElementById("comment_container");
-  //TODO tee lisää juttuja että kommentit näyttää siistimmiltä
-  comment_list.appendChild(new_comment);
+  return new_comment;
+}
+
+function comment(comment_text){
+  comment_text = document.getElementById("comment_text").value;
+  new_comment = create_single_comment_element(comment_text);
   document.getElementById('rclickmenu').style.display = "none";
+  comment_list.appendChild(new_comment);
   comment_list.appendChild(document.createElement("br"));
   ++num_comments;
 }
@@ -102,9 +106,9 @@ function bold_commented(e){
   console.log(e.value);
   if(i > -1){
     var text_length = e.value.length;
-    var temp_text = text.substr(0, i) + "<b>";
+    var temp_text = text.substr(0, i) + "<b><b>";
     temp_text = temp_text + text.substr(i, text_length);
-    temp_text = temp_text + "</b>" + text.substr(text_length + i);
+    temp_text = temp_text + "</b></b>" + text.substr(text_length + i);
     text_element.innerHTML = temp_text;
   }
 }
@@ -112,8 +116,7 @@ function bold_commented(e){
 function unbold_commented(e){
   console.log("unbolding comment");
   var text_element = document.getElementById("lakiteksti");
-  var temp_text = text_element.innerHTML;
-  text_element.innerHTML = temp_text;
+  text_element.innerHTML = original;
 }
 
 function home(){

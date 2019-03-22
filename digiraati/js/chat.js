@@ -1,6 +1,12 @@
 var socket = io();
-$(function () {
 
+//Check login
+socket.emit("check user login")
+socket.on("not logged in", function(){
+  home();
+});
+
+$(function () {
   socket.emit('get prev messages');
   //When server emits a message we go here
   //SENDING A MESSAGE PART
@@ -37,10 +43,11 @@ $(function () {
 });
 
 function home(){
+  console.log("redirecting");
   goToPage("/");
 }
 
-function logout(){
-  socket.emit('user logout');
+function _logout(){
+  logout();
   home();
 }

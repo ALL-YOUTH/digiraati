@@ -63,3 +63,8 @@ function login(){
     socket.emit('name submit', person);
   }
 }
+
+function _logout(){
+  logout();
+  goToPage("/");
+}

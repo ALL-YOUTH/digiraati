@@ -30,6 +30,9 @@ app.get('/css/style.css', function(req, res) {
 app.get('/res/digiraati_title.png', function(req, res) {
     res.sendFile(path.join(__dirname + '/res/digiraati_title.png'));
 });
+app.get('/res/version.png', function(req, res) {
+    res.sendFile(path.join(__dirname + '/res/version.png'));
+});
 
 //DigiRaatiChat
 app.get('/chat', function(req, res){
@@ -101,6 +104,13 @@ io.on('connection', function(socket){
     print_msgs(socket, MESSAGES2PRINT);
   });
 
+  socket.on('check user login', function(){
+    client = socket.request.connection.remoteAddress;
+    check = get_name(client);
+    if(check == -1){
+      io.emit("not logged in");
+    }
+  });
 });
 
 http.listen(port, function(){
