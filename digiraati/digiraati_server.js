@@ -13,6 +13,9 @@ var chatters = [];
 var messages = [];
 var MESSAGES2PRINT = 10;
 
+//Comments in lakiteksti
+var comments = {};
+
 //Digiraati pages
 //HOME
 app.get('/js/home.js', function(req, res) {
@@ -111,12 +114,40 @@ io.on('connection', function(socket){
       io.emit("not logged in");
     }
   });
+
+  socket.on('add comment', function(page, comment, ref_text){
+    if(check_page_comments(page) == 0){
+      comments[page] = [];
+    }
+    comments[page].push([comment, ref_text]);
+    io.emit('refresh comments', comments[page]);
+  });
+
+  socket.on('comment refresh request', function(page){
+    if(check_page_comments(page) == 0){
+      comments[page] = [];
+    }
+    io.emit('refresh comments', comments[page]);
+  });
 });
 
 http.listen(port, function(){
   console.log('Running on: http://' + host + ":" + port);
 });
 
+function check_page_comments(page){
+  var keys = [];
+  for(var key in comments) keys.push(key);
+  for(i = 0; i < keys.length; ++i){
+    if(keys[i] == page){
+      //page was found in known keys
+      return 1;
+    }
+  }
+  //page was not found in known keys
+  return 0;
+
+}
 
 function get_name(id){
   for(i = 0; i < chatters.length; ++i){

@@ -6,11 +6,21 @@ var num_comments = 0;
 var current_comment = "";
 var logged_in = false;
 var original = "";
+var page = "";
+var comments = [];
+
+var socket = io();
+
+socket.on('refresh comments', function(c){
+  comments = c;
+  display_comments();
+});
 
 lawList.forEach(function(item) {
   item.onclick = function(e) {
-    console.log("clicked item");
+    page = this.innerHTML;
     display_text(this.id); // this returns clicked li's value
+    socket.emit('comment refresh request', page);
   }
 });
 
@@ -39,9 +49,7 @@ function getSelectionText() {
 }
 
 $("#lakiteksti_container").mouseup(function(e){
-  console.log("Now check the selection");
   selected_text = getSelectionText();
-  console.log(e);
   if(selected_text.length == 0){
     hide_context_menu();
     return;
@@ -72,25 +80,37 @@ function startFocusOut(){
   });
 }
 
-function create_single_comment_element(text){
+function display_single_comment(c, i){
   var new_comment = document.createElement("a");
   new_comment.classList.add("comment");
-  new_comment.innerHTML = text;
-  new_comment.id = "comment-" + num_comments;
-  new_comment.value = current_comment;
+  new_comment.innerHTML = c[0];
+  new_comment.id = "comment-" + i;
+  new_comment.value = c[1];
   new_comment.onmouseover = function(){bold_commented(this)};
   new_comment.onmouseout = function(){unbold_commented(this)};
   comment_list = document.getElementById("comment_container");
-  return new_comment;
+  comment_list.appendChild(new_comment);
+  comment_list.appendChild(document.createElement('br'));
 }
 
-function comment(comment_text){
+function clear_comments(){
+  comment_list = document.getElementById("comment_container");
+  while (comment_list.firstChild) {
+    comment_list.removeChild(comment_list.firstChild);
+  }
+}
+
+function display_comments(){
+  clear_comments();
+  for(i = 0; i < comments.length; ++i){
+    display_single_comment(comments[i], i);
+  }
+}
+
+function comment(){
   comment_text = document.getElementById("comment_text").value;
-  new_comment = create_single_comment_element(comment_text);
+  socket.emit('add comment', page, comment_text, current_comment);
   document.getElementById('rclickmenu').style.display = "none";
-  comment_list.appendChild(new_comment);
-  comment_list.appendChild(document.createElement("br"));
-  ++num_comments;
 }
 
 function cancel_comment(){
@@ -114,7 +134,6 @@ function bold_commented(e){
 }
 
 function unbold_commented(e){
-  console.log("unbolding comment");
   var text_element = document.getElementById("lakiteksti");
   text_element.innerHTML = original;
 }
