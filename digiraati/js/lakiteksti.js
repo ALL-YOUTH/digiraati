@@ -30,9 +30,7 @@ lawList.forEach(function(item) {
 function display_text(id){
   //html = get_text(id);
   //lakihtml = httpGet(finlex_base + id);
-  //console.log(html);
   //text = lakihtml.getElementById('laki-alkup');
-  //console.log(text);
   //original = new DOMParser().parseFromString(ilmastolaki, "text/xml");
   original = ilmastolaki;
   document.getElementById("lakiteksti").insertAdjacentHTML('afterbegin', original);
@@ -47,7 +45,7 @@ function get_text(id){
   r.setRequestHeader("Accept", "application/json");
   r.send();
   //var data = JSON.parse(r["response"]);
-//return data["temporalVersion"]["languageVersion"]["hasFormat"]["content_fi"];
+  //return data["temporalVersion"]["languageVersion"]["hasFormat"]["content_fi"];
 }
 
 function getSelectionText() {
