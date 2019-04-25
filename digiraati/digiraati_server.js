@@ -6,9 +6,14 @@ var path = require("path");
 var port = process.env.PORT || 3000;
 var host = "localhost";
 
+var Users = require(path.join(__dirname + "/user.js"));
+var Rooms = require(path.join(__dirname + "/rooms.js"));
 
 //Chatters are arrays of [socketID, name]
 var chatters = [];
+let users = new Users();
+let rooms = new Rooms();
+
 //Messages are arrays of [name, msg]
 var messages = [];
 var MESSAGES2PRINT = 10;
@@ -25,16 +30,13 @@ app.get('/js/common.js', function(req, res) {
     res.sendFile(path.join(__dirname + '/js/common.js'));
 });
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/html/home.html');
+  res.sendFile(path.join(__dirname + '/html/home.html'));
 });
 app.get('/css/style.css', function(req, res) {
     res.sendFile(path.join(__dirname + '/css/style.css'));
 });
 app.get('/res/digiraati_title.png', function(req, res) {
     res.sendFile(path.join(__dirname + '/res/digiraati_title.png'));
-});
-app.get('/res/version.png', function(req, res) {
-    res.sendFile(path.join(__dirname + '/res/version.png'));
 });
 
 //DigiRaatiChat
@@ -72,30 +74,26 @@ io.on('connection', function(socket){
   else{
     socket.emit('logged', name);
   }
+
+
   socket.on('name submit', function(name){
     console.log("Client submitted a name", name);
-    for(i = 0; i < chatters.length; ++i){
-      //Submitted nickname already taken
-      if(chatters[i][1].toLowerCase() == name.toLowerCase()){
-        socket.emit('invalid nickname');
-        return;
-      }
+    ret_val = users.add_user(client, name, "12345");
+    if(ret_val != -1){
+      socket.emit('login success');
     }
-    chatters.push([client, name]);
-    //socket.emit('chat message', "Digiraati: Welcome to the chat " + name);
-    //socket.broadcast.emit('chat message', "Digiraati: " + name + " joined the chat!");
-    //print_msgs(socket, MESSAGES2PRINT);
-    socket.emit('login success');
+    else{
+      socket.emit('invalid nickname');
+    }
   });
 
   //SENDING A MESSAGE PART
   socket.on('chat message', function(msg){
-    client = socket.request.connection.remoteAddress;
-    //console.log("Message was sent \"", msg + "\"");
     send_msg = get_name(client) + ": " + msg;
     io.emit('chat message', send_msg);
     messages.push(send_msg);
   });
+  
   //User logged out of the chat
   socket.on('user logout', function(){
     client = socket.request.connection.remoteAddress;

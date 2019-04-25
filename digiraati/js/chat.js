@@ -11,7 +11,7 @@ $(function () {
   //When server emits a message we go here
   //SENDING A MESSAGE PART
   $('form').submit(function(){
-    console.log("submit");
+    log("submit");
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
     return false;
@@ -43,7 +43,7 @@ $(function () {
 });
 
 function home(){
-  console.log("redirecting");
+  log("redirecting");
   goToPage("/");
 }
 

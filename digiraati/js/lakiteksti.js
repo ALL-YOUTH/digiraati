@@ -38,10 +38,10 @@ function display_text(id){
 
 function get_text(id){
   url = finlex_base + id;
-  console.log(url);
+  log(url);
   var r = new XMLHttpRequest();
   r.open( "GET", url, false );
-  console.log(r);
+  log(r);
   r.setRequestHeader("Accept", "application/json");
   r.send();
   //var data = JSON.parse(r["response"]);
@@ -127,7 +127,7 @@ function comment(){
 }
 
 function cancel_comment(){
-  console.log("cancelling comment");
+  log("cancelling comment");
   document.getElementById('rclickmenu').style.display = "none";
 }
 
@@ -135,8 +135,8 @@ function bold_commented(e){
   var text_element = document.getElementById("lakiteksti");
   text = text_element.innerHTML;
   var i = text.indexOf(e.value);
-  console.log(text.indexOf(e.value));
-  console.log(e.value);
+  log(text.indexOf(e.value));
+  log(e.value);
   if(i > -1){
     var text_length = e.value.length;
     var temp_text = text.substr(0, i) + "<b><b>";
