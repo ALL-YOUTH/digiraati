@@ -1,6 +1,7 @@
 var socket = io();
-var logged_in = false;
+var logged_in = "";
 var redirect = "/";
+
 
 $(function(){
   //Quit pressed
@@ -16,32 +17,49 @@ $(function(){
       alert("User cancelled the prompt.");
     }
     else{
-      socket.emit('name submit', person);
+      socket.emit('login attempt', person);
     }
   });
 
-  socket.on('login success', function(){
-    goToPage(redirect);
+  socket.on('login success', function(name){
+    display_user_logged_in(name);
   });
 
   socket.on('not logged', function(){
-    $("#user-logged-in").css('display', 'none');
-    $("#login_btn").css('display', 'block');
-    $("#logout_btn").css('display', 'none');
-    logged_in = false;
+    hide_user_logged_in();
   });
 
   socket.on('logged', function(name){
-    $("#user-logged-in").html("Logged in as: " + name);
-    $("#user-logged-in").css('display', 'block');
-    $("#login_btn").css('display', 'none');
-    $("#logout_btn").css('display', 'block');
-    logged_in = true;
+    display_user_logged_in(name);
+  });
+
+  /*socket.on('councils content', function(councils){
+    //input parameter "councils" contains all the councils currently available
+    //// TODO:
+  });*/
+
+  socket.on('users update', function(users_logged_in){
+    display_users(users_logged_in);
   });
 });
 
+function hide_user_logged_in(){
+  $("#user-logged-in").css('display', 'none');
+  $("#login_btn").css('display', 'block');
+  $("#logout_btn").css('display', 'none');
+  logged_in = "";
+}
+
+function display_user_logged_in(name){
+  $("#user-logged-in").html("Logged in as: " + name);
+  $("#user-logged-in").css('display', 'block');
+  $("#login_btn").css('display', 'none');
+  $("#logout_btn").css('display', 'block');
+  logged_in = name;
+}
+
 function startChat() {
-    if(!logged_in){
+    if(logged_in == ""){
       redirect = "chat";
       login();
     }
@@ -60,11 +78,26 @@ function login(){
     return;
   }
   else{
-    socket.emit('name submit', person);
+    socket.emit('login attempt', person);
   }
 }
 
 function _logout(){
-  logout();
-  goToPage("/");
+  socket.emit('logout attempt', logged_in);
+  logged_in = "";
+  hide_user_logged_in();
+}
+
+function display_users(user_a){
+  var users_logged_element = document.getElementById("logged_in_users");
+  clear_child_elements(users_logged_element);
+  for(i = 0; i < user_a.length; ++i){
+    var new_elem = document.createElement("div");
+    new_elem.innerHTML = user_a[i];
+    users_logged_element.appendChild(new_elem);
+  }
+}
+
+function create_new_council_clicked(){
+  TODO();
 }

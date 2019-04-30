@@ -15,12 +15,27 @@
     <div class="row" id="user-logged-in" style="display:none;float:right;">
     </div><br>
     <div class="row">
-      <button onclick="startChat()">DigiRaati</button>
-      <button class="disabled" onclick="startForum()">DigiFoorumi</button>
-      <button class="disabled" onclick="startProfile()">Oma profiili</button>
-      <button onclick="startLakiteksti()">Lakitekstit</button>
+      <!--<button onclick="startChat()">DigiRaadit</button>-->
+      <div class="dropdown">
+        <button id="councils_btn" class="dropdown councils_btn">DigiRaadit</button>
+        <div id="councils_content" class="dropdown-content">
+          <a onclick="create_new_council_clicked()">Luo uusi raati</a>
+          -------------------------
+          <a>TEMPLATE_RAATI</a>
+        </div>
+      </div>
+        <button class="disabled" onclick="startForum()">DigiFoorumi</button>
+        <button class="disabled" onclick="startProfile()">Oma profiili</button>
+        <button onclick="startLakiteksti()">Lakitekstit</button>
+
       <button id="login_btn" style="float:right;display:none;" onclick="login()">Kirjaudu sisään</button>
       <button id="logout_btn" style="float:right;display:none;" onclick="_logout()">Kirjaudu ulos</button>
+      <!--<button id="register_btn" style="float:right;display:block;" onclick="_register()">Rekisteröidy</button>-->
+
+    </div>
+    <div class="logged_in_users"><h2>Currently logged in:</h2>
+      <div id="logged_in_users">
+      </div>
     </div>
     <script src="../js/home.js"></script>
     <script src="../js/common.js"></script>

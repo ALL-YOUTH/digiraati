@@ -15,7 +15,8 @@ class Room{
   constructor(name, description){
     this.name = name;
     this.messages = [];
-
+    this.creator = creator;
+    
   }
   add_council(){
 
