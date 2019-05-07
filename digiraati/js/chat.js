@@ -1,4 +1,5 @@
 var socket = io();
+var council = "";
 
 //Check login
 socket.emit("check user login")
@@ -7,13 +8,15 @@ socket.on("not logged in", function(){
 });
 
 $(function () {
-  socket.emit('get prev messages');
+  council = getUrlVars()["chat"];
+  socket.emit('get prev messages', council);
   //When server emits a message we go here
   //SENDING A MESSAGE PART
   $('form').submit(function(){
-    log("submit");
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
+    message = document.getElementById('message_input').value;
+    var info = { "message":message, "council":council };
+    socket.emit('chat message', info);
+    document.getElementById('message_input').value = "";
     return false;
   });
 
@@ -43,7 +46,6 @@ $(function () {
 });
 
 function home(){
-  log("redirecting");
   goToPage("/");
 }
 

@@ -7,13 +7,14 @@ var port = process.env.PORT || 3000;
 var host = "localhost";
 
 var Users = require(path.join(__dirname + "/user.js"));
-var Rooms = require(path.join(__dirname + "/rooms.js"));
+var Councils = require(path.join(__dirname + "/councils.js"));
 
 let users = new Users();
-let rooms = new Rooms();
+let councils = new Councils();
 
 //Comments in lakiteksti
 var comments = {};
+MESSAGES2PRINT = 50;
 
 //Digiraati pages
 //HOME
@@ -89,12 +90,21 @@ io.on('connection', function(socket){
     update_page();
   });
 
+  socket.on('council create attempt', function(info){
+    ret_val = councils.add_council(info["id"], info["name"], "TESTIRAATI", info["creator"]);
+    if(ret_val == -1){
+      console.log("Unable to create council...");
+    }
+    update_page();
+  });
+
   //SENDING A MESSAGE PART
-  /*socket.on('chat message', function(msg){
-    send_msg = get_name(client) + ": " + msg;
+  socket.on('chat message', function(msg){
+    var sender = users.get_username_by_id(id);
+    councils.add_message(msg["council"], sender, msg["message"]);
+    send_msg = sender + ": " + msg["message"];
     io.emit('chat message', send_msg);
-    messages.push(send_msg);
-  });*/
+  });
 
   //User logged out of the chat
   socket.on('logout attempt', function(name){
@@ -102,9 +112,13 @@ io.on('connection', function(socket){
     update_page();
   });
 
-  /*socket.on('get prev messages', function(){
-    print_msgs(socket, MESSAGES2PRINT);
-  });*/
+  socket.on('get prev messages', function(c){
+    console.log("Getting previous messages");
+    msgs = councils.get_previous_messages_from_council(c, MESSAGES2PRINT);
+    for(var i = 0; i < msgs.length; ++i){
+      socket.emit('chat message', msgs[i]["sender"] + ": " + msgs[i]["text"]);
+    }
+  });
 
   /*socket.on('check user login', function(){
     client = socket.request.connection.remoteAddress;
@@ -139,9 +153,32 @@ function update_page(){
   var online_users = users.get_logged_in_usernames();
   io.emit('users update', online_users);
 
-  //councils
+  //Councils
+  var all_councils = councils.get_councils();
+  io.emit('councils update', all_councils);
+  //print_councils(all_councils);
 
   //Lakitekstit
 
   //...
+}
+
+function print_messages(c, n){
+
+}
+
+//////////////////////////////////////////////////////////////////////////////
+// DEBUG FUNCTIONS
+//////////////////////////////////////////////////////////////////////////////
+
+function print_councils(c){
+  for(var i = 0; i < c.length; ++i){
+    console.log("Council name: ", c[i]["name"], "|", "Council ID:", c[i]["id"])
+  }
+}
+
+function print_users(u){
+  for(var i = 0; i < u.length; ++i){
+    console.log(u[i]);
+  }
 }
