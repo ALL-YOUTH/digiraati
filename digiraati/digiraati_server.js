@@ -49,9 +49,6 @@ app.get('/lakiteksti', function(req, res){
 app.get('/js/lakiteksti.js', function(req, res){
   res.sendFile(__dirname + '/js/lakiteksti.js');
 });
-app.get('/files/YMra_21_2017.pdf', function(req, res) {
-    res.sendFile(path.join(__dirname + '/files/YMra_21_2017.pdf'));
-});
 
 //===================================================================
 //===================================================================

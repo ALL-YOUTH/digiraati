@@ -134,9 +134,9 @@ function bold_commented(e){
   var i = text.indexOf(e.value);
   if(i > -1){
     var text_length = e.value.length;
-    var temp_text = text.substr(0, i) + "<b><b>";
+    var temp_text = text.substr(0, i) + '<span style="color:#0000FF"><b><b>';
     temp_text = temp_text + text.substr(i, text_length);
-    temp_text = temp_text + "</b></b>" + text.substr(text_length + i);
+    temp_text = temp_text + "</b></b></span>" + text.substr(text_length + i);
     text_element.innerHTML = temp_text;
   }
 }
