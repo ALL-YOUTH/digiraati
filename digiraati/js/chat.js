@@ -1,14 +1,23 @@
 var socket = io();
 var council = "";
+var logged_in = "";
 
 //Check login
-socket.emit("check user login")
-socket.on("not logged in", function(){
+socket.emit("check login")
+socket.on("not logged", function(){
   home();
 });
 
 $(function () {
   council = getUrlVars()["chat"];
+  if(council.length == 0){
+    home();
+  }
+  socket.emit('check login');
+  socket.on('login success', function(name){
+    logged_in = name;
+  });
+
   socket.emit('get prev messages', council);
   //When server emits a message we go here
   //SENDING A MESSAGE PART
@@ -21,12 +30,10 @@ $(function () {
   });
 
   socket.on('chat message', function(msg){
-    console.log("server send message answer");
     try{
       previous_msg = document.getElementById("messages").lastChild.innerHTML;
     }
     catch(err){
-      console.log("First message in the chat");
       $('#messages').append($('<li>').text(msg));
       window.scrollTo(0, document.body.scrollHeight);
       return;
@@ -45,11 +52,15 @@ $(function () {
   });
 });
 
+function start_lakiteksti(){
+  goToPage("/lakiteksti");
+}
+
 function home(){
   goToPage("/");
 }
 
 function _logout(){
-  logout();
+  logout(logged_in);
   home();
 }

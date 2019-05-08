@@ -100,6 +100,13 @@ module.exports = class Users{
   logout_user(name){
     let user = this.get_user(name);
     user.set_online_status(false);
+    //TODO
+    //THIS HAS TO BE MODIFIED NO TO DELETE THE USER ON LOGOUT
+    for(var i = 0; i < this.users.length; ++i){
+      if(name == this.users[i].get_username()){
+        this.users.splice(i, 1);
+      }
+    }
   }
   login_user(name){
     let user = this.get_user(name);

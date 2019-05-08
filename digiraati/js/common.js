@@ -2,8 +2,8 @@ function goToPage(page){
   window.location = page;
 }
 
-function logout(){
-  socket.emit('user logout');
+function logout(name){
+  socket.emit('logout attempt', name);
 }
 
 function log(text){

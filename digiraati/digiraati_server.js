@@ -63,8 +63,8 @@ app.get('/files/YMra_21_2017.pdf', function(req, res) {
 
 //Connection
 io.on('connection', function(socket){
-  id = socket.request.connection.remoteAddress;
-  name = users.get_username_by_id(id);
+  var id = socket.request.connection.remoteAddress;
+  /*name = users.get_username_by_id(id);
   if(name == -1){
     //Connected user is not logged inspect
     socket.emit('not logged');
@@ -73,7 +73,19 @@ io.on('connection', function(socket){
     users.login_user(name);
     socket.emit('login success', name);
     update_page();
-  }
+  }*/
+
+  socket.on('check login', function(){
+    var name = users.get_username_by_id(id);
+    if(name == -1){
+      socket.emit('not logged');
+    }
+    else{
+      users.login_user(name);
+      socket.emit('login success', name);
+      update_page();
+    }
+  });
 
   socket.on('login attempt', function(name){
     if(users.get_user(name) != null && users.get_online_status_of_username(name) == false){
@@ -116,7 +128,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('get prev messages', function(c){
-    console.log("Getting previous messages");
     msgs = councils.get_previous_messages_from_council(c, MESSAGES2PRINT);
     for(var i = 0; i < msgs.length; ++i){
       socket.emit('chat message', msgs[i]["sender"] + ": " + msgs[i]["text"]);
@@ -130,8 +141,20 @@ io.on('connection', function(socket){
       io.emit("not logged in");
     }
   });*/
+  function check_page_comments(page){
+    var keys = [];
+    for(var key in comments) keys.push(key);
+    for(i = 0; i < keys.length; ++i){
+      if(keys[i] == page){
+        //page was found in known keys
+        return 1;
+      }
+    }
+    //page was not found in known keys
+    return 0;
 
-  /*socket.on('add comment', function(page, comment, ref_text){
+  }
+  socket.on('add comment', function(page, comment, ref_text){
     if(check_page_comments(page) == 0){
       comments[page] = [];
     }
@@ -144,7 +167,7 @@ io.on('connection', function(socket){
       comments[page] = [];
     }
     io.emit('refresh comments', comments[page]);
-  });*/
+  });
 });
 
 http.listen(port, function(){

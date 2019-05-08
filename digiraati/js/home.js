@@ -5,6 +5,8 @@ var redirect = "/";
 
 $(function(){
   //Quit pressed
+  socket.emit('check login');
+
   $('#logout').click(function(){
     socket.emit('user logout');
     goToPage();
@@ -149,4 +151,5 @@ function create_raati(){
   var info = {"id":id, "name":name, "creator":logged_in};
   socket.emit('council create attempt', info);
   cancel_modal();
+  alert("Raadin luonti onnistui");
 }
