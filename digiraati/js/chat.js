@@ -29,7 +29,10 @@ $(function () {
     return false;
   });
 
-  socket.on('chat message', function(msg){
+  socket.on('chat message', function(c, msg){
+    if(council != c){
+      return;
+    }
     try{
       previous_msg = document.getElementById("messages").lastChild.innerHTML;
     }

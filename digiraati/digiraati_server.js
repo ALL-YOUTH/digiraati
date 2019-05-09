@@ -115,7 +115,7 @@ io.on('connection', function(socket){
     var sender = users.get_username_by_id(id);
     councils.add_message(msg["council"], sender, msg["message"]);
     send_msg = sender + ": " + msg["message"];
-    io.emit('chat message', send_msg);
+    io.emit('chat message', msg["council"], send_msg);
   });
 
   //User logged out of the chat
