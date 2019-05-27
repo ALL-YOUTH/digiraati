@@ -173,3 +173,59 @@ li{
 
 #council_cancel_btn{ width: auto; background: red; }
 #council_creation_btn{ width:auto; background: green; }
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: #F3F3F3;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: right;
+  color: #4A86E8;
+  font-weight: bold;
+  margin-right:5%;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  cursor:pointer;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  color: #999999;
+}
+
+.topnav img{
+  margin-left:10%;
+}
+
+.home-search{
+  height:20%;
+  width:100%;
+  background-color: #6DFD6F;
+  color: #FFFFFF;
+}
+
+.home-search h2{
+  padding-top:30px;
+  font-size:40px;
+  text-align: center;
+}
+
+.home-search h3{
+  padding-top:30px;
+  font-size:20px;
+  text-align: center;
+}
+
+.home-search input{
+
+}
