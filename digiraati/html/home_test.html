@@ -12,53 +12,46 @@
 
   <body>
     <div class="topnav row">
-      <img id="navilogo" src="./images/digiraatilogo_trans.png"/>
-        <a>Kirjaudu<br>sisään</a>
-        <a>Raatini</a>
-        <a>Info</a>
-        <a class="active">Etusivu</a>
-      </div>
+      <img id="navilogo" src="../res/digiraatilogo_trans.PNG"/>
+      <a onclick="login_modal()">Kirjaudu<br>sisään</a>
+      <a>Raatini</a>
+      <a>Info</a>
+      <a class="active">Etusivu</a>
+    </div>
     <div class="row home-search">
       <h2>Osallistu yhteiskunnalliseen vaikuttamiseen</h2>
       <h3>Digiraati.fi-palvelussa voit osallistua digitaalisiin kansalaisraateihin</h3>
-      <input type="text" placeholder="Hae raateja">
-    </div>
-    <!--<div class="row" id="user-logged-in" style="display:none;float:right;">
-    </div><br>
-    <div class="row">
-      <button onclick="startChat()">DigiRaadit</button>
-      <div class="dropdown">
-        <button id="councils_btn" class="dropdown councils_btn">DigiRaadit</button>
-        <div id="councils_content" class="dropdown-content">
-          <a onclick="create_new_council_clicked()">Luo uusi raati</a>
-          ----------------------------------------
-          <div id="list_of_councils">
-            <a id="">TEMPLATE_RAATI</a>
-          </div>
-        </div>
-      </div>
-        <button class="disabled" onclick="startForum()">DigiFoorumi</button>
-        <button class="disabled" onclick="startProfile()">Oma profiili</button>
-        <!--<button onclick="startLakiteksti()">Lakitekstit</button>
-
-      <button id="login_btn" style="float:right;display:none;" onclick="login()">Kirjaudu sisään</button>
-      <button id="logout_btn" style="float:right;display:none;" onclick="_logout()">Kirjaudu ulos</button>
-      <!--<button id="register_btn" style="float:right;display:block;" onclick="_register()">Rekisteröidy</button>
-
-    </div>
-    <div class="logged_in_users"><h2>Sisäänkirjautuneet käyttäjät:</h2>
-      <div id="logged_in_users">
+      <div>
+        <input class="search-field" type="text" placeholder="Hae raateja"></input>
+        <input class="search-button" type="button" value="Hae"></input>
       </div>
     </div>
+
+    <!--Login modal-->
+    <div id="login_modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="cancel_login_modal()">&times;</span>
+        <span>Sähköposti</span>
+        <input type="text" id="user_email"></input><br>
+        <span>Käyttäjänimi</span>
+        <input type="text" id="user_username"></input><br>
+        <span>Salasana</span>
+        <input type="text" id="user_password"></input><br>
+        <input type="button" value="Luo" id="user_creation_btn" onclick="create_user()"></button>
+      </div>
+
+    </div>
+
+
     <!--New council creation popup-->
     <div id="new_council_modal" class="modal">
       <div class="modal-content">
-        <span class="close" onclick="cancel_modal()">&times;</span>
+        <span class="close" onclick="cancel_council_modal()">&times;</span>
         <span>Nimi</span>
         <input type="text" id="council_name"></input><br>
         <span>Kuvaus</span>
         <input type="text" id="council_description"></input><br>
-        <button id="council_cancel_btn" onclick="cancel_modal()">Peruuta</button>
+        <button onclick="cancel_council_modal()">Peruuta</button>
         <button id="council_creation_btn" onclick="create_raati()">Luo</button>
       </div>
 

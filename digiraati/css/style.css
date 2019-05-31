@@ -149,7 +149,8 @@ li{
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 50%;
+  width: auto;
+  width:40%;
 }
 
 .modal-content * {
@@ -171,7 +172,7 @@ li{
   cursor: pointer;
 }
 
-#council_cancel_btn{ width: auto; background: red; }
+#council_cancel_btn{ width:auto; background: red; }
 #council_creation_btn{ width:auto; background: green; }
 
 /* Add a black background color to the top navigation */
@@ -186,6 +187,7 @@ li{
   color: #4A86E8;
   font-weight: bold;
   margin-right:5%;
+  margin-top:20px;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -212,6 +214,7 @@ li{
   width:100%;
   background-color: #6DFD6F;
   color: #FFFFFF;
+  text-align: center;
 }
 
 .home-search h2{
@@ -226,6 +229,13 @@ li{
   text-align: center;
 }
 
-.home-search input{
+.home-search .search-field{
+  height:50px;
+  width:200px;
+}
 
+.home-search .search-button{
+  height:50px;
+  width:50px;
+  margin:20px;
 }

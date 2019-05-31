@@ -25,13 +25,13 @@ app.get('/js/common.js', function(req, res) {
     res.sendFile(path.join(__dirname + '/js/common.js'));
 });
 app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/home.html'));
+  res.sendFile(path.join(__dirname + '/html/home_test.html'));
 });
 app.get('/css/style.css', function(req, res) {
     res.sendFile(path.join(__dirname + '/css/style.css'));
 });
-app.get('/res/digiraati_title.png', function(req, res) {
-    res.sendFile(path.join(__dirname + '/res/digiraati_title.png'));
+app.get('/res/digiraatilogo_trans.PNG', function(req, res) {
+    res.sendFile(path.join(__dirname + '/res/digiraatilogo_trans.PNG'));
 });
 
 //DigiRaatiChat
@@ -61,16 +61,6 @@ app.get('/js/lakiteksti.js', function(req, res){
 //Connection
 io.on('connection', function(socket){
   var id = socket.request.connection.remoteAddress;
-  /*name = users.get_username_by_id(id);
-  if(name == -1){
-    //Connected user is not logged inspect
-    socket.emit('not logged');
-  }
-  else{
-    users.login_user(name);
-    socket.emit('login success', name);
-    update_page();
-  }*/
 
   socket.on('check login', function(){
     var name = users.get_username_by_id(id);
@@ -131,13 +121,6 @@ io.on('connection', function(socket){
     }
   });
 
-  /*socket.on('check user login', function(){
-    client = socket.request.connection.remoteAddress;
-    check = get_name(client);
-    if(check == -1){
-      io.emit("not logged in");
-    }
-  });*/
   function check_page_comments(page){
     var keys = [];
     for(var key in comments) keys.push(key);

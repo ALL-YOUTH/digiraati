@@ -123,13 +123,25 @@ function open_council(e){
   goToPage(page);
 }
 
+function login_modal(){
+  var modal = document.getElementById('login_modal');
+  modal.style.display = "block";
+}
+
 function create_new_council_clicked(){
   var modal = document.getElementById('new_council_modal');
   modal.style.display = "block";
   //create_test_raati();
 }
 
-function cancel_modal(){
+function cancel_login_modal(){
+  document.getElementById('user_username').value = "";
+  document.getElementById('user_password').value = "";
+  document.getElementById('user_email').value = "";
+  document.getElementById('login_modal').style.display = "none";
+}
+
+function cancel_council_modal(){
   document.getElementById('council_name').value = "";
   document.getElementById('council_description').value = "";
   var modal = document.getElementById('new_council_modal');
