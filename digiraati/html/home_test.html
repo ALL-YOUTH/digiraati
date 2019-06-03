@@ -5,18 +5,22 @@
     <link href="../css/style.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-
     <meta charset="UTF-8">
   </head>
 
-
   <body>
     <div class="topnav row">
-      <img id="navilogo" src="../res/digiraatilogo_trans.PNG"/>
-      <a onclick="login_modal()">Kirjaudu<br>sisään</a>
-      <a>Raatini</a>
+      <img onclick="home()" id="navilogo" src="../res/digiraatilogo_trans.PNG"/>
+      <a class="dropdown" id="homepage_profile_element">
+      </a>
+      <a id="login_btn" onclick="login_modal()">Kirjaudu<br>sisään</a>
+      <a id="raatini_btn" style="display:none" class="dropdown">Raatini
+        <div class="dropdown-content">
+          <a>Luo uusi raati</a>
+        </div>
+      </a>
       <a>Info</a>
-      <a class="active">Etusivu</a>
+      <a onclick="home()" class="active">Etusivu</a>
     </div>
     <div class="row home-search">
       <h2>Osallistu yhteiskunnalliseen vaikuttamiseen</h2>
@@ -27,19 +31,23 @@
       </div>
     </div>
 
+    <div id="list_of_councils" class="councils_container">
+    </div>
+
     <!--Login modal-->
     <div id="login_modal" class="modal">
       <div class="modal-content">
-        <span class="close" onclick="cancel_login_modal()">&times;</span>
-        <span>Sähköposti</span>
-        <input type="text" id="user_email"></input><br>
-        <span>Käyttäjänimi</span>
-        <input type="text" id="user_username"></input><br>
-        <span>Salasana</span>
-        <input type="text" id="user_password"></input><br>
-        <input type="button" value="Luo" id="user_creation_btn" onclick="create_user()"></button>
-      </div>
+        <span class="close" onclick="cancel_login_modal()">&times;</span><br>
+        <span>Kirjaudu sisään Digiraati-palveluun</span><br><br><br>
+        <h2>Sähköposti</h2>
+        <input class="modal-input disabled" type="text" id="user_email"></input><br>
+        <h2>Käyttäjänimi</h2>
+        <input class="modal-input" type="text" id="user_username"></input><br>
+        <h2>Salasana</h2>
+        <input class="modal-input disabled" type="text" id="user_password"></input><br>
+        <input class="modal-input modal-button" type="button" value="Kirjaudu" id="user_creation_btn" onclick="login()"></button>
 
+      </div>
     </div>
 
 
@@ -56,6 +64,7 @@
       </div>
 
     </div>
+
     <script src="../js/home.js"></script>
     <script src="../js/common.js"></script>
   </body>

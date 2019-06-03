@@ -12,6 +12,9 @@ var Councils = require(path.join(__dirname + "/councils.js"));
 let users = new Users();
 let councils = new Councils();
 
+//Add a template council
+councils.add_council("TEMPLATE", "TESTI RAATI", "Tämä raati on tarkoitettu täysin testaukseen.", "111");
+
 //Comments in lakiteksti
 var comments = {};
 MESSAGES2PRINT = 50;
@@ -157,12 +160,12 @@ http.listen(port, function(){
 function update_page(){
   //Users
   var online_users = users.get_logged_in_usernames();
-  io.emit('users update', online_users);
+  //io.emit('users update', online_users);
 
   //Councils
   var all_councils = councils.get_councils();
+  console.log(all_councils);
   io.emit('councils update', all_councils);
-  //print_councils(all_councils);
 
   //Lakitekstit
 

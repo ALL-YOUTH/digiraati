@@ -71,9 +71,7 @@ li{
   color: white;
 }
 
-#navbar{
-  padding: 3px;
-}
+#navbar{ padding: 3px; }
 
 #login_btn{
   float:right;
@@ -107,11 +105,7 @@ li{
 }
 
 .dropdown-content a:hover {background-color: #ddd;}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
+.dropdown:hover .dropdown-content { display: block;}
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 .logged_in_users{
@@ -124,9 +118,7 @@ li{
 
 }
 
-.councils_btn {
-  width:auto;
-}
+.councils_btn { width:auto; }
 
 /* The Modal (background) */
 .modal {
@@ -141,6 +133,7 @@ li{
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  text-align: center;
 }
 
 /* Modal Content */
@@ -149,13 +142,12 @@ li{
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
-  width: auto;
-  width:40%;
+  max-width: 30%;
+  width:auto;
+  height:auto;
 }
 
-.modal-content * {
-  margin:5px;
-}
+.modal-content * { margin:5px; }
 
 /* The Close Button */
 .close {
@@ -201,13 +193,8 @@ li{
 }
 
 /* Add a color to the active/current link */
-.topnav a.active {
-  color: #999999;
-}
-
-.topnav img{
-  margin-left:10%;
-}
+.topnav a.active { color: #999999; }
+.topnav img{ margin-left:10%; }
 
 .home-search{
   height:20%;
@@ -238,4 +225,41 @@ li{
   height:50px;
   width:50px;
   margin:20px;
+}
+
+.modal-input{
+  border-radius:10px;
+  height:25px;
+  width:200px;
+}
+.modal-button{
+  height: 50px;
+  width:80px;
+}
+
+#homepage_profile_element{
+  display:none; /*hide this by default*/
+  height:50px;
+  width:50px;
+  background-color: lightblue;
+  border-radius:50%;
+}
+
+#navilogo{ cursor:pointer; }
+
+.councils_container{
+  width:auto;
+  height:auto;
+  background-color:#F3F3F3;
+}
+
+.council_element{
+  height:200px;
+  width:25%;
+  margin:50px;
+  background-color: yellow;
+  display:inline-block;
+  cursor:pointer;
+  text-align: center;
+  padding:20px;
 }

@@ -24,7 +24,11 @@ $(function(){
   });
 
   socket.on('login success', function(name){
-    display_user_logged_in(name);
+    //display_user_logged_in(name);
+    document.getElementById('login_modal').style.display = "none";
+    document.getElementById('login_btn').style.display = "none";
+    document.getElementById('homepage_profile_element').style.display = "block";
+    document.getElementById('raatini_btn').style.display = "block";
   });
 
   socket.on('not logged', function(){
@@ -40,9 +44,9 @@ $(function(){
     //// TODO:
   });*/
 
-  socket.on('users update', function(users_logged_in){
+  /*socket.on('users update', function(users_logged_in){
     display_users(users_logged_in);
-  });
+  });*/
 
   socket.on('councils update', function(all_councils){
     display_councils(all_councils);
@@ -64,6 +68,10 @@ function display_user_logged_in(name){
   logged_in = name;
 }
 
+function home(){
+  goToPage("/");
+}
+
 function startChat() {
     if(logged_in == ""){
       redirect = "chat";
@@ -78,9 +86,8 @@ function startLakiteksti(){
 }
 
 function login(){
-  var txt;
-  var person = prompt("Hello new user. \nPlease enter your name:", "");
-  if (person == null || person == "") {
+  var person = document.getElementById('user_username').value;
+  if(person == null||person == ""){
     return;
   }
   else{
@@ -94,7 +101,7 @@ function _logout(){
   hide_user_logged_in();
 }
 
-function display_users(user_a){
+/*function display_users(user_a){
   var users_logged_element = document.getElementById("logged_in_users");
   clear_child_elements(users_logged_element);
   for(i = 0; i < user_a.length; ++i){
@@ -102,17 +109,18 @@ function display_users(user_a){
     new_elem.innerHTML = user_a[i];
     users_logged_element.appendChild(new_elem);
   }
-}
+}*/
 
 function display_councils(councils){
-  var councils_ddmenu = document.getElementById('list_of_councils');
-  clear_child_elements(councils_ddmenu);
+  var councils_element = document.getElementById('list_of_councils');
+  clear_child_elements(councils_element);
   for(i = 0; i < councils.length; ++i){
     var new_elem = document.createElement("a");
     new_elem.id = councils[i]["id"];
     new_elem.onclick = function(){ open_council(this); }
-    new_elem.innerHTML = councils[i]["name"];
-    councils_ddmenu.appendChild(new_elem);
+    new_elem.innerHTML = "<h2>"+ councils[i]["name"]+"</h2>";
+    new_elem.classList.add("council_element");
+    councils_element.appendChild(new_elem);
   }
 }
 
