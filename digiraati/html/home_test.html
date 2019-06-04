@@ -11,16 +11,19 @@
   <body>
     <div class="topnav row">
       <img onclick="home()" id="navilogo" src="../res/digiraatilogo_trans.PNG"/>
-      <a class="dropdown" id="homepage_profile_element">
-      </a>
-      <a id="login_btn" onclick="login_modal()">Kirjaudu<br>sisään</a>
-      <a id="raatini_btn" style="display:none" class="dropdown">Raatini
+      <div class="dropdown dropbtn" id="homepage_profile_element">
         <div class="dropdown-content">
-          <a>Luo uusi raati</a>
+          <a onclick="_logout()">Kirjaudu ulos</a>
         </div>
-      </a>
-      <a>Info</a>
-      <a onclick="home()" class="active">Etusivu</a>
+      </div>
+      <div id="login_btn" onclick="login_modal()">Kirjaudu<br>sisään</div>
+      <div id="raatini_btn" style="display:none" class="dropdown dropbtn">Raatini
+        <div class="dropdown-content">
+          <a onclick="create_new_council_clicked()">Luo raati</a>
+        </div>
+      </div>
+      <div>Info</div>
+      <div onclick="home()" class="active">Etusivu</div>
     </div>
     <div class="row home-search">
       <h2>Osallistu yhteiskunnalliseen vaikuttamiseen</h2>
@@ -38,7 +41,7 @@
     <div id="login_modal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="cancel_login_modal()">&times;</span><br>
-        <span>Kirjaudu sisään Digiraati-palveluun</span><br><br><br>
+        <span id="login_instruction">Kirjaudu sisään Digiraati-palveluun</span><br><br><br>
         <h2>Sähköposti</h2>
         <input class="modal-input disabled" type="text" id="user_email"></input><br>
         <h2>Käyttäjänimi</h2>

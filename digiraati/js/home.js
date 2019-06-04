@@ -13,22 +13,19 @@ $(function(){
   });
 
   socket.on('invalid nickname', function(){
-    var txt;
-    var person = prompt("Name already in use. Try another");
-    if (person == null || person == "") {
-      alert("User cancelled the prompt.");
-    }
-    else{
-      socket.emit('login attempt', person);
-    }
+    var txt = "<h3 style=\"color:red\">Nimimerkki on jo käytössä<br>Koita jotain toista...</h3>";
+    document.getElementById('login_instruction').innerHTML = txt;
   });
 
   socket.on('login success', function(name){
-    //display_user_logged_in(name);
+    logged_in = name;
     document.getElementById('login_modal').style.display = "none";
     document.getElementById('login_btn').style.display = "none";
     document.getElementById('homepage_profile_element').style.display = "block";
     document.getElementById('raatini_btn').style.display = "block";
+    document.getElementById('user_username').value = "";
+    document.getElementById('user_password').value = "";
+    document.getElementById('user_email').value = "";
   });
 
   socket.on('not logged', function(){
@@ -60,14 +57,6 @@ function hide_user_logged_in(){
   logged_in = "";
 }
 
-function display_user_logged_in(name){
-  $("#user-logged-in").html("Logged in as: " + name);
-  $("#user-logged-in").css('display', 'block');
-  $("#login_btn").css('display', 'none');
-  $("#logout_btn").css('display', 'block');
-  logged_in = name;
-}
-
 function home(){
   goToPage("/");
 }
@@ -87,7 +76,10 @@ function startLakiteksti(){
 
 function login(){
   var person = document.getElementById('user_username').value;
+  console.log(person);
   if(person == null||person == ""){
+    var txt = "<h3 style=\"color:red\">Käyttäjänimen tulee olla vähintään 3 merkkiä...</h3>";
+    document.getElementById('login_instruction').innerHTML = txt;
     return;
   }
   else{
@@ -98,18 +90,10 @@ function login(){
 function _logout(){
   socket.emit('logout attempt', logged_in);
   logged_in = "";
-  hide_user_logged_in();
+  document.getElementById('login_btn').style.display = "block";
+  document.getElementById('homepage_profile_element').style.display = "none";
+  document.getElementById('raatini_btn').style.display = "none";
 }
-
-/*function display_users(user_a){
-  var users_logged_element = document.getElementById("logged_in_users");
-  clear_child_elements(users_logged_element);
-  for(i = 0; i < user_a.length; ++i){
-    var new_elem = document.createElement("div");
-    new_elem.innerHTML = user_a[i];
-    users_logged_element.appendChild(new_elem);
-  }
-}*/
 
 function display_councils(councils){
   var councils_element = document.getElementById('list_of_councils');
@@ -132,8 +116,7 @@ function open_council(e){
 }
 
 function login_modal(){
-  var modal = document.getElementById('login_modal');
-  modal.style.display = "block";
+  document.getElementById('login_modal').style.display = "block";
 }
 
 function create_new_council_clicked(){

@@ -13,7 +13,7 @@ let users = new Users();
 let councils = new Councils();
 
 //Add a template council
-councils.add_council("TEMPLATE", "TESTI RAATI", "Tämä raati on tarkoitettu täysin testaukseen.", "111");
+councils.add_council("TEMPLATE", "TESTIRAATI", "Tämä raati on tarkoitettu täysin testaukseen.", "111");
 
 //Comments in lakiteksti
 var comments = {};
@@ -84,7 +84,6 @@ io.on('connection', function(socket){
       update_page();
       return;
     }
-
     ret_val = users.add_user(id, name, "12345");
     if(ret_val != -1){
       socket.emit('login success', name);
@@ -99,6 +98,7 @@ io.on('connection', function(socket){
     ret_val = councils.add_council(info["id"], info["name"], "TESTIRAATI", info["creator"]);
     if(ret_val == -1){
       console.log("Unable to create council...");
+      return;
     }
     update_page();
   });
@@ -119,8 +119,11 @@ io.on('connection', function(socket){
 
   socket.on('get prev messages', function(c){
     msgs = councils.get_previous_messages_from_council(c, MESSAGES2PRINT);
+    console.log("Council:", c);
+    console.log("Messages:", msgs);
     for(var i = 0; i < msgs.length; ++i){
-      socket.emit('chat message', msgs[i]["sender"] + ": " + msgs[i]["text"]);
+      socket.emit('chat message', c, msgs[i]["sender"] + ": " + msgs[i]["text"]);
+      console.log("plööö");
     }
   });
 
@@ -164,7 +167,6 @@ function update_page(){
 
   //Councils
   var all_councils = councils.get_councils();
-  console.log(all_councils);
   io.emit('councils update', all_councils);
 
   //Lakitekstit
