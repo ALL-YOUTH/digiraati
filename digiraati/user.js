@@ -1,22 +1,48 @@
+function hash(p){
+  var h;
+  for (var i = 0; i < p.length; i++) {
+    var char = p.charCodeAt(i);
+    h = ((h<<5)-h)+char;
+    h = h & h; // Convert to 32bit integer
+  }
+  return h;
+}
+
 //Class a single user
 class User{
-  constructor(id, name, pw){
+  constructor(id, uname, fname, lname, email, pw){
     this.id = id;
-    this.username = name;
-    this.pw = pw;
-    this.online = true;
+    this.username = uname;
+    this.fname = fname;
+    this.lname = lname;
+    this.email = email;
+    this.hash = hash(pw);
+    this.online = false;
+    this.ip = null;
   }
 
   get_id(){ return this.id; }
 
+  set_fname(fname){ this.first_name = fname; }
+  get_fname(){ return this.first_name; }
+
+  set_lname(lname){ this.last_name = lname; }
+  get_lname(){ return this.last_name; }
+
   set_username(uname){ this.username = uname; }
   get_username(){ return this.username; }
+
+  set_user_email(email){ this.email = email; }
+  get_user_email(){ return this.email; }
 
   get_online_status(){ return this.online; }
   set_online_status(status) { this.online = status; }
 
-  set_pw(pw){ this.pw = pw; }
-  get_pw(){ return this.pw; }
+  set_hash(pw){ this.hash = hash(pw); }
+  get_hash(){ return this.hash; }
+
+  set_ip(ip){ this.ip = ip }
+  get_ip(){ return this.ip; }
 }
 
 //Class for handling all users
@@ -35,10 +61,10 @@ module.exports = class Users{
     }
   }
 
-  add_user(socket, name, pw){
+  add_user(id, uname, fname, lname, email, pw){
     //Checks if the username is already taken
-    if(this.username_available(name)){
-      var new_user = new User(socket, name, pw);
+    if(this.username_available(uname)){
+      var new_user = new User(id, uname, fname, lname, email, pw);
       this.users.push(new_user);
       return 0;
     }
@@ -56,14 +82,13 @@ module.exports = class Users{
     return null;
   }
 
-  check_pw(name, pw){
-    var u = this.get_user(name);
-    if(u.get_pw() != pw){
-      return false;
+  get_user_by_email(mail){
+    for(var i = 0; i < this.users.length; ++i){
+      if(this.users[i].get_user_email().toLowerCase() == mail.toLowerCase()){
+        return this.users[i];
+      }
     }
-    else{
-      return true;
-    }
+    return null;
   }
 
   get_all_usernames(){
@@ -84,9 +109,9 @@ module.exports = class Users{
     return all;
   }
 
-  get_username_by_id(id){
+  get_username_by_ip(ip){
     for(var i = 0; i < this.users.length; ++i){
-      if(this.users[i].get_id() == id){
+      if(this.users[i].get_ip() == ip){
         return this.users[i].get_username();
       }
     }
@@ -100,17 +125,25 @@ module.exports = class Users{
   logout_user(name){
     let user = this.get_user(name);
     user.set_online_status(false);
-    //TODO
-    //THIS HAS TO BE MODIFIED NO TO DELETE THE USER ON LOGOUT
-    for(var i = 0; i < this.users.length; ++i){
-      if(name == this.users[i].get_username()){
-        this.users.splice(i, 1);
-      }
-    }
+    user.set_ip(null);
   }
-  login_user(name){
-    let user = this.get_user(name);
-    user.set_online_status(true);
-    return user.get_online_status();
+
+  login_user(name, p, ip){
+    let user;
+    if(this.get_user(name) != null){ //Username login
+      user = this.get_user(name);
+    }
+    else if(this.get_user_by_email(name) != null){ //Username login
+      user = this.get_user_by_email(name);
+    }
+    else{
+      return false;   //no user found with this username or email
+    }
+    if(hash(p) == user.get_hash()){    //password hash check
+      user.set_online_status(true);
+      user.set_ip(ip);
+      return true;
+    }
+    return false;
   }
 }

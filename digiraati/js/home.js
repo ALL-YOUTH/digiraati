@@ -12,8 +12,13 @@ $(function(){
     goToPage();
   });
 
+  socket.on('invalid login', function(){
+    var txt = "<h3 style=\"color:red\">Tarkista käyttäjänimi, sähköposti ja salasana.</h3>";
+    document.getElementById('login_instruction').innerHTML = txt;
+  });
+
   socket.on('invalid nickname', function(){
-    var txt = "<h3 style=\"color:red\">Nimimerkki on jo käytössä<br>Koita jotain toista...</h3>";
+    var txt = "<h3 style=\"color:red\">Tarkista käyttäjänimi, sähköposti ja salasana.</h3>";
     document.getElementById('login_instruction').innerHTML = txt;
   });
 
@@ -23,9 +28,8 @@ $(function(){
     document.getElementById('login_btn').style.display = "none";
     document.getElementById('homepage_profile_element').style.display = "block";
     document.getElementById('raatini_btn').style.display = "block";
-    document.getElementById('user_username').value = "";
+    document.getElementById('user_username_email').value = "";
     document.getElementById('user_password').value = "";
-    document.getElementById('user_email').value = "";
   });
 
   socket.on('not logged', function(){
@@ -75,16 +79,9 @@ function startLakiteksti(){
 }
 
 function login(){
-  var person = document.getElementById('user_username').value;
-  console.log(person);
-  if(person == null||person == ""){
-    var txt = "<h3 style=\"color:red\">Käyttäjänimen tulee olla vähintään 3 merkkiä...</h3>";
-    document.getElementById('login_instruction').innerHTML = txt;
-    return;
-  }
-  else{
-    socket.emit('login attempt', person);
-  }
+  uname = document.getElementById('user_username_email').value;
+  p = document.getElementById('user_password').value;
+  socket.emit('login attempt', uname, p);
 }
 
 function _logout(){
@@ -110,7 +107,6 @@ function display_councils(councils){
 
 function open_council(e){
   //e.id is the ID of the council
-  console.log(e.id);
   page = "/chat?chat=" + e.id;
   goToPage(page);
 }
@@ -126,10 +122,11 @@ function create_new_council_clicked(){
 }
 
 function cancel_login_modal(){
-  document.getElementById('user_username').value = "";
   document.getElementById('user_password').value = "";
-  document.getElementById('user_email').value = "";
+  document.getElementById('user_username_email').value = "";
   document.getElementById('login_modal').style.display = "none";
+  document.getElementById('login_instruction').innerHTML = "Kirjaudu sisään Digiraati-palveluun";
+
 }
 
 function cancel_council_modal(){
@@ -152,7 +149,11 @@ function create_raati(){
   }
 
   var info = {"id":id, "name":name, "creator":logged_in};
+  cancel_council_modal();
   socket.emit('council create attempt', info);
-  cancel_modal();
-  alert("Raadin luonti onnistui");
+
+}
+
+function register_clicked(){
+  goToPage("register");
 }

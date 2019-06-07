@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Tietoa Digiraadista</title>
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <meta charset="UTF-8">
+    <link rel='icon' href='../res/favicon.ico' type='image/x-icon'/ >
+  </head>
+
+  <body>
+    <div class="topnav row">
+      <img onclick="home()" id="navilogo" src="../res/digiraatilogo_trans.PNG"/>
+      <div class="dropdown dropbtn" id="homepage_profile_element">
+        <div class="dropdown-content">
+          <a onclick="_logout()">Kirjaudu ulos</a>
+        </div>
+      </div>
+      <div id="register_btn" onclick="register_clicked()">Rekisteröidy</div>
+      <div id="login_btn" onclick="login_modal()">Kirjaudu<br>sisään</div>
+      <div id="raatini_btn" style="display:none" class="dropdown dropbtn">Raatini
+        <div class="dropdown-content">
+          <a onclick="create_new_council_clicked()">Luo raati</a>
+        </div>
+      </div>
+      <div class="active">Info</div>
+      <div onclick="home()">Etusivu</div>
+    </div>
+
+    <div>
+      <h1>Mikä on Digiraati?</h1>
+      <p>Digiraati on ALL-YOUTH hankkeen kehitteillä oleva digitaalinen verkkopalvelu,
+        jolla on tarkoitus osallistaa ja mahdollistaa helpompi osallistuminen
+        yhteiskunnallisiin asioihin. Digiraadin toteutus tehdään nuoret (15-25v)
+        edellä. 
+    </div>
+
+    <script src="../js/register.js"></script>
+    <script src="../js/common.js"></script>
+  </body>
+</html>

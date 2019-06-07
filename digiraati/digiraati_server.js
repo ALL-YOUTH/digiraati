@@ -36,6 +36,9 @@ app.get('/css/style.css', function(req, res) {
 app.get('/res/digiraatilogo_trans.PNG', function(req, res) {
     res.sendFile(path.join(__dirname + '/res/digiraatilogo_trans.PNG'));
 });
+app.get('/res/favicon.ico', function(req, res) {
+    res.sendFile(path.join(__dirname + '/res/favicon.ico'));
+});
 
 //DigiRaatiChat
 app.get('/chat', function(req, res){
@@ -53,6 +56,13 @@ app.get('/js/lakiteksti.js', function(req, res){
   res.sendFile(__dirname + '/js/lakiteksti.js');
 });
 
+//Register page
+app.get('/register', function(req, res){
+  res.sendFile(__dirname + '/html/register.html');
+});
+app.get('/js/register.js', function(req, res){
+  res.sendFile(__dirname + '/js/register.js');
+});
 //===================================================================
 //===================================================================
 //===================================================================
@@ -63,30 +73,43 @@ app.get('/js/lakiteksti.js', function(req, res){
 
 //Connection
 io.on('connection', function(socket){
-  var id = socket.request.connection.remoteAddress;
+  var ip = socket.request.connection.remoteAddress;
 
   socket.on('check login', function(){
-    var name = users.get_username_by_id(id);
+    var name = users.get_username_by_ip(ip);
     if(name == -1){
       socket.emit('not logged');
     }
     else{
-      users.login_user(name);
       socket.emit('login success', name);
       update_page();
     }
   });
 
-  socket.on('login attempt', function(name){
-    if(users.get_user(name) != null && users.get_online_status_of_username(name) == false){
-      users.login_user(name);
+  socket.on('login attempt', function(name, pw){
+    if(users.login_user(name, pw, ip) == false){
+      socket.emit('invalid login');
+      return;
+    }
+    else{
       socket.emit('login success', name);
       update_page();
       return;
     }
-    ret_val = users.add_user(id, name, "12345");
+  });
+
+  socket.on('register attempt', function(data){
+    if(users.get_user(data["uname"]) != null){ //Username already in use
+      socket.emit("invalid username");
+      return;
+    }
+    else if(users.get_user_by_email(data["email"]) != null){ // email already in use
+      socket.emit("invalid email");
+      return;
+    }
+    ret_val = users.add_user(data["id"], data["uname"], data["fname"], data["lname"], data["email"], data["p"]);
     if(ret_val != -1){
-      socket.emit('login success', name);
+      socket.emit('register success', data["uname"]);
     }
     else{
       socket.emit('invalid nickname');
@@ -97,7 +120,6 @@ io.on('connection', function(socket){
   socket.on('council create attempt', function(info){
     ret_val = councils.add_council(info["id"], info["name"], "TESTIRAATI", info["creator"]);
     if(ret_val == -1){
-      console.log("Unable to create council...");
       return;
     }
     update_page();
@@ -105,7 +127,7 @@ io.on('connection', function(socket){
 
   //SENDING A MESSAGE PART
   socket.on('chat message', function(msg){
-    var sender = users.get_username_by_id(id);
+    var sender = users.get_username_by_ip(ip);
     councils.add_message(msg["council"], sender, msg["message"]);
     send_msg = sender + ": " + msg["message"];
     io.emit('chat message', msg["council"], send_msg);
@@ -119,11 +141,8 @@ io.on('connection', function(socket){
 
   socket.on('get prev messages', function(c){
     msgs = councils.get_previous_messages_from_council(c, MESSAGES2PRINT);
-    console.log("Council:", c);
-    console.log("Messages:", msgs);
     for(var i = 0; i < msgs.length; ++i){
       socket.emit('chat message', c, msgs[i]["sender"] + ": " + msgs[i]["text"]);
-      console.log("plööö");
     }
   });
 
@@ -172,10 +191,6 @@ function update_page(){
   //Lakitekstit
 
   //...
-}
-
-function print_messages(c, n){
-
 }
 
 //////////////////////////////////////////////////////////////////////////////

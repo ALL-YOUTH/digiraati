@@ -4,6 +4,7 @@
   "description": "my first socket.io app",
   "dependencies": {
     "express": "^4.16.4",
+    "password-hash": "^1.2.2",
     "socket.io": "^1.7.4"
   },
   "scripts": {

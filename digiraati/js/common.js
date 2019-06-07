@@ -2,9 +2,9 @@ function goToPage(page){
   window.location = page;
 }
 
-/*function logout(name){
+function logout(name){
   socket.emit('logout attempt', name);
-}*/
+}
 
 function log(text){
   console.log("Log:", text)

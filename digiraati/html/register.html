@@ -1,14 +1,12 @@
 <!doctype html>
 <html>
   <head>
-    <title>Digiraati Etusivu</title>
+    <title>Rekisteröi käyttäjätunnus</title>
     <link href="../css/style.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <meta charset="UTF-8">
     <link rel='icon' href='../res/favicon.ico' type='image/x-icon'/ >
-    <script src="../js/home.js"></script>
-    <script src="../js/common.js"></script>
   </head>
 
   <body>
@@ -29,16 +27,22 @@
       <div>Info</div>
       <div onclick="home()" class="active">Etusivu</div>
     </div>
-    <div class="row home-search">
-      <h2>Osallistu yhteiskunnalliseen vaikuttamiseen</h2>
-      <h3>Digiraati.fi-palvelussa voit osallistua digitaalisiin kansalaisraateihin</h3>
-      <div>
-        <input class="search-field" type="text" placeholder="Hae raateja"></input>
-        <input class="search-button" type="button" value="Hae"></input>
-      </div>
-    </div>
 
-    <div id="list_of_councils" class="councils_container">
+    <div class="register_container">
+      <h1> Rekisteröinti </h1>
+      <h3>Käyttäjänimi</h3>
+      <input type="text" id="register_username"></input>
+      <h3>Etunimi</h3>
+      <input type="text" id="register_name"></input>
+      <h3>Sukunimi</h3>
+      <input type="text" id="register_lastname"></input>
+      <h3>Sähköposti</h3>
+      <input type="text" id="register_email"></input>
+      <h3>Salasana</h3>
+      <input type="password" id="register_pw1"></input>
+      <h3>Salasana uudelleen</h3>
+      <input type="password" id="register_pw2"></input><br><br>
+      <input type="button" onclick="register_btn_clicked()" value="Rekisteröidy"></input>
     </div>
 
     <!--Login modal-->
@@ -46,30 +50,18 @@
       <div class="modal-content">
         <span class="close" onclick="cancel_login_modal()">&times;</span><br>
         <span id="login_instruction">Kirjaudu sisään Digiraati-palveluun</span><br><br><br>
-        <h2>Sähköposti tai käyttäjätunnus</h2>
-        <input class="modal-input" type="text" id="user_username_email"></input><br>
+        <h2>Sähköposti</h2>
+        <input class="modal-input disabled" type="text" id="user_email"></input><br>
+        <h2>Käyttäjänimi</h2>
+        <input class="modal-input" type="text" id="user_username"></input><br>
         <h2>Salasana</h2>
-        <input class="modal-input" type="password" id="user_password"></input><br>
+        <input class="modal-input disabled" type="text" id="user_password"></input><br>
         <input class="modal-input modal-button" type="button" value="Kirjaudu" id="user_creation_btn" onclick="login()"></button>
 
       </div>
     </div>
 
-
-    <!--New council creation popup-->
-    <div id="new_council_modal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="cancel_council_modal()">&times;</span>
-        <span>Nimi</span>
-        <input type="text" id="council_name"></input><br>
-        <span>Kuvaus</span>
-        <input type="text" id="council_description"></input><br>
-        <button onclick="cancel_council_modal()">Peruuta</button>
-        <button id="council_creation_btn" onclick="create_raati()">Luo</button>
-      </div>
-
-    </div>
-
-
+    <script src="../js/register.js"></script>
+    <script src="../js/common.js"></script>
   </body>
 </html>
