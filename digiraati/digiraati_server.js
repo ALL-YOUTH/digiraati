@@ -63,6 +63,14 @@ app.get('/register', function(req, res){
 app.get('/js/register.js', function(req, res){
   res.sendFile(__dirname + '/js/register.js');
 });
+
+//Info page
+app.get('/info', function(req, res){
+  res.sendFile(__dirname + '/html/info.html');
+});
+app.get('/js/info.js', function(req, res){
+  res.sendFile(__dirname + '/js/info.js');
+});
 //===================================================================
 //===================================================================
 //===================================================================
@@ -172,6 +180,13 @@ io.on('connection', function(socket){
       comments[page] = [];
     }
     io.emit('refresh comments', comments[page]);
+  });
+
+  socket.on('request council data', function(id){
+    council_data = councils.get_council_data(id);
+    if(council_data != null){
+      socket.emit('council data', council_data);
+    }
   });
 });
 

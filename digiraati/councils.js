@@ -26,6 +26,8 @@ class Council{
   get_council_id(){ return this.id; }
   get_council_description(){ return this.description; }
   get_council_messages(){ return this.messages; }
+  get_council_creator(){ return this.creator; }
+
 
   add_msg(msg){
     this.messages.push(msg);
@@ -96,5 +98,20 @@ module.exports = class Councils{
     var council = this.get_council_by_id(council_id);
     return council.get_n_messages(number_of);
 
+  }
+
+  get_council_data(id){
+    var council = this.get_council_id(id);
+    var council_data = {};
+    if(council == -1){ return null; }
+    else{
+      council_data["title"] = council.get_council_name();
+      council_data["description"] = council.get_council_description();
+      council_data["creator"] = council.get_council_creator();
+      council_data["starttime"] = council.get_council_starttime();
+      council_data["endtime"] = council.get_council_endtime();
+    }
+
+    return council_data;
   }
 }

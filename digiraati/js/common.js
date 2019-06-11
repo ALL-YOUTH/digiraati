@@ -1,9 +1,18 @@
+var socket = io();
+socket.emit('check login');
+
 function goToPage(page){
   window.location = page;
 }
 
 function logout(name){
   socket.emit('logout attempt', name);
+}
+
+function login(){
+  uname = document.getElementById('user_username_email').value;
+  p = document.getElementById('user_password').value;
+  socket.emit('login attempt', uname, p);
 }
 
 function log(text){
@@ -36,4 +45,133 @@ function getUrlVars(){
     vars[key] = value;
 	});
 	return vars;
+}
+
+/////////////////////////////////////////////////
+///////////////Navigation functions//////////////
+/////////////////////////////////////////////////
+function home(){
+  goToPage("/");
+}
+
+function _logout(){
+  logout(logged_in);
+  home();
+}
+
+/////////////////////////////////////////////////
+///////////////Login functions     //////////////
+/////////////////////////////////////////////////
+
+$('#logout').click(function(){
+  socket.emit('user logout');
+  goToPage();
+});
+
+socket.on('invalid login', function(){
+  var txt = "<h3 style=\"color:red\">Tarkista käyttäjänimi, sähköposti ja salasana.</h3>";
+  document.getElementById('login_instruction').innerHTML = txt;
+});
+
+socket.on('invalid nickname', function(){
+  var txt = "<h3 style=\"color:red\">Tarkista käyttäjänimi, sähköposti ja salasana.</h3>";
+  document.getElementById('login_instruction').innerHTML = txt;
+});
+
+function login_modal(){
+  document.getElementById('login_instruction').innerHTML = "Kirjaudu sisään Digiraati-palveluun";
+  document.getElementById('login_modal').style.display = "block";
+}
+
+
+function cancel_login_modal(){
+  document.getElementById('user_password').value = "";
+  document.getElementById('user_username_email').value = "";
+  document.getElementById('login_modal').style.display = "none";
+  document.getElementById('login_instruction').innerHTML = "Kirjaudu sisään Digiraati-palveluun";
+}
+
+function login(){
+  uname = document.getElementById('user_username_email').value;
+  p = document.getElementById('user_password').value;
+  socket.emit('login attempt', uname, p);
+}
+
+socket.on('login success', function(name){
+  logged_in = name;
+  try{
+    document.getElementById('login_modal').style.display = "none";
+    document.getElementById('login_btn').style.display = "none";
+    document.getElementById('homepage_profile_element').style.display = "block";
+    document.getElementById('raatini_btn').style.display = "block";
+    document.getElementById('user_username_email').value = "";
+    document.getElementById('user_password').value = "";
+    document.getElementById('register_btn').style.display = "none";
+  }
+  catch{ } // Nothing in the catch just to avoid chat.js not having some of the modal elements
+});
+
+socket.on('not logged', function(){
+  hide_user_logged_in();
+});
+
+socket.on('logged', function(name){
+  display_user_logged_in(name);
+});
+
+function hide_user_logged_in(){
+  $("#user-logged-in").css('display', 'none');
+  $("#login_btn").css('display', 'block');
+  $("#logout_btn").css('display', 'none');
+  logged_in = "";
+}
+
+/////////////////////////////////////////////////
+///////////////Registration functions////////////
+/////////////////////////////////////////////////
+function nav_register_clicked(){
+  goToPage("register");
+}
+
+function register_btn_clicked(){
+  if(document.getElementById('register_username').value == "" ||
+      document.getElementById('register_name').value == "" ||
+      document.getElementById('register_lastname').value == "" ||
+      document.getElementById('register_email').value == "" ||
+      document.getElementById('register_pw1').value == "" ||
+      document.getElementById('register_pw2').value == ""){
+        alert("Täytä kaikki kentät");
+      }
+
+  else if(document.getElementById('register_pw1').value !=
+  document.getElementById('register_pw2').value){
+    alert("Salasanat eivät täsmää");
+  }
+
+  var data = {};
+  data["id"] = makeid(8);
+  data["uname"] = document.getElementById('register_username').value;
+  data["fname"] = document.getElementById('register_name').value;
+  data["lname"] = document.getElementById('register_lastname').value;
+  data["email"] = document.getElementById('register_email').value;
+  data["p"] = document.getElementById('register_pw1').value;
+  socket.emit('register attempt', data);
+}
+
+socket.on('register success', function(){
+  alert("Registration success");
+  goToPage("/");
+});
+
+/////////////////////////////////////////////////
+///////////////Council functions     ////////////
+/////////////////////////////////////////////////
+function open_council(id){
+  //e.id is the ID of the council
+  page = "/chat?chat=" + id;
+  goToPage(page);
+}
+
+function nav_info_clicked(){
+  goToPage("/info");
 }

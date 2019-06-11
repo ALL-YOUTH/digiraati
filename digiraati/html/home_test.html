@@ -19,14 +19,14 @@
           <a onclick="_logout()">Kirjaudu ulos</a>
         </div>
       </div>
-      <div id="register_btn" onclick="register_clicked()">Rekisteröidy</div>
+      <div id="register_btn" onclick="nav_register_clicked()">Rekisteröidy</div>
       <div id="login_btn" onclick="login_modal()">Kirjaudu<br>sisään</div>
       <div id="raatini_btn" style="display:none" class="dropdown dropbtn">Raatini
         <div class="dropdown-content">
           <a onclick="create_new_council_clicked()">Luo raati</a>
         </div>
       </div>
-      <div>Info</div>
+      <div onclick="nav_info_clicked()">Info</div>
       <div onclick="home()" class="active">Etusivu</div>
     </div>
     <div class="row home-search">
@@ -50,7 +50,7 @@
         <input class="modal-input" type="text" id="user_username_email"></input><br>
         <h2>Salasana</h2>
         <input class="modal-input" type="password" id="user_password"></input><br>
-        <input class="modal-input modal-button" type="button" value="Kirjaudu" id="user_creation_btn" onclick="login()"></button>
+        <input class="modal-input modal-button" type="button" value="Kirjaudu" id="login_modal_login_btn" onclick="login()"></button>
 
       </div>
     </div>
