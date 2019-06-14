@@ -5,16 +5,29 @@
     <link href="../css/style.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-
+    <link rel='icon' href='../res/favicon.ico' type='image/x-icon'/ >
   </head>
   <body>
-    <div class="row" id="navbar">
-        <span>
-          <button onclick="home()" id="home">Koti</button>
-          <button class="disabled" onclick="profile()" id="profile">Raati</button>
-          <button onclick="start_lakiteksti()" id="documents">Materiaali</button>
-          <button onclick="_logout()" style="float:right">Kirjaudu Ulos</button>
-        </span>
+    <div class="topnav row">
+      <div id="navilogo" class="topnav-left"><a href="/"><img src="../res/digiraatilogo_trans.PNG"/></a></div>
+      <div class="topnav-right">
+        <a href="/" class="active">Etusivu</a>
+        <a href="/info">Info</a>
+        <a id="raatini_btn" style="display:none">Raatini
+          <div class="dropdown dropbtn">
+            <div class="dropdown-content">
+              <a onclick="create_new_council_clicked()">Luo raati</a>
+            </div>
+          </div>
+        </a>
+        <a class="dropdown dropbtn" id="homepage_profile_element">
+          <div class="dropdown-content">
+            <a onclick="_logout()">Kirjaudu ulos</a>
+          </div>
+        </a>
+        <a href="/register" id="register_btn" >Rekisteröidy</a>
+        <a id="login_btn" onclick="login_modal()">Kirjaudu sisään</a>
+      </div>
     </div>
     <ul id="messages"></ul>
     <form action="">

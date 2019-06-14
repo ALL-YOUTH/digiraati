@@ -102,8 +102,8 @@ socket.on('login success', function(name){
   try{
     document.getElementById('login_modal').style.display = "none";
     document.getElementById('login_btn').style.display = "none";
-    document.getElementById('homepage_profile_element').style.display = "block";
-    document.getElementById('raatini_btn').style.display = "block";
+    document.getElementById('homepage_profile_element').style.display = "inline-block";
+    document.getElementById('raatini_btn').style.display = "inline-block";
     document.getElementById('user_username_email').value = "";
     document.getElementById('user_password').value = "";
     document.getElementById('register_btn').style.display = "none";
@@ -116,12 +116,12 @@ socket.on('not logged', function(){
 });
 
 socket.on('logged', function(name){
-  display_user_logged_in(name);
+display_user_logged_in(name);
 });
 
 function hide_user_logged_in(){
   $("#user-logged-in").css('display', 'none');
-  $("#login_btn").css('display', 'block');
+  $("#login_btn").css('display', 'inline-block');
   $("#logout_btn").css('display', 'none');
   logged_in = "";
 }
@@ -166,9 +166,15 @@ socket.on('register success', function(){
 /////////////////////////////////////////////////
 ///////////////Council functions     ////////////
 /////////////////////////////////////////////////
-function open_council(id){
+function open_council_chat(id){
   //e.id is the ID of the council
   page = "/chat?chat=" + id;
+  goToPage(page);
+}
+
+function open_council_frontpage(id){
+  //e.id is the ID of the council
+  page = "/lobby?lobby=" + id;
   goToPage(page);
 }
 

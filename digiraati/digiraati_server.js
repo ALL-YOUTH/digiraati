@@ -71,6 +71,14 @@ app.get('/info', function(req, res){
 app.get('/js/info.js', function(req, res){
   res.sendFile(__dirname + '/js/info.js');
 });
+
+//Info page
+app.get('/lobby', function(req, res){
+  res.sendFile(__dirname + '/html/lobby.html');
+});
+app.get('/js/lobby.js', function(req, res){
+  res.sendFile(__dirname + '/js/lobby.js');
+});
 //===================================================================
 //===================================================================
 //===================================================================
@@ -130,6 +138,10 @@ io.on('connection', function(socket){
     if(ret_val == -1){
       return;
     }
+    update_page();
+  });
+
+  socket.on('request councils update', function(){
     update_page();
   });
 
@@ -195,17 +207,17 @@ http.listen(port, function(){
 });
 
 function update_page(){
-  //Users
-  var online_users = users.get_logged_in_usernames();
-  //io.emit('users update', online_users);
+  update_councils();
+}
 
-  //Councils
+function update_councils(){
   var all_councils = councils.get_councils();
+  console.log("Updating councils", all_councils);
   io.emit('councils update', all_councils);
+}
 
-  //Lakitekstit
-
-  //...
+function update_users(){
+  //TODO
 }
 
 //////////////////////////////////////////////////////////////////////////////

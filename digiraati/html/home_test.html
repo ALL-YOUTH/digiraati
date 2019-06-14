@@ -9,25 +9,31 @@
     <link rel='icon' href='../res/favicon.ico' type='image/x-icon'/ >
     <script src="../js/home.js"></script>
     <script src="../js/common.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.00, minimum-scale=1.00, maximum-scale=2.00">
+
   </head>
 
   <body>
     <div class="topnav row">
-      <img onclick="home()" id="navilogo" src="../res/digiraatilogo_trans.PNG"/>
-      <div class="dropdown dropbtn" id="homepage_profile_element">
-        <div class="dropdown-content">
-          <a onclick="_logout()">Kirjaudu ulos</a>
-        </div>
+      <div id="navilogo" class="topnav-left"><a href="/"><img src="../res/digiraatilogo_trans.PNG"/></a></div>
+      <div class="topnav-right">
+        <a href="/" class="active">Etusivu</a>
+        <a href="/info">Info</a>
+        <a id="raatini_btn" style="display:none">Raatini
+          <div class="dropdown dropbtn">
+            <div class="dropdown-content">
+              <a onclick="create_new_council_clicked()">Luo raati</a>
+            </div>
+          </div>
+        </a>
+        <a class="dropdown dropbtn" id="homepage_profile_element">
+          <div class="dropdown-content">
+            <a onclick="_logout()">Kirjaudu ulos</a>
+          </div>
+        </a>
+        <a href="/register" id="register_btn" >Rekisteröidy</a>
+        <a id="login_btn" onclick="login_modal()">Kirjaudu sisään</a>
       </div>
-      <div id="register_btn" onclick="nav_register_clicked()">Rekisteröidy</div>
-      <div id="login_btn" onclick="login_modal()">Kirjaudu<br>sisään</div>
-      <div id="raatini_btn" style="display:none" class="dropdown dropbtn">Raatini
-        <div class="dropdown-content">
-          <a onclick="create_new_council_clicked()">Luo raati</a>
-        </div>
-      </div>
-      <div onclick="nav_info_clicked()">Info</div>
-      <div onclick="home()" class="active">Etusivu</div>
     </div>
     <div class="row home-search">
       <h2>Osallistu yhteiskunnalliseen vaikuttamiseen</h2>

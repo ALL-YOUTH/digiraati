@@ -27,7 +27,8 @@ class Council{
   get_council_description(){ return this.description; }
   get_council_messages(){ return this.messages; }
   get_council_creator(){ return this.creator; }
-
+  get_council_starttime(){ return this.start_datetime; }
+  get_council_endtime(){ return this.end_datetime; }
 
   add_msg(msg){
     this.messages.push(msg);
@@ -101,7 +102,7 @@ module.exports = class Councils{
   }
 
   get_council_data(id){
-    var council = this.get_council_id(id);
+    var council = this.get_council_by_id(id);
     var council_data = {};
     if(council == -1){ return null; }
     else{

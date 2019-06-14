@@ -1,6 +1,8 @@
 var socket = io();
 var logged_in = "";
 
+socket.emit('request councils update');
+
 socket.on('councils update', function(all_councils){
   display_councils(all_councils);
 });
@@ -15,7 +17,7 @@ function display_councils(councils){
   for(i = 0; i < councils.length; ++i){
     var new_elem = document.createElement("a");
     new_elem.id = councils[i]["id"];
-    new_elem.onclick = function(){ open_council(this.id); }
+    new_elem.onclick = function(){ open_council_frontpage(this.id); }
     new_elem.innerHTML = "<h2>"+ councils[i]["name"]+"</h2>";
     new_elem.classList.add("council_element");
     councils_element.appendChild(new_elem);
