@@ -284,21 +284,30 @@ li{
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-.register_container{
-  text-align: center;
-}
-
-.center-title{
-  text-align: center;
-}
+.register_container{text-align: center;}
+.center-title{text-align: center;}
 
 .lobby-nav{
-  margin-left:30px;
-
+  display:inline-block;
+  width:auto;
+  height:auto;
+  border-radius:15px;
+  background:#E0E0E0;
+  margin:30px;
+  padding:15px;
 }
 
 .lobby-nav a{
+  background:#E0E0E0;
   cursor:pointer;
-  margin:5px;
-  font-size:10;
+  font-size:20px;
+  border-radius: 15px;
+  padding:15px;
+}
+
+.lobby-nav a:hover{background:#A0A0A0;}
+#messages li:hover .comment_menu{display:inline-block;}
+
+#raatini_btn {
+  display: none;
 }

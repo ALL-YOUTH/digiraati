@@ -41,6 +41,11 @@ $(function () {
       window.scrollTo(0, document.body.scrollHeight);
       return;
     }
+
+    var c_menu = document.createElement("input");
+    c_menu.setAttribute("type", "button");
+    c_menu.value = "Tykkää";
+    c_menu.style.display = "none";
     index = previous_msg.indexOf(":");
     previous_sender = previous_msg.substr(0,index);
     this_sender = msg.substr(0,msg.indexOf(":"));
@@ -49,9 +54,17 @@ $(function () {
       document.getElementById('messages').lastChild.innerHTML += "<br>   " + msg;
     }
     else{
-      $('#messages').append($('<li>').text(msg));
+      var new_comment = document.createElement("li");
+      new_comment.innerHTML = msg;
+      new_comment.classList.add("comment_menu");
+      new_comment.appendChild(c_menu);
+
+      document.getElementById("messages").appendChild(new_comment);
+      //$('#messages').append($('<li>').text(msg));
+
       window.scrollTo(0, document.body.scrollHeight);
     }
+    window.scrollTo(0, document.body.scrollHeight);
   });
 });
 
