@@ -36,18 +36,19 @@
     <!--END NAV BAR-->
 
     <div class="lobby-nav">
-      <a>Raati</a>
+      <a onclick="open_chat()">Raati</a>
       <a>Keskustelu</a>
       <a>Materiaali</a>
-      <a>Raatilaiset</a>
+      <a>Osallistujat</a>
+      <a>Statistiikka</a>
     </div>
     <div class="row center-title">
       <h1 id="lobby-title"></h1>
     </div>
-    <!--<div class="row lobby-nav">
-      <input type="button" id="lobby-chat-btn" onclick="open_chat()" value="Keskustelu"></input><br>
-      <input type="button" id="lobby-material-btn" onclick="open_material()" value="Materiaali"></input>
-    </div>-->
+    <div>
+      <h2>Kuvaus</h2>
+      <p id="lobby-description"/>
+    </div>
 
     <script src="../js/lobby.js"></script>
     <script src="../js/common.js"></script>

@@ -15,6 +15,9 @@ let councils = new Councils();
 //Add a template council
 councils.add_council("TEMPLATE", "TESTIRAATI", "Tämä raati on tarkoitettu täysin testaukseen.", "111");
 
+//Add a template user
+users.add_user("test", "test", "test", "test", "test", "test");
+
 //Comments in lakiteksti
 var comments = {};
 MESSAGES2PRINT = 50;

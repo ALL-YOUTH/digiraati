@@ -17,6 +17,7 @@ $(function () {
 socket.on('council data', function(data){
   council_data = data;
   document.getElementById('lobby-title').innerHTML = data["title"];
+  document.getElementById('lobby-description').innerHTML = data["description"];
 });
 
 function open_chat(){

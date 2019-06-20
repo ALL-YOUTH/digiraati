@@ -143,6 +143,7 @@ li{
   max-width: 30%;
   width:auto;
   height:auto;
+  border-radius:5px;
 }
 
 .modal-content * { margin:5px; }
