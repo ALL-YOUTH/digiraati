@@ -60,13 +60,19 @@
     <!--New council creation popup-->
     <div id="new_council_modal" class="modal">
       <div class="modal-content">
-        <span class="close" onclick="cancel_council_modal()">&times;</span>
-        <span>Nimi</span>
+        <div class="close" onclick="cancel_council_modal()">&times;</div>
+        <h2>Raadin nimi</h2>
         <input type="text" id="council_name"></input><br>
-        <span>Kuvaus</span>
+        <h2>Kuvaus</h2>
         <input type="text" id="council_description"></input><br>
-        <button onclick="cancel_council_modal()">Peruuta</button>
-        <button id="council_creation_btn" onclick="create_raati()">Luo</button>
+        <h2>Alkamisaika</h2>
+        <input type="date" id="council_start_date"></input><input type="time" id="council_start_time"></input><br>
+        <h2>Loppumisaika</h2>
+        <input type="date" id="council_end_date"></input><input type="time" id="council_end_time"></input><br>
+        <h2>Avainsanat</h2>
+        <input type="text" id="council_keywords"></input><br>
+        <input type="button" onclick="cancel_council_modal()" value="Peruuta"></input>
+        <input type="button" id="council_creation_btn" onclick="create_raati()" value="Luo"></input>
       </div>
     </div>
   </body>

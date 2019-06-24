@@ -1,6 +1,12 @@
 var socket = io();
 var logged_in = "";
 
+council_colors = {
+  "environment":"#66FF66",
+  "economy":"#66B2FF",
+  "culture":"#FFB2FF"
+}
+
 socket.emit('request councils update');
 
 socket.on('councils update', function(all_councils){

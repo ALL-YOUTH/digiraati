@@ -20,6 +20,9 @@ class Council{
     this.messages = [];
     this.start_datetime = "";
     this.end_datetime = "";
+    this.tags = [];
+    this.user_limit = ;
+    this.users = [];
   }
 
   get_council_name(){ return this.name; }
@@ -29,6 +32,9 @@ class Council{
   get_council_creator(){ return this.creator; }
   get_council_starttime(){ return this.start_datetime; }
   get_council_endtime(){ return this.end_datetime; }
+  get_council_tags(){ return this.tags; }
+  get_council_user_limit(){ return this.user_limit; }
+  get_council_users(){ return this.users; }
 
   add_msg(msg){
     this.messages.push(msg);
@@ -96,9 +102,14 @@ module.exports = class Councils{
   }
 
   get_previous_messages_from_council(council_id, number_of){
-    var council = this.get_council_by_id(council_id);
-    return council.get_n_messages(number_of);
-
+    try{
+      var council = this.get_council_by_id(council_id);
+      return council.get_n_messages(number_of);
+    }
+    catch{
+      +new Date;
+      console.log(Date.now());
+    }
   }
 
   get_council_data(id){

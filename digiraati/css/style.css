@@ -148,6 +148,10 @@ li{
 
 .modal-content * { margin:5px; }
 
+.modal-content input[type=button]{
+  padding:10px;
+  font-size: 20px;
+}
 /* The Close Button */
 .close {
   color: #aaaaaa;
@@ -277,7 +281,6 @@ li{
   height:200px;
   width:25%;
   margin:50px;
-  background-color: yellow;
   display:inline-block;
   cursor:pointer;
   text-align: center;

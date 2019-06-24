@@ -16,7 +16,7 @@ let councils = new Councils();
 councils.add_council("TEMPLATE", "TESTIRAATI", "Tämä raati on tarkoitettu täysin testaukseen.", "111");
 
 //Add a template user
-users.add_user("test", "test", "test", "test", "test", "test");
+users.add_user("test", "test", "test", "test", "test", "123");
 
 //Comments in lakiteksti
 var comments = {};
@@ -215,7 +215,6 @@ function update_page(){
 
 function update_councils(){
   var all_councils = councils.get_councils();
-  console.log("Updating councils", all_councils);
   io.emit('councils update', all_councils);
 }
 
