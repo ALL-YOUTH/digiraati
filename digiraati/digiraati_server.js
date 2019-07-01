@@ -13,10 +13,18 @@ let users = new Users();
 let councils = new Councils();
 
 //Add a template council
-councils.add_council("TEMPLATE", "TESTIRAATI", "Tämä raati on tarkoitettu täysin testaukseen.", "111");
+councils.add_council( id="TEMPLATE",
+                      name="TESTIRAATI",
+                      description="Tämä raati on tarkoitettu täysin testaukseen.",
+                      creator="test",
+                      starttime=null,
+                      endtime=null,
+                      userlimit=null,
+                      tags=["General"]
+                    );
 
 //Add a template user
-users.add_user("test", "test", "test", "test", "test", "123");
+users.add_user("test", "test", "test", "test", "test", "test");
 
 //Comments in lakiteksti
 var comments = {};

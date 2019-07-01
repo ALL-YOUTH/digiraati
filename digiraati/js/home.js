@@ -46,6 +46,10 @@ function cancel_council_modal(){
 function create_raati(){
   var id = makeid(10);
   var name = document.getElementById('council_name').value;
+  var description = document.getElementById('council_description').value;
+  var start_date = document.getElementById('council_start_date').value;
+  var start_time = document.getElementById('council_start_time').value;
+  console.log(start_date.length, start_time.length);
   if(name.length == 0){
     console.log("Give Council a name");
     return;

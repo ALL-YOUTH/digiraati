@@ -36,10 +36,8 @@ function display_text(id){
 
 function get_text(id){
   url = finlex_base + id;
-  log(url);
   var r = new XMLHttpRequest();
   r.open( "GET", url, false );
-  log(r);
   r.setRequestHeader("Accept", "application/json");
   r.send();
   //var data = JSON.parse(r["response"]);
