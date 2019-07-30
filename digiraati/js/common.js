@@ -1,4 +1,5 @@
 var socket = io();
+var logged_in = "";
 socket.emit('check login');
 
 function goToPage(page){

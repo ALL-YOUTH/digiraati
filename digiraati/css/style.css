@@ -315,3 +315,6 @@ li{
 #raatini_btn {
   display: none;
 }
+
+#lobby-description *{ margin:10px; }
+#lobby-description p{ margin-left:20px; }

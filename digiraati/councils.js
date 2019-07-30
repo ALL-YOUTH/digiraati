@@ -12,16 +12,18 @@ class Message{
 
 //Class for one chat room
 class Council{
-  constructor(id, name, description, creator, starttime,
-              endtime, userlimit, tags){
+  constructor(id, name, description, creator, startdate, starttime,
+              enddate, endtime, userlimit=-1, tags){
     this.id = id;
     this.name = name;
     this.description = description;
     this.creator = creator;
-    this.start_datetime = starttime;
-    this.end_datetime = endtime;
+    this.startdate = startdate;
+    this.starttime = starttime;
+    this.enddate = enddate;
+    this.endtime = endtime;
     this.tags = tags;
-    this.user_limit = userlimit;
+    this.userlimit = userlimit;
 
     this.users = [];
     this.messages = [];
@@ -32,10 +34,12 @@ class Council{
   get_council_description(){ return this.description; }
   get_council_messages(){ return this.messages; }
   get_council_creator(){ return this.creator; }
-  get_council_starttime(){ return this.start_datetime; }
-  get_council_endtime(){ return this.end_datetime; }
+  get_council_startdate(){ return this.startdate; }
+  get_council_starttime(){ return this.starttime; }
+  get_council_enddate(){ return this.enddate; }
+  get_council_endtime(){ return this.endtime; }
   get_council_tags(){ return this.tags; }
-  get_council_userlimit(){ return this.user_limit; }
+  get_council_userlimit(){ return this.userlimit; }
   get_council_users(){ return this.users; }
 
   add_msg(msg){
@@ -64,8 +68,12 @@ module.exports = class Councils{
     this.councils = [];
   }
 
-  add_council(id, name, description, creator, starttime, endtime, userlimit, tags){
-    let new_council = new Council(id, name, description, creator);
+  add_council(id, name, description, creator, startdate,
+              starttime, enddate, endtime, userlimit=-1, tags){
+    let new_council = new Council(id=id, name=name,
+      description=description, creator=creator,
+      startdate=startdate, starttime=starttime, enddate=enddate,
+      endtime=endtime, tags=tags, userlimit=userlimit);
     this.councils.push(new_council);
   }
 
@@ -122,7 +130,9 @@ module.exports = class Councils{
       council_data["title"] = council.get_council_name();
       council_data["description"] = council.get_council_description();
       council_data["creator"] = council.get_council_creator();
+      council_data["startdate"] = council.get_council_startdate();
       council_data["starttime"] = council.get_council_starttime();
+      council_data["enddate"] = council.get_council_enddate();
       council_data["endtime"] = council.get_council_endtime();
       council_data["users"] = council.get_council_users();
       council_data["userlimit"] = council.get_council_userlimit();

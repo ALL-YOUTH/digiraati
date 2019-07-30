@@ -47,9 +47,11 @@ function create_raati(){
   var id = makeid(10);
   var name = document.getElementById('council_name').value;
   var description = document.getElementById('council_description').value;
-  var start_date = document.getElementById('council_start_date').value;
-  var start_time = document.getElementById('council_start_time').value;
-  console.log(start_date.length, start_time.length);
+  var startdate = document.getElementById('council_start_date').value;
+  var starttime = document.getElementById('council_start_time').value;
+  var enddate = document.getElementById('council_end_date').value;
+  var endtime = document.getElementById('council_end_time').value;
+  var keywords = document.getElementById('council_keywords').value;
   if(name.length == 0){
     console.log("Give Council a name");
     return;
@@ -59,7 +61,10 @@ function create_raati(){
     return;
   }
 
-  var info = {"id":id, "name":name, "creator":logged_in};
+  var info = {"id":id, "name":name, "creator":logged_in,
+              "description":description, "startdate":startdate,
+              "starttime":starttime, "endtime":endtime,
+              "enddate":enddate, "keywords":keywords };
   cancel_council_modal();
   socket.emit('council create attempt', info);
 

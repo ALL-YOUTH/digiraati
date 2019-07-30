@@ -145,7 +145,14 @@ io.on('connection', function(socket){
   });
 
   socket.on('council create attempt', function(info){
-    ret_val = councils.add_council(info["id"], info["name"], "TESTIRAATI", info["creator"]);
+    ret_val = councils.add_council(id=info["id"], name=info["name"],
+                                    description=info["description"],
+                                    creator=info["creator"],
+                                    startdate=info["startdate"],
+                                    starttime=info["starttime"],
+                                    enddate=info["enddate"],
+                                    endtime=info["endtime"],
+                                    tags=info["keywords"]);
     if(ret_val == -1){
       return;
     }
@@ -211,6 +218,13 @@ io.on('connection', function(socket){
       socket.emit('council data', council_data);
     }
   });
+
+  socket.on('check joined', function(userid){
+    joined = councils.is_user_joined(userid);
+    if(joined){
+      socket.emit('user joined in council');
+    }
+  }
 });
 
 http.listen(port, function(){
