@@ -76,7 +76,7 @@ function home(){
   goToPage("/");
 }
 
-function _logout(){
+function logout(){
   logout(logged_in);
   home();
 }

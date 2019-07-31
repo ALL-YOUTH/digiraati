@@ -26,7 +26,7 @@
         </a>
         <a class="dropdown dropbtn" id="homepage_profile_element">
           <div class="dropdown-content">
-            <a onclick="_logout()">Kirjaudu ulos</a>
+            <a onclick="logout()">Kirjaudu ulos</a>
           </div>
         </a>
         <a href="/register" id="register_btn" >Rekisteröidy</a>
@@ -55,8 +55,14 @@
       <p id="lobby-startdatetime-text"/>
       <h2>Raati päättyy</h2>
       <p id="lobby-enddatetime-text"/>
+      <h2>Osallistujia</h2>
+      <p id="number_council_participants"/>
     </div>
 
+    <div id="sign_container" class="col-sm-10">
+      <input type="button" onclick="sign_in_council()" id="join_council_btn" value="Liity"/>
+      <input type="button" id="resign_council_btn" value="Poistu Raadista"/>
+    </div>
     <script src="../js/lobby.js"></script>
     <script src="../js/common.js"></script>
   </body>

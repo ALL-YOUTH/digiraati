@@ -103,8 +103,8 @@ io.on('connection', function(socket){
   var ip = socket.request.connection.remoteAddress;
 
   socket.on('check login', function(){
-    var name = users.get_username_by_ip(ip);
-    if(name == -1){
+    var name = users.get_login_by_ip(ip);
+    if(name == false){
       socket.emit('not logged');
     }
     else{
@@ -175,6 +175,7 @@ io.on('connection', function(socket){
   socket.on('logout attempt', function(name){
     users.logout_user(name);
     update_page();
+    logged_in = "";
   });
 
   socket.on('get prev messages', function(c){
@@ -219,12 +220,35 @@ io.on('connection', function(socket){
     }
   });
 
-  socket.on('check joined', function(userid){
-    joined = councils.is_user_joined(userid);
+  socket.on('check joined', function(councilid, userid){
+    if(userid.length == 0){
+      socket.emit('user not logged in');
+      return;
+    }
+    joined = councils.is_user_joined(councilid, userid);
     if(joined){
       socket.emit('user joined in council');
     }
-  }
+    else{
+      socket.emit('user not in council')
+    }
+  });
+
+  socket.on('request council join', function(councilid, userid){
+    var res = councils.sign_user_in_council(councilid, userid);
+    if(!res){
+      socket.emit("council join failed");
+    }
+    else{
+      socket.emit("council join success");
+    }
+  });
+
+  socket.on('request council members', function(councilid){
+    var members = councils.get_council_members(councilid);
+    console.log(councilid, members);
+    socket.emit('council members', members);
+  });
 });
 
 http.listen(port, function(){

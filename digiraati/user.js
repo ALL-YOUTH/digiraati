@@ -74,12 +74,20 @@ module.exports = class Users{
   }
 
   get_user(name){
-    for(var i = 0; i < this.users.length; ++i){
-      if(this.users[i].get_username().toLowerCase() == name.toLowerCase()){
-        return this.users[i];
+    try{
+      if(name == ""){
+        return null;
       }
+      for(var i = 0; i < this.users.length; ++i){
+        if(this.users[i].get_username().toLowerCase() == name.toLowerCase()){
+          return this.users[i];
+        }
+      }
+      return null;
     }
-    return null;
+    catch(err){
+      console.log(err);
+    }
   }
 
   get_user_by_email(mail){
@@ -116,6 +124,24 @@ module.exports = class Users{
       }
     }
     return -1;
+  }
+
+  get_login_by_ip(ip){
+    let username = this.get_username_by_ip(ip);
+    if(username == -1){
+      return false;
+    }
+    let user = this.get_user(username);
+    if(user == null){
+      return false
+    }
+    let login = user.get_online_status();
+    if(login){
+      return username;
+    }
+    else{
+      return false;
+    }
   }
 
   get_online_status_of_username(name){

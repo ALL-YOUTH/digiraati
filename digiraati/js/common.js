@@ -1,13 +1,14 @@
 var socket = io();
 var logged_in = "";
-socket.emit('check login');
+//socket.emit('check login');
 
 function goToPage(page){
   window.location = page;
 }
 
-function logout(name){
-  socket.emit('logout attempt', name);
+function logout(){
+  socket.emit('logout attempt', logged_in);
+  home();
 }
 
 function login(){
@@ -55,19 +56,14 @@ function home(){
   goToPage("/");
 }
 
-function _logout(){
-  logout(logged_in);
-  home();
-}
-
 /////////////////////////////////////////////////
 ///////////////Login functions     //////////////
 /////////////////////////////////////////////////
 
-$('#logout').click(function(){
+/*$('#logout').click(function(){
   socket.emit('user logout');
   goToPage();
-});
+});*/
 
 socket.on('invalid login', function(){
   var txt = "<h3 style=\"color:red\">Tarkista käyttäjänimi, sähköposti ja salasana.</h3>";
@@ -92,11 +88,11 @@ function cancel_login_modal(){
   document.getElementById('login_instruction').innerHTML = "Kirjaudu sisään Digiraati-palveluun";
 }
 
-function login(){
+/*function login(){
   uname = document.getElementById('user_username_email').value;
   p = document.getElementById('user_password').value;
   socket.emit('login attempt', uname, p);
-}
+}*/
 
 socket.on('login success', function(name){
   logged_in = name;
@@ -117,7 +113,7 @@ socket.on('not logged', function(){
 });
 
 socket.on('logged', function(name){
-display_user_logged_in(name);
+  display_user_logged_in(name);
 });
 
 function hide_user_logged_in(){

@@ -42,6 +42,20 @@ class Council{
   get_council_userlimit(){ return this.userlimit; }
   get_council_users(){ return this.users; }
 
+  add_participant(uid){
+    var result = false;
+    if(this.userlimit == -1){
+      this.users.push(uid);
+      result = true;
+    }
+    else if (this.userlimit > this.users.length) {
+      this.users.push(uid);
+      result = true;
+    }
+
+    return result;
+  }
+
   add_msg(msg){
     this.messages.push(msg);
   }
@@ -111,6 +125,17 @@ module.exports = class Councils{
     council.add_msg(new_message);
   }
 
+  is_user_joined(councilid, userid){
+    let c = this.get_council_by_id(councilid);
+    let users = c.get_council_users();
+    for(var i = 0; i < users.length; ++i){
+      if(users[i] == councilid){
+        return true;
+      }
+    }
+    return false;
+  }
+
   get_previous_messages_from_council(council_id, number_of){
     try{
       var council = this.get_council_by_id(council_id);
@@ -123,7 +148,7 @@ module.exports = class Councils{
   }
 
   get_council_data(id){
-    var council = this.get_council_by_id(id);
+    let council = this.get_council_by_id(id);
     var council_data = {};
     if(council == -1){ return null; }
     else{
@@ -140,5 +165,17 @@ module.exports = class Councils{
     }
 
     return council_data;
+  }
+
+  sign_user_in_council(c_id, u_id){
+    let council = this.get_council_by_id(id);
+    var res = council.add_participant(u_id);
+    return res;
+  }
+
+  get_council_members(cid){
+    let council = this.get_council_by_id(cid);
+    let users = council.get_council_users();
+    return users;
   }
 }

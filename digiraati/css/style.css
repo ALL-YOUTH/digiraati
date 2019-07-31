@@ -318,3 +318,7 @@ li{
 
 #lobby-description *{ margin:10px; }
 #lobby-description p{ margin-left:20px; }
+
+#sign_container * {
+  display:none;
+}
