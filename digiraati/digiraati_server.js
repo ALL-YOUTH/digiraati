@@ -226,6 +226,7 @@ io.on('connection', function(socket){
       return;
     }
     joined = councils.is_user_joined(councilid, userid);
+    console.log("Checking if user is joined in council:", userid, joined);
     if(joined){
       socket.emit('user joined in council');
     }

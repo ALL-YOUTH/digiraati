@@ -1,5 +1,4 @@
 var socket = io();
-var logged_in = "";
 
 council_colors = {
   "environment":"#66FF66",

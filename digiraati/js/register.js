@@ -27,5 +27,5 @@ var socket = io();
 
 socket.on('register success', function(){
   alert("Registration success");
-  goToPage("/");*/
-});
+  goToPage("/");
+});*/

@@ -129,7 +129,7 @@ module.exports = class Councils{
     let c = this.get_council_by_id(councilid);
     let users = c.get_council_users();
     for(var i = 0; i < users.length; ++i){
-      if(users[i] == councilid){
+      if(users[i] == userid){
         return true;
       }
     }
@@ -141,7 +141,7 @@ module.exports = class Councils{
       var council = this.get_council_by_id(council_id);
       return council.get_n_messages(number_of);
     }
-    catch{
+    catch(err){
       +new Date;
       console.log(Date.now());
     }
@@ -167,9 +167,16 @@ module.exports = class Councils{
     return council_data;
   }
 
-  sign_user_in_council(c_id, u_id){
-    let council = this.get_council_by_id(id);
-    var res = council.add_participant(u_id);
+  sign_user_in_council(cid, uid){
+    let council = this.get_council_by_id(cid);
+    //First check if user is already a member of the council
+    let users = council.get_council_users();
+    for(var i = 0; i < users.length; ++i){
+      if(uid == users[i]){
+        return false;
+      }
+    }
+    var res = council.add_participant(uid);
     return res;
   }
 
