@@ -247,8 +247,17 @@ io.on('connection', function(socket){
 
   socket.on('request council members', function(councilid){
     var members = councils.get_council_members(councilid);
-    console.log(councilid, members);
     socket.emit('council members', members);
+  });
+
+  socket.on('request resign council', function(cid, uid){
+    var res = councils.resign_user_from_council(cid, uid);
+    if(!res){
+      socket.emit("council resign failed");
+    }
+    else{
+      socket.emit("council resign success");
+    }
   });
 });
 

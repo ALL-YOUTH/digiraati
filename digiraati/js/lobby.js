@@ -1,7 +1,6 @@
 var socket = io();
 var council_data = {};
 var council_id = "";
-var logged_in = "";
 
 socket.emit('check login');
 socket.on('login success', function(name){
@@ -56,6 +55,15 @@ socket.on("council join success", function(){
   location.reload();
 });
 
+socket.on('council resign failed', function(){
+  alert("Could not resign user from the council...(!?!?!?)");
+  location.reload();
+});
+socket.on('council resign success', function(){
+  alert("ET OLE ENÄÄ RAADISSA....");
+  location.reload();
+});
+
 function open_chat(){
   var url = "/chat?chat=" + council_id;
   goToPage(url);
@@ -68,5 +76,11 @@ function open_material(){
 
 function sign_in_council(){
   socket.emit('request council join', council_id, logged_in);
+}
 
+function resign_from_council(){
+  var ans = confirm("Oletko varma että haluat poistua raadista?");
+  if(ans){
+    socket.emit('request resign council', council_id, logged_in);
+  }
 }

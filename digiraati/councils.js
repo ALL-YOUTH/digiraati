@@ -176,8 +176,23 @@ module.exports = class Councils{
         return false;
       }
     }
+    //add the participant
     var res = council.add_participant(uid);
     return res;
+  }
+
+  resign_user_from_council(cid, uid){
+    let council = this.get_council_by_id(cid);
+    let users = council.get_council_users();
+    for(var i = 0; i < users.length; ++i){
+      if(uid == users[i]){
+        users.splice(i, 1);
+        console.log("council users:", users);
+        return true;
+      }
+    }
+
+
   }
 
   get_council_members(cid){
