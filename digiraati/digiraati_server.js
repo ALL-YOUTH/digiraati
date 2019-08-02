@@ -179,7 +179,9 @@ io.on('connection', function(socket){
   });
 
   socket.on('get prev messages', function(c){
+    //This should be done in chat.js
     msgs = councils.get_previous_messages_from_council(c, MESSAGES2PRINT);
+    if(msgs == undefined){return 0;}
     for(var i = 0; i < msgs.length; ++i){
       socket.emit('chat message', c, msgs[i]["sender"] + ": " + msgs[i]["text"]);
     }

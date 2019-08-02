@@ -301,6 +301,10 @@ li{
   padding:15px;
 }
 
+.lobby-nav a.active{
+  background:#A0A0A0;
+}
+
 .lobby-nav a{
   background:#E0E0E0;
   cursor:pointer;
@@ -310,6 +314,13 @@ li{
 }
 
 .lobby-nav a:hover{background:#A0A0A0;}
+
+#council-chat-container {
+  overflow-y: scroll;
+  position:relative;
+  width:99%;
+  max-height: 600px;
+}
 #messages li:hover .comment_menu{display:inline-block;}
 
 #raatini_btn {
@@ -321,4 +332,14 @@ li{
 
 #sign_container * {
   display:none;
+}
+
+.center_list{
+  margin-top:10px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.center_list div{
+  margin-top:3px;
 }

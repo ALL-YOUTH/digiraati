@@ -1,36 +1,18 @@
-var socket = io();
-var council = "";
-var logged_in = "";
-
-//Check login
-socket.emit("check login")
-socket.on("not logged", function(){
-  home();
-});
-
 $(function () {
-  council = getUrlVars()["chat"];
-  if(council.length == 0){
-    home();
-  }
-  socket.emit('check login');
-  socket.on('login success', function(name){
-    logged_in = name;
-  });
-
-  socket.emit('get prev messages', council);
+  socket.emit('get prev messages', council_id);
   //When server emits a message we go here
   //SENDING A MESSAGE PART
   $('form').submit(function(){
     message = document.getElementById('message_input').value;
-    var info = { "message":message, "council":council };
+    var info = { "message":message, "council":council_id };
     socket.emit('chat message', info);
     document.getElementById('message_input').value = "";
     return false;
   });
 
   socket.on('chat message', function(c, msg){
-    if(council != c){
+    var cont = document.getElementById('council-chat-container');
+    if(council_id != c){
       return;
     }
     try{
@@ -38,7 +20,7 @@ $(function () {
     }
     catch(err){
       $('#messages').append($('<li>').text(msg));
-      window.scrollTo(0, document.body.scrollHeight);
+      cont.scrollTo(0, cont.scrollHeight);
       return;
     }
 
@@ -58,13 +40,10 @@ $(function () {
       new_comment.innerHTML = msg;
       new_comment.classList.add("comment_menu");
       new_comment.appendChild(c_menu);
-
       document.getElementById("messages").appendChild(new_comment);
-      //$('#messages').append($('<li>').text(msg));
-
-      window.scrollTo(0, document.body.scrollHeight);
+      cont.scrollTo(0, cont.scrollHeight);
     }
-    window.scrollTo(0, document.body.scrollHeight);
+    cont.scrollTo(0, cont.scrollHeight);
   });
 });
 

@@ -2,7 +2,7 @@ var socket = io();
 var council_data = {};
 var council_id = "";
 
-socket.emit('check login');
+//socket.emit('check login');
 socket.on('login success', function(name){
   logged_in = name;
   socket.emit('check joined', council_id, logged_in);
@@ -11,14 +11,21 @@ socket.on('login success', function(name){
 
 $(function () {
   council_id = getUrlVars()["lobby"];
+  open_council_info();
   socket.emit('request council data', council_id);
   socket.emit('check joined', council_id, logged_in);
   socket.emit('request council members', council_id);
 });
 
 socket.on('council members', function(members){
-  console.log("members:", members);
   document.getElementById('number_council_participants').innerHTML = members.length;
+  var list = document.getElementById('list_participants');
+  clear_child_elements(list);
+  for(var i = 0; i < members.length; ++i){
+    var new_member = document.createElement('div');
+    new_member.innerHTML = members[i];
+    list.appendChild(new_member);
+  }
 });
 
 socket.on('user not logged in', function(){
@@ -64,11 +71,6 @@ socket.on('council resign success', function(){
   location.reload();
 });
 
-function open_chat(){
-  var url = "/chat?chat=" + council_id;
-  goToPage(url);
-}
-
 function open_material(){
   var url = "/material?material=" + council_id;
   goToPage("/lakiteksti");
@@ -83,4 +85,37 @@ function resign_from_council(){
   if(ans){
     socket.emit('request resign council', council_id, logged_in);
   }
+}
+
+function hide_all_lobby_containers(){
+  var c = document.getElementById('lobby_nav').children;
+  for(var i = 0; i < c.length; ++i){
+    c[i].classList.remove('active');
+  }
+  document.getElementById("council-info-container").style.display = "none";
+  document.getElementById("council-participant-container").style.display = "none";
+  document.getElementById("council-chat-container").style.display = "none";
+}
+
+function display_container(container){
+  document.getElementById(container).style.display = "block";
+}
+
+function open_council_chat(){
+  hide_all_lobby_containers();
+  document.getElementById('chat_btn').classList.add("active");
+  display_container("council-chat-container");
+}
+
+function open_council_info(){
+  hide_all_lobby_containers();
+  document.getElementById('info_btn').classList.add("active");
+  display_container("council-info-container");
+}
+
+function open_council_participants(){
+  hide_all_lobby_containers();
+  document.getElementById('participant_btn').classList.add("active");
+  display_container("council-participant-container");
+  socket.emit("")
 }

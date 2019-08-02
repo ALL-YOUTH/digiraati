@@ -61,11 +61,6 @@ function home(){
 ///////////////Login functions     //////////////
 /////////////////////////////////////////////////
 
-/*$('#logout').click(function(){
-  socket.emit('user logout');
-  goToPage();
-});*/
-
 socket.on('invalid login', function(){
   var txt = "<h3 style=\"color:red\">Tarkista käyttäjänimi, sähköposti ja salasana.</h3>";
   document.getElementById('login_instruction').innerHTML = txt;
@@ -164,11 +159,11 @@ socket.on('register success', function(){
 /////////////////////////////////////////////////
 ///////////////Council functions     ////////////
 /////////////////////////////////////////////////
-function open_council_chat(id){
+/*function open_council_chat(id){
   //e.id is the ID of the council
   page = "/chat?chat=" + id;
   goToPage(page);
-}
+}*/
 
 function open_council_frontpage(id){
   //e.id is the ID of the council

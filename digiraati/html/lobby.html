@@ -35,35 +35,51 @@
     </div>
     <!--END NAV BAR-->
 
-    <div class="lobby-nav">
-      <a>Raati</a>
-      <a onclick="open_chat()">Keskustelu</a>
-      <a>Materiaali</a>
-      <a>Osallistujat</a>
-      <a>Statistiikka</a>
+    <div class="lobby-nav" id="lobby_nav">
+      <a class="active" onclick="open_council_info()" id="info_btn">Raati</a>
+      <a onclick="open_council_chat()" id="chat_btn">Keskustelu</a>
+      <a id="material_btn">Materiaali</a>
+      <a onclick="open_council_participants()" id="participant_btn">Osallistujat</a>
+      <a id="statistics_btn">Statistiikka</a>
     </div>
     <div class="row center-title">
       <h1 id="lobby-title"></h1>
     </div>
-    <div class="row center-title">
-      <h2><p id="lobby-keywords"/></h2>
-    </div>
-    <div id=lobby-description>
-      <h2>Kuvaus</h2>
-      <p id="lobby-description-text"/>
-      <h2>Raati alkaa</h2>
-      <p id="lobby-startdatetime-text"/>
-      <h2>Raati päättyy</h2>
-      <p id="lobby-enddatetime-text"/>
-      <h2>Osallistujia</h2>
-      <p id="number_council_participants"/>
-    </div>
+    <div id="lobby-content">
+      <div id="council-info-container" class="row">
+        <div class="row center-title">
+          <h2><p id="lobby-keywords"/></h2>
+        </div>
+        <div id=lobby-description>
+          <h2>Kuvaus</h2>
+          <p id="lobby-description-text"/>
+          <h2>Raati alkaa</h2>
+          <p id="lobby-startdatetime-text"/>
+          <h2>Raati päättyy</h2>
+          <p id="lobby-enddatetime-text"/>
+          <h2>Osallistujia</h2>
+          <p id="number_council_participants"/>
+        </div>
+        <div id="sign_container" class="col-sm-10">
+          <input type="button" onclick="sign_in_council()" id="join_council_btn" value="Liity"/>
+          <input type="button" onclick="resign_from_council() "id="resign_council_btn" value="Poistu Raadista"/>
+        </div>
+      </div>
 
-    <div id="sign_container" class="col-sm-10">
-      <input type="button" onclick="sign_in_council()" id="join_council_btn" value="Liity"/>
-      <input type="button" onclick="resign_from_council() "id="resign_council_btn" value="Poistu Raadista"/>
+      <div id="council-chat-container" class="row">
+        <ul id="messages"></ul>
+        <form action="">
+          <input id="message_input" autocomplete="off" /><button>Send</button>
+        </form>
+      </div>
+
+      <div id="council-participant-container" class="row">
+        <div class="center_list" id="list_participants"></div>
+      </div>
+
     </div>
     <script src="../js/lobby.js"></script>
     <script src="../js/common.js"></script>
+    <script src="../js/chat.js"></script>
   </body>
 </html>

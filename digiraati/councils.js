@@ -187,15 +187,13 @@ module.exports = class Councils{
     for(var i = 0; i < users.length; ++i){
       if(uid == users[i]){
         users.splice(i, 1);
-        console.log("council users:", users);
         return true;
       }
     }
-
-
   }
 
   get_council_members(cid){
+    if(cid == undefined){return;}
     let council = this.get_council_by_id(cid);
     let users = council.get_council_users();
     return users;
