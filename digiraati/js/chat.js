@@ -12,9 +12,8 @@ $(function () {
 
   socket.on('chat message', function(c, msg){
     var cont = document.getElementById('council-chat-container');
-    if(council_id != c){
-      return;
-    }
+    if(msg.length == ""){ return; }
+    if(council_id != c){ return; }
     try{
       previous_msg = document.getElementById("messages").lastChild.innerHTML;
     }
@@ -28,6 +27,7 @@ $(function () {
     c_menu.setAttribute("type", "button");
     c_menu.value = "Tykkää";
     c_menu.style.display = "none";
+    c_menu.classList.add = "comment_menu";
     index = previous_msg.indexOf(":");
     previous_sender = previous_msg.substr(0,index);
     this_sender = msg.substr(0,msg.indexOf(":"));
@@ -41,7 +41,6 @@ $(function () {
       new_comment.classList.add("comment_menu");
       new_comment.appendChild(c_menu);
       document.getElementById("messages").appendChild(new_comment);
-      cont.scrollTo(0, cont.scrollHeight);
     }
     cont.scrollTo(0, cont.scrollHeight);
   });

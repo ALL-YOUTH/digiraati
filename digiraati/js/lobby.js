@@ -41,6 +41,8 @@ socket.on('user joined in council',function(){
 socket.on('user not in council', function(){
   document.getElementById('resign_council_btn').style.display = "none";
   document.getElementById('join_council_btn').style.display = "block";
+  document.getElementById("send_btn").classList.remove("disabled");
+  document.getElementById("message_input").readonly = true;
 });
 
 socket.on('council data', function(data){
