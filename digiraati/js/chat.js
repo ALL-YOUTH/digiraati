@@ -18,16 +18,13 @@ $(function () {
       previous_msg = document.getElementById("messages").lastChild.innerHTML;
     }
     catch(err){
-      $('#messages').append($('<li>').text(msg));
-      cont.scrollTo(0, cont.scrollHeight);
-      return;
+      previous_msg = "";
     }
 
-    var c_menu = document.createElement("input");
-    c_menu.setAttribute("type", "button");
-    c_menu.value = "Tykkää";
-    c_menu.style.display = "none";
-    c_menu.classList.add = "comment_menu";
+    var c_menu = document.createElement("a");
+    c_menu.innerHTML = "Tykkää";
+    c_menu.classList.add("comment_menu");
+    c_menu.onclick = function(){ console.log("Tykkäsit kommentista")};
     index = previous_msg.indexOf(":");
     previous_sender = previous_msg.substr(0,index);
     this_sender = msg.substr(0,msg.indexOf(":"));
@@ -36,9 +33,8 @@ $(function () {
       document.getElementById('messages').lastChild.innerHTML += "<br>   " + msg;
     }
     else{
-      var new_comment = document.createElement("li");
+      var new_comment = document.createElement("div");
       new_comment.innerHTML = msg;
-      new_comment.classList.add("comment_menu");
       new_comment.appendChild(c_menu);
       document.getElementById("messages").appendChild(new_comment);
     }
