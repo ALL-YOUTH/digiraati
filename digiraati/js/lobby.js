@@ -99,6 +99,8 @@ function hide_all_lobby_containers(){
   document.getElementById("council-info-container").style.display = "none";
   document.getElementById("council-participant-container").style.display = "none";
   document.getElementById("council-chat-container").style.display = "none";
+  document.getElementById("council-material-container").style.display = "none";
+  document.getElementById("council-statistics-container").style.display = "none";
 }
 
 function display_container(container){
@@ -121,5 +123,16 @@ function open_council_participants(){
   hide_all_lobby_containers();
   document.getElementById('participant_btn').classList.add("active");
   display_container("council-participant-container");
-  socket.emit("")
+}
+
+function open_council_material(){
+  hide_all_lobby_containers();
+  document.getElementById('material_btn').classList.add("active");
+  display_container("council-material-container");
+}
+
+function open_council_statistics(){
+  hide_all_lobby_containers();
+  document.getElementById('statistics_btn').classList.add("active");
+  display_container("council-statistics-container");
 }

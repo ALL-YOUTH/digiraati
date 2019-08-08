@@ -314,10 +314,10 @@ li{
 
 .lobby-nav a:hover{background:#A0A0A0;}
 
-#council-chat-container {
+#messages{
+  height: 600px;
+  width: 100%;
   overflow-y: scroll;
-  width:100%;
-  height:100%;
 }
 
 .comment_menu{
@@ -359,3 +359,19 @@ li{
 .center_list div{
   margin-top:3px;
 }
+
+#council-material-container div{
+  border:solid;
+  border-width: 1px;
+  float: left;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.column-20{ width:20%; }
+.column-30{ width:30%; }
+.column-40{ width:40%; }
+.column-50{ width:50%; }
+.column-60{ width:60%; }
+.column-70{ width:70%; }
+.column-80{ width:80%; }

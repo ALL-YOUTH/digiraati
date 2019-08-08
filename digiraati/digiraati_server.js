@@ -39,7 +39,7 @@ app.get('/js/common.js', function(req, res) {
     res.sendFile(path.join(__dirname + '/js/common.js'));
 });
 app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/home_test.html'));
+  res.sendFile(path.join(__dirname + '/html/home.html'));
 });
 app.get('/css/style.css', function(req, res) {
     res.sendFile(path.join(__dirname + '/css/style.css'));
@@ -59,6 +59,7 @@ app.get('/js/chat.js', function(req, res) {
     res.sendFile(path.join(__dirname + '/js/chat.js'));
 });
 
+/*
 //Lakiteksti
 app.get('/lakiteksti', function(req, res){
   res.sendFile(__dirname + '/html/lakiteksti.html');
@@ -66,7 +67,7 @@ app.get('/lakiteksti', function(req, res){
 app.get('/js/lakiteksti.js', function(req, res){
   res.sendFile(__dirname + '/js/lakiteksti.js');
 });
-
+*/
 //Register page
 app.get('/register', function(req, res){
   res.sendFile(__dirname + '/html/register.html');

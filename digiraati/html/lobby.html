@@ -6,6 +6,7 @@
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.4">
     <link rel='icon' href='../res/favicon.ico' type='image/x-icon'/ >
   </head>
 
@@ -36,11 +37,11 @@
     <!--END NAV BAR-->
 
     <div class="lobby-nav" id="lobby_nav">
-      <a class="active" onclick="open_council_info()" id="info_btn">Raati</a>
+      <a onclick="open_council_info()" class="active" id="info_btn">Raati</a>
       <a onclick="open_council_chat()" id="chat_btn">Keskustelu</a>
-      <a id="material_btn">Materiaali</a>
+      <a onclick="open_council_material()" id="material_btn">Materiaali</a>
       <a onclick="open_council_participants()" id="participant_btn">Osallistujat</a>
-      <a id="statistics_btn">Statistiikka</a>
+      <a onclick="open_council_statistics()" id="statistics_btn">Statistiikka</a>
     </div>
     <div class="row center-title">
       <h1 id="lobby-title"></h1>
@@ -74,13 +75,25 @@
         </form>
       </div>
 
+      <div id="council-material-container">
+        <div id="material-files" class="column-20">Files</div>
+        <div id="material-file-viewer" class="column-50">Content</div>
+        <div id="material-file-comments" class="column-30">Comments</div>
+      </div>
+
       <div id="council-participant-container" class="row">
+        <div>Participants</div>
         <div class="center_list" id="list_participants"></div>
+      </div>
+
+      <div id="council-statistics-container" class="row">
+        <div>Stats</div>
       </div>
 
     </div>
     <script src="../js/lobby.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/chat.js"></script>
+    <script src="../js/lakiteksti.js"></script>
   </body>
 </html>

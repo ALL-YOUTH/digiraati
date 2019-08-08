@@ -11,7 +11,7 @@ $(function () {
   });
 
   socket.on('chat message', function(c, msg){
-    var cont = document.getElementById('council-chat-container');
+    var cont = document.getElementById('messages');
     if(msg.length == ""){ return; }
     if(council_id != c){ return; }
     try{
