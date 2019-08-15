@@ -1,7 +1,9 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var path = require("path");
+var path = require('path');
+var SocketIOFile = require('socket.io-file');
+var fs = require('fs');
 
 var port = process.env.PORT || 3000;
 var host = "localhost";
@@ -14,14 +16,14 @@ let councils = new Councils();
 
 //Add a template council
 councils.add_council( id="TEMPLATE",
-                      name="TESTIRAATI",
-                      description="Tämä raati on tarkoitettu täysin testaukseen.",
-                      creator="test",
-                      starttime=null,
-                      endtime=null,
-                      userlimit=null,
-                      tags=["General"]
-                    );
+name="TESTIRAATI",
+description="Tämä raati on tarkoitettu täysin testaukseen.",
+creator="test",
+starttime=null,
+endtime=null,
+userlimit=null,
+tags=["General"]
+);
 
 //Add a template user
 users.add_user("test", "test", "test", "test", "test", "test");
@@ -33,22 +35,22 @@ MESSAGES2PRINT = 50;
 //Digiraati pages
 //HOME
 app.get('/js/home.js', function(req, res) {
-    res.sendFile(path.join(__dirname + '/js/home.js'));
+  res.sendFile(path.join(__dirname + '/js/home.js'));
 });
 app.get('/js/common.js', function(req, res) {
-    res.sendFile(path.join(__dirname + '/js/common.js'));
+  res.sendFile(path.join(__dirname + '/js/common.js'));
 });
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname + '/html/home.html'));
 });
 app.get('/css/style.css', function(req, res) {
-    res.sendFile(path.join(__dirname + '/css/style.css'));
+  res.sendFile(path.join(__dirname + '/css/style.css'));
 });
 app.get('/res/digiraatilogo_trans.PNG', function(req, res) {
-    res.sendFile(path.join(__dirname + '/res/digiraatilogo_trans.PNG'));
+  res.sendFile(path.join(__dirname + '/res/digiraatilogo_trans.PNG'));
 });
 app.get('/res/favicon.ico', function(req, res) {
-    res.sendFile(path.join(__dirname + '/res/favicon.ico'));
+  res.sendFile(path.join(__dirname + '/res/favicon.ico'));
 });
 
 //DigiRaatiChat
@@ -56,18 +58,9 @@ app.get('/chat', function(req, res){
   res.sendFile(__dirname + '/html/chat.html');
 });
 app.get('/js/chat.js', function(req, res) {
-    res.sendFile(path.join(__dirname + '/js/chat.js'));
+  res.sendFile(path.join(__dirname + '/js/chat.js'));
 });
 
-/*
-//Lakiteksti
-app.get('/lakiteksti', function(req, res){
-  res.sendFile(__dirname + '/html/lakiteksti.html');
-});
-app.get('/js/lakiteksti.js', function(req, res){
-  res.sendFile(__dirname + '/js/lakiteksti.js');
-});
-*/
 //Register page
 app.get('/register', function(req, res){
   res.sendFile(__dirname + '/html/register.html');
@@ -91,6 +84,14 @@ app.get('/lobby', function(req, res){
 app.get('/js/lobby.js', function(req, res){
   res.sendFile(__dirname + '/js/lobby.js');
 });
+
+app.get('/socket.io.js', (req, res, next) => {
+  return res.sendFile(__dirname + '/node_modules/socket.io-client/dist/socket.io.js');
+});
+
+app.get('/socket.io-file-client.js', (req, res, next) => {
+  return res.sendFile(__dirname + '/node_modules/socket.io-file-client/socket.io-file-client.js');
+});
 //===================================================================
 //===================================================================
 //===================================================================
@@ -102,6 +103,14 @@ app.get('/js/lobby.js', function(req, res){
 //Connection
 io.on('connection', function(socket){
   var ip = socket.request.connection.remoteAddress;
+  var uploader = new SocketIOFile(socket, {
+    uploadDir: 'files',							// simple directory
+    //accepts: ['document/txt', 'document/docx', 'document/pdf'],		// chrome and some of browsers checking mp3 as 'audio/mp3', not 'audio/mpeg'
+    maxFileSize: 4194304, 						// 4 MB. default is undefined(no limit)
+    chunkSize: 10240,							// default is 10240(1KB)
+    transmissionDelay: 0,						// delay of each transmission, higher value saves more cpu resources, lower upload speed. default is 0(no delay)
+    overwrite: true 							// overwrite file if exists, default is true.
+  });
 
   socket.on('check login', function(){
     var name = users.get_login_by_ip(ip);
@@ -147,13 +156,13 @@ io.on('connection', function(socket){
 
   socket.on('council create attempt', function(info){
     ret_val = councils.add_council(id=info["id"], name=info["name"],
-                                    description=info["description"],
-                                    creator=info["creator"],
-                                    startdate=info["startdate"],
-                                    starttime=info["starttime"],
-                                    enddate=info["enddate"],
-                                    endtime=info["endtime"],
-                                    tags=info["keywords"]);
+    description=info["description"],
+    creator=info["creator"],
+    startdate=info["startdate"],
+    starttime=info["starttime"],
+    enddate=info["enddate"],
+    endtime=info["endtime"],
+    tags=info["keywords"]);
     if(ret_val == -1){
       return;
     }
@@ -261,6 +270,24 @@ io.on('connection', function(socket){
     else{
       socket.emit("council resign success");
     }
+  });
+
+  uploader.on('start', (fileInfo) => {
+    console.log('Start uploading');
+    console.log(fileInfo);
+  });
+  uploader.on('stream', (fileInfo) => {
+    console.log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
+  });
+  uploader.on('complete', (fileInfo) => {
+    console.log('Upload Complete.');
+    console.log(fileInfo);
+  });
+  uploader.on('error', (err) => {
+    console.log('Error!', err);
+  });
+  uploader.on('abort', (fileInfo) => {
+    console.log('Aborted: ', fileInfo);
   });
 });
 

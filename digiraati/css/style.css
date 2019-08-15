@@ -6,8 +6,8 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font: 13px Helvetica, Arial; }
-form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+.message_form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+.message_form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
 button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 button:hover { background: rgb(53, 117, 192); }
 #messages { list-style-type: none; margin: 0; padding: 0;  margin-bottom: 40px; }
@@ -151,6 +151,7 @@ li{
   padding:10px;
   font-size: 20px;
 }
+
 /* The Close Button */
 .close {
   color: #aaaaaa;

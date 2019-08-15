@@ -2,6 +2,9 @@ var socket = io();
 var council_data = {};
 var council_id = "";
 
+var uploader = new SocketIOFileClient(socket);
+var files = document.getElementById('files');
+
 //socket.emit('check login');
 socket.on('login success', function(name){
   logged_in = name;
@@ -136,3 +139,36 @@ function open_council_statistics(){
   document.getElementById('statistics_btn').classList.add("active");
   display_container("council-statistics-container");
 }
+
+//////////////////////////////////////////////////////////////////////
+////////////////FILE UPLOAD ATTEMPT///////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+uploader.on('start', function(fileInfo) {
+    console.log('Start uploading', fileInfo);
+});
+uploader.on('stream', function(fileInfo) {
+    console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
+});
+uploader.on('complete', function(fileInfo) {
+    console.log('Upload Complete', fileInfo);
+});
+uploader.on('error', function(err) {
+    console.log('Error!', err);
+});
+uploader.on('abort', function(fileInfo) {
+    console.log('Aborted: ', fileInfo);
+});
+
+files.onsubmit = function(ev) {
+    ev.preventDefault();
+
+    var fileEl = document.getElementById('file');
+    var uploadIds = uploader.upload(fileEl, {
+        data: { /* Arbitrary data... */ }
+    });
+
+    // setTimeout(function() {
+        // uploader.abort(uploadIds[0]);
+        // console.log(uploader.getUploadInfo());
+    // }, 1000);
+};

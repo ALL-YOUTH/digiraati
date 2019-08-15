@@ -10,6 +10,17 @@ class Message{
   get_likes(){ return this.likes; }
 }
 
+class File{
+  constructor(id, path, sender){
+    this.id = id;
+    this.path = path;
+    this.sender = sender;
+  }
+  get_id(){return this.id;}
+  get_path(){return this.path;}
+  get_sender(){return this.sender;}
+}
+
 //Class for one chat room
 class Council{
   constructor(id, name, description, creator, startdate, starttime,
@@ -27,6 +38,7 @@ class Council{
 
     this.users = [];
     this.messages = [];
+    this.files = [];
   }
 
   get_council_name(){ return this.name; }
@@ -41,6 +53,7 @@ class Council{
   get_council_tags(){ return this.tags; }
   get_council_userlimit(){ return this.userlimit; }
   get_council_users(){ return this.users; }
+  get_council_files(){ return this.files; }
 
   add_participant(uid){
     var result = false;
@@ -54,6 +67,10 @@ class Council{
     }
 
     return result;
+  }
+
+  add_file(file){
+    this.files.push(file);
   }
 
   add_msg(msg){
@@ -125,6 +142,16 @@ module.exports = class Councils{
     council.add_msg(new_message);
   }
 
+  add_file(council_id, path, sender){
+    var council = this.get_council_by_id(council_id);
+    if(council == -1){
+      return;
+    }
+    var id = makeid(8);
+    var file = new File(id, path, sender);
+    council.add_file(file);
+  }
+
   is_user_joined(councilid, userid){
     let c = this.get_council_by_id(councilid);
     let users = c.get_council_users();
@@ -142,8 +169,8 @@ module.exports = class Councils{
       return council.get_n_messages(number_of);
     }
     catch(err){
-      +new Date;
-      console.log(Date.now());
+      /*+new Date;
+      console.log(Date.now());*/
     }
   }
 

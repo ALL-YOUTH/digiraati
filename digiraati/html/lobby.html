@@ -69,14 +69,19 @@
 
       <div id="council-chat-container">
         <div id="messages"></div>
-        <form id="message_form" action="">
+        <form class="message_form" id="message_form" action="">
           <input id="message_input" disabled="disabled" autocomplete="off" />
           <button id="send_btn" class="disabled">Send</button>
         </form>
       </div>
 
       <div id="council-material-container">
-        <div id="material-files" class="column-20">Files</div>
+        <div id="material-files" class="column-20">Tiedostot
+          <form id="files" action="fileupload" method="post" enctype="multipart/form-data">
+            <input type="file" name="filetoupload" id="file"></input>
+            <input type="submit" value="Lähetä"></input>
+          </form>
+        </div>
         <div id="material-file-viewer" class="column-50">Content</div>
         <div id="material-file-comments" class="column-30">Comments</div>
       </div>
@@ -91,9 +96,10 @@
       </div>
 
     </div>
+    <script src="../socket.io.js"></script>
+    <script src="../socket.io-file-client.js"></script>
     <script src="../js/lobby.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/chat.js"></script>
-    <script src="../js/lakiteksti.js"></script>
   </body>
 </html>
