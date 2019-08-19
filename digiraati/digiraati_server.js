@@ -14,6 +14,8 @@ var Councils = require(path.join(__dirname + "/councils.js"));
 let users = new Users();
 let councils = new Councils();
 
+http.listen(port);
+
 //Add a template council
 councils.add_council( id="TEMPLATE",
 name="TESTIRAATI",
@@ -60,7 +62,6 @@ app.get('/chat', function(req, res){
 app.get('/js/chat.js', function(req, res) {
   res.sendFile(path.join(__dirname + '/js/chat.js'));
 });
-
 //Register page
 app.get('/register', function(req, res){
   res.sendFile(__dirname + '/html/register.html');
@@ -73,6 +74,7 @@ app.get('/js/register.js', function(req, res){
 app.get('/info', function(req, res){
   res.sendFile(__dirname + '/html/info.html');
 });
+
 app.get('/js/info.js', function(req, res){
   res.sendFile(__dirname + '/js/info.js');
 });
@@ -88,7 +90,6 @@ app.get('/js/lobby.js', function(req, res){
 app.get('/socket.io.js', (req, res, next) => {
   return res.sendFile(__dirname + '/node_modules/socket.io-client/dist/socket.io.js');
 });
-
 app.get('/socket.io-file-client.js', (req, res, next) => {
   return res.sendFile(__dirname + '/node_modules/socket.io-file-client/socket.io-file-client.js');
 });
@@ -104,12 +105,11 @@ app.get('/socket.io-file-client.js', (req, res, next) => {
 io.on('connection', function(socket){
   var ip = socket.request.connection.remoteAddress;
   var uploader = new SocketIOFile(socket, {
-    uploadDir: 'files',							// simple directory
-    //accepts: ['document/txt', 'document/docx', 'document/pdf'],		// chrome and some of browsers checking mp3 as 'audio/mp3', not 'audio/mpeg'
-    maxFileSize: 4194304, 						// 4 MB. default is undefined(no limit)
-    chunkSize: 10240,							// default is 10240(1KB)
-    transmissionDelay: 0,						// delay of each transmission, higher value saves more cpu resources, lower upload speed. default is 0(no delay)
-    overwrite: true 							// overwrite file if exists, default is true.
+    uploadDir: 'files',			// simple directory
+    maxFileSize: 4194304, 	// 4 MB. default is undefined(no limit)
+    chunkSize: 10240,				// default is 10240(1KB)
+    transmissionDelay: 0,		// delay of each transmission, higher value saves more cpu resources, lower upload speed. default is 0(no delay)
+    overwrite: true 				// overwrite file if exists, default is true.
   });
 
   socket.on('check login', function(){
@@ -238,7 +238,7 @@ io.on('connection', function(socket){
       return;
     }
     joined = councils.is_user_joined(councilid, userid);
-    console.log("Checking if user is joined in council:", userid, joined);
+    server_log("Checking if user is joined in council:", userid, joined);
     if(joined){
       socket.emit('user joined in council');
     }
@@ -272,28 +272,49 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on('update files request', function(cid){
+    var files = councils.get_council_data(cid);
+    socket.emit("update files", files["files"]);
+  });
+
+  socket.on('request file data', function(fid){
+    var file_data = councils.get_file_by_id(fid);
+    if(file_data != -1){
+      socket.emit('file get error');
+    }
+    else{
+      socket.emit('file data', file_data);
+    }
+  });
+
+  ///File upload stuff
+  //Todo tähän pitää keksiä vielä vähän sääntöjä että kuka voi lisäämistä
+  //tiedostoja ja samannimiset tiedostot yms....
   uploader.on('start', (fileInfo) => {
-    console.log('Start uploading');
-    console.log(fileInfo);
+    server_log('Start uploading');
   });
   uploader.on('stream', (fileInfo) => {
-    console.log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
+    server_log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
   });
   uploader.on('complete', (fileInfo) => {
-    console.log('Upload Complete.');
-    console.log(fileInfo);
+    server_log('Upload Complete.');
+    councils.add_file(fileInfo["data"]["id"],
+                      fileInfo["data"]["filename"],
+                      fileInfo["data"]["council"],
+                      fileInfo["data"]["uploader"]);
   });
+
   uploader.on('error', (err) => {
-    console.log('Error!', err);
+    server_log('Error!');
   });
+
   uploader.on('abort', (fileInfo) => {
-    console.log('Aborted: ', fileInfo);
+    server_log('Aborted: ');
   });
+
 });
 
-http.listen(port, function(){
-  console.log('Running on: http://' + host + ":" + port);
-});
+
 
 function update_page(){
   update_councils();
@@ -314,12 +335,16 @@ function update_users(){
 
 function print_councils(c){
   for(var i = 0; i < c.length; ++i){
-    console.log("Council name: ", c[i]["name"], "|", "Council ID:", c[i]["id"])
+    server_log("Council name: ", c[i]["name"], "|", "Council ID:", c[i]["id"])
   }
 }
 
 function print_users(u){
   for(var i = 0; i < u.length; ++i){
-    console.log(u[i]);
+    server_log(u[i]);
   }
+}
+
+function server_log(str){
+  console.log("Server:", str);
 }

@@ -142,13 +142,13 @@ module.exports = class Councils{
     council.add_msg(new_message);
   }
 
-  add_file(council_id, path, sender){
+  add_file(fileid, filename, council_id, uploader){
     var council = this.get_council_by_id(council_id);
     if(council == -1){
+      console.log("Unable to find council with id", council_id);
       return;
     }
-    var id = makeid(8);
-    var file = new File(id, path, sender);
+    var file = new File(fileid, filename, uploader);
     council.add_file(file);
   }
 
@@ -189,6 +189,7 @@ module.exports = class Councils{
       council_data["users"] = council.get_council_users();
       council_data["userlimit"] = council.get_council_userlimit();
       council_data["tags"] = council.get_council_tags();
+      council_data["files"] = council.get_council_files();
     }
 
     return council_data;

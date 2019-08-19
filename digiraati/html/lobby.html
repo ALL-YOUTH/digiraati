@@ -78,12 +78,14 @@
       <div id="council-material-container">
         <div id="material-files" class="column-20">Tiedostot
           <form id="files" action="fileupload" method="post" enctype="multipart/form-data">
-            <input type="file" name="filetoupload" id="file"></input>
-            <input type="submit" value="Lähetä"></input>
+            <input type="file" name="filetoupload" id="file" onchange="file_select_check()"></input>
+            <input type="submit" value="Lähetä" id="submit_file"></input>
           </form>
+          --------------------
+          <span id="file_list"></span>
         </div>
-        <div id="material-file-viewer" class="column-50">Content</div>
-        <div id="material-file-comments" class="column-30">Comments</div>
+        <div id="material-file-viewer" class="column-50">Sisältö</div>
+        <div id="material-file-comments" class="column-30">Kommentit</div>
       </div>
 
       <div id="council-participant-container" class="row">
@@ -96,10 +98,11 @@
       </div>
 
     </div>
-    <script src="../socket.io.js"></script>
     <script src="../socket.io-file-client.js"></script>
     <script src="../js/lobby.js"></script>
     <script src="../js/common.js"></script>
     <script src="../js/chat.js"></script>
+    <script src="../socket.io.js"></script>
+
   </body>
 </html>
