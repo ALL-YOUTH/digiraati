@@ -4,9 +4,10 @@
   "description": "my first socket.io app",
   "dependencies": {
     "delivery": "0.0.6",
-    "express": "^4.16.4",
+    "express": "^4.17.1",
     "express-fileupload": "^1.1.5",
     "formidable": "^1.2.1",
+    "mammoth": "^1.4.8",
     "password-hash": "^1.2.2",
     "socket.io": "^1.7.4",
     "socket.io-file": "^2.0.31",

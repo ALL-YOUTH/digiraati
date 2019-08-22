@@ -4,6 +4,7 @@ var io = require('socket.io')(http);
 var path = require('path');
 var SocketIOFile = require('socket.io-file');
 var fs = require('fs');
+var mammoth = require('mammoth');
 
 var port = process.env.PORT || 3000;
 var host = "localhost";
@@ -274,17 +275,24 @@ io.on('connection', function(socket){
 
   socket.on('update files request', function(cid){
     var files = councils.get_council_data(cid);
-    socket.emit("update files", files["files"]);
+    try{
+      socket.emit("update files", files["files"]);
+    }
+    catch{
+      console.log("no files in this council");
+    }
+
   });
 
   socket.on('request file data', function(fid){
-    var file_data = councils.get_file_by_id(fid);
-    if(file_data != -1){
-      socket.emit('file get error');
-    }
-    else{
-      socket.emit('file data', file_data);
-    }
+    var res = "";
+    mammoth.convertToHtml({path: __dirname + "/files/" + fid})
+    .then(function(result){
+        var html = result.value;
+        var messages = result.messages;
+        socket.emit('file data', html);
+    })
+    .done();
   });
 
   ///File upload stuff
@@ -302,6 +310,12 @@ io.on('connection', function(socket){
                       fileInfo["data"]["filename"],
                       fileInfo["data"]["council"],
                       fileInfo["data"]["uploader"]);
+
+    fs.rename(__dirname + "/files/" + fileInfo["data"]["filename"],
+              __dirname + '/files/' + fileInfo["data"]["id"],
+              function(err) {
+                if ( err ) console.log('ERROR: ' + err);
+              });
   });
 
   uploader.on('error', (err) => {

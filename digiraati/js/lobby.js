@@ -89,9 +89,13 @@ socket.on('update files', function(files){
   list_files(files);
 });
 
-socket.on('file data', function(){
-
+socket.on('file data', function(data){
+  document.getElementById('material-file-viewer').innerHTML = data;
 });
+
+function file_clicked(e){
+  socket.emit("request file data", e.id);
+}
 
 function open_material(){
   var url = "/material?material=" + council_id;
@@ -117,7 +121,7 @@ function list_files(files){
     el.id = files[i]["id"];
     el.innerHTML = files[i]["path"];
     el.onclick = function(){
-      socket.emit('request file data', el.id);
+      file_clicked(this);
     }
     filelist.appendChild(el);
   }

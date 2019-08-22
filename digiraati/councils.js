@@ -226,4 +226,5 @@ module.exports = class Councils{
     let users = council.get_council_users();
     return users;
   }
+
 }
