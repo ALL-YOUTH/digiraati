@@ -4,7 +4,8 @@ var io = require('socket.io')(http);
 var path = require('path');
 var SocketIOFile = require('socket.io-file');
 var fs = require('fs');
-var mammoth = require('mammoth');
+var dl = require('delivery');
+var util = require('util');
 
 var port = process.env.PORT || 3000;
 var host = "localhost";
@@ -19,14 +20,13 @@ http.listen(port);
 
 //Add a template council
 councils.add_council( id="TEMPLATE",
-name="TESTIRAATI",
-description="Tämä raati on tarkoitettu täysin testaukseen.",
-creator="test",
-starttime=null,
-endtime=null,
-userlimit=null,
-tags=["General"]
-);
+                      name="TESTIRAATI",
+                      description="Tämä raati on tarkoitettu täysin testaukseen.",
+                      creator="test",
+                      starttime=null,
+                      endtime=null,
+                      userlimit=null,
+                      tags=["General"]);
 
 //Add a template user
 users.add_user("test", "test", "test", "test", "test", "test");
@@ -94,6 +94,7 @@ app.get('/socket.io.js', (req, res, next) => {
 app.get('/socket.io-file-client.js', (req, res, next) => {
   return res.sendFile(__dirname + '/node_modules/socket.io-file-client/socket.io-file-client.js');
 });
+
 //===================================================================
 //===================================================================
 //===================================================================
@@ -104,6 +105,7 @@ app.get('/socket.io-file-client.js', (req, res, next) => {
 
 //Connection
 io.on('connection', function(socket){
+
   var ip = socket.request.connection.remoteAddress;
   var uploader = new SocketIOFile(socket, {
     uploadDir: 'files',			// simple directory
@@ -285,15 +287,14 @@ io.on('connection', function(socket){
   });
 
   socket.on('request file data', function(fid){
-    var res = "";
-    mammoth.convertToHtml({path: __dirname + "/files/" + fid})
-    .then(function(result){
-        var html = result.value;
-        var messages = result.messages;
-        socket.emit('file data', html);
-    })
-    .done();
+    fs.readFile(path.join(__dirname, "/files/", fid), function(err, buff){
+      server_log("err:" + err);
+      server_log("buff" + buff);
+      socket.emit("file data", {type:"txt", buffer:buff});
+      server_log("File sent");
+    });
   });
+
 
   ///File upload stuff
   //Todo tähän pitää keksiä vielä vähän sääntöjä että kuka voi lisäämistä

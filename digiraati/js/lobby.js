@@ -13,7 +13,6 @@ $(function(){
   socket.emit('request council data', council_id);
   socket.emit('check joined', council_id, logged_in);
   socket.emit('request council members', council_id);
-  console.log("Checking page ready");
 });
 
 socket.on('login success', function(name){
@@ -90,11 +89,13 @@ socket.on('update files', function(files){
 });
 
 socket.on('file data', function(data){
-  document.getElementById('material-file-viewer').innerHTML = data;
+  log("type: " + data["type"]);
+  log("buffer: " + data["buffer"]);
+  document.getElementById('material-file-viewer').innerHTML = data["buffer"];
 });
 
 function file_clicked(e){
-  socket.emit("request file data", e.id);
+  socket.emit('request file data', e.id);
 }
 
 function open_material(){
@@ -188,19 +189,19 @@ function check_file_extention(name){
 ////////////////FILE UPLOAD ATTEMPT///////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 uploader.on('start', function(fileInfo) {
-    console.log('Start uploading', fileInfo);
+  console.log('Start uploading', fileInfo);
 });
 uploader.on('stream', function(fileInfo) {
-    console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
+  console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
 });
 uploader.on('complete', function(fileInfo) {
-    socket.emit('update files request', council_id);
+  socket.emit('update files request', council_id);
 });
 uploader.on('error', function(err) {
-    console.log('Error!', err);
+  console.log('Error!', err);
 });
 uploader.on('abort', function(fileInfo) {
-    console.log('Aborted: ', fileInfo);
+  console.log('Aborted: ', fileInfo);
 });
 
 function file_select_check(){
@@ -219,24 +220,24 @@ function file_select_check(){
 }
 
 files.onsubmit = function(ev) {
-    ev.preventDefault();
-    var fileEl = document.getElementById('file');
-    var fn = fileEl.files[0]["name"];
-    if(!check_file_extention(fn)){
-      console.log("Not allowed file");
-      return;
+  ev.preventDefault();
+  var fileEl = document.getElementById('file');
+  var fn = fileEl.files[0]["name"];
+  if(!check_file_extention(fn)){
+    console.log("Not allowed file");
+    return;
+  }
+  var uploadIds = uploader.upload(fileEl, {
+    data: {
+      "id":makeid(8),
+      "filename":fn,
+      "council":council_id,
+      "uploader":logged_in,
     }
-    var uploadIds = uploader.upload(fileEl, {
-        data: {
-          "id":makeid(8),
-          "filename":fn,
-          "council":council_id,
-          "uploader":logged_in,
-        }
-    });
+  });
 
-    setTimeout(function() {
-        uploader.abort(uploadIds[0]);
-        console.log(uploader.getUploadInfo());
-    }, 5000);
+  setTimeout(function() {
+    uploader.abort(uploadIds[0]);
+    console.log(uploader.getUploadInfo());
+  }, 5000);
 };
