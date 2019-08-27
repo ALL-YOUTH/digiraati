@@ -7,6 +7,9 @@ var allowed_extentions = [".txt", ".docx", ".doc", ".pdf"];
 var uploader = new SocketIOFileClient(socket);
 var files = document.getElementById('files');
 
+var xhr = new XMLHttpRequest();
+xhr.responseType = 'arraybuffer';
+
 $(function(){
   council_id = getUrlVars()["lobby"];
   open_council_info();
@@ -88,15 +91,27 @@ socket.on('update files', function(files){
   list_files(files);
 });
 
-socket.on('file data', function(data){
-  log("type: " + data["type"]);
-  log("buffer: " + data["buffer"]);
-  document.getElementById('material-file-viewer').innerHTML = data["buffer"];
+socket.on('file data', function(buffer){
+  var pdfAsDataUri = "data:application/pdf;base64,"+buffer;
+  window.open(pdfAsDataUri);
 });
 
 function file_clicked(e){
-  socket.emit('request file data', e.id);
+  log('http://localhost:3000/files/' + e.id);
+  xhr.open('GET', 'http://localhost:3000/files/' + e.id, true);
+  xhr.send();
+  console.log("File clicked");
 }
+
+xhr.onload = function() {
+  var buffer = xhr.response;
+  var blob = new Blob([buffer], {
+      type: 'application/pdf'
+  });
+  var objectURL = URL.createObjectURL(blob);
+  var iframe = document.getElementById("material-url");
+  iframe.src = objectURL;
+};
 
 function open_material(){
   var url = "/material?material=" + council_id;
@@ -241,3 +256,7 @@ files.onsubmit = function(ev) {
     console.log(uploader.getUploadInfo());
   }, 5000);
 };
+
+function ab2str(buf) {
+  return String.fromCharCode.apply(null, new Uint16Array(buf));
+}

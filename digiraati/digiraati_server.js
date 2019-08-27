@@ -4,8 +4,7 @@ var io = require('socket.io')(http);
 var path = require('path');
 var SocketIOFile = require('socket.io-file');
 var fs = require('fs');
-var dl = require('delivery');
-var util = require('util');
+var cors = require('cors')
 
 var port = process.env.PORT || 3000;
 var host = "localhost";
@@ -17,6 +16,14 @@ let users = new Users();
 let councils = new Councils();
 
 http.listen(port);
+
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+
+app.use(cors(corsOptions));
 
 //Add a template council
 councils.add_council( id="TEMPLATE",
@@ -93,6 +100,12 @@ app.get('/socket.io.js', (req, res, next) => {
 });
 app.get('/socket.io-file-client.js', (req, res, next) => {
   return res.sendFile(__dirname + '/node_modules/socket.io-file-client/socket.io-file-client.js');
+});
+
+app.get('/files/:id', (req, res, next) => {
+  var fid = req.params.id;
+  server_log(path.join(__dirname, "/files/" + fid));
+  return res.sendFile(path.join(__dirname, "/files/" + fid));
 });
 
 //===================================================================
@@ -288,10 +301,18 @@ io.on('connection', function(socket){
 
   socket.on('request file data', function(fid){
     fs.readFile(path.join(__dirname, "/files/", fid), function(err, buff){
-      server_log("err:" + err);
-      server_log("buff" + buff);
+      if(err){
+        console.log(err);
+      }
+      socket.emit('file data', {data:buff, binary:true});
+      server_log("sent file data");
+      server_log(buff);
+      /*eString = String.fromCharCode.apply(null, buff);
+      server_log(eString);
+      dString = decodeURIComponent(unescape(eString));
+      server_log(dString);
       socket.emit("file data", {type:"txt", buffer:buff});
-      server_log("File sent");
+      server_log("File sent");*/
     });
   });
 
@@ -303,9 +324,10 @@ io.on('connection', function(socket){
     server_log('Start uploading');
   });
   uploader.on('stream', (fileInfo) => {
-    server_log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
+    //server_log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
   });
   uploader.on('complete', (fileInfo) => {
+    server_log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
     server_log('Upload Complete.');
     councils.add_file(fileInfo["data"]["id"],
                       fileInfo["data"]["filename"],
