@@ -118,7 +118,6 @@ app.get('/files/:id', (req, res, next) => {
 
 //Connection
 io.on('connection', function(socket){
-
   var ip = socket.request.connection.remoteAddress;
   var uploader = new SocketIOFile(socket, {
     uploadDir: 'files',			// simple directory

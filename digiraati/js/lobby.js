@@ -91,20 +91,58 @@ socket.on('update files', function(files){
   list_files(files);
 });
 
-socket.on('file data', function(buffer){
-  var pdfAsDataUri = "data:application/pdf;base64,"+buffer;
-  window.open(pdfAsDataUri);
-});
-
 function file_clicked(e){
-  log('http://localhost:3000/files/' + e.id);
-  xhr.open('GET', 'http://localhost:3000/files/' + e.id, true);
-  xhr.send();
-  console.log("File clicked");
+  //xhr.open('GET', 'http://localhost:3000/files/' + e.id, true);
+  //xhr.send();
+
+  // If absolute URL from the remote server is provided, configure the CORS
+  // header on that server.
+  var url = 'http://localhost:3000/files/'+ e.id;
+
+  // Loaded via <script> tag, create shortcut to access PDF.js exports.
+  var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+  // The workerSrc property shall be specified.
+  pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+  // Asynchronous download of PDF
+  var loadingTask = pdfjsLib.getDocument(url);
+  loadingTask.promise.then(function(pdf) {
+    console.log('PDF loaded');
+
+    // Fetch the first page
+    var pageNumber = 1;
+    pdf.getPage(pageNumber).then(function(page) {
+      console.log('Page loaded');
+
+      var scale = 1.0;
+      var viewport = page.getViewport({scale: scale});
+
+      // Prepare canvas using PDF page dimensions
+      var canvas = document.getElementById('material-url');
+      var context = canvas.getContext('2d');
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      // Render PDF page into canvas context
+      var renderContext = {
+        canvasContext: context,
+        viewport: viewport
+      };
+      var renderTask = page.render(renderContext);
+      renderTask.promise.then(function () {
+        console.log('Page rendered');
+      });
+    });
+  }, function (reason) {
+    // PDF loading error
+    console.error(reason);
+  });
 }
 
 xhr.onload = function() {
   var buffer = xhr.response;
+  console.log(buffer);
   var blob = new Blob([buffer], {
       type: 'application/pdf'
   });
@@ -257,6 +295,6 @@ files.onsubmit = function(ev) {
   }, 5000);
 };
 
-function ab2str(buf) {
-  return String.fromCharCode.apply(null, new Uint16Array(buf));
-}
+$(window).click(function(e) {
+  console.log("x:" + e.pageX + ", y:" + e.pageY);
+});
