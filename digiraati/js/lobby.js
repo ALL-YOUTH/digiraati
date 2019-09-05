@@ -6,9 +6,10 @@ var allowed_extentions = [".txt", ".docx", ".doc", ".pdf"];
 
 var uploader = new SocketIOFileClient(socket);
 var files = document.getElementById('files');
+var loadingTask = null;
+var pageNumber = 1;
 
-var xhr = new XMLHttpRequest();
-xhr.responseType = 'arraybuffer';
+var comment_visibility = false;
 
 $(function(){
   council_id = getUrlVars()["lobby"];
@@ -89,42 +90,44 @@ socket.on('council resign success', function(){
 
 socket.on('update files', function(files){
   list_files(files);
+  document.getElementById('submit_file').style.display = "none";
+  document.getElementById('filename').innerHTML = "";
 });
 
+
+//This function is modified version of provided in:
+//https://github.com/mozilla/pdf.js/blob/master/examples/learning/helloworld.html
 function file_clicked(e){
-  //xhr.open('GET', 'http://localhost:3000/files/' + e.id, true);
-  //xhr.send();
-
-  // If absolute URL from the remote server is provided, configure the CORS
-  // header on that server.
+  pageNumber = 1;
   var url = 'http://localhost:3000/files/'+ e.id;
-
-  // Loaded via <script> tag, create shortcut to access PDF.js exports.
   var pdfjsLib = window['pdfjs-dist/build/pdf'];
-
-  // The workerSrc property shall be specified.
   pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+  loadingTask = pdfjsLib.getDocument(url);
+  display_file(pageNumber);
+}
 
-  // Asynchronous download of PDF
-  var loadingTask = pdfjsLib.getDocument(url);
+function display_file(page_){
   loadingTask.promise.then(function(pdf) {
-    console.log('PDF loaded');
-
-    // Fetch the first page
-    var pageNumber = 1;
-    pdf.getPage(pageNumber).then(function(page) {
-      console.log('Page loaded');
-
+    var totalPages = pdf.numPages;
+    if(page_ > totalPages){
+      return;
+    }
+    else if (page_ == 0) {
+      return;
+    }
+    pageNumber = page_;
+    document.getElementById("file_pages").innerHTML = "Sivu " +
+                                                      page_ + "/"
+                                                      + totalPages;
+    pdf.getPage(page_).then(function(page) {
       var scale = 1.0;
       var viewport = page.getViewport({scale: scale});
 
-      // Prepare canvas using PDF page dimensions
       var canvas = document.getElementById('material-url');
       var context = canvas.getContext('2d');
       canvas.height = viewport.height;
       canvas.width = viewport.width;
 
-      // Render PDF page into canvas context
       var renderContext = {
         canvasContext: context,
         viewport: viewport
@@ -135,21 +138,17 @@ function file_clicked(e){
       });
     });
   }, function (reason) {
-    // PDF loading error
     console.error(reason);
   });
 }
 
-xhr.onload = function() {
-  var buffer = xhr.response;
-  console.log(buffer);
-  var blob = new Blob([buffer], {
-      type: 'application/pdf'
-  });
-  var objectURL = URL.createObjectURL(blob);
-  var iframe = document.getElementById("material-url");
-  iframe.src = objectURL;
-};
+function next_page(){
+  display_file(pageNumber + 1);
+}
+
+function prev_page(){
+  display_file(pageNumber - 1);
+}
 
 function open_material(){
   var url = "/material?material=" + council_id;
@@ -258,23 +257,27 @@ uploader.on('abort', function(fileInfo) {
 });
 
 function file_select_check(){
+  var submit_file_btn = document.getElementById('submit_file')
+  var filename = document.getElementById('filename');
   try{
-    var file = document.getElementById('file').files[0]["name"];
+    var file = document.getElementById('fileselect').files[0]["name"];
+    filename.innerHTML = file;
     if(file.length == 0){
-      document.getElementById('submit_file').style.display = "none";
+      submit_file_btn.style.display = "none";
     }
     else{
-      document.getElementById('submit_file').style.display = "block";
+      submit_file_btn.style.display = "block";
     }
   }
   catch{
-    document.getElementById('submit_file').style.display = "none";
+    submit_file_btn.style.display = "none";
+    filename = "";
   }
 }
 
 files.onsubmit = function(ev) {
   ev.preventDefault();
-  var fileEl = document.getElementById('file');
+  var fileEl = document.getElementById('fileselect');
   var fn = fileEl.files[0]["name"];
   if(!check_file_extention(fn)){
     console.log("Not allowed file");
@@ -295,6 +298,88 @@ files.onsubmit = function(ev) {
   }, 5000);
 };
 
+function file_select_clicked(){
+  document.getElementById('fileselect').click();
+  document.getElementById('fileselect').value = null;
+}
+
+document.getElementById('material-url').onclick = function(e) {
+  var rclickmenu = document.getElementById("rclickmenu");
+  if(comment_visibility == true){
+    close_comment_menu();
+  }
+  else{
+    open_comment_menu(rclickmenu, e);
+  }
+}
+
+function close_comment_menu(){
+  var rclickmenu = document.getElementById("rclickmenu");
+  rclickmenu.style.display = "none";
+  comment_visibility = false;
+}
+
+function open_comment_menu(rclickmenu, e){
+  rclickmenu.style.left = e.pageX +"px";
+  rclickmenu.style.top = e.pageY +"px";
+  rclickmenu.style.display = "block";
+  comment_visibility = true;
+}
+
+function add_comment(){
+
+}
+
 $(window).click(function(e) {
-  console.log("x:" + e.pageX + ", y:" + e.pageY);
+  var x = e.pageX - $('#material-url').offset().left;
+  var y = e.pageY - $('#material-url').offset().top;
 });
+
+window.onresize = function () {
+  var canvas = document.getElementById('material-url');
+  var div = document.getElementById('material-file-viewer');
+  if(canvas.width >= div.width){
+
+  }
+};
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+dragElement(document.getElementById("rclickmenu"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  }
+  else {
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}

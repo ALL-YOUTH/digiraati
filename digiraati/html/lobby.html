@@ -75,18 +75,23 @@
           </div>
 
           <div id="council-material-container">
-            <div id="material-files" class="column-20">Tiedostot
+            <div id="material-files" class="column-20"><h2>Tiedostot</h2>
               <form id="files" action="fileupload" method="post" enctype="multipart/form-data">
-                <input type="file" name="filetoupload" id="file" onchange="file_select_check()"></input>
+                <input type="file" id="fileselect" onchange="file_select_check()"></input>
+                <input type="button" id="file-select-btn" onclick="file_select_clicked()" value="Valitse Tiedosto"></input>
+                <br><span id="filename"></span>
                 <input type="submit" value="Lähetä" id="submit_file"></input>
               </form>
               --------------------
               <span id="file_list"></span>
             </div>
             <div id="material-file-viewer" class="column-50">
-              <canvas id="material-url"></canvas>
+              <div onclick="prev_page()">Edellinen</div>
+              <div id="file_pages" class="row"></div>
+              <div onclick="next_page()">Seuraava</div>
+              <canvas id="material-url" onclick="open_comment_menu(this)"></canvas>
             </div>
-            <div id="material-file-comments" class="column-30">Kommentit</div>
+            <div id="material-file-comments" class="column-30"><h2>Kommentit</h2></div>
           </div>
 
           <div id="council-participant-container" class="row">
@@ -96,6 +101,20 @@
 
           <div id="council-statistics-container" class="row">
             <div>Stats</div>
+          </div>
+          <div id='rclickmenu'>
+            <div id="rclickmenuheader">Kommentti</div>
+            <ul>
+              <li class="options">Mitä tämä tarkoittaa?</li>
+              <li class="options">Peukku</li>
+              <li class="options">Peukku alas</li>
+            </ul>
+            <input id="comment_text" type="text" style="resize:both;"></input>
+            <ul>
+              <li class="options" onclick="add_comment()">Lisää Kommentti</li>
+              <hr>
+              <li class="options" onclick="close_comment_menu()">Peru</li>
+            </ul>
           </div>
         </div>
       </div>

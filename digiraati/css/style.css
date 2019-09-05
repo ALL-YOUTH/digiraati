@@ -17,7 +17,7 @@ button:hover { background: rgb(53, 117, 192); }
 #lakilista li{ padding: 5px 10px; cursor:pointer;}
 #lakilista li:nth-child(odd){ background: #eee; }
 #lakilista li:hover { color: #2693ff; }
-#options{
+.options{
   list-style:none;
   margin:0px;
   margin-top:4px;
@@ -26,14 +26,15 @@ button:hover { background: rgb(53, 117, 192); }
   padding-bottom:3px;
   font-size:17px;
   color: #333333;
-
 }
+
 hr { width: 85%;
   background-color:#E4E4E4;
   border-color:#E4E4E4;
   color:#E4E4E4;
 }
 #rclickmenu{
+  z-index: 9;
   display:none;
   position:absolute;
   border:1px solid #B2B2B2;
@@ -43,13 +44,21 @@ hr { width: 85%;
   border-radius:4px;
 }
 
+#rclickmenuheader{
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
+}
+
 li{
   padding: 3px;
   padding-left:10px;
 }
 
 
-#options:hover{
+.options:hover{
   color: white;
   background:#284570;
   border-radius:2px;
@@ -392,4 +401,29 @@ li{
 
 .container .content{
   flex: 1;
+}
+
+#fileselect{
+  visibility:hidden;
+}
+
+.speech-bubble {
+	position: relative;
+	background: #00aabb;
+	border-radius: .4em;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 36px solid transparent;
+	border-top-color: #00aabb;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -18px;
+	margin-bottom: -36px;
 }
