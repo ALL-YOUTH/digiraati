@@ -8,6 +8,10 @@ var uploader = new SocketIOFileClient(socket);
 var files = document.getElementById('files');
 var loadingTask = null;
 var pageNumber = 1;
+var current_file = "";
+var pdf_scale = 1.0;
+var comment_x = 0;
+var comment_y = 0;
 
 var comment_visibility = false;
 
@@ -100,10 +104,34 @@ socket.on('update files', function(files){
 function file_clicked(e){
   pageNumber = 1;
   var url = 'http://localhost:3000/files/'+ e.id;
+  current_file = url;
   var pdfjsLib = window['pdfjs-dist/build/pdf'];
   pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
   loadingTask = pdfjsLib.getDocument(url);
+
+  reset_file_canvas();
   display_file(pageNumber);
+}
+
+function reset_file_canvas(){
+  var prev_btn = document.createElement('div');
+  prev_btn.onclick = function(){prev_page();};
+  prev_btn.innerHTML = "Edellinen";
+  var pages = document.createElement('div');
+  pages.id="file_pages";
+  var next_btn = document.createElement('div');
+  next_btn.onclick = function(){next_page();};
+  next_btn.innerHTML = "Seuraava";
+  var canvas = document.createElement('canvas');
+  canvas.id = "material-url";
+  canvas.addEventListener("click", canvas_clicked);
+
+  var parent = document.getElementById('material-file-viewer');
+  clear_child_elements(parent);
+  parent.appendChild(prev_btn);
+  parent.appendChild(pages);
+  parent.appendChild(next_btn);
+  parent.appendChild(canvas);
 }
 
 function display_file(page_){
@@ -117,14 +145,20 @@ function display_file(page_){
     }
     pageNumber = page_;
     document.getElementById("file_pages").innerHTML = "Sivu " +
-                                                      page_ + "/"
+                                                     page_ + "/"
                                                       + totalPages;
     pdf.getPage(page_).then(function(page) {
-      var scale = 1.0;
-      var viewport = page.getViewport({scale: scale});
-
+      var scale = 0.1;
       var canvas = document.getElementById('material-url');
+      var viewport = page.getViewport(scale);
+      var div = document.getElementById('material-file-viewer');
+      while(viewport.width < div.clientWidth){
+        scale += 0.1;
+        viewport = page.getViewport(scale);
+      }
+      viewport = page.getViewport(scale-0.1);
       var context = canvas.getContext('2d');
+
       canvas.height = viewport.height;
       canvas.width = viewport.width;
 
@@ -132,10 +166,17 @@ function display_file(page_){
         canvasContext: context,
         viewport: viewport
       };
+
       var renderTask = page.render(renderContext);
-      renderTask.promise.then(function () {
-        console.log('Page rendered');
-      });
+      try{
+        renderTask.promise.then(function () {
+          console.log('Page rendered');
+        });
+      }
+      catch(err){
+        reset_file_canvas();
+        display_file(pageNumber);
+      }
     });
   }, function (reason) {
     console.error(reason);
@@ -303,13 +344,15 @@ function file_select_clicked(){
   document.getElementById('fileselect').value = null;
 }
 
-document.getElementById('material-url').onclick = function(e) {
+function canvas_clicked(e) {
+  comment_x = e.pageX / $(window).width();
+  comment_y = (e.pageY - $('#material-url').offset().top) / $('#material-url').height();
   var rclickmenu = document.getElementById("rclickmenu");
-  if(comment_visibility == true){
-    close_comment_menu();
+  if(comment_visibility == false){
+    open_comment_menu(rclickmenu, e);
   }
   else{
-    open_comment_menu(rclickmenu, e);
+    close_comment_menu();
   }
 }
 
@@ -326,21 +369,32 @@ function open_comment_menu(rclickmenu, e){
   comment_visibility = true;
 }
 
-function add_comment(){
-
+function draw_comments(comment){
+  //TODO
 }
 
-$(window).click(function(e) {
-  var x = e.pageX - $('#material-url').offset().left;
-  var y = e.pageY - $('#material-url').offset().top;
-});
+function add_comment(comment_text){
+  console.log(comment_text);
+  var new_comment = document.createElement('div');
+  new_comment.classList.add("speech-bubble");
+  new_comment.style.left = comment_x * $(window).width() + "px";
+  new_comment.style.top = comment_y * $(window).height() + "px";
+  console.log("top: "+ comment_y * $(window).height() + "px");
+  console.log("left: " + comment_x * $(window).width() + "px");
+  document.getElementById('material-file-viewer').appendChild(new_comment);
+}
 
 window.onresize = function () {
   var canvas = document.getElementById('material-url');
   var div = document.getElementById('material-file-viewer');
-  if(canvas.width >= div.width){
 
+  if(canvas.width/window.innerWidth > 0.5){
+    pdf_scale = pdf_scale - 0.2;
   }
+  else if (canvas.width/window.innerWidth < 0.5) {
+    pdf_scale = pdf_scale + 0.2;
+  }
+  display_file(pageNumber);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -382,4 +436,14 @@ function dragElement(elmnt) {
     document.onmouseup = null;
     document.onmousemove = null;
   }
+}
+
+function get_parent_elements(element){
+  var nodes = [];
+  nodes.push(element);
+  while(element.parentNode){
+    nodes.unshift(element.parentNode);
+    element = element.parentNode;
+  }
+  return nodes;
 }

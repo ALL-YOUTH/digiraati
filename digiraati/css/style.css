@@ -409,6 +409,7 @@ li{
 
 .speech-bubble {
 	position: relative;
+  z-index: 10;
 	background: #00aabb;
 	border-radius: .4em;
 }
@@ -426,4 +427,8 @@ li{
 	border-left: 0;
 	margin-left: -18px;
 	margin-bottom: -36px;
+}
+
+#material-file-viewer div{
+  cursor:pointer;
 }

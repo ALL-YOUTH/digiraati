@@ -119,9 +119,10 @@ app.get('/files/:id', (req, res, next) => {
 //Connection
 io.on('connection', function(socket){
   var ip = socket.request.connection.remoteAddress;
+  server_log(ip + " connected to the server");
   var uploader = new SocketIOFile(socket, {
     uploadDir: 'files',			// simple directory
-    maxFileSize: 4194304, 	// 4 MB. default is undefined(no limit)
+    maxFileSize: 4194304, 	// 4 MB.
     chunkSize: 10240,				// default is 10240(1KB)
     transmissionDelay: 0,		// delay of each transmission, higher value saves more cpu resources, lower upload speed. default is 0(no delay)
     overwrite: true 				// overwrite file if exists, default is true.
@@ -292,8 +293,8 @@ io.on('connection', function(socket){
     try{
       socket.emit("update files", files["files"]);
     }
-    catch{
-      console.log("no files in this council");
+    catch(err){
+      console.log("no files in this council", err);
     }
 
   });
@@ -306,12 +307,6 @@ io.on('connection', function(socket){
       socket.emit('file data', {data:buff, binary:true});
       server_log("sent file data");
       server_log(buff);
-      /*eString = String.fromCharCode.apply(null, buff);
-      server_log(eString);
-      dString = decodeURIComponent(unescape(eString));
-      server_log(dString);
-      socket.emit("file data", {type:"txt", buffer:buff});
-      server_log("File sent");*/
     });
   });
 

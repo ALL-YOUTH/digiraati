@@ -6,7 +6,7 @@
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.4">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0">
     <link rel='icon' href='../res/favicon.ico' type='image/x-icon'/ >
   </head>
 
@@ -89,7 +89,9 @@
               <div onclick="prev_page()">Edellinen</div>
               <div id="file_pages" class="row"></div>
               <div onclick="next_page()">Seuraava</div>
-              <canvas id="material-url" onclick="open_comment_menu(this)"></canvas>
+              <div id="canvas-div" class="row">
+                <canvas id="material-url"></canvas>
+              </div>
             </div>
             <div id="material-file-comments" class="column-30"><h2>Kommentit</h2></div>
           </div>
@@ -105,9 +107,9 @@
           <div id='rclickmenu'>
             <div id="rclickmenuheader">Kommentti</div>
             <ul>
-              <li class="options">Mitä tämä tarkoittaa?</li>
-              <li class="options">Peukku</li>
-              <li class="options">Peukku alas</li>
+              <li id="wtf_btn" onclick="add_comment('???')" class="options">Mitä tämä tarkoittaa?</li>
+              <li id="thumbs_up_btn" onclick="add_comment('tykkäys')" class="options">Peukku</li>
+              <li id="thumbs_down_btn" onclick="add_comment('epätykkäys')" class="options">Peukku alas</li>
             </ul>
             <input id="comment_text" type="text" style="resize:both;"></input>
             <ul>
