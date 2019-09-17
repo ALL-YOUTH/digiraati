@@ -346,7 +346,7 @@ function file_select_clicked(){
 
 function canvas_clicked(e) {
   comment_x = e.pageX / $(window).width();
-  comment_y = (e.pageY - $('#material-url').offset().top) / $('#material-url').height();
+  comment_y = e.pageY;
   var rclickmenu = document.getElementById("rclickmenu");
   if(comment_visibility == false){
     open_comment_menu(rclickmenu, e);
@@ -375,25 +375,15 @@ function draw_comments(comment){
 
 function add_comment(comment_text){
   console.log(comment_text);
-  var new_comment = document.createElement('div');
+  var new_comment = document.createElement('a');
   new_comment.classList.add("speech-bubble");
-  new_comment.style.left = comment_x * $(window).width() + "px";
-  new_comment.style.top = comment_y * $(window).height() + "px";
-  console.log("top: "+ comment_y * $(window).height() + "px");
-  console.log("left: " + comment_x * $(window).width() + "px");
+  new_comment.style.right = "30%";
+  console.log(comment_y);
+  new_comment.style.top = comment_y + "px";
   document.getElementById('material-file-viewer').appendChild(new_comment);
 }
 
 window.onresize = function () {
-  var canvas = document.getElementById('material-url');
-  var div = document.getElementById('material-file-viewer');
-
-  if(canvas.width/window.innerWidth > 0.5){
-    pdf_scale = pdf_scale - 0.2;
-  }
-  else if (canvas.width/window.innerWidth < 0.5) {
-    pdf_scale = pdf_scale + 0.2;
-  }
   display_file(pageNumber);
 };
 

@@ -408,7 +408,7 @@ li{
 }
 
 .speech-bubble {
-	position: relative;
+	position: absolute;
   z-index: 10;
 	background: #00aabb;
 	border-radius: .4em;
@@ -431,4 +431,5 @@ li{
 
 #material-file-viewer div{
   cursor:pointer;
+  position:relative;
 }

@@ -8,12 +8,50 @@ var cors = require('cors')
 
 var port = process.env.PORT || 3000;
 var host = "localhost";
+var backup_file = "backup.json"
 
 var Users = require(path.join(__dirname + "/user.js"));
 var Councils = require(path.join(__dirname + "/councils.js"));
 
 let users = new Users();
 let councils = new Councils();
+
+//Recover digiraati from backupfile
+fs.readFile(backup_file, function (err, data) {
+  if (err) {
+    console.log("An error occured while writing JSON Object to File.");
+    return;
+  }
+  data = JSON.parse(data);
+  var recover_users = data["users"];
+  var recover_councils = data["councils"];
+  for(let user of recover_users){
+    try{
+      users.recover_user(id=user["id"], uname=user["username"],
+                      fname=user["fname"], lname=user["lname"],
+                      email=user["email"],
+                      hash=user["hash"], online="false", ip=null);
+    }
+    catch(err){
+      server_log(err);
+    }
+  }
+  for(let council of recover_councils){
+    try{
+      councils.add_council( id=council["id"],
+                            name=council["name"],
+                            description=council["description"],
+                            creator=council["creator"],
+                            starttime=council["starttime"],
+                            endtime=council["endtime"],
+                            userlimit=council["userlimit"],
+                            tags=council["tags"]);
+    }
+    catch(err){
+      server_log("Something went wrong trying to recover users: " + err);
+    }
+  }
+});
 
 http.listen(port);
 
@@ -22,22 +60,27 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
+//Backup functions
+setInterval(function () {
+  create_backup();
+}, 1 * 60 * 1000); // 1 min
+
 
 app.use(cors(corsOptions));
 
 //Add a template council
-councils.add_council( id="TEMPLATE",
-                      name="TESTIRAATI",
-                      description="Tämä raati on tarkoitettu täysin testaukseen.",
-                      creator="test",
-                      starttime=null,
-                      endtime=null,
-                      userlimit=null,
-                      tags=["General"]);
+/*councils.add_council( id="TEMPLATE",
+name="TESTIRAATI",
+description="Tämä raati on tarkoitettu täysin testaukseen.",
+creator="test",
+starttime=null,
+endtime=null,
+userlimit=null,
+tags=["General"]);
 
 //Add a template user
 users.add_user("test", "test", "test", "test", "test", "test");
-
+*/
 //Comments in lakiteksti
 var comments = {};
 MESSAGES2PRINT = 50;
@@ -160,7 +203,9 @@ io.on('connection', function(socket){
       socket.emit("invalid email");
       return;
     }
-    ret_val = users.add_user(data["id"], data["uname"], data["fname"], data["lname"], data["email"], data["p"]);
+    ret_val = users.add_user(id=data["id"], uname=data["uname"],
+                              fname=data["fname"], lname=data["lname"],
+                              email=data["email"], pw=data["p"]);
     if(ret_val != -1){
       socket.emit('register success', data["uname"]);
     }
@@ -324,15 +369,15 @@ io.on('connection', function(socket){
     server_log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
     server_log('Upload Complete.');
     councils.add_file(fileInfo["data"]["id"],
-                      fileInfo["data"]["filename"],
-                      fileInfo["data"]["council"],
-                      fileInfo["data"]["uploader"]);
+    fileInfo["data"]["filename"],
+    fileInfo["data"]["council"],
+    fileInfo["data"]["uploader"]);
 
     fs.rename(__dirname + "/files/" + fileInfo["data"]["filename"],
-              __dirname + '/files/' + fileInfo["data"]["id"],
-              function(err) {
-                if ( err ) console.log('ERROR: ' + err);
-              });
+    __dirname + '/files/' + fileInfo["data"]["id"],
+    function(err) {
+      if ( err ) console.log('ERROR: ' + err);
+    });
   });
 
   uploader.on('error', (err) => {
@@ -345,8 +390,6 @@ io.on('connection', function(socket){
 
 });
 
-
-
 function update_page(){
   update_councils();
 }
@@ -358,6 +401,30 @@ function update_councils(){
 
 function update_users(){
   //TODO
+}
+
+function create_backup(){
+  try{
+    var backup_data = {};
+    var backup_users = users.get_all_users();
+    backup_data["users"] = backup_users;
+    var _councils = councils.get_councils();
+    backup_data["councils"] = [];
+    for(let c of _councils){
+      backup_data["councils"].push(councils.get_council_by_id(c["id"]));
+    }
+    var json_data = JSON.stringify(backup_data);
+    fs.writeFile(backup_file, json_data, 'utf8', function (err) {
+      if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
+      }
+      console.log("JSON file has been saved.");
+    });
+  }
+  catch(err){
+    console.log("Unable to create backup", err);
+  }
 }
 
 //////////////////////////////////////////////////////////////////////////////

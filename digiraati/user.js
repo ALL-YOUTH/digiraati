@@ -10,13 +10,14 @@ function hash(p){
 
 //Class a single user
 class User{
-  constructor(id, uname, fname, lname, email, pw){
+  constructor(id, uname, fname, lname, email, h){
     this.id = id;
     this.username = uname;
     this.fname = fname;
     this.lname = lname;
     this.email = email;
-    this.hash = hash(pw);
+    if(typeof h === 'string'){this.hash = hash(h); }
+    else{this.hash = h; }
     this.online = false;
     this.ip = null;
   }
@@ -61,16 +62,46 @@ module.exports = class Users{
     }
   }
 
-  add_user(id, uname, fname, lname, email, pw){
+  add_user(id, uname, fname, lname, email, pw, hash){
     //Checks if the username is already taken
     if(this.username_available(uname)){
-      var new_user = new User(id, uname, fname, lname, email, pw);
+      if(hash != null){pw = null;}
+      var new_user = new User(id, uname, fname, lname, email, pw=pw, hash=hash);
       this.users.push(new_user);
       return 0;
     }
     else{
       return -1;
     }
+  }
+
+  recover_user(id, uname, fname, lname, email, hash){
+    //Checks if the username is already taken
+    if(this.username_available(uname)){
+      var new_user = new User(id, uname, fname, lname, email, hash);
+      this.users.push(new_user);
+      return 0;
+    }
+    else{
+      return -1;
+    }
+  }
+
+  get_all_users(){
+    var all_users = [];
+    for(var i = 0; i < this.users.length; ++i){
+      var u = {};
+      u["id"] = this.users[i].get_id();
+      u["fname"] = this.users[i].get_fname();
+      u["lname"] = this.users[i].get_lname();
+      u["username"] = this.users[i].get_username();
+      u["email"] = this.users[i].get_user_email();
+      u["online"] = this.users[i].get_online_status();
+      u["hash"] = this.users[i].get_hash();
+      u["ip"] = this.users[i].get_ip();
+      all_users.push(u);
+    }
+    return all_users;
   }
 
   get_user(name){

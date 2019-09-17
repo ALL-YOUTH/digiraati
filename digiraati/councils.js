@@ -154,6 +154,7 @@ module.exports = class Councils{
 
   is_user_joined(councilid, userid){
     let c = this.get_council_by_id(councilid);
+    if(c == -1){return false;}
     let users = c.get_council_users();
     for(var i = 0; i < users.length; ++i){
       if(users[i] == userid){
