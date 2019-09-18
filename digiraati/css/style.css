@@ -10,7 +10,7 @@ body { font: 13px Helvetica, Arial; }
 .message_form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
 button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
 button:hover { background: rgb(53, 117, 192); }
-#messages { list-style-type: none; margin: 0; padding: 0;  margin-bottom: 40px; }
+#messages { list-style-type: none; margin: 0; padding: 0;  margin-bottom: 40px; text-align: left;}
 #messages div { padding: 5px 10px; }
 #messages div:nth-child(odd) { background: #eee; }
 .disabled { opacity:0.3; pointer-events:none;}

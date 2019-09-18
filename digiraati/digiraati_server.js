@@ -46,6 +46,9 @@ fs.readFile(backup_file, function (err, data) {
                             endtime=council["endtime"],
                             userlimit=council["userlimit"],
                             tags=council["tags"]);
+      for(let message of council["messages"]){
+        councils.add_message(council["id"], message["sender"], message["content"]);
+      }
     }
     catch(err){
       server_log("Something went wrong trying to recover users: " + err);
@@ -162,7 +165,7 @@ app.get('/files/:id', (req, res, next) => {
 //Connection
 io.on('connection', function(socket){
   var ip = socket.request.connection.remoteAddress;
-  server_log(ip + " connected to the server");
+  //server_log(ip + " connected to the server");
   var uploader = new SocketIOFile(socket, {
     uploadDir: 'files',			// simple directory
     maxFileSize: 4194304, 	// 4 MB.
@@ -178,6 +181,7 @@ io.on('connection', function(socket){
     }
     else{
       socket.emit('login success', name);
+      server_log(ip + ": " + name + " logged in");
       update_page();
     }
   });
@@ -185,10 +189,12 @@ io.on('connection', function(socket){
   socket.on('login attempt', function(name, pw){
     if(users.login_user(name, pw, ip) == false){
       socket.emit('invalid login');
+      server_log(ip + ": Failed to login");
       return;
     }
     else{
       socket.emit('login success', name);
+      server_log(ip + ": " + name + " logged in");
       update_page();
       return;
     }
@@ -208,6 +214,7 @@ io.on('connection', function(socket){
                               email=data["email"], pw=data["p"]);
     if(ret_val != -1){
       socket.emit('register success', data["uname"]);
+      server_log(ip + ": " + data["uname"] + " registered succesfully");
     }
     else{
       socket.emit('invalid nickname');
@@ -216,6 +223,8 @@ io.on('connection', function(socket){
   });
 
   socket.on('council create attempt', function(info){
+    server_log(ip + ": " + info["creator"] + " attempted to create council: " +
+                info["name"]);
     ret_val = councils.add_council(id=info["id"], name=info["name"],
     description=info["description"],
     creator=info["creator"],
@@ -239,12 +248,15 @@ io.on('connection', function(socket){
     var sender = users.get_username_by_ip(ip);
     councils.add_message(msg["council"], sender, msg["message"]);
     send_msg = sender + ": " + msg["message"];
+    server_log(ip + ": " + sender + " : " + msg["council"]
+                + " send chat message: " + send_msg);
     io.emit('chat message', msg["council"], send_msg);
   });
 
   //User logged out of the chat
   socket.on('logout attempt', function(name){
     users.logout_user(name);
+    server_log(ip + ": " + name + " logged out");
     update_page();
     logged_in = "";
   });
@@ -299,7 +311,6 @@ io.on('connection', function(socket){
       return;
     }
     joined = councils.is_user_joined(councilid, userid);
-    server_log("Checking if user is joined in council:", userid, joined);
     if(joined){
       socket.emit('user joined in council');
     }
@@ -310,10 +321,14 @@ io.on('connection', function(socket){
 
   socket.on('request council join', function(councilid, userid){
     var res = councils.sign_user_in_council(councilid, userid);
+    server_log(ip + ": " + userid + " attempted to join council " + councilid);
     if(!res){
+      server_log(ip + ": " + userid + " was prevented from joining council: "
+                  + councilid);
       socket.emit("council join failed");
     }
     else{
+      server_log(ip + ": " + userid + " joined council: " + councilid);
       socket.emit("council join success");
     }
   });
@@ -325,10 +340,13 @@ io.on('connection', function(socket){
 
   socket.on('request resign council', function(cid, uid){
     var res = councils.resign_user_from_council(cid, uid);
+    server_log(ip + ": " + uid + " attempting to resign from council: " + cid);
     if(!res){
+      server_log(ip + ": " + uid + " could not resign from council: " + cid);
       socket.emit("council resign failed");
     }
     else{
+      server_log(ip + ": " + uid + " resigned from council: " + cid);
       socket.emit("council resign success");
     }
   });
@@ -345,13 +363,12 @@ io.on('connection', function(socket){
   });
 
   socket.on('request file data', function(fid){
+    server_log(ip + ": " + " requested file: " + fid);
     fs.readFile(path.join(__dirname, "/files/", fid), function(err, buff){
       if(err){
-        console.log(err);
+        server_log(ip + ": " + " could not send file: " + fid);
       }
       socket.emit('file data', {data:buff, binary:true});
-      server_log("sent file data");
-      server_log(buff);
     });
   });
 
@@ -360,14 +377,15 @@ io.on('connection', function(socket){
   //Todo tähän pitää keksiä vielä vähän sääntöjä että kuka voi lisäämistä
   //tiedostoja ja samannimiset tiedostot yms....
   uploader.on('start', (fileInfo) => {
-    server_log('Start uploading');
+    server_log(ip + ": " + " started to upload a file");
   });
+
   uploader.on('stream', (fileInfo) => {
     //server_log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
   });
+
   uploader.on('complete', (fileInfo) => {
-    server_log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
-    server_log('Upload Complete.');
+    server_log(ip + ": " + " file upload done");
     councils.add_file(fileInfo["data"]["id"],
     fileInfo["data"]["filename"],
     fileInfo["data"]["council"],
@@ -381,11 +399,11 @@ io.on('connection', function(socket){
   });
 
   uploader.on('error', (err) => {
-    server_log('Error!');
+    server_log(ip + ": file upload ERROR");
   });
 
   uploader.on('abort', (fileInfo) => {
-    server_log('Aborted: ');
+    server_log(ip + ": file upload ABORT");
   });
 
 });
@@ -419,12 +437,16 @@ function create_backup(){
         console.log("An error occured while writing JSON Object to File.");
         return console.log(err);
       }
-      console.log("JSON file has been saved.");
+      console.log("Backup done");
     });
   }
   catch(err){
     console.log("Unable to create backup", err);
   }
+}
+
+function timestamp(){
+  return new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -444,5 +466,5 @@ function print_users(u){
 }
 
 function server_log(str){
-  console.log("Server:", str);
+  console.log(timestamp(), str);
 }
