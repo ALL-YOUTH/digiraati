@@ -45,9 +45,13 @@ fs.readFile(backup_file, function (err, data) {
                             starttime=council["starttime"],
                             endtime=council["endtime"],
                             userlimit=council["userlimit"],
-                            tags=council["tags"]);
+                            tags=council["tags"],
+                            files=council["files"]);
       for(let message of council["messages"]){
         councils.add_message(council["id"], message["sender"], message["content"]);
+      }
+      for(let file of council["files"]){
+        councils.add_file(file["id"], file["path"], council["id"], file["sender"]);
       }
     }
     catch(err){

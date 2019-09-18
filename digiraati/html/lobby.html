@@ -33,8 +33,40 @@
           <a href="/register" id="register_btn" >Rekisteröidy</a>
           <a id="login_btn" onclick="login_modal()">Kirjaudu sisään</a>
         </div>
+
+        <!--Login modal-->
+        <div id="login_modal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="cancel_login_modal()">&times;</span><br>
+            <span id="login_instruction">Kirjaudu sisään Digiraati-palveluun</span><br><br><br>
+            <h2>Sähköposti tai käyttäjätunnus</h2>
+            <input class="modal-input" type="text" id="user_username_email"></input><br>
+            <h2>Salasana</h2>
+            <input class="modal-input" type="password" id="user_password"></input><br>
+            <input class="modal-input modal-button" type="button" value="Kirjaudu" id="login_modal_login_btn" onclick="login()"></button>
+          </div>
+        </div>
       </div>
       <!--END NAV BAR-->
+
+      <!--New council creation popup-->
+      <div id="new_council_modal" class="modal">
+        <div class="modal-content">
+          <div class="close" onclick="cancel_council_modal()">&times;</div>
+          <h2>Raadin nimi</h2>
+          <input type="text" id="council_name"></input><br>
+          <h2>Kuvaus</h2>
+          <input type="text" id="council_description"></input><br>
+          <h2>Alkamisaika</h2>
+          <input type="date" id="council_start_date"></input><input type="time" id="council_start_time"></input><br>
+          <h2>Loppumisaika</h2>
+          <input type="date" id="council_end_date"></input><input type="time" id="council_end_time"></input><br>
+          <h2>Avainsanat</h2>
+          <input type="text" id="council_keywords"></input><br>
+          <input type="button" onclick="cancel_council_modal()" value="Peruuta"></input>
+          <input type="button" id="council_creation_btn" onclick="create_raati()" value="Luo"></input>
+        </div>
+      </div>
 
       <div class="lobby-nav" id="lobby_nav">
         <a onclick="open_council_info()" class="active" id="info_btn">Raati</a>
