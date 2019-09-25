@@ -2,6 +2,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var util = require('util');
 var SocketIOFile = require('socket.io-file');
 var fs = require('fs');
 var cors = require('cors')
@@ -9,6 +10,14 @@ var cors = require('cors')
 var port = process.env.PORT || 3000;
 var host = "localhost";
 var backup_file = "backup.json"
+
+var log_filename = __dirname + '/logs/' + new Date().toISOString().slice(-24).replace(/\D/g,'').slice(0, 14); + ".log";
+fs.writeFile(log_filename, 'Server started at: ' + timestamp() , function (err) {
+  if (err) throw err;
+});
+
+var log_file = fs.createWriteStream(log_filename, {flags : 'w'});
+var log_stdout = process.stdout;
 
 var Users = require(path.join(__dirname + "/user.js"));
 var Councils = require(path.join(__dirname + "/councils.js"));
@@ -470,5 +479,6 @@ function print_users(u){
 }
 
 function server_log(str){
-  console.log(timestamp(), str);
+  log_file.write(util.format(str) + '\n');
+  log_stdout.write(util.format(str) + '\n');
 }

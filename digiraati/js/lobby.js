@@ -374,13 +374,12 @@ function draw_comments(comment){
 }
 
 function add_comment(comment_text){
-  console.log(comment_text);
   var new_comment = document.createElement('a');
   new_comment.classList.add("speech-bubble");
   new_comment.style.right = "30%";
-  console.log(comment_y);
   new_comment.style.top = comment_y + "px";
   document.getElementById('material-file-viewer').appendChild(new_comment);
+  close_comment_menu();
 }
 
 window.onresize = function () {
