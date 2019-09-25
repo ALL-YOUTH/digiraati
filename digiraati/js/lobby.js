@@ -373,14 +373,40 @@ function draw_comments(comment){
   //TODO
 }
 
-function add_comment(comment_text){
-  var new_comment = document.createElement('a');
+function add_custom_comment(){
+  add_comment(document.getElementById('comment_text').value);
+}
+
+function add_comment(text){
+  if(logged_in == ""){
+    alert("Sinun täytyy olla kirjautuneena sisään jotta voit lisätä kommentin");
+  }
+  else{
+    var comment = {};
+    comment["text"] = text;
+    comment["sender"] = logged_in;
+    comment["time"] = timestamp();
+    comment["likes"] = 0;
+    comment["dislikes"] = 0;
+    socket.emit('request add comment', council_id, comment);
+  }
+  close_comment_menu();
+
+  /*var new_comment = document.createElement('a');
   new_comment.classList.add("speech-bubble");
   new_comment.style.right = "30%";
   new_comment.style.top = comment_y + "px";
-  document.getElementById('material-file-viewer').appendChild(new_comment);
-  close_comment_menu();
+  //document.getElementById('material-file-viewer').appendChild(new_comment);
+  close_comment_menu();*/
 }
+
+socket.on("comment add failed", function(){
+  alert("Kommentin lisääminen epäonnistui");
+});
+
+socket.on("comment add success", function(){
+  alert("Kommentin lisääminen onnistui");
+});
 
 window.onresize = function () {
   display_file(pageNumber);

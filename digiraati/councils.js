@@ -10,6 +10,27 @@ class Message{
   get_likes(){ return this.likes; }
 }
 
+class Comment{
+  constructor(id, sender, text, time, likes, dislikes, parentid, childid){
+    this.id = id;
+    this.sender = sender;
+    this.text = text;
+    this.time = time;
+    this.likes = likes;
+    this.dislikes = dislikes;
+    this.parentid = parentid;
+    this.childid = childid;
+  }
+  get_id(){ return this.id; }
+  get_sender(){ return this.sender; }
+  get_content(){ return this.text; }
+  get_likes(){ return this.likes; }
+  get_dislikes(){ return this.dislikes; }
+  get_time(){ return this.time; }
+  get_child_comment_id(){ return this.childid; }
+  get_parent_comment_id(){ return this.parentid; }
+}
+
 class File{
   constructor(id, path, sender){
     this.id = id;
@@ -39,6 +60,7 @@ class Council{
     this.users = [];
     this.messages = [];
     this.files = [];
+    this.comments = [];
   }
 
   get_council_name(){ return this.name; }
@@ -75,6 +97,10 @@ class Council{
 
   add_msg(msg){
     this.messages.push(msg);
+  }
+
+  add_comment(comment){
+    this.comments.push(comment)
   }
 
   get_n_messages(n){
@@ -152,6 +178,20 @@ module.exports = class Councils{
     council.add_file(file);
   }
 
+  add_comment_to_council(cid, c){
+    try{
+      var council = this.get_council_by_id(cid);
+      var comment = new Comment(makeid(8), c["sender"], c["text"], c["time"],
+                                c["likes"], c["dislikes"], c["parent"], null);
+      var res = council.add_comment(comment);
+    }
+    catch(err){
+      console.log(err);
+      return -1;
+    }
+    return 0;
+  }
+
   is_user_joined(councilid, userid){
     let c = this.get_council_by_id(councilid);
     if(c == -1){return false;}
@@ -170,8 +210,7 @@ module.exports = class Councils{
       return council.get_n_messages(number_of);
     }
     catch(err){
-      /*+new Date;
-      console.log(Date.now());*/
+
     }
   }
 
@@ -228,4 +267,14 @@ module.exports = class Councils{
     return users;
   }
 
+}
+
+function makeid(length) {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }

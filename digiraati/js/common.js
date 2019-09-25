@@ -12,6 +12,10 @@ function logout(){
   home();
 }
 
+function timestamp(){
+  return new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+}
+
 function login(){
   uname = document.getElementById('user_username_email').value;
   p = document.getElementById('user_password').value;

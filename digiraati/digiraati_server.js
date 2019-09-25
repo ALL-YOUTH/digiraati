@@ -81,22 +81,8 @@ setInterval(function () {
   create_backup();
 }, 1 * 60 * 1000); // 1 min
 
-
 app.use(cors(corsOptions));
 
-//Add a template council
-/*councils.add_council( id="TEMPLATE",
-name="TESTIRAATI",
-description="Tämä raati on tarkoitettu täysin testaukseen.",
-creator="test",
-starttime=null,
-endtime=null,
-userlimit=null,
-tags=["General"]);
-
-//Add a template user
-users.add_user("test", "test", "test", "test", "test", "test");
-*/
 //Comments in lakiteksti
 var comments = {};
 MESSAGES2PRINT = 50;
@@ -376,7 +362,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('request file data', function(fid){
-    server_log(ip + ": " + " requested file: " + fid);
+    server_log(ip + ": requested file: " + fid);
     fs.readFile(path.join(__dirname, "/files/", fid), function(err, buff){
       if(err){
         server_log(ip + ": " + " could not send file: " + fid);
@@ -385,6 +371,16 @@ io.on('connection', function(socket){
     });
   });
 
+  socket.on('request add comment', function(cid, comment){
+    server_log(ip + ": " + "attempting to add a comment: " + comment["text"] + " to a council " + cid);
+    var res = councils.add_comment_to_council(cid, comment);
+    if(res != -1){
+      socket.emit("comment add success");
+    }
+    else{
+      socket.emit("comment add failed");
+    }
+  });
 
   ///File upload stuff
   //Todo tähän pitää keksiä vielä vähän sääntöjä että kuka voi lisäämistä
