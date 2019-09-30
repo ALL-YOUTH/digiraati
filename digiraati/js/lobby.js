@@ -114,24 +114,12 @@ function file_clicked(e){
 }
 
 function reset_file_canvas(){
-  var prev_btn = document.createElement('div');
-  prev_btn.onclick = function(){prev_page();};
-  prev_btn.innerHTML = "Edellinen";
-  var pages = document.createElement('div');
-  pages.id="file_pages";
-  var next_btn = document.createElement('div');
-  next_btn.onclick = function(){next_page();};
-  next_btn.innerHTML = "Seuraava";
+  document.getElementById('material-url').remove();
   var canvas = document.createElement('canvas');
   canvas.id = "material-url";
   canvas.addEventListener("click", canvas_clicked);
 
-  var parent = document.getElementById('material-file-viewer');
-  clear_child_elements(parent);
-  parent.appendChild(prev_btn);
-  parent.appendChild(pages);
-  parent.appendChild(next_btn);
-  parent.appendChild(canvas);
+  document.getElementById('canvas-div').appendChild(canvas);
 }
 
 function display_file(page_){
@@ -357,16 +345,30 @@ function canvas_clicked(e) {
 }
 
 function close_comment_menu(){
-  var rclickmenu = document.getElementById("rclickmenu");
-  rclickmenu.style.display = "none";
+  //var rclickmenu = document.getElementById("rclickmenu");
+  //rclickmenu.style.display = "none";
+  document.getElementById('text-selector').style.display = "none";
   comment_visibility = false;
 }
 
 function open_comment_menu(rclickmenu, e){
-  rclickmenu.style.left = e.pageX +"px";
+  /*rclickmenu.style.left = e.pageX +"px";
   rclickmenu.style.top = e.pageY +"px";
-  rclickmenu.style.display = "block";
+  rclickmenu.style.display = "block";*/
   comment_visibility = true;
+  var s = document.getElementById('pane');
+  show_comment_menu(e);
+  s.style.left = e.pageX + "px";
+  s.style.top = e.pageY + "px";
+  s.style.display = "block";
+}
+
+function show_comment_menu(e){
+  var s = document.getElementById('pane');
+  document.getElementById('ghostpane').style.display = "block";
+  s.style.left = e.pageX + "px";
+  s.style.top = e.pageY + "px";
+  s.style.display = "block";
 }
 
 function draw_comments(comment){
@@ -378,6 +380,8 @@ function add_custom_comment(){
 }
 
 function add_comment(text){
+  var value = croppr.getValue();
+  console.log(value);
   if(logged_in == ""){
     alert("Sinun täytyy olla kirjautuneena sisään jotta voit lisätä kommentin");
   }

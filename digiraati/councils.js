@@ -1,11 +1,11 @@
 
 class Message{
-  constructor(sender, text){
+  constructor(sender, text, likes){
     this.sender = sender;
     this.content = text;
-    this.likes = 0;
+    this.likes = likes;
   }
-  get_sender(){ return this.sender; }
+  get_sender(){ return this.senderid; }
   get_content(){ return this.content; }
   get_likes(){ return this.likes; }
 }
@@ -164,7 +164,7 @@ module.exports = class Councils{
     if(council == -1){
       return;
     }
-    var new_message = new Message(sender, message_text);
+    var new_message = new Message(sender, message_text, 0);
     council.add_msg(new_message);
   }
 

@@ -5,6 +5,7 @@
   "dependencies": {
     "arraybuffer-to-string": "^1.0.2",
     "cors": "^2.8.5",
+    "croppr": "^2.3.1",
     "delivery": "0.0.6",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.5",

@@ -1,0 +1,29 @@
+#pane {
+  display:none;
+	position: absolute;
+	width: 45%;
+	height: 45%;
+
+	margin: 0;
+	padding: 0;
+	z-index: 99;
+	border: 2px solid purple;
+	background: #fefefe;
+}
+
+#ghostpane {
+  display:none;
+	background: #999;
+	opacity: 0.2;
+
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	z-index: 98;
+
+	-webkit-transition: all 0.25s ease-in-out;
+	-moz-transition: all 0.25s ease-in-out;
+	-ms-transition: all 0.25s ease-in-out;
+	-o-transition: all 0.25s ease-in-out;
+	transition: all 0.25s ease-in-out;
+}

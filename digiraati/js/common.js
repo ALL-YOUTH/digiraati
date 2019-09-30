@@ -80,7 +80,6 @@ function login_modal(){
   document.getElementById('login_modal').style.display = "block";
 }
 
-
 function cancel_login_modal(){
   document.getElementById('user_password').value = "";
   document.getElementById('user_username_email').value = "";

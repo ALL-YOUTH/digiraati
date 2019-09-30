@@ -87,6 +87,15 @@ module.exports = class Users{
     }
   }
 
+  get_userid_by_username(sender_name){
+    for(var i = 0; i < this.users.length; ++i){
+      if(this.users[i].get_username() == sender_name){
+        return this.users[i].get_id();
+      }
+    }
+    return -1;
+  }
+
   get_all_users(){
     var all_users = [];
     for(var i = 0; i < this.users.length; ++i){

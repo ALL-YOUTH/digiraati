@@ -4,7 +4,7 @@ $(function () {
   //SENDING A MESSAGE PART
   $('form').submit(function(){
     message = document.getElementById('message_input').value;
-    var info = { "message":message, "council":council_id };
+    var info = { "sender":logged_in, "message":message, "council":council_id };
     socket.emit('chat message', info);
     document.getElementById('message_input').value = "";
     return false;

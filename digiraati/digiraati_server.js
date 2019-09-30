@@ -1,11 +1,13 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+
 var path = require('path');
 var util = require('util');
 var SocketIOFile = require('socket.io-file');
 var fs = require('fs');
-var cors = require('cors')
+var cors = require('cors');
+var server = require('./routes.js');
+var app = server["app"];
+var io = server["io"];
+var http = server["http"];
 
 var port = process.env.PORT || 3000;
 var host = "localhost";
@@ -83,75 +85,7 @@ setInterval(function () {
 
 app.use(cors(corsOptions));
 
-//Comments in lakiteksti
-var comments = {};
 MESSAGES2PRINT = 50;
-
-//Digiraati pages
-//HOME
-app.get('/js/home.js', function(req, res) {
-  res.sendFile(path.join(__dirname + '/js/home.js'));
-});
-app.get('/js/common.js', function(req, res) {
-  res.sendFile(path.join(__dirname + '/js/common.js'));
-});
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/home.html'));
-});
-app.get('/css/style.css', function(req, res) {
-  res.sendFile(path.join(__dirname + '/css/style.css'));
-});
-app.get('/res/digiraatilogo_trans.PNG', function(req, res) {
-  res.sendFile(path.join(__dirname + '/res/digiraatilogo_trans.PNG'));
-});
-app.get('/res/favicon.ico', function(req, res) {
-  res.sendFile(path.join(__dirname + '/res/favicon.ico'));
-});
-
-//DigiRaatiChat
-app.get('/chat', function(req, res){
-  res.sendFile(__dirname + '/html/chat.html');
-});
-app.get('/js/chat.js', function(req, res) {
-  res.sendFile(path.join(__dirname + '/js/chat.js'));
-});
-//Register page
-app.get('/register', function(req, res){
-  res.sendFile(__dirname + '/html/register.html');
-});
-app.get('/js/register.js', function(req, res){
-  res.sendFile(__dirname + '/js/register.js');
-});
-
-//Info page
-app.get('/info', function(req, res){
-  res.sendFile(__dirname + '/html/info.html');
-});
-
-app.get('/js/info.js', function(req, res){
-  res.sendFile(__dirname + '/js/info.js');
-});
-
-//Info page
-app.get('/lobby', function(req, res){
-  res.sendFile(__dirname + '/html/lobby.html');
-});
-app.get('/js/lobby.js', function(req, res){
-  res.sendFile(__dirname + '/js/lobby.js');
-});
-
-app.get('/socket.io.js', (req, res, next) => {
-  return res.sendFile(__dirname + '/node_modules/socket.io-client/dist/socket.io.js');
-});
-app.get('/socket.io-file-client.js', (req, res, next) => {
-  return res.sendFile(__dirname + '/node_modules/socket.io-file-client/socket.io-file-client.js');
-});
-
-app.get('/files/:id', (req, res, next) => {
-  var fid = req.params.id;
-  server_log(path.join(__dirname, "/files/" + fid));
-  return res.sendFile(path.join(__dirname, "/files/" + fid));
-});
 
 //===================================================================
 //===================================================================
@@ -244,10 +178,11 @@ io.on('connection', function(socket){
 
   //SENDING A MESSAGE PART
   socket.on('chat message', function(msg){
-    var sender = users.get_username_by_ip(ip);
-    councils.add_message(msg["council"], sender, msg["message"]);
-    send_msg = sender + ": " + msg["message"];
-    server_log(ip + ": " + sender + " : " + msg["council"]
+    var sender_name = msg["sender"];
+    var userid = users.get_userid_by_username(sender_name);
+    councils.add_message(msg["council"], userid, msg["message"]);
+    send_msg = sender_name + ": " + msg["message"];
+    server_log(ip + ": " + sender_name + " : " + msg["council"]
                 + " send chat message: " + send_msg);
     io.emit('chat message', msg["council"], send_msg);
   });

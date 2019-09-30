@@ -370,7 +370,8 @@ li{
   margin-top:3px;
 }
 
-#council-material-container div{
+#material-files, #material-file-viewer, #material-file-comments{
+  position:relative;
   border:solid;
   border-width: 1px;
   height: auto;
