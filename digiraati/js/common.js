@@ -1,6 +1,6 @@
 var socket = io();
 var logged_in = "";
-socket.emit('check login');
+//socket.emit('check login');
 
 function goToPage(page){
   window.location = page;

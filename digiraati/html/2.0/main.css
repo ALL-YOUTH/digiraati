@@ -1,0 +1,292 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+
+body, html{
+  font-family: Montserrat;
+  margin:0;
+  height: 100%;
+}
+
+#container {
+  width:100%;
+  min-height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#header_div{
+  padding-top: 20px;
+}
+
+#Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar, #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #footer_social{
+  display:none;
+}
+
+#hamburger_div{
+  position:relative;
+  display:inline-block;
+  float:right;
+  width:48px;
+  height:48px;
+  cursor:pointer;
+}
+
+#hamburger_icon{
+  position:absolute;
+  top:50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+#logo_div{
+  display:inline-block;
+  float:left;
+  cursor:pointer;
+  width:300px;
+}
+
+#hero{
+  margin-top: 20px;
+  height:300px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-image: url("/res/hero_image_mobile.png");
+  background-repeat: no-repeat;
+  color:white;
+}
+
+#main_text_mobile, #secondary_text_mobile{
+  text-align: right;
+  display:block;
+  margin-right: 5%;
+}
+
+#council_container{
+  max-width: 320px;
+  margin:auto;
+}
+
+#test_council_1{
+  border-radius: 5px;
+  height:300px;
+  width:300px;
+  backround:white;
+  border:solid;
+  float:left;
+  margin:10px;
+  margin-top:40px;
+}
+
+#footer {
+  position: absolute;
+  width:100%;
+  min-width: 320px;
+  height: auto;
+  margin-top: 200px;
+  clear:both;
+  background-color: rgba(1,175,196,0.7);
+}
+
+#footer_container{
+  color:rgba(203,208,211,1);
+  font-weight: bold;
+  padding-bottom: 50px;
+  font-size: 15px;
+  text-align: left;
+  width:100%;
+  min-width: 320px;
+}
+
+#footer_logo{
+  margin:5px;
+}
+
+#footer_navi{
+  float:left;
+  margin:15px;
+}
+#footer_navi2{
+  float:left;
+  margin:15px;
+}
+
+#logo_url{
+  content:url("/res/digiraati_logo.png");
+}
+
+#footer_logo_url{
+content:url("/res/digiraati_logo_valk.png");
+
+}
+/*Everything below is css for desktop view of the website.*/
+@media (min-width:800px){
+  #hamburger_div, #main_text_mobile, #secondary_text_mobile{
+    display:none;
+  }
+
+  #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar, #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #footer_social{
+    display:inline-block;
+  }
+
+  #header_navi_btns{
+    float:right;
+    margin-right: 40px;
+  }
+  #avatar_url{
+    content:url("/res/avatar.png");
+  }
+  /*#logo_div{
+    display:inline-block;
+    float:left;
+    cursor:pointer;
+    width:300px;
+  }*/
+
+  #header_btns{
+    width:100%;
+    margin:25px;
+    margin-right:2%;
+  }
+  #header_btns span{
+    cursor:pointer;
+    margin-left: 20px;
+  }
+
+  #hero{
+    position: relative;
+    height:400px;
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/res/hero_image2.png");
+    background-repeat: no-repeat;
+    color:white;
+  }
+
+  #hero_text{
+    position:relative;
+    float:right;
+    text-align: right;
+    padding: 100px;
+  }
+
+  #hero_search_councils_btn_desktop{
+    margin: auto;
+    position: absolute;
+    bottom:20px;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+    cursor: pointer;
+  }
+
+  #council_container{
+    max-width: 1200px;
+    margin:auto;
+  }
+
+  #filter{
+    margin:20px;
+    max-width: 1200px;
+    position:relative;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+  }
+
+  #filter #selector, #sorter, #search{
+    float:left;
+    margin: 0 auto;
+  }
+
+  #selector #ongoing, #newest, #popularest{
+    float:left;
+    margin-left:10px;
+    margin-right:10px;
+  }
+
+  .inactive{
+    padding:5px;
+    border: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: rgba(254,4,86,1);
+    color: rgba(254,4,86,1);
+  }
+
+  .active {
+    padding:5px;
+    background: rgba(254,4,86,1);
+    color:white;
+    border-radius: 5px;
+    border-width: 1px;
+    border:solid;
+    border-color: rgba(254,4,86,1);
+  }
+
+  #sorter #list, #small_grid, #large_grid{
+    margin-left:1px;
+    padding: 5px;
+    position:relative;
+    background: rgba(1,175,196,1);
+    border-color: white;
+    height: auto;
+    width:auto;
+    border-radius: 2px;
+    color: white;
+  }
+
+  #filter #search {
+    margin-left:50px;
+  }
+
+  #council_title {
+    margin: 20px;
+    margin-left: 50px;
+  }
+
+  #council_list{
+
+  }
+
+  #footer {
+    position: relative;
+    height: 170px;
+    margin-top: 200px;
+    clear:both;
+    background-color: rgba(1,175,196,0.7);
+  }
+
+  #footer_container{
+    max-width: 1000px;
+    margin:auto;
+  }
+
+  #footer_container #footer_logo{
+    float:left;
+  }
+
+  #footer_container #footer_navi{
+    float:left;
+    margin:30px;
+  }
+  #footer_container #footer_navi2{
+    float:left;
+    margin:30px;
+  }
+  #footer_container #footer_social{
+    float:left;
+    margin:30px;
+  }
+
+
+}

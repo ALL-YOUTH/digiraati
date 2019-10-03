@@ -11,7 +11,7 @@ var http = server["http"];
 
 var port = process.env.PORT || 3000;
 var host = "localhost";
-var backup_file = "backup.json"
+var backup_file = path.join(__dirname, "backup.json");
 
 var log_filename = __dirname + '/logs/' + new Date().toISOString().slice(-24).replace(/\D/g,'').slice(0, 14); + ".log";
 fs.writeFile(log_filename, 'Server started at: ' + timestamp() , function (err) {
@@ -36,7 +36,8 @@ fs.readFile(backup_file, function (err, data) {
   data = JSON.parse(data);
   var recover_users = data["users"];
   var recover_councils = data["councils"];
-  for(let user of recover_users){
+  for(var i = 0; i < recover_users.length; ++i){
+    let user = recover_users[i];
     try{
       users.recover_user(id=user["id"], uname=user["username"],
                       fname=user["fname"], lname=user["lname"],
@@ -47,7 +48,9 @@ fs.readFile(backup_file, function (err, data) {
       server_log(err);
     }
   }
-  for(let council of recover_councils){
+
+  for(var i = 0; i <  recover_councils.length; ++i){
+    let council = recover_councils[i];
     try{
       councils.add_council( id=council["id"],
                             name=council["name"],
@@ -69,6 +72,7 @@ fs.readFile(backup_file, function (err, data) {
       server_log("Something went wrong trying to recover users: " + err);
     }
   }
+
 });
 
 http.listen(port);
@@ -372,7 +376,8 @@ function create_backup(){
     backup_data["users"] = backup_users;
     var _councils = councils.get_councils();
     backup_data["councils"] = [];
-    for(let c of _councils){
+    for(var i = 0; i < _councils.length; ++i){
+      let c = _councils[i];
       backup_data["councils"].push(councils.get_council_by_id(c["id"]));
     }
     var json_data = JSON.stringify(backup_data);
