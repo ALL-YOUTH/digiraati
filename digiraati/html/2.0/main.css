@@ -6,10 +6,13 @@ body, html{
   height: 100%;
 }
 
+body{
+  overflow-x:hidden;
+}
+
 #container {
   width:100%;
   min-height: 100%;
-  overflow: auto;
   overflow-x: hidden;
 }
 
@@ -20,6 +23,7 @@ img {
 
 #header_div{
   padding-top: 20px;
+  overflow-x: hidden;
 }
 
 #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar, #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #footer_social{
@@ -27,6 +31,7 @@ img {
 }
 
 #hamburger_div{
+  z-index:2;
   position:relative;
   display:inline-block;
   float:right;
@@ -43,11 +48,23 @@ img {
   transform: translate(-50%,-50%);
 }
 
+#hamburger_menu{
+  background-color: #34ebbd;
+  z-index: 1;
+  height:100%;
+  width:200px;
+  position:absolute;
+  right:-200px;
+  padding-top: 100px;
+  opacity: 0.9;
+  border-radius: 3px;
+}
+
 #logo_div{
   display:inline-block;
   float:left;
   cursor:pointer;
-  width:300px;
+  width:250px;
 }
 
 #hero{
@@ -64,9 +81,11 @@ img {
 }
 
 #main_text_mobile, #secondary_text_mobile{
+  font-family: Montserrat Alternates;
   text-align: right;
   display:block;
   margin-right: 5%;
+  text-shadow: 1px 1px 1px 1px #000000;
 }
 
 #council_container{
@@ -83,6 +102,11 @@ img {
   float:left;
   margin:10px;
   margin-top:40px;
+  cursor:pointer;
+}
+
+#test_council_1:hover{
+  box-shadow: 2px 2px 10px #000000
 }
 
 #footer {
@@ -123,12 +147,11 @@ img {
 }
 
 #footer_logo_url{
-content:url("/res/digiraati_logo_valk.png");
-
+  content:url("/res/digiraati_logo_valk.png");
 }
 /*Everything below is css for desktop view of the website.*/
 @media (min-width:800px){
-  #hamburger_div, #main_text_mobile, #secondary_text_mobile{
+  #hamburger_div, #main_text_mobile, #secondary_text_mobile, #hamburger_menu{
     display:none;
   }
 
@@ -136,19 +159,23 @@ content:url("/res/digiraati_logo_valk.png");
     display:inline-block;
   }
 
+  #main_text_desktop, #secondary_text_desktop{
+    font-family: Montserrat Alternates;
+    text-align: right;
+    display:block;
+    margin-right: 5%;
+    font-weight: bold;
+    text-shadow: 1px 1px 10px #000000;
+  }
+
   #header_navi_btns{
+    font-family: Montserrat;
     float:right;
     margin-right: 40px;
   }
   #avatar_url{
     content:url("/res/avatar.png");
   }
-  /*#logo_div{
-    display:inline-block;
-    float:left;
-    cursor:pointer;
-    width:300px;
-  }*/
 
   #header_btns{
     width:100%;
@@ -182,11 +209,12 @@ content:url("/res/digiraati_logo_valk.png");
   #hero_search_councils_btn_desktop{
     margin: auto;
     position: absolute;
-    bottom:20px;
+    bottom:50px;
     left: 50%;
     -webkit-transform: translate(-50%,0);
     transform: translate(-50%,0);
     cursor: pointer;
+    font-weight: bold;
   }
 
   #council_container{
@@ -201,11 +229,17 @@ content:url("/res/digiraati_logo_valk.png");
     display: -ms-flex;
     display: -webkit-flex;
     display: flex;
+    font-weight: bold;
   }
 
   #filter #selector, #sorter, #search{
     float:left;
     margin: 0 auto;
+    cursor: pointer;
+  }
+
+  .selector_btn:hover{
+    box-shadow: 1px 1px 5px rgba(254,4,86,1);
   }
 
   #selector #ongoing, #newest, #popularest{
@@ -237,12 +271,20 @@ content:url("/res/digiraati_logo_valk.png");
     margin-left:1px;
     padding: 5px;
     position:relative;
+  }
+
+  .sorter_active{
     background: rgba(1,175,196,1);
     border-color: white;
-    height: auto;
-    width:auto;
     border-radius: 2px;
     color: white;
+  }
+
+  .sorter_inactive{
+    background: white;
+    border-color: rgba(1,175,196,1);
+    border-radius: 2px;
+    color: rgba(1,175,196,1);
   }
 
   #filter #search {
@@ -288,5 +330,16 @@ content:url("/res/digiraati_logo_valk.png");
     margin:30px;
   }
 
+  #test_council_1{
+    border-radius: 5px;
+    height:300px;
+    width:400px;
+    backround:white;
+    border:solid;
+    float:left;
+    margin:10px;
+    margin-top:40px;
+    cursor:pointer;
+  }
 
 }

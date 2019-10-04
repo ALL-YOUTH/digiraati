@@ -20,6 +20,10 @@ app.get('/main.css', function(req, res){
   res.sendFile(path.join(__dirname + '/html/2.0/main.css'));
 });
 
+app.get('/index.js', function(req, res){
+  res.sendFile(path.join(__dirname + '/html/2.0/index.js'));
+});
+
 //DigiRaatiChat
 app.get('/chat', function(req, res){
   res.sendFile(__dirname + '/html/chat.html');
@@ -61,7 +65,6 @@ app.get('/css/*', function(req, res){
 });
 
 app.get('/res/*', function(req, res){
-  console.log("Fetching image: " + path.join(__dirname, req.path));
   res.sendFile(path.join(__dirname, req.path));
 });
 

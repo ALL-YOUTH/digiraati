@@ -14,6 +14,7 @@ var host = "localhost";
 var backup_file = path.join(__dirname, "backup.json");
 
 var log_filename = __dirname + '/logs/' + new Date().toISOString().slice(-24).replace(/\D/g,'').slice(0, 14); + ".log";
+fs.closeSync(fs.openSync(log_filename, 'w'));
 fs.writeFile(log_filename, 'Server started at: ' + timestamp() , function (err) {
   if (err) throw err;
 });
