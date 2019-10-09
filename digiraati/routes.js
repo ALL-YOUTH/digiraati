@@ -9,7 +9,19 @@ var SocketIOFile = require('socket.io-file');
 //app.use(express.static(path.join(__dirname, '/public')));
 
 app.get('/2.0/', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/2.0/index.html'));
+  res.sendFile(path.join(__dirname + '/html/index.html'));
+});
+
+app.get('/2.0/register', function(req, res){
+  res.sendFile(path.join(__dirname + '/html/register.html'));
+});
+
+app.get('/html/2.0/header.html', function(req, res){
+  res.sendFile(path.join(__dirname + '/html/header.html'));
+});
+
+app.get('/html/2.0/footer.html', function(req, res){
+  res.sendFile(path.join(__dirname + '/html/footer.html'));
 });
 
 app.get('/', function(req, res){
@@ -17,11 +29,15 @@ app.get('/', function(req, res){
 });
 
 app.get('/main.css', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/2.0/main.css'));
+  res.sendFile(path.join(__dirname + '/css/main.css'));
 });
 
 app.get('/index.js', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/2.0/index.js'));
+  res.sendFile(path.join(__dirname + '/js/index.js'));
+});
+
+app.get('/js/header.js', function(req, res){
+  res.sendFile(path.join(__dirname + '/js/header.js'));
 });
 
 //DigiRaatiChat

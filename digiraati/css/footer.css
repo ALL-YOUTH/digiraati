@@ -1,0 +1,67 @@
+#footer {
+  position: absolute;
+  width:100%;
+  min-width: 320px;
+  height: auto;
+  margin-top: 200px;
+  clear:both;
+  background-color: rgba(1,175,196,0.7);
+}
+
+#footer_container{
+  color:rgba(203,208,211,1);
+  font-weight: bold;
+  padding-bottom: 50px;
+  font-size: 15px;
+  text-align: left;
+  width:100%;
+  min-width: 320px;
+}
+
+#footer_logo{
+  margin:5px;
+}
+
+#footer_navi{
+  float:left;
+  margin:15px;
+}
+#footer_navi2{
+  float:left;
+  margin:15px;
+}
+#footer_logo_url{
+  content:url("/res/digiraati_logo_valk.png");
+}
+
+@media (min-width:800px){
+  #footer {
+    position: relative;
+    height: 170px;
+    margin-top: 200px;
+    clear:both;
+    background-color: rgba(1,175,196,0.7);
+  }
+
+  #footer_container{
+    max-width: 1000px;
+    margin:auto;
+  }
+
+  #footer_container #footer_logo{
+    float:left;
+  }
+
+  #footer_container #footer_navi{
+    float:left;
+    margin:30px;
+  }
+  #footer_container #footer_navi2{
+    float:left;
+    margin:30px;
+  }
+  #footer_container #footer_social{
+    float:left;
+    margin:30px;
+  }
+}

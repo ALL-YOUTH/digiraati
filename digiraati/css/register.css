@@ -1,0 +1,184 @@
+body, html{
+  font-family: Montserrat;
+  margin:0;
+  height: 100%;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+#register_error_text{
+  display:none;
+  color:red;
+  font-size: 15px;
+  padding-top:50px;
+}
+
+#register_container{
+  text-align: center;
+}
+
+#register_title{
+  padding-top: 20px;
+  font-size: 20px;
+  font-family: Montserrat;
+  font-weight: bold;
+}
+
+#register_hero, #register_hero_text{
+  display:none;
+}
+
+#register_container{
+  max-width: 320px;
+  margin:auto;
+}
+
+#confirm_register{
+  font-weight: bold;
+  border-radius: 5px;
+  height:40px;
+  padding:15px;
+  background-color: rgba(254,4,86,1);
+  color:white;
+}
+
+#register_inputs input[type=button]{
+  position:relative;
+  padding:5px;
+  margin-top: 30px;
+}
+
+#register_avatar_preview{
+  border:solid;
+  border-width: 1px;
+  width: 50px;
+  height: 50px;
+}
+
+#register_inputs p{
+  font-size: 13px;
+  font-family: Acumin Pro;
+  font-weight: bold;
+  text-align: left;
+  margin-left:19%;
+}
+
+#register_inputs input[type=text], input[type=email], input[type=password]{
+  position:relative;
+  width:60%;
+  border-radius: 3px;
+  height: 30px;
+}
+#register_inputs p, h1{
+  position:relative;
+  font-weight: bold;
+  margin-top:14px;
+  margin-bottom:2px;
+}
+
+@media (min-width:800px){
+  #register_hero, #register_hero_text{
+    display:block;
+  }
+
+  #register_hero{
+    position: relative;
+    height:300px;
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/res/register_hero.png");
+    background-repeat: no-repeat;
+    color:white;
+  }
+  #register_hero_text{
+    position:relative;
+    text-align: center;
+  }
+
+  #register_main_text_desktop{
+    font-size: 55px;
+    font-family: Montserrat Alternates;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  #register_secondary_text_desktop{
+    text-align: center;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+  }
+
+  #register_hero_search_councils_btn_desktop{
+    margin: auto;
+    position: absolute;
+    bottom:-30px;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    width: 130px;
+    height: auto;
+  }
+  #register_title{
+    padding-top: 50px;
+    font-size: 20px;
+    font-family: Montserrat;
+    font-weight: bold;
+  }
+  #register_container{
+    max-width: 1200px;
+    margin:auto;
+  }
+  #confirm_register{
+    font-weight: bold;
+    border-radius: 5px;
+    height:40px;
+    padding:15px;
+    background-color: rgba(254,4,86,1);
+    color:white;
+  }
+
+  #register_inputs input[type=button]{
+    position:relative;
+    padding:5px;
+    margin-top: 30px;
+  }
+
+  #register_avatar_preview{
+    border:solid;
+    border-width: 1px;
+    width: 50px;
+    height: 50px;
+  }
+
+  #register_inputs input[type=text], input[type=email], input[type=password]{
+    position:relative;
+    width:60%;
+    border-radius: 3px;
+    height: 30px;
+  }
+  #register_inputs p, h1{
+    position:relative;
+    font-weight: bold;
+    margin-top:14px;
+    margin-bottom:2px;
+  }
+
+  .active {
+    padding:5px;
+    background: rgba(254,4,86,1);
+    color:white;
+    border-radius: 5px;
+    border-width: 1px;
+    border:solid;
+    border-color: rgba(254,4,86,1);
+  }
+}

@@ -98,10 +98,15 @@ socket.on('update files', function(files){
   document.getElementById('filename').innerHTML = "";
 });
 
+function file_clicked(e){
+  $('#material-url').attr("href", "localhost:3000/files/"+e.id);
+  $('#material-url').gdocsViewer();
+}
+
 
 //This function is modified version of provided in:
 //https://github.com/mozilla/pdf.js/blob/master/examples/learning/helloworld.html
-function file_clicked(e){
+/*function file_clicked(e){
   pageNumber = 1;
   var url = 'http://localhost:3000/files/'+ e.id;
   current_file = url;
@@ -177,12 +182,7 @@ function next_page(){
 
 function prev_page(){
   display_file(pageNumber - 1);
-}
-
-function open_material(){
-  var url = "/material?material=" + council_id;
-  goToPage("/lakiteksti");
-}
+}*/
 
 function sign_in_council(){
   socket.emit('request council join', council_id, logged_in);

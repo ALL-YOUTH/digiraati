@@ -28,6 +28,23 @@ var Councils = require(path.join(__dirname + "/councils.js"));
 let users = new Users();
 let councils = new Councils();
 
+///////////////////////
+//Add a couple of test users for test purposes
+///////////////////////
+/*users.add_user("1111", "test", "F_test", "L_test", "L_test@test.com", "test");
+users.add_user("2222", "test2", "F_test", "L_test", "L_test@test.com", "test");
+users.add_user("3333", "test3", "F_test", "L_test", "L_test@test.com", "test");
+*/
+
+///////////////////////
+//Add a couple of councils for test purposes
+/*councils.add_council("AAAA", "Raati, jolla on todella pitkä nimi, että nähdään kuinka otsikko asettuu laatikkoon.", "Hehe", "test", "12.12.2012", "11:00", "13.12.2013", "12:00", "General");
+councils.add_council("BBBB", "Raatimaa", "Hehe", "test", "12.12.2012", "11:00", "13.12.2013", "12:00", "General");
+councils.add_council("CCCC", "ALL-YOUTH", "Hehe", "test", "12.12.2012", "11:00", "13.12.2013", "12:00", "General");
+*/
+///////////////////////
+
+
 //Recover digiraati from backupfile
 fs.readFile(backup_file, function (err, data) {
   if (err) {

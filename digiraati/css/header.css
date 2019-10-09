@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+
+#Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar{
+  display:none;
+}
+
+#header_div{
+  padding-top: 20px;
+  overflow-x: hidden;
+}
+
+#hamburger_div{
+  z-index:10;
+  position:relative;
+  display:inline-block;
+  float:right;
+  width:48px;
+  height:48px;
+  cursor:pointer;
+}
+
+#logo_url{
+  content:url("/res/digiraati_logo.png");
+}
+
+#hamburger_icon{
+  position:absolute;
+  top:50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+#hamburger_menu {
+  z-index: 9;
+  height:100%;
+  width:200px;
+  position:fixed;
+  right:-200px;
+  background-color: rgb(52,235,189, 0.9);
+  border-radius: 3px;
+}
+
+#hamburger_menu ul{
+  font-weight: bold;
+  padding-top: 100px;
+}
+
+#hamburger_menu ul li{
+  margin:10px;
+}
+
+#hamburger_close{
+  float:left;
+  padding:20px;
+  cursor:pointer;
+}
+
+#logo_div{
+  display:inline-block;
+  float:left;
+  cursor:pointer;
+  margin-left: 5%;
+  margin-top: 10px;
+}
+
+#logo_url{
+  width:160px;
+}
+
+#arrow_left{
+  float:left;
+  margin:10px;
+  width: 48px;
+  height: 48px;
+}
+
+#register_disclaimer{
+  text-align: center;
+  font-size: 10px;
+  margin-top: 20px;
+}
+
+@media (min-width:800px){
+
+  #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar{
+    display:inline-block;
+  }
+
+  #hamburger_div, #hamburger_menu, #arrow_left{
+    display:none;
+  }
+  #logo_url{
+    width:auto;
+  }
+
+  #header_navi_btns{
+    font-family: Montserrat;
+    float:right;
+    margin-right: 8%;
+    font-size: 13px;
+    font-weight: bold;
+    color: rgba(52,54,56,1);
+  }
+  #avatar_url{
+    content:url("/res/avatar.png");
+  }
+
+  #header_btns{
+    width:100%;
+    margin:25px;
+    margin-right:2%;
+  }
+  #header_btns span{
+    cursor:pointer;
+    margin-left: 20px;
+  }
+
+}

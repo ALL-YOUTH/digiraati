@@ -138,14 +138,7 @@ module.exports = class Councils{
   //If there are no councils, returns -1
   get_councils(){
     if(this.councils.length == 0){ return -1; }
-    var all_councils = [];
-    for(var i = 0; i < this.councils.length; ++i){
-      var council = {};
-      council["id"] = this.councils[i].get_council_id();
-      council["name"] = this.councils[i].get_council_name();
-      all_councils.push(council);
-    }
-    return all_councils;
+    return this.councils;
   }
 
   get_council_by_id(id){
