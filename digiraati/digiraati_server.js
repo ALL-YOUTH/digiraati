@@ -1,4 +1,3 @@
-
 var path = require('path');
 var util = require('util');
 var SocketIOFile = require('socket.io-file');
@@ -156,7 +155,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('register attempt', function(data){
-    if(users.get_user(data["uname"]) != null){ //Username already in use
+    if(users.get_user(data["username"]) != null){ //Username already in use
       socket.emit("invalid username");
       return;
     }
@@ -164,12 +163,12 @@ io.on('connection', function(socket){
       socket.emit("invalid email");
       return;
     }
-    ret_val = users.add_user(id=data["id"], uname=data["uname"],
-                              fname=data["fname"], lname=data["lname"],
-                              email=data["email"], pw=data["p"]);
+    ret_val = users.add_user(id=data["id"], uname=data["username"],
+                              fname=data["firstname"], lname=data["lastname"],
+                              email=data["email"], pw=data["password1"]);
     if(ret_val != -1){
-      socket.emit('register success', data["uname"]);
-      server_log(ip + ": " + data["uname"] + " registered succesfully");
+      socket.emit('register success', data["username"]);
+      server_log(ip + ": " + data["username"] + " registered succesfully");
     }
     else{
       socket.emit('invalid nickname');

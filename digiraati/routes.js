@@ -12,6 +12,10 @@ app.get('/2.0/', function(req, res){
   res.sendFile(path.join(__dirname + '/html/index.html'));
 });
 
+app.get('/', function(req, res){
+  res.sendFile(path.join(__dirname + '/html/index.html'));
+});
+
 app.get('/2.0/register', function(req, res){
   res.sendFile(path.join(__dirname + '/html/register.html'));
 });

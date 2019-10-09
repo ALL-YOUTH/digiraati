@@ -81,6 +81,90 @@
   margin-top: 20px;
 }
 
+#login_div{
+  position:fixed;
+  top:100px;
+  width:320px;
+  height:360px;
+  display:none;
+  z-index:15;
+  background-color: rgb(95,213,227,1);
+  border-radius: 3px;
+  box-shadow: 1px 1px 5px rgb(1, 175, 196, 1);
+}
+
+#login_div #login_title{
+  display:inline-block;
+  padding:10px;
+  font-weight: bold;
+}
+
+#login_div a{
+  margin-right: 10px;
+  float:right;
+  padding:10px;
+}
+
+#login_div #header_title{
+  font-family: Montserrat;
+  margin-top:300px;
+  margin-left:10px;
+  color:rgba(0,96,115,1);
+}
+
+#login_div #separator{
+  background-color: rgb(255,255,255,0.5);
+  height:2px;
+  margin:0;
+}
+
+#login_div p{
+  margin:0;
+  margin-left: 10%;
+  margin-top:20px;
+  font-weight: bold;
+  font-family: Montserrat;
+}
+
+#login_div input{
+  width:80%;
+  margin-left: 10%;
+  margin-top:5px;
+  border-radius: 5px;
+  height:40px;
+  border-width: 0.5px;
+  border-color: rgb(95,213,227,1);
+}
+
+.input-icons i {
+  position: absolute;
+}
+
+.input-icons {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.icon {
+  padding-top: 17px;
+  padding-left: 10px;
+  min-width: 40px;
+  margin-left: 10%;
+  color:rgb(0, 96, 115);
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+#login_confirm{
+  color:white;
+  background-color: rgb(1, 175, 196, 1);
+  font-weight: bold;
+}
+
 @media (min-width:800px){
 
   #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar{
@@ -114,6 +198,19 @@
   #header_btns span{
     cursor:pointer;
     margin-left: 20px;
+  }
+
+  #login_div{
+    right:10%;
+    position:fixed;
+    top:100px;
+    width:300px;
+    height:360px;
+    display:none;
+    z-index:15;
+    background-color: rgb(95,213,227,1);
+    border-radius: 3px;
+    box-shadow: 1px 1px 10px rgb(0, 0, 0, 1);
   }
 
 }

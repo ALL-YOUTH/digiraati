@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/header.css" type="text/css">
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <header id="header">
   <div id="header_div">
     <div id="header_btns">
@@ -15,7 +16,7 @@
           <img id="avatar_url"></img>
         </span>
         <div id="hamburger_div">
-          <span class="fas fa-bars" id="hamburger_icon"></span>
+          <span class="fas fa-bars fa-2x" id="hamburger_icon"></span>
         </div>
         <div id="hamburger_menu">
           <div id="hamburger_close" class="fas fa-times"></div>
@@ -27,6 +28,18 @@
           <ul>
       </div>
     </div>
+  </div>
+  <div id="login_div" class="input-icons">
+    <div id="login_title">KIRJAUDU SISÄÄN</div>
+    <a class="fas fa-times" id="login_close_btn"></a>
+    <hr id="separator"></hr>
+    <p>E-MAIL</p>
+    <i class="fas fa-envelope icon"></i>
+    <input class="input-field" type="text" id="login_email"></input>
+    <p>SALASANA</p>
+    <i class="fas fa-unlock-alt icon"></i>
+    <input class="input-field" type="password" id="login_password"></input><br><br>
+    <input type="button" id="login_confirm" value="KIRJAUDU"></input>
   </div>
 </header>
 <script src="../js/common.js"></script>

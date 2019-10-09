@@ -67,41 +67,10 @@ function home(){
 ///////////////Login functions     //////////////
 /////////////////////////////////////////////////
 
-socket.on('invalid login', function(){
-  var txt = "<h3 style=\"color:red\">Tarkista käyttäjänimi, sähköposti ja salasana.</h3>";
-  document.getElementById('login_instruction').innerHTML = txt;
-});
-
-socket.on('invalid nickname', function(){
-  var txt = "<h3 style=\"color:red\">Tarkista käyttäjänimi, sähköposti ja salasana.</h3>";
-  document.getElementById('login_instruction').innerHTML = txt;
-});
-
-function login_modal(){
-  document.getElementById('login_instruction').innerHTML = "Kirjaudu sisään Digiraati-palveluun";
-  document.getElementById('login_modal').style.display = "block";
-}
-
-function cancel_login_modal(){
-  document.getElementById('user_password').value = "";
-  document.getElementById('user_username_email').value = "";
-  document.getElementById('login_modal').style.display = "none";
-  document.getElementById('login_instruction').innerHTML = "Kirjaudu sisään Digiraati-palveluun";
-}
-
 
 socket.on('login success', function(name){
   logged_in = name;
-  try{
-    document.getElementById('login_modal').style.display = "none";
-    document.getElementById('login_btn').style.display = "none";
-    document.getElementById('homepage_profile_element').style.display = "inline-block";
-    document.getElementById('raatini_btn').style.display = "inline-block";
-    document.getElementById('user_username_email').value = "";
-    document.getElementById('user_password').value = "";
-    document.getElementById('register_btn').style.display = "none";
-  }
-  catch{ } // Nothing in the catch just to avoid chat.js not having some of the modal elements
+  console.log("logged in eeeeeeee");
 });
 
 socket.on('not logged', function(){
