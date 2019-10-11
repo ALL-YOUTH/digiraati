@@ -20,6 +20,14 @@ app.get('/2.0/register', function(req, res){
   res.sendFile(path.join(__dirname + '/html/register.html'));
 });
 
+app.get('/html/lobby', function(req, res){
+  res.sendFile(path.join(__dirname + '/html/lobby.html'));
+});
+
+app.get('/test.pdf', function(req, res){
+  res.sendFile(path.join(__dirname + '/test.pdf'));
+});
+
 app.get('/html/2.0/header.html', function(req, res){
   res.sendFile(path.join(__dirname + '/html/header.html'));
 });

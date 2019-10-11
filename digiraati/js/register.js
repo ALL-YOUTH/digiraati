@@ -55,7 +55,7 @@ $('#confirm_register').click(function(){
 
 socket.on('register success', function(){
   alert("Rekisteröinti onnistui!");
-  goToPage("/2.0");
+  goToPage("/");
 });
 
 socket.on('invalid username', function(){
@@ -66,7 +66,7 @@ socket.on('invalid username', function(){
 
 socket.on('invalid email', function(){
   console.log("huono email");
-  $('#register_error_text').html("Käyttäjänimi on varattu");
+  $('#register_error_text').html("Sähköposti on jo käytössä");
   color_input_text("#email_input", "red");
   $('#register_error_text').css("display", "block");
 });

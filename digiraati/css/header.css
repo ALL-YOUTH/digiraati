@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
-#Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar{
+#Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar, #Kirjaudu_ulos_btn{
   display:none;
 }
 
@@ -44,6 +44,7 @@
 #hamburger_menu ul{
   font-weight: bold;
   padding-top: 100px;
+  cursor:pointer;
 }
 
 #hamburger_menu ul li{
@@ -56,12 +57,21 @@
   cursor:pointer;
 }
 
+#hamburger_avatar{
+  position:absolute;
+  top:60px;
+  left:40px;
+}
+
+#hamburger_avatar_url{
+  content:url("/res/avatar.png");
+}
+
 #logo_div{
   display:inline-block;
   float:left;
   cursor:pointer;
   margin-left: 5%;
-  margin-top: 10px;
 }
 
 #logo_url{
@@ -81,18 +91,22 @@
   margin-top: 20px;
 }
 
-#login_div{
-  position:fixed;
-  top:100px;
-  width:320px;
-  height:360px;
-  display:none;
-  z-index:15;
-  background-color: rgb(95,213,227,1);
-  border-radius: 3px;
-  box-shadow: 1px 1px 5px rgb(1, 175, 196, 1);
+@media (max-width:800px){
+  #login_div{
+    left:50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+    position:fixed;
+    top:100px;
+    width:320px;
+    height:360px;
+    display:none;
+    z-index:15;
+    background-color: rgb(95,213,227,1);
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px rgb(1, 175, 196, 1);
+  }
 }
-
 #login_div #login_title{
   display:inline-block;
   padding:10px;
@@ -167,7 +181,7 @@
 
 @media (min-width:800px){
 
-  #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar{
+  #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Kirjaudu_ulos_btn, #Profile_avatar{
     display:inline-block;
   }
 
@@ -186,6 +200,7 @@
     font-weight: bold;
     color: rgba(52,54,56,1);
   }
+
   #avatar_url{
     content:url("/res/avatar.png");
   }
@@ -198,10 +213,13 @@
   #header_btns span{
     cursor:pointer;
     margin-left: 20px;
+    color: rgba(1,20,20,1);
   }
 
   #login_div{
     right:10%;
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
     position:fixed;
     top:100px;
     width:300px;
@@ -211,6 +229,16 @@
     background-color: rgb(95,213,227,1);
     border-radius: 3px;
     box-shadow: 1px 1px 10px rgb(0, 0, 0, 1);
+  }
+
+  .header_active{
+    padding:5px;
+    background: rgba(1,205,226,0.5);
+    color:white;
+    border-radius: 5px;
+    border-width: 1px;
+    border:solid;
+    border-color: white;
   }
 
 }

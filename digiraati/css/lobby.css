@@ -1,0 +1,28 @@
+#pdf{
+  width:80%;
+  height:800px;
+  border:0px;
+  border-color:white;
+}
+
+#comment_canvas{
+  position:absolute;
+  z-index: 8;
+  opacity:0.5;
+}
+
+#comment_layer{
+  position:absolute;
+  width:80%;
+  height: 100%;
+  z-index:7;
+}
+
+.comment{
+  position:absolute;
+  border:dotted;
+  border-color: black;
+  background-color: yellow;
+  z-index: 8;
+  opacity:0.5;
+}

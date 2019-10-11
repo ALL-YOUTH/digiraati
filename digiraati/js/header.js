@@ -1,12 +1,36 @@
 var hamburger_menu_open = false;
 var socket = io();
+var logged_in = "";
+var view = "";
+
+socket.emit('check login');
+
+if($(window).width() < 800){
+  view = "mobile";
+}
+else{
+  view = "desktop";
+}
+
+window.onresize = function(){
+  if(view == "desktop" && $(window).width() < 800){
+    socket.emit('check login');
+    view = "mobile";
+  }
+  else if(view == "mobile" && $(window).width() > 799){
+    socket.emit('check login');
+    view = "desktop";
+  }
+}
+
+$('#Kirjaudu_ulos_btn').hide();
 
 $("#Etusivu_btn").click(function(){
-  goToPage("/2.0");
+  goToPage("/");
 });
 
 $("#logo_div").click(function(){
-  goToPage("/2.0");
+  goToPage("/");
 });
 
 $("#Rekistroidy_btn").click(function(){
@@ -37,7 +61,7 @@ $('#hamburger_close').click(function(){
 });
 
 $('#hamburger_index').click(function(){
-  goToPage("/2.0");
+  goToPage("/");
 });
 
 $('#hamburger_register').click(function(){
@@ -69,13 +93,71 @@ $('#Kirjaudu_btn').click(function(){
   open_login_menu();
 });
 
+$('#Kirjaudu_ulos_btn').click(function(){
+  socket.emit('logout attempt', logged_in);
+});
+
+$('#hamburger_signout').click(function(){
+  socket.emit('logout attempt', logged_in);
+});
+
 $('#login_confirm').click(function(){
   var email = $('#login_email').val();
   var password = $('#login_password').val();
   socket.emit('login attempt', email, password);
 });
 
-socket.on("login success", function(){
-  console.log("hyvin kirjauduttu sisään");
-  $('#login_div').css("display", "none");
+function mobile_header_fix(){
+  $('#Kirjaudu_btn').hide();
+  $('#Kirjaudu_ulos_btn').hide();
+}
+
+socket.on("login success", function(name){
+  logged_in = name;
+  if($(window).width() > 799){
+    $('#login_div').css("display", "none");
+    $('#Profile_avatar').show();
+    $('#Kirjaudu_btn').hide();
+    $('#Kirjaudu_ulos_btn').show();
+  }
+  else{
+    $('#hamburger_avatar').show()
+    $('#login_div').css("display", "none");
+    $('#hamburger_signin').hide();
+    $('#hamburger_signout').show();
+    $('#Kirjaudu_btn').hide();
+    $('#Kirjaudu_ulos_btn').hide();
+  }
+});
+
+socket.on('logout success', function(){
+  logged_in = "";
+  if($(window).width() > 799){
+    $('#Profile_avatar').hide();
+    $('#Kirjaudu_btn').show();
+    $('#Kirjaudu_ulos_btn').hide();
+  }
+  else{
+    $('#hamburger_avatar').hide()
+    $('#hamburger_signin').show();
+    $('#hamburger_signout').hide();
+    $('#Kirjaudu_btn').hide();
+    $('#Kirjaudu_ulos_btn').hide();
+  }
+});
+
+socket.on('not logged', function(){
+  logged_in = "";
+  if($(window).width() > 799){
+    $('#Profile_avatar').hide();
+    $('#Kirjaudu_btn').show();
+    $('#Kirjaudu_ulos_btn').hide();
+  }
+  else{
+    $('#hamburger_avatar').hide()
+    $('#hamburger_signin').show();
+    $('#hamburger_signout').hide();
+    $('#Kirjaudu_btn').hide();
+    $('#Kirjaudu_ulos_btn').hide();
+  }
 });

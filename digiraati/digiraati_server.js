@@ -212,6 +212,7 @@ io.on('connection', function(socket){
   socket.on('logout attempt', function(name){
     users.logout_user(name);
     server_log(ip + ": " + name + " logged out");
+    socket.emit('logout success');
     update_page();
     logged_in = "";
   });

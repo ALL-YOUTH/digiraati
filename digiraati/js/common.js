@@ -70,7 +70,6 @@ function home(){
 
 socket.on('login success', function(name){
   logged_in = name;
-  console.log("logged in eeeeeeee");
 });
 
 socket.on('not logged', function(){
