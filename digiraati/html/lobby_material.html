@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/css/lobby_material.css" type="text/css">
+  <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+	<title>Digiraati 2.0</title>
+</head>
+<body>
+	<div id="container">
+		<header id="header">
+		</header>
+    <div id="comment_view">
+			<!--<div id="comment_layer"></div>
+      <iframe id="pdf" src="/test.pdf"></iframe>-->
+			<div>
+				<div id="comment_layer"></div>
+			  <button id="prev">Previous</button>
+			  <button id="next">Next</button>
+			  &nbsp; &nbsp;
+			  <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+			</div>
+
+			<canvas id="the-canvas"></canvas>
+			<div id="comment_list_div">
+				<div id="comment_list_title">Kommentit</div>
+				<div id="comment_list"></div>
+			</div>
+    <footer id="footer">
+  	</footer>
+  </div>
+  <script src="../js/common.js"></script>
+  <script src="../js/lobby_material.js"></script>
+</body>

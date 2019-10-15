@@ -21,7 +21,7 @@ app.get('/2.0/register', function(req, res){
 });
 
 app.get('/html/lobby', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/lobby.html'));
+  res.sendFile(path.join(__dirname + '/html/lobby_material.html'));
 });
 
 app.get('/test.pdf', function(req, res){
@@ -67,9 +67,18 @@ app.get('/info', function(req, res){
   res.sendFile(__dirname + '/html/info.html');
 });
 
-//Info page
-app.get('/lobby', function(req, res){
+//Council page
+app.get('/lobby/:id/material', function(req, res){
+  res.sendFile(__dirname + '/html/lobby_material.html');
+});
+app.get('/lobby/:id/index', function(req, res){
   res.sendFile(__dirname + '/html/lobby.html');
+});
+app.get('/lobby/:id/chat', function(req, res){
+  res.sendFile(__dirname + '/html/lobby_chat.html');
+});
+app.get('/lobby/:id/stats', function(req, res){
+  res.sendFile(__dirname + '/html/lobby_stats.html');
 });
 
 app.get('/socket.io.js', (req, res, next) => {
@@ -84,17 +93,21 @@ app.get('/files/:id', (req, res, next) => {
   return res.sendFile(path.join(__dirname, "/files/" + fid));
 });
 
-app.get('/js/*', function(req, res){
-  res.sendFile(__dirname + req.path);
+app.get('/js/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/js/" + fid));
 });
 
-app.get('/css/*', function(req, res){
-  res.sendFile(__dirname + req.path);
+app.get('/css/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/css/" + fid));
 });
 
-app.get('/res/*', function(req, res){
-  res.sendFile(path.join(__dirname, req.path));
+app.get('/res/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/res/" + fid));
 });
+
 
 ///////////////////////////////////////////////////////
 // images

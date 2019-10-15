@@ -1,0 +1,92 @@
+#comment_view{
+  height:100%;
+  overflow-y: scroll;
+}
+
+body{
+  overflow:hidden;
+}
+
+#pdf{
+  width:80%;
+  height:10000px;
+  border:0px;
+  border-color:white;
+  overflow-y:hidden;
+}
+
+#comment_canvas{
+  width:80%;
+  position:absolute;
+  z-index: 8;
+}
+
+#comment_layer{
+  position:absolute;
+  width:77%;
+  height: 10000px;
+  z-index:7;
+}
+
+.temp_comment{
+  border:dashed;
+  position:relative;
+  border-width:2px;
+  border-color:black;
+  background-color: rgb(200,200,200,0.5);
+}
+
+.comment{
+  position:relative;
+  border-color: black;
+  background-color: rgb(255,255,0, 0.5);
+  z-index: 9;
+}
+
+.comment_close_btn{
+  float:right;
+  right:-15px;
+  top:-15px;
+  border-radius:50%;
+  background-color: rgb(200,200,200,0.5);
+  position:relative;
+  z-index: 10;
+  color:red;
+  cursor:pointer;
+  padding:2px;
+}
+
+.comment_add_btn{
+  float:left;
+  left:-15px;
+  top:-15px;
+  background-color: rgb(200,200,200,0.5);
+  color:green;
+  border-radius:50%;
+  position:relative;
+  z-index: 10;
+  cursor:pointer;
+  padding:2px;
+}
+
+#comment_list_div {
+  width:15%;
+  float:right;
+  right:30px;
+}
+#comment_list_title{
+  text-align: center;
+}
+
+.comment_in_list{
+  position:relative;
+  margin:3px;
+  width:100%;
+  height: auto;
+  border:solid;
+  border-radius:3px;
+  border-width: 0px;
+  background:rgb(200,200,200, 0.5);
+  cursor:pointer;
+  padding:5px;
+}

@@ -1,28 +1,160 @@
-#pdf{
-  width:80%;
-  height:800px;
-  border:0px;
-  border-color:white;
+@import url("https://use.typekit.net/gbv0ney.css");
+
+body{
+  max-width:1200px;
+  margin:auto;
 }
 
-#comment_canvas{
-  position:absolute;
-  z-index: 8;
-  opacity:0.5;
+#lobby_container{
+  max-width:1200px;
+  margin:auto;
 }
 
-#comment_layer{
-  position:absolute;
-  width:80%;
-  height: 100%;
-  z-index:7;
+#lobby_title{
+  margin-top:50px;
+  margin-left:5%;
+  position:relative;
+  font-size: 32px;
+  font-family: Montserrat;
+  font-weight: bold;
+  color: rgba(32,33,36,1);
 }
 
-.comment{
+#lobby_timetable{
+  font-family: normal;
+  font-size:28px;
+  color: rgba(0,96,115,1);
+  margin-top:20px;
+  margin-left:5%;
+}
+
+#lobby_milestones{
+  margin-top:20px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("/res/temp_milestone.png");
+  height:130px;
+  margin-left:5%;
+}
+
+#lobby_navigation {
+  position:relative;
+  padding-left: 5%;
+  height:auto;
+  width:100%;
+  background-color: rgb(255,255,255,1);
+}
+#lobby_navigation span{
+  margin:10px;
+  font-size:11px;
+  font-weight: bold;
+  font-family: Montserrat;
+  padding:10px;
+  padding-left:20px;
+  padding-right:20px;
+  border-radius:3px;
+  cursor:pointer;
+}
+
+div .active{
+  background-color: rgba(235,237,237,1);
+}
+div .inactive{
+  background-color: rgba(255,255,255,1);
+}
+
+#lobby_content_background{
+  margin-top:10px;
+  width:100%;
+  height:auto;
+  background-color: rgba(246,248,249,1);
+}
+
+#lobby_content{
+  width:100%;
+  margin-left:5%;
+  max-width:1200px;
+}
+
+#lobby_content_description{
   position:absolute;
-  border:dotted;
-  border-color: black;
-  background-color: yellow;
-  z-index: 8;
-  opacity:0.5;
+  float:left;
+  width:30%;
+  height:100%;
+  margin-top:20px;
+  border-style: none solid none none;
+  border-color: rgb(0,0,0,0.1);
+}
+
+#lobby_description_title{
+  line-height: 42px;
+  text-align: left;
+  font-family: acumin-pro, sans-serif;
+  font-weight: bold;
+  font-style: normal;
+  font-size:32px;
+  padding-right:10px;
+}
+
+#lobby_description{
+  font-family:Helvetica;
+  color:rgba(166,173,180,1);
+  font-size:14px;
+  line-height: 26px;
+  margin-top:30px;
+}
+
+#lobby_social{
+  border-style: none none dashed none;
+  border-color: rgb(0,0,0,0.1);
+  padding-bottom:30px;
+  padding-top:30px;
+}
+
+#lobby_social span{
+  margin:5px;
+}
+
+#lobby_creator_title{
+  line-height: 26px;
+  font-family: acumin-pro;
+  font-style:normal;
+  font-weight: bold;
+  font-size:16px;
+  color:rgba(32,33,36,1);
+  margin-top:30px;
+}
+
+#lobby_creator{
+  line-height: 26px;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 13px;
+  color:rgba(166,173,180,1);
+  margin-top:5px;
+  margin-left:5px;
+}
+
+#lobby_tags{
+  margin-top:30px;
+}
+
+.lobby_tag{
+  display:inline-block;
+  text-align: center;
+  font-family: Helvetica;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  padding: 4px;
+  color: rgba(1,175,196,1);
+  border: 1px solid !important;
+  border-color: rgb(1, 175, 196);
+  border-radius: 3px;
+  border: rgb(1, 175, 196);
+  background-color: white;
+  margin-top:3px;
+  margin-left:3px;
 }

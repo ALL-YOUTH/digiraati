@@ -25,13 +25,14 @@ function add_class_innerhtml(c, html){
 function create_council_face(c){
   var res = document.createElement('div');
   res.classList.add('council_box');
-  res.appendChild(add_class_innerhtml(["council_picture"], ""));
-  res.appendChild(add_class_innerhtml(["council_title"], c["name"]));
-  res.appendChild(add_class_innerhtml(["council_description"], c["description"]));
-  res.appendChild(add_class_innerhtml(["council_likes", "far", "fa-thumbs-up"], 0));
-  res.appendChild(add_class_innerhtml(["council_dislikes", "far", "fa-thumbs-down"], 0));
-  res.appendChild(add_class_innerhtml(["council_people", "fas", "fa-users"], c["users"].length));
-  res.appendChild(add_class_innerhtml(["council_time", "far", "fa-clock"], c["startdate"] + " - "));
+  res.id = c["id"];
+  res.appendChild(add_class_innerhtml(["council_picture", "council_btn"], ""));
+  res.appendChild(add_class_innerhtml(["council_title", "council_btn"], c["name"]));
+  res.appendChild(add_class_innerhtml(["council_description", "council_btn"], c["description"]));
+  res.appendChild(add_class_innerhtml(["council_likes", "far", "fa-thumbs-up", "council_btn"], 0));
+  res.appendChild(add_class_innerhtml(["council_dislikes", "far", "fa-thumbs-down", "council_btn"], 0));
+  res.appendChild(add_class_innerhtml(["council_people", "fas", "fa-users", "council_btn"], c["users"].length));
+  res.appendChild(add_class_innerhtml(["council_time", "far", "fa-clock", "council_btn"], c["startdate"] + " - "));
   return res;
 }
 
@@ -48,6 +49,11 @@ function inactivate_filter(){
   $('.selector_btn').removeClass("active");
   $('.selector_btn').addClass("inactive");
 }
+
+$(document).on('click', '.council_btn', function(e){
+  var parentID = $(this).parent().attr('id');
+  goToPage("/lobby/"+parentID+"/index");
+});
 
 $('.selector_btn').click(function(){
   inactivate_filter();

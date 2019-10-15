@@ -45,7 +45,7 @@ class File{
 //Class for one chat room
 class Council{
   constructor(id, name, description, creator, startdate, starttime,
-              enddate, endtime, userlimit=-1, tags){
+              enddate, endtime, userlimit=-1, tags, likes, dislikes){
     this.id = id;
     this.name = name;
     this.description = description;
@@ -61,6 +61,8 @@ class Council{
     this.messages = [];
     this.files = [];
     this.comments = [];
+    this.likes = likes;
+    this.dislikes = dislikes;
   }
 
   get_council_name(){ return this.name; }
@@ -130,7 +132,7 @@ module.exports = class Councils{
     let new_council = new Council(id=id, name=name,
       description=description, creator=creator,
       startdate=startdate, starttime=starttime, enddate=enddate,
-      endtime=endtime, tags=tags, userlimit=userlimit);
+      endtime=endtime, userlimit=userlimit, tags=tags);
     this.councils.push(new_council);
   }
 
@@ -211,21 +213,7 @@ module.exports = class Councils{
     let council = this.get_council_by_id(id);
     var council_data = {};
     if(council == -1){ return null; }
-    else{
-      council_data["title"] = council.get_council_name();
-      council_data["description"] = council.get_council_description();
-      council_data["creator"] = council.get_council_creator();
-      council_data["startdate"] = council.get_council_startdate();
-      council_data["starttime"] = council.get_council_starttime();
-      council_data["enddate"] = council.get_council_enddate();
-      council_data["endtime"] = council.get_council_endtime();
-      council_data["users"] = council.get_council_users();
-      council_data["userlimit"] = council.get_council_userlimit();
-      council_data["tags"] = council.get_council_tags();
-      council_data["files"] = council.get_council_files();
-    }
-
-    return council_data;
+    return council;
   }
 
   sign_user_in_council(cid, uid){
