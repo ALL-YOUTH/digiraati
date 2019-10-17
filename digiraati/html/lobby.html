@@ -9,10 +9,9 @@
 	<title>Digiraati 2.0</title>
 </head>
 <body>
-	<div id="container">
-		<header id="header">
-		</header>
-
+	<header id="header">
+	</header>
+	<div id="container" class="wrapper">
 		<div id="lobby_container">
 			<div id="lobby_header">
 				<div id="lobby_title"></div>
@@ -20,9 +19,9 @@
 				<div id="lobby_milestones"></div>
 
 				<div id="lobby_navigation">
-					<span class="active" id="lobby_home_btn">Pääsivu</span>
-					<span class="inactive" id="lobby_chat_btn">Keskustelu</span>
-					<span class="inactive" id="lobby_document.btn">Lue asiakirja</span>
+					<div class="active" id="lobby_home_btn">Pääsivu</div>
+					<div class="inactive" id="lobby_chat_btn">Keskustelu</div>
+					<div class="inactive" id="lobby_document_btn">Lue asiakirja</div>
 				</div>
 			</div>
 			<div id="lobby_content_background">
@@ -39,14 +38,20 @@
 						<div class="far fa-clock" id="lobby_creator">3h tuntia sitten: Paavo Pesusieni</div>
 						<div id="lobby_tags"></div>
 					</div>
-					<div id="lobby_recent_activity"></div>
+					<div id="lobby_recent_activity">
+						<div id="lobby_latest_messages_title" class="lobby_title_font">Viimeisimmät viestit</div>
+						<div id="lobby_latest_messages"></div>
+						<div id="lobby_latest_participants_title" class="lobby_title_font">Uusimmat jäsenet</div>
+						<div id="lobby_latest_participants"></div>
+					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-    <footer id="footer">
-  	</footer>
-  </div>
+  <footer id="footer">
+  </footer>
+
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>

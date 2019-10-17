@@ -1,12 +1,13 @@
 var socket = io();
 var host = socket["io"]["uri"] + ":" + location.port;
+var council = "";
 
 $(function(){
-  $('#header').load(host + "/html/2.0/header.html");
-  $('#footer').load(host + "/html/2.0/footer.html");
+  $('#header').load(host + "/html/header.html");
+  $('#footer').load(host + "/html/footer.html");
 
-  var id = window.location.href.split("/").slice(-2)[0];
-  socket.emit("request council data", id);
+  council = window.location.href.split("/").slice(-2)[0];
+  socket.emit("request council data", council);
 });
 
 function uniqId() {
@@ -14,8 +15,7 @@ function uniqId() {
 }
 
 socket.on('council data', function(data){
-  console.log(data);
-  $('#lobby_title').html(data["title"]);
+  $('#lobby_title').html(data["name"]);
   $('#lobby_timetable').html(data["startdate"] + " " + data["starttime"]
                         + " - " + data["enddate"] + " " + data["endtime"]);
   $('#lobby_description_title').html(data["name"]);
@@ -26,4 +26,12 @@ socket.on('council data', function(data){
     tag.innerHTML = data["tags"][i];
     document.getElementById("lobby_tags").appendChild(tag);
   }
+});
+
+$('#lobby_chat_btn').click(function(){
+  goToPage("/lobby/" + council + "/chat");
+});
+
+$('#lobby_document_btn').click(function(){
+  goToPage("/lobby/" + council + "/material");
 });

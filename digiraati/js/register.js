@@ -1,8 +1,8 @@
 var socket = io();
 
 $(function(){
-  $('#header').load(host + "/html/2.0/header.html");
-  $('#footer').load(host + "/html/2.0/footer.html");
+  $('#header').load(host + "/html/header.html");
+  $('#footer').load(host + "/html/footer.html");
 })
 
 function initial_register_text_inputs(){
@@ -65,7 +65,6 @@ socket.on('invalid username', function(){
 });
 
 socket.on('invalid email', function(){
-  console.log("huono email");
   $('#register_error_text').html("Sähköposti on jo käytössä");
   color_input_text("#email_input", "red");
   $('#register_error_text').css("display", "block");

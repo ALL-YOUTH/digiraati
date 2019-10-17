@@ -128,7 +128,7 @@ module.exports = class Councils{
   }
 
   add_council(id, name, description, creator, startdate,
-              starttime, enddate, endtime, userlimit=-1, tags){
+              starttime, enddate, endtime, userlimit=-1, tags, files, likes, dislikes){
     let new_council = new Council(id=id, name=name,
       description=description, creator=creator,
       startdate=startdate, starttime=starttime, enddate=enddate,

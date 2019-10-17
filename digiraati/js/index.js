@@ -4,8 +4,8 @@ var socket = io();
 var host = socket["io"]["uri"] + ":" + location.port;
 
 $(function(){
-  $('#header').load(host + "/html/2.0/header.html");
-  $('#footer').load(host + "/html/2.0/footer.html");
+  $('#header').load(host + "/html/header.html");
+  $('#footer').load(host + "/html/footer.html");
   socket.emit('request councils update');
 });
 
@@ -38,7 +38,7 @@ function create_council_face(c){
 
 function display_councils(councils){
   var councils_list = document.getElementById('council_list');
-  //clear_child_elements(councils_element);
+  clear_child_elements(councils_list);
   for(i = 0; i < councils.length; ++i){
     var new_elem = create_council_face(councils[i]);
     councils_list.appendChild(new_elem);
@@ -72,4 +72,8 @@ $('.sorter_btn').click(function(){
   $(this).removeClass("sorter_inactive");
   $(this).addClass("sorter_active");
   //TODO arrange councils here
+});
+
+$('#hero_search_councils_btn_desktop').click(function(){
+  goToPage("/search");
 });

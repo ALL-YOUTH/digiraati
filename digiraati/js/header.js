@@ -34,7 +34,7 @@ $("#logo_div").click(function(){
 });
 
 $("#Rekistroidy_btn").click(function(){
-  goToPage("/2.0/register");
+  goToPage("/register");
 });
 
 function open_hamburger_menu(){

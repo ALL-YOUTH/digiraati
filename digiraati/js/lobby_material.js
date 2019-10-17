@@ -19,8 +19,8 @@ var pdfDoc = null,
 
 
 $(function(){
-  $('#header').load(host + "/html/2.0/header.html");
-  $('#footer').load(host + "/html/2.0/footer.html");
+  $('#header').load(host + "/html/header.html");
+  $('#footer').load(host + "/html/footer.html");
   $('#comment_view').css("height", $(window).height()-100);
 });
 

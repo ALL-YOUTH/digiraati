@@ -8,51 +8,19 @@ var SocketIOFile = require('socket.io-file');
 
 //app.use(express.static(path.join(__dirname, '/public')));
 
-app.get('/2.0/', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/index.html'));
-});
-
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname + '/html/index.html'));
-});
-
-app.get('/2.0/register', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/register.html'));
-});
-
-app.get('/html/lobby', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/lobby_material.html'));
 });
 
 app.get('/test.pdf', function(req, res){
   res.sendFile(path.join(__dirname + '/test.pdf'));
 });
 
-app.get('/html/2.0/header.html', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/header.html'));
-});
-
-app.get('/html/2.0/footer.html', function(req, res){
-  res.sendFile(path.join(__dirname + '/html/footer.html'));
-});
-
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname + '/html/home.html'));
 });
 
-app.get('/main.css', function(req, res){
-  res.sendFile(path.join(__dirname + '/css/main.css'));
-});
-
-app.get('/index.js', function(req, res){
-  res.sendFile(path.join(__dirname + '/js/index.js'));
-});
-
-app.get('/js/header.js', function(req, res){
-  res.sendFile(path.join(__dirname + '/js/header.js'));
-});
-
-//DigiRaatiChat
+//DigiRaatiChat OLD
 app.get('/chat', function(req, res){
   res.sendFile(__dirname + '/html/chat.html');
 });
@@ -66,6 +34,17 @@ app.get('/register', function(req, res){
 app.get('/info', function(req, res){
   res.sendFile(__dirname + '/html/info.html');
 });
+
+//Council search page
+app.get('/search', function(req, res){
+  res.sendFile(__dirname + '/html/search.html');
+});
+
+//Create council page
+app.get('/create', function(req, res){
+  res.sendFile(__dirname + '/html/create.html');
+});
+
 
 //Council page
 app.get('/lobby/:id/material', function(req, res){
@@ -96,6 +75,11 @@ app.get('/files/:id', (req, res, next) => {
 app.get('/js/:id', (req, res, next) => {
   var fid = req.params.id;
   return res.sendFile(path.join(__dirname, "/js/" + fid));
+});
+
+app.get('/html/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/html/" + fid));
 });
 
 app.get('/css/:id', (req, res, next) => {
