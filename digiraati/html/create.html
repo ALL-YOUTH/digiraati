@@ -15,8 +15,30 @@
 				<div id="hero_text_area">
 					<div id="hero_main_text">Luo uusia raateja</div>
 					<div id="hero_secondary_text">Digiraati.fi -palvelussa voit hakea digitaalisia kansalaisraateja</div>
-					<div id="hero_search_councils_btn">Hae raateja</div>
+					<div id="hero_create_councils_btn">Hae raateja</div>
 				</div>
+			</div>
+			<div id="create_container">
+				<form>
+					<div id="create_container_title">LUO UUSI RAATI</div>
+					<div class="create_text" id="create_name_title">Raadin nimi</div>
+					<textarea id="name_input" type="text"></textarea><br>
+					<div class="create_text" id="create_tag_title">Aihepiiri</div>
+					<textarea id="word_search" type="text"></textarea><br>
+					<div class="create_text" id="create_description_title">Raadin kuvaus</div>
+					<textarea id="create_description_text_input"></textarea><br>
+					<div class="create_text" id="crate_open_closed_title">Raadin luonne<br>
+						<input type="radio" name="closed_open" value="Avoin"> Avoin <br>
+						<input type="radio" name="closed_open" value="Suljettu"> Suljettu <br>
+					</div>
+
+					<div class="create_text">Osallistujien määrä<br>
+						<input id="no_limit_radiobtn"name="userlimit" type="radio" default="checked">Ei rajoitettu<br>
+						<input id="limit_radiobtn" name="userlimit" type="radio">Rajoitettu
+						<input id="limit_number" type="number" value="20">
+					</div>
+					<div id="confirm_create">Luo raati</div>
+				</form>
 			</div>
 		</div>
 	<footer id="footer">
