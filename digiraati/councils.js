@@ -45,7 +45,7 @@ class File{
 //Class for one chat room
 class Council{
   constructor(id, name, description, creator, startdate, starttime,
-              enddate, endtime, userlimit=-1, tags, likes, dislikes){
+              enddate, endtime, userlimit, tags, likes, dislikes){
     this.id = id;
     this.name = name;
     this.description = description;
@@ -128,11 +128,11 @@ module.exports = class Councils{
   }
 
   add_council(id, name, description, creator, startdate,
-              starttime, enddate, endtime, userlimit=-1, tags, files, likes, dislikes){
+              starttime, enddate, endtime, userlimit=-1, tags, likes, dislikes){
     let new_council = new Council(id=id, name=name,
       description=description, creator=creator,
       startdate=startdate, starttime=starttime, enddate=enddate,
-      endtime=endtime, userlimit=userlimit, tags=tags);
+      endtime=endtime, userlimit=userlimit, tags=tags, likes=likes, dislikes=dislikes);
     this.councils.push(new_council);
   }
 

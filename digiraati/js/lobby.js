@@ -10,10 +10,6 @@ $(function(){
   socket.emit("request council data", council);
 });
 
-function uniqId() {
-  return Math.round(new Date().getTime() + (Math.random() * 100));
-}
-
 socket.on('council data', function(data){
   $('#lobby_title').html(data["name"]);
   $('#lobby_timetable').html(data["startdate"] + " " + data["starttime"]
@@ -26,6 +22,10 @@ socket.on('council data', function(data){
     tag.innerHTML = data["tags"][i];
     document.getElementById("lobby_tags").appendChild(tag);
   }
+});
+
+$('#lobby_home_btn').click(function(){
+  goToPage("/lobby/" + council + "/index");
 });
 
 $('#lobby_chat_btn').click(function(){

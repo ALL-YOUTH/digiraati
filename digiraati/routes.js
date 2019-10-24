@@ -16,6 +16,10 @@ app.get('/test.pdf', function(req, res){
   res.sendFile(path.join(__dirname + '/test.pdf'));
 });
 
+app.get('/large_test.pdf', function(req, res){
+  res.sendFile(path.join(__dirname + '/large_test.pdf'));
+});
+
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname + '/html/home.html'));
 });

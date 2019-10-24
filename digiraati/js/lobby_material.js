@@ -2,39 +2,53 @@ var socket = io();
 var rect = {};
 var drag = false;
 var comment_layer = document.getElementById("comment_layer");
+var cw = document.getElementById("comment_view");
+var pdf_div = document.getElementById('pdf_div');
 var current_comment_id = null;
 var COMMENT_SIZE = 20;
+var council = "";
 
-var url = 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf';
-var pdfjsLib = window['pdfjs-dist/build/pdf'];
-pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+var url = "http://localhost:3000/test.pdf";
 
-var pdfDoc = null,
-    pageNum = 1,
-    pageRendering = false,
-    pageNumPending = null,
-    scale = 1.5,
-    canvas = document.getElementById('the-canvas'),
-    ctx = canvas.getContext('2d')
-
+var numPages = 0;
+var currPage = 1;
+var thePDF = null;
+var scale = 1.5;
 
 $(function(){
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
   $('#comment_view').css("height", $(window).height()-100);
+  council = window.location.href.split("/").slice(-2)[0];
 });
 
-function uniqId() {
-  return Math.round(new Date().getTime() + (Math.random() * 100));
-}
-
 function init() {
-  comment_layer.addEventListener('mousedown', mouseDown, false);
-  comment_layer.addEventListener('mouseup', mouseUp, false);
-  comment_layer.addEventListener('mousemove', mouseMove, false);
+  pdf_div.addEventListener('mousedown', mouseDown, false);
+  pdf_div.addEventListener('mouseup', mouseUp, false);
+  pdf_div.addEventListener('mousemove', mouseMove, false);
+  document.getElementById('comment_view').addEventListener('scroll', wheel);
 }
 
 init();
+
+function wheel(){
+  var cl = document.getElementById('comment_layer');
+  var move_var = (0 - parseInt(cw.scrollTop) + cw.offsetTop)+ "px";
+  cl.style.top = move_var;
+  rect.startY -= move_var;
+  console.log(cw.scrollTop);
+  if(!current_comment_id){return;}
+  draw();
+}
+
+function comment_wheel(e){
+  if(cw.scrollTop == 0 && e.deltaY < 0){return;}
+  var cl = document.getElementById('comment_layer');
+  var move_var = (0 - parseInt(cw.scrollTop) + cw.offsetTop + e.deltaY)+ "px";
+  cl.style.top = move_var;
+  cw.scrollTo(0,cw.scrollTop + e.deltaY);
+}
+
 function mouseDown(e){
   if(e.target.id == "tmp_add" || e.target.id == "tmp_close"){return;}
   if(current_comment_id != null){
@@ -43,22 +57,25 @@ function mouseDown(e){
   }
   var temp = document.createElement("div");
   rect.startX = e.pageX - this.offsetLeft;
-  rect.startY = e.pageY - this.offsetTop;
+  rect.startY = e.pageY - this.offsetTop + cw.scrollTop;
+  console.log(e.pageY, this.offsetTop, cw.scrollTop);
   rect.h = 0;
   rect.w = 0;
   drag = true;
-  current_comment_id = uniqId();
+  current_comment_id = makeid();
   temp.id = current_comment_id;
   temp.style.left = rect.startX + "px";
   temp.style.top = rect.startY + "px";
   add_classes_to_element(temp, ["temp_comment"]);
+  temp.addEventListener("mousewheel", comment_wheel);
   comment_layer.appendChild(temp);
+  draw();
 }
 
 function mouseMove(e){
   if (drag) {
     rect.w = (e.pageX - this.offsetLeft) - rect.startX;
-    rect.h = (e.pageY - this.offsetTop) - rect.startY ;
+    rect.h = (e.pageY - this.offsetTop + cw.scrollTop ) - rect.startY ;
     draw();
   }
 }
@@ -75,6 +92,7 @@ function comment_too_small(id){
 }
 
 function mouseUp(e){
+  console.log(rect);
   if(!drag){ return; }
   drag = false;
   if(comment_too_small(current_comment_id) && e.target.className == "comment"){
@@ -87,7 +105,6 @@ function mouseUp(e){
     drag = false;
     return;
   }
-  //clearRectangle();
   continue_comment();
 }
 
@@ -129,7 +146,7 @@ function add_comment(id){
   while(c.childNodes.length > 0){
     c.removeChild(c.childNodes[0]);
   }
-  var id = uniqId();
+  var id = makeid();
   c.classList.add(id);
   current_comment_id = null;
   var nc = document.createElement('div');
@@ -140,8 +157,6 @@ function add_comment(id){
   c.addEventListener("mouseout", unhighlight_comment);
   nc.addEventListener("mouseover", hightlight_comment);
   nc.addEventListener("mouseout", unhighlight_comment);
-  var style = document.createElement('style');
-  document.head.appendChild(style);
   document.getElementById('comment_list').appendChild(nc);
 }
 
@@ -182,59 +197,48 @@ function unhighlight_comment(e){
 }
 
 
-function renderPage(num) {
-  pageRendering = true;
-  pdfDoc.getPage(num).then(function(page) {
-    var viewport = page.getViewport({scale: scale});
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
+function handlePages(page) {
+  //This gives us the page's dimensions at full scale
+  currPage++;
+  var viewport = page.getViewport({scale: scale,});
+    //We'll create a canvas for each page to draw it on
+  var canvas = document.createElement("canvas");
+  canvas.style.display = "block";
+  var context = canvas.getContext('2d');
+  canvas.height = viewport.height;
+  canvas.width = viewport.width;
+  canvas.classList.add("page");
 
-    var renderContext = {
-      canvasContext: ctx,
-      viewport: viewport
-    };
-    var renderTask = page.render(renderContext);
+  //Draw it on the canvas
+  page.render({canvasContext: context, viewport: viewport});
 
-    renderTask.promise.then(function() {
-      pageRendering = false;
-      if (pageNumPending !== null) {
-        renderPage(pageNumPending);
-        pageNumPending = null;
-      }
-    });
-  });
+  //Add it to the web page
+  var pdf_div = document.getElementById('pdf_div');
+  pdf_div.appendChild(canvas);
 
-  document.getElementById('page_num').textContent = num;
-}
+  //Move to next page
 
-function queueRenderPage(num) {
-  if (pageRendering) {
-    pageNumPending = num;
-  } else {
-    renderPage(num);
+  if ( thePDF !== null && currPage <= numPages )
+  {
+    thePDF.getPage( currPage ).then( handlePages );
   }
 }
 
-function onPrevPage() {
-  if (pageNum <= 1) {
-    return;
-  }
-  pageNum--;
-  queueRenderPage(pageNum);
-}
-document.getElementById('prev').addEventListener('click', onPrevPage);
+pdfjsLib.getDocument(url).promise.then(function(pdf) {
+  thePDF = pdf;
+  numPages = thePDF.numPages;
+  pdf.getPage(currPage).then(handlePages);
+});
 
-function onNextPage() {
-  if (pageNum >= pdfDoc.numPages) {
-    return;
-  }
-  pageNum++;
-  queueRenderPage(pageNum);
-}
-document.getElementById('next').addEventListener('click', onNextPage);
-pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
-  pdfDoc = pdfDoc_;
-  document.getElementById('page_count').textContent = pdfDoc.numPages;
 
-  renderPage(pageNum);
+$('#lobby_home_btn').click(function(){
+  goToPage("/lobby/" + council + "/index");
+});
+
+$('#lobby_chat_btn').click(function(){
+  goToPage("/lobby/" + council + "/chat");
+});
+
+$('#lobby_document_btn').click(function(){
+  goToPage("/lobby/" + council + "/material");
 });

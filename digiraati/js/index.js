@@ -55,6 +55,11 @@ $(document).on('click', '.council_btn', function(e){
   goToPage("/lobby/"+parentID+"/index");
 });
 
+$(document).on('click', '.council_box', function(e){
+  var parentID = $(this).attr('id');
+  goToPage("/lobby/"+parentID+"/index");
+});
+
 $('.selector_btn').click(function(){
   inactivate_filter();
   $(this).removeClass("inactive");

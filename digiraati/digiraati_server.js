@@ -181,17 +181,22 @@ io.on('connection', function(socket){
     update_page();
   });
 
-  socket.on('council create attempt', function(info){
+  socket.on('request council create', function(info){
     server_log(ip + ": " + info["creator"] + " attempted to create council: " +
                 info["name"]);
-    ret_val = councils.add_council(id=info["id"], name=info["name"],
-    description=info["description"],
-    creator=info["creator"],
-    startdate=info["startdate"],
-    starttime=info["starttime"],
-    enddate=info["enddate"],
-    endtime=info["endtime"],
-    tags=info["keywords"]);
+    ret_val = councils.add_council( id=info["id"],
+                                    name=info["name"],
+                                    description=info["description"],
+                                    creator=info["creator"],
+                                    startdate=info["startdate"],
+                                    starttime=info["starttime"],
+                                    enddate=info["enddate"],
+                                    endtime=info["endtime"],
+                                    userlimit=info["userlimit"],
+                                    tags=info["keywords"],
+                                    likes=0,
+                                    dislikes=0);
+
     if(ret_val == -1){
       return;
     }

@@ -8,6 +8,7 @@
 #header_div{
   padding-top: 20px;
   overflow-x: hidden;
+  z-index:15;
 }
 
 #hamburger_div{

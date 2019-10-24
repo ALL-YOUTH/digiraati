@@ -24,16 +24,22 @@
 					<div class="create_text" id="create_name_title">Raadin nimi</div>
 					<textarea id="name_input" type="text"></textarea><br>
 					<div class="create_text" id="create_tag_title">Aihepiiri</div>
-					<textarea id="word_search" type="text"></textarea><br>
+					<textarea id="create_tags" type="text"></textarea><br>
 					<div class="create_text" id="create_description_title">Raadin kuvaus</div>
 					<textarea id="create_description_text_input"></textarea><br>
+					<div class="create_text" id="startdate_input">Raati alkaa</div>
+					<input type="date" id="startdate_input"></input>
+					<input type="time" id="starttime_input"></input>
+					<div class="create_text" id="enddate_input">Raati päättyy</div>
+					<input type="date" id="enddate_input"></input>
+					<input type="time" id="endtime_input"></input>
 					<div class="create_text" id="crate_open_closed_title">Raadin luonne<br>
-						<input type="radio" name="closed_open" value="Avoin"> Avoin <br>
-						<input type="radio" name="closed_open" value="Suljettu"> Suljettu <br>
+						<input type="radio" name="closed_open" value="Avoin" checked="checked" id="open_radio"> Avoin <br>
+						<input type="radio" name="closed_open" value="Suljettu" id="closed_radio"> Suljettu <br>
 					</div>
 
 					<div class="create_text">Osallistujien määrä<br>
-						<input id="no_limit_radiobtn"name="userlimit" type="radio" default="checked">Ei rajoitettu<br>
+						<input id="no_limit_radiobtn"name="userlimit" type="radio" checked="checked">Ei rajoitettu<br>
 						<input id="limit_radiobtn" name="userlimit" type="radio">Rajoitettu
 						<input id="limit_number" type="number" value="20">
 					</div>
