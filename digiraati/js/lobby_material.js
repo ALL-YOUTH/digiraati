@@ -7,19 +7,24 @@ var pdf_div = document.getElementById('pdf_div');
 var current_comment_id = null;
 var COMMENT_SIZE = 20;
 var council = "";
+var current_file = "";
+var uploader = new SocketIOFileClient(socket);
 
-var url = "http://localhost:3000/test.pdf";
+var url = "";
 
 var numPages = 0;
 var currPage = 1;
 var thePDF = null;
 var scale = 1.5;
 
+var host = socket["io"]["uri"] + ":" + location.port;
+
 $(function(){
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
   $('#comment_view').css("height", $(window).height()-100);
   council = window.location.href.split("/").slice(-2)[0];
+  socket.emit('update files request', council);
 });
 
 function init() {
@@ -31,12 +36,20 @@ function init() {
 
 init();
 
+async function display_file(file){
+  url = host + "/files/" + file;
+  pdfjsLib.getDocument(url).promise.then(function(pdf) {
+    thePDF = pdf;
+    numPages = thePDF.numPages;
+    pdf.getPage(currPage).then(handlePages);
+  });
+}
+
 function wheel(){
   var cl = document.getElementById('comment_layer');
   var move_var = (0 - parseInt(cw.scrollTop) + cw.offsetTop)+ "px";
   cl.style.top = move_var;
   rect.startY -= move_var;
-  console.log(cw.scrollTop);
   if(!current_comment_id){return;}
   draw();
 }
@@ -46,7 +59,7 @@ function comment_wheel(e){
   var cl = document.getElementById('comment_layer');
   var move_var = (0 - parseInt(cw.scrollTop) + cw.offsetTop + e.deltaY)+ "px";
   cl.style.top = move_var;
-  cw.scrollTo(0,cw.scrollTop + e.deltaY);
+  cw.scrollTo(0,cw.scrollTop + (e.deltaY/2));
 }
 
 function mouseDown(e){
@@ -58,7 +71,6 @@ function mouseDown(e){
   var temp = document.createElement("div");
   rect.startX = e.pageX - this.offsetLeft;
   rect.startY = e.pageY - this.offsetTop + cw.scrollTop;
-  console.log(e.pageY, this.offsetTop, cw.scrollTop);
   rect.h = 0;
   rect.w = 0;
   drag = true;
@@ -92,7 +104,6 @@ function comment_too_small(id){
 }
 
 function mouseUp(e){
-  console.log(rect);
   if(!drag){ return; }
   drag = false;
   if(comment_too_small(current_comment_id) && e.target.className == "comment"){
@@ -111,7 +122,7 @@ function mouseUp(e){
 function draw() {
   var c = document.getElementById(current_comment_id);
   if(rect.h < 0){
-    c.style.top = rect.startY + rect.h + "px";
+    c.style.top = rect.startY + rect.h + cw.scrollTop + "px";
     c.style.height = Math.abs(rect.h) + "px";
   }
   if(rect.w < 0){
@@ -121,7 +132,7 @@ function draw() {
   if(rect.w < 5 && rect.w > -5){
     rect.w = 6;
   }
-  if(rect.h < 5 && rect.w > -5){
+  if(rect.h < 5 && rect.h > -5){
     rect.h = 6;
   }
   c.style.height = rect.h + "px";
@@ -139,7 +150,19 @@ function remove_comment(id){
   current_comment_id = null;
 }
 
-function add_comment(id){
+function request_add_comment(){
+  var comment_data = {};
+  comment_data["sender"] = logged_in;
+  comment_data["id"] = makeid();
+  comment_data["timestamp"] = timestamp();
+  comment_data["dimentions"] = rect;
+  comment_data["text"] = current_comment_id;
+  comment_data["council"] = council;
+  comment_data["file"] = current_file;
+  socket.emit("request add comment", comment_data);
+}
+
+socket.on('comment add success', function(data){
   var c = document.getElementById(current_comment_id);
   c.classList.remove("temp_comment");
   c.classList.add("comment");
@@ -158,7 +181,7 @@ function add_comment(id){
   nc.addEventListener("mouseover", hightlight_comment);
   nc.addEventListener("mouseout", unhighlight_comment);
   document.getElementById('comment_list').appendChild(nc);
-}
+});
 
 function continue_comment(){
   if(rect.h < 5 && rect.h > -5 && rect.w < 5 && rect.w > -5){return;}
@@ -171,7 +194,7 @@ function continue_comment(){
 
   var nc_add = document.createElement('a');
   add_classes_to_element(nc_add, ["fas", "fa-check", "comment_add_btn"]);
-  nc_add.addEventListener("click", add_comment);
+  nc_add.addEventListener("click", request_add_comment);
   nc_add.id = "tmp_add";
   comment.appendChild(nc_add);
 }
@@ -224,12 +247,96 @@ function handlePages(page) {
   }
 }
 
-pdfjsLib.getDocument(url).promise.then(function(pdf) {
-  thePDF = pdf;
-  numPages = thePDF.numPages;
-  pdf.getPage(currPage).then(handlePages);
+$('#add_file_btn').click(function(ev){
+  ev.preventDefault();
+  var fileEl = document.getElementById('file_input');
+  var fn = fileEl.files[0]["name"];
+  var uploadIds = uploader.upload(fileEl, {
+    data: {
+      "id":makeid(8),
+      "filename":fn,
+      "council":council,
+      "uploader":logged_in,
+    }
+  });
+
+  setTimeout(function() {
+    uploader.abort(uploadIds[0]);
+  }, 5000);
 });
 
+uploader.on('start', function(fileInfo) {
+  console.log('Start uploading', fileInfo);
+});
+uploader.on('stream', function(fileInfo) {
+  console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
+});
+uploader.on('complete', function(fileInfo) {
+  socket.emit('update files request', council);
+});
+uploader.on('error', function(err) {
+  console.log('Error!', err);
+});
+uploader.on('abort', function(fileInfo) {
+  console.log('Aborted: ', fileInfo);
+});
+
+socket.on('update files', function(files){
+  list_files(files);
+});
+
+function list_files(files){
+  var filelist = document.getElementById('file_list');
+  clear_child_elements(filelist);
+  for(var i = 0; i < files.length; ++i){
+    var el = document.createElement('div');
+    el.id = files[i]["id"];
+    el.innerHTML = files[i]["path"];
+    el.onclick = function(){
+      file_clicked(this);
+    }
+    filelist.appendChild(el);
+  }
+}
+
+async function file_clicked(e){
+  current_file = e.id;
+  await display_file(e.id);
+  socket.emit('request file comments', council, e.id);
+}
+
+socket.on('file comments', function(comments){
+  for(var i = 0; i < comments.length; ++i){
+    var com = comments[i];
+    var c = document.createElement("div");
+    console.log(com);
+    c.classList.add("comment");
+    c.style.top = com["dimentions"]["startY"] + "px";
+    c.style.left = com["dimentions"]["startX"] + "px";
+    c.style.height = com["dimentions"]["h"] + "px";
+    c.style.width = com["dimentions"]["w"] + "px";
+    var id = makeid();
+    c.id = id;
+    c.classList.add(id);
+    c.addEventListener("mouseover", hightlight_comment);
+    c.addEventListener("mouseout", unhighlight_comment);
+    c.addEventListener("mousewheel", comment_wheel);
+    comment_layer.appendChild(c);
+
+    while(c.childNodes.length > 0){
+      c.removeChild(c.childNodes[0]);
+    }
+
+    current_comment_id = null;
+    var nc = document.createElement('div');
+    nc.classList.add("comment_in_list");
+    nc.classList.add(id);
+    nc.innerHTML = c.id;
+    nc.addEventListener("mouseover", hightlight_comment);
+    nc.addEventListener("mouseout", unhighlight_comment);
+    document.getElementById('comment_list').appendChild(nc);
+  }
+});
 
 $('#lobby_home_btn').click(function(){
   goToPage("/lobby/" + council + "/index");

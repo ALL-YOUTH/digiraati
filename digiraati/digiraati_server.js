@@ -338,22 +338,31 @@ io.on('connection', function(socket){
     });
   });
 
-  socket.on('request add comment', function(cid, comment){
-    server_log(ip + ": " + "attempting to add a comment: " + comment["text"] + " to a council " + cid);
-    var res = councils.add_comment_to_council(cid, comment);
+  socket.on('request add comment', function(data){
+    server_log(ip + ": " + "attempting to add a comment: " + data["id"] + " to a council " + data["council"]);
+    var res = councils.add_comment_to_file(data);
     if(res != -1){
-      socket.emit("comment add success");
+      socket.emit("comment add success", data);
     }
     else{
       socket.emit("comment add failed");
     }
   });
 
+  socket.on('request file comments', function(cid, fid){
+    var comments = councils.get_file_comments(cid, fid);
+    if(comments == -1){
+      socket.emit('no file comments');
+      return;
+    }
+    socket.emit('file comments', comments);
+  });
+
   ///File upload stuff
   //Todo tähän pitää keksiä vielä vähän sääntöjä että kuka voi lisäämistä
   //tiedostoja ja samannimiset tiedostot yms....
   uploader.on('start', (fileInfo) => {
-    server_log(ip + ": " + " started to upload a file");
+    server_log(ip + ": " + " started to upload a file: " + fileInfo["data"]["filename"]);
   });
 
   uploader.on('stream', (fileInfo) => {
@@ -363,9 +372,9 @@ io.on('connection', function(socket){
   uploader.on('complete', (fileInfo) => {
     server_log(ip + ": " + " file upload done");
     councils.add_file(fileInfo["data"]["id"],
-    fileInfo["data"]["filename"],
-    fileInfo["data"]["council"],
-    fileInfo["data"]["uploader"]);
+                      fileInfo["data"]["filename"],
+                      fileInfo["data"]["council"],
+                      fileInfo["data"]["uploader"]);
 
     fs.rename(__dirname + "/files/" + fileInfo["data"]["filename"],
     __dirname + '/files/' + fileInfo["data"]["id"],
@@ -381,7 +390,6 @@ io.on('connection', function(socket){
   uploader.on('abort', (fileInfo) => {
     server_log(ip + ": file upload ABORT");
   });
-
 });
 
 function update_page(){

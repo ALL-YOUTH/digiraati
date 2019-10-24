@@ -27,7 +27,12 @@ function TODO(){
 }
 
 function makeid() {
-  return Math.round(new Date().getTime() + (Math.random() * 10000));
+  id = "";
+  var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  while(id.length < 12){
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id;
 }
 
 function getUrlVars(){

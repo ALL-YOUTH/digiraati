@@ -1,11 +1,4 @@
-#comment_view{
-  height:500px;
-  overflow-y: scroll;
-  border:solid;
-}
-
 body{
-  overflow:hidden;
 }
 
 #lobby_navigation {
@@ -36,8 +29,21 @@ div .inactive{
   background-color: rgba(255,255,255,1);
 }
 
+#file_list{
+  float:left;
+  width:10%;
+}
+
+#comment_view{
+  min-width:70%;
+  height:70%;
+  overflow-y: scroll;
+  border:solid;
+  display:inline-block;
+}
+
 #pdf_div{
-  width:80%;
+  width:auto;
   border:solid;
 }
 
@@ -101,6 +107,7 @@ div .inactive{
   float:right;
   right:30px;
 }
+
 #comment_list_title{
   text-align: center;
 }
@@ -116,4 +123,8 @@ div .inactive{
   background:rgb(200,200,200, 0.5);
   cursor:pointer;
   padding:5px;
+}
+
+#add_file_btn{
+  cursor: pointer;
 }

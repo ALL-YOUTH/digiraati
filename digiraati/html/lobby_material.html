@@ -19,18 +19,24 @@
 			<div class="inactive" id="lobby_chat_btn">Keskustelu</div>
 			<div class="active" id="lobby_document_btn">Lue asiakirja</div>
 		</div>
+		<div id="file_container">
+			<input type="file" id="file_input"></input>
+			<a id="add_file_btn">LISÄÄ TIEDOSTO</a>
+			<div id="file_list"></div>
+		</div>
     <div id="comment_view">
       <div id="pdf_div">
 				<div id="comment_layer"></div>
 			</div>
-
-			<div id="comment_list_div">
-				<div id="comment_list_title">Kommentit</div>
-				<div id="comment_list"></div>
-			</div>
+		</div>
+		<div id="comment_list_div">
+			<div id="comment_list_title">Kommentit</div>
+			<div id="comment_list"></div>
+		</div>
     <footer id="footer">
   	</footer>
   </div>
+	<script src="/socket.io-file-client.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/lobby_material.js"></script>
 </body>

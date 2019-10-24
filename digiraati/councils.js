@@ -11,15 +11,16 @@ class Message{
 }
 
 class Comment{
-  constructor(id, sender, text, time, likes, dislikes, parentid, childid){
+  constructor(id, sender, text, time, dimentions){
     this.id = id;
     this.sender = sender;
     this.text = text;
     this.time = time;
-    this.likes = likes;
-    this.dislikes = dislikes;
-    this.parentid = parentid;
-    this.childid = childid;
+    this.dimentions = dimentions;
+    this.likes = 0;
+    this.dislikes = 0;
+    this.parentid = null;
+    this.childid = null;
   }
   get_id(){ return this.id; }
   get_sender(){ return this.sender; }
@@ -36,10 +37,16 @@ class File{
     this.id = id;
     this.path = path;
     this.sender = sender;
+    this.comments = [];
   }
   get_id(){return this.id;}
   get_path(){return this.path;}
   get_sender(){return this.sender;}
+  get_comments(){return this.comments;}
+
+  add_comment(comment){
+    this.comments.push(comment);
+  }
 }
 
 //Class for one chat room
@@ -99,10 +106,6 @@ class Council{
 
   add_msg(msg){
     this.messages.push(msg);
-  }
-
-  add_comment(comment){
-    this.comments.push(comment)
   }
 
   get_n_messages(n){
@@ -173,18 +176,40 @@ module.exports = class Councils{
     council.add_file(file);
   }
 
-  add_comment_to_council(cid, c){
+  add_comment_to_file(data){
     try{
-      var council = this.get_council_by_id(cid);
-      var comment = new Comment(makeid(8), c["sender"], c["text"], c["time"],
-                                c["likes"], c["dislikes"], c["parent"], null);
-      var res = council.add_comment(comment);
+      var council = this.get_council_by_id(data["council"]);
+      var files = council.get_council_files();
+      var file = null;
+      for(var i = 0; i < files.length; ++i){
+        if(files[i]["id"] == data["file"]){
+          file = files[i];
+        }
+      }
+      if(file == null){
+        return -1;
+      }
+      var comment = new Comment(data["id"], data["sender"], data["text"], data["timestamp"],
+                                data["dimentions"]);
+      var res = file.add_comment(comment);
     }
     catch(err){
       console.log(err);
       return -1;
     }
     return 0;
+  }
+
+  get_file_comments(cid, fid){
+    var council = this.get_council_by_id(cid);
+    var files = council.get_council_files();
+    var file = null;
+    for(var i = 0; i < files.length; ++i){
+      if(files[i]["id"] == fid){
+        return files[i].get_comments();
+      }
+    }
+    return -1;
   }
 
   is_user_joined(councilid, userid){
@@ -250,12 +275,6 @@ module.exports = class Councils{
 
 }
 
-function makeid(length) {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
+function makeid() {
+  return Math.round(new Date().getTime() + (Math.random() * 10000));
 }
