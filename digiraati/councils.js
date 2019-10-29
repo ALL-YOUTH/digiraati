@@ -33,11 +33,11 @@ class Comment{
 }
 
 class File{
-  constructor(id, path, sender){
+  constructor(id, path, sender, comments){
     this.id = id;
     this.path = path;
     this.sender = sender;
-    this.comments = [];
+    this.comments = comments;
   }
   get_id(){return this.id;}
   get_path(){return this.path;}
@@ -63,13 +63,12 @@ class Council{
     this.endtime = endtime;
     this.tags = tags;
     this.userlimit = userlimit;
-
-    this.users = [];
-    this.messages = [];
-    this.files = [];
-    this.comments = [];
     this.likes = likes;
     this.dislikes = dislikes;
+
+    this.files = [];
+    this.users = [];
+    this.messages = [];
   }
 
   get_council_name(){ return this.name; }
@@ -131,11 +130,12 @@ module.exports = class Councils{
   }
 
   add_council(id, name, description, creator, startdate,
-              starttime, enddate, endtime, userlimit=-1, tags, likes, dislikes){
+              starttime, enddate, endtime, userlimit, tags, likes, dislikes){
     let new_council = new Council(id=id, name=name,
       description=description, creator=creator,
       startdate=startdate, starttime=starttime, enddate=enddate,
-      endtime=endtime, userlimit=userlimit, tags=tags, likes=likes, dislikes=dislikes);
+      endtime=endtime, userlimit=userlimit, tags=tags, likes=likes,
+      dislikes=dislikes);
     this.councils.push(new_council);
   }
 
@@ -166,13 +166,13 @@ module.exports = class Councils{
     council.add_msg(new_message);
   }
 
-  add_file(fileid, filename, council_id, uploader){
+  add_file(fileid, filename, council_id, uploader, comments=[]){
     var council = this.get_council_by_id(council_id);
     if(council == -1){
       console.log("Unable to find council with id", council_id);
       return;
     }
-    var file = new File(fileid, filename, uploader);
+    var file = new File(fileid, filename, uploader, comments);
     council.add_file(file);
   }
 

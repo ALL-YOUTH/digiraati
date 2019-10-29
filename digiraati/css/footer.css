@@ -3,7 +3,7 @@
   bottom:0px;
   width:100%;
   min-width: 320px;
-  margin-top:170px;
+
   height: 250px;
   clear:both;
   background-color: rgba(1,175,196,0.7);
@@ -38,12 +38,11 @@
 @media (min-width:800px){
   #footer {
     position:relative;
-    height: 170px;
+    height: 150px;
     bottom: 0px;
     width:100%;
-    margin-top:170px;
     clear:both;
-    background-color: rgba(1,175,196,0.7);
+    background-color: rgba(1,175,196,1);
   }
 
   #footer_container{

@@ -67,31 +67,24 @@ fs.readFile(backup_file, function (err, data) {
 
   for(var i = 0; i <  recover_councils.length; ++i){
     let council = recover_councils[i];
-    try{
-      councils.add_council( id=council["id"],
-                            name=council["name"],
-                            description=council["description"],
-                            creator=council["creator"],
-                            startdate=council["startdate"],
-                            starttime=council["starttime"],
-                            enddate=council["enddate"],
-                            endtime=council["endtime"],
-                            userlimit=council["userlimit"],
-                            tags=council["tags"],
-                            files=council["files"],
-                            tags=council["tags"],
-                            likes=council["likes"],
-                            dislikes=council["dislikes"]
-                          );
-      for(let message of council["messages"]){
-        councils.add_message(council["id"], message["sender"], message["content"]);
-      }
-      for(let file of council["files"]){
-        councils.add_file(file["id"], file["path"], council["id"], file["sender"]);
-      }
+    councils.add_council( id=council["id"],
+                          name=council["name"],
+                          description=council["description"],
+                          creator=council["creator"],
+                          startdate=council["startdate"],
+                          starttime=council["starttime"],
+                          enddate=council["enddate"],
+                          endtime=council["endtime"],
+                          userlimit=council["userlimit"],
+                          tags=council["tags"],
+                          likes=council["likes"],
+                          dislikes=council["dislikes"]
+                        );
+    for(let message of council["messages"]){
+      councils.add_message(council["id"], message["sender"], message["content"]);
     }
-    catch(err){
-      server_log("Something went wrong trying to recover users: " + err);
+    for(let file of council["files"]){
+      councils.add_file(file["id"], file["path"], council["id"], file["sender"], file["comments"]);
     }
   }
 
@@ -140,7 +133,18 @@ io.on('connection', function(socket){
     }
     else{
       socket.emit('login success', name);
-      server_log(ip + ": " + name + " logged in");
+      update_page();
+    }
+  });
+
+  socket.on('check login council', function(cid){
+    var name = users.get_login_by_ip(ip);
+    if(name == false){
+      socket.emit('not logged');
+    }
+    else{
+      socket.emit('login success', name);
+      socket.join(cid);
       update_page();
     }
   });
@@ -208,14 +212,11 @@ io.on('connection', function(socket){
   });
 
   //SENDING A MESSAGE PART
-  socket.on('chat message', function(msg){
-    var sender_name = msg["sender"];
-    var userid = users.get_userid_by_username(sender_name);
+  socket.on('request new message', function(msg){
+    var userid = users.get_userid_by_username(msg["sender"]);
     councils.add_message(msg["council"], userid, msg["message"]);
-    send_msg = sender_name + ": " + msg["message"];
-    server_log(ip + ": " + sender_name + " : " + msg["council"]
-                + " send chat message: " + send_msg);
-    io.emit('chat message', msg["council"], send_msg);
+    server_log(ip + ":" + msg );
+    io.to(msg["council"]).emit('new message', msg);
   });
 
   //User logged out of the chat
@@ -374,7 +375,8 @@ io.on('connection', function(socket){
     councils.add_file(fileInfo["data"]["id"],
                       fileInfo["data"]["filename"],
                       fileInfo["data"]["council"],
-                      fileInfo["data"]["uploader"]);
+                      fileInfo["data"]["uploader"],
+                      []);
 
     fs.rename(__dirname + "/files/" + fileInfo["data"]["filename"],
     __dirname + '/files/' + fileInfo["data"]["id"],

@@ -9,8 +9,7 @@ var COMMENT_SIZE = 20;
 var council = "";
 var current_file = "";
 var uploader = new SocketIOFileClient(socket);
-
-var url = "";
+var showing = "";
 
 var numPages = 0;
 var currPage = 1;
@@ -36,13 +35,15 @@ function init() {
 
 init();
 
-async function display_file(file){
+function display_file(file){
   url = host + "/files/" + file;
+  currPage = 1;
   pdfjsLib.getDocument(url).promise.then(function(pdf) {
     thePDF = pdf;
     numPages = thePDF.numPages;
     pdf.getPage(currPage).then(handlePages);
   });
+  showing = file;
 }
 
 function wheel(){
@@ -122,18 +123,12 @@ function mouseUp(e){
 function draw() {
   var c = document.getElementById(current_comment_id);
   if(rect.h < 0){
-    c.style.top = rect.startY + rect.h + cw.scrollTop + "px";
+    c.style.top = rect.startY + rect.h + "px";
     c.style.height = Math.abs(rect.h) + "px";
   }
   if(rect.w < 0){
     c.style.left = rect.startX + rect.w + "px";
     c.style.width = Math.abs(rect.w) + "px";
-  }
-  if(rect.w < 5 && rect.w > -5){
-    rect.w = 6;
-  }
-  if(rect.h < 5 && rect.h > -5){
-    rect.h = 6;
   }
   c.style.height = rect.h + "px";
   c.style.width = rect.w + "px";
@@ -236,8 +231,8 @@ function handlePages(page) {
   page.render({canvasContext: context, viewport: viewport});
 
   //Add it to the web page
-  var pdf_div = document.getElementById('pdf_div');
-  pdf_div.appendChild(canvas);
+  var pdf = document.getElementById('pdf');
+  pdf.appendChild(canvas);
 
   //Move to next page
 
@@ -286,6 +281,7 @@ socket.on('update files', function(files){
 });
 
 function list_files(files){
+  if(files == null){return;}
   var filelist = document.getElementById('file_list');
   clear_child_elements(filelist);
   for(var i = 0; i < files.length; ++i){
@@ -299,9 +295,15 @@ function list_files(files){
   }
 }
 
-async function file_clicked(e){
+function file_clicked(e){
+  if(e.id == showing){return;}
+  currPage = 1;
+  thePDF = null;
+  clear_child_elements(document.getElementById("comment_layer"));
+  clear_child_elements(document.getElementById("comment_list"));
+  clear_child_elements(document.getElementById("pdf"));
   current_file = e.id;
-  await display_file(e.id);
+  display_file(e.id);
   socket.emit('request file comments', council, e.id);
 }
 
@@ -313,8 +315,15 @@ socket.on('file comments', function(comments){
     c.classList.add("comment");
     c.style.top = com["dimentions"]["startY"] + "px";
     c.style.left = com["dimentions"]["startX"] + "px";
-    c.style.height = com["dimentions"]["h"] + "px";
-    c.style.width = com["dimentions"]["w"] + "px";
+    c.style.height = Math.abs(com["dimentions"]["h"]) + "px";
+    c.style.width = Math.abs(com["dimentions"]["w"]) + "px";
+    if(com["dimentions"]["w"] < 0){
+      c.style.left = (com["dimentions"]["startX"] + com["dimentions"]["w"]) + "px";
+    }
+    if(com["dimentions"]["h"] < 0){
+      c.style.top += (com["dimentions"]["startY"] + com["dimentions"]["h"] + "px");
+    }
+
     var id = makeid();
     c.id = id;
     c.classList.add(id);

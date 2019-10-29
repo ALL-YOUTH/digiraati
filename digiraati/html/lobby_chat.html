@@ -11,10 +11,36 @@
 <body>
 	<header id="header">
 	</header>
-	<div id="lobby_navigation">
-		<div class="inactive" id="lobby_home_btn">Pääsivu</div>
-		<div class="active" id="lobby_chat_btn">Keskustelu</div>
-		<div class="inactive" id="lobby_document_btn">Lue asiakirja</div>
+
+	<div id="chat_container">
+		<div id="left_menu">
+			<div id="left_menu_title"></div>
+			<div id="gonfind" class="fas fa-bars left_menu_title"> Mene ja löydä</div>
+			<div id="left_menu_councils" class="left_menu_title">Raadit</div>
+			<div id="left_menu_my_councils" class="left_menu_title">Omat Raadit</div>
+			<div id="left_menu_council_members" class="left_menu_title">Tyypit</div>
+		</div>
+
+		<div id="chat_content">
+			<div id="chat_title"></div>
+			<div id="chat_timetable"></div>
+			<div id="chat_description"></div>
+			<div id="lobby_navigation">
+				<div class="inactive" id="lobby_home_btn">Pääsivu</div>
+				<div class="active" id="lobby_chat_btn">Keskustelu</div>
+				<div class="inactive" id="lobby_document_btn">Lue asiakirja</div>
+			</div>
+			<div id="chat">
+				<div id="chat_hashtag"></div>
+				<div id="message_list">
+					
+				</div>
+				<div id="chat_message_input">
+					<textarea id="message_input"></textarea>
+					<span class="fas fa-arrow-circle-right fa-2x" id="send_btn"></span>
+				</div>
+			</div>
+		</div>
 	</div>
 
 
