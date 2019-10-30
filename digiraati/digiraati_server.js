@@ -132,6 +132,7 @@ io.on('connection', function(socket){
       socket.emit('not logged');
     }
     else{
+      var uid = users.get_userid_by_username(name);
       socket.emit('login success', name);
       update_page();
     }
@@ -143,6 +144,7 @@ io.on('connection', function(socket){
       socket.emit('not logged');
     }
     else{
+      var uid = users.get_userid_by_username(name);
       socket.emit('login success', name);
       socket.join(cid);
       update_page();
@@ -156,8 +158,9 @@ io.on('connection', function(socket){
       return;
     }
     else{
+      var uid = users.get_userid_by_username(name);
       socket.emit('login success', name);
-      server_log(ip + ": " + name + " logged in");
+      server_log(ip + ": " + uid + " (" + name + ") logged in");
       update_page();
       return;
     }
@@ -214,8 +217,7 @@ io.on('connection', function(socket){
   //SENDING A MESSAGE PART
   socket.on('request new message', function(msg){
     var userid = users.get_userid_by_username(msg["sender"]);
-    councils.add_message(msg["council"], userid, msg["message"]);
-    server_log(ip + ":" + msg );
+    councils.add_message(msg["council"], msg["sender"], msg["content"]);
     io.to(msg["council"]).emit('new message', msg);
   });
 

@@ -157,11 +157,12 @@ div .inactive{
 
 }
 
-#chat_message{
+.chat_message{
   height:auto;
   display:block;
-  background-color:gray;
-  padding:10px;
+  padding:3px;
+  cursor:default;
+  border-radius:2px;
 }
 
 .chat_message:hover{
