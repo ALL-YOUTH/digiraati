@@ -57,8 +57,8 @@ fs.readFile(backup_file, function (err, data) {
     try{
       users.recover_user(id=user["id"], uname=user["username"],
                       fname=user["fname"], lname=user["lname"],
-                      email=user["email"],
-                      hash=user["hash"], online="false", ip=null);
+                      email=user["email"], hash=user["hash"],
+                      online="false", ip=null);
     }
     catch(err){
       server_log(err);
@@ -81,7 +81,7 @@ fs.readFile(backup_file, function (err, data) {
                           dislikes=council["dislikes"]
                         );
     for(let message of council["messages"]){
-      councils.add_message(council["id"], message["sender"], message["content"]);
+      councils.add_message(council["id"], message["id"], message["sender"], message["content"], message["likes"]);
     }
     for(let file of council["files"]){
       councils.add_file(file["id"], file["path"], council["id"], file["sender"], file["comments"]);
@@ -150,6 +150,10 @@ io.on('connection', function(socket){
       update_page();
     }
   });
+  
+  socket.on('request join council', function(cid){
+    socket.join(cid);
+  });
 
   socket.on('login attempt', function(name, pw){
     if(users.login_user(name, pw, ip) == false){
@@ -217,8 +221,14 @@ io.on('connection', function(socket){
   //SENDING A MESSAGE PART
   socket.on('request new message', function(msg){
     var userid = users.get_userid_by_username(msg["sender"]);
-    councils.add_message(msg["council"], msg["sender"], msg["content"]);
+    councils.add_message(msg["council"], msg["id"], msg["sender"], msg["content"]);
     io.to(msg["council"]).emit('new message', msg);
+  });
+
+  socket.on('request add like', function(data){
+    console.log(data);
+    var likes = councils.add_like_to_message(data["council"], data["mid"]);
+    io.to(data["council"]).emit('update likes', data["mid"], likes);
   });
 
   //User logged out of the chat

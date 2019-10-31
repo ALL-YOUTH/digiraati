@@ -46,3 +46,9 @@ function getUrlVars(){
 socket.on('login success', function(name){
   logged_in = name;
 });
+
+function add_classes_to_element(element, classes){
+  for(var i = 0; i < classes.length; ++i){
+    element.classList.add(classes[i]);
+  }
+}

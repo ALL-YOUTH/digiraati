@@ -1,13 +1,20 @@
 
 class Message{
-  constructor(sender, text, likes){
+  constructor(id, sender, text, likes){
+    this.id = id;
     this.sender = sender;
     this.content = text;
     this.likes = likes;
   }
+  get_id(){ return this.id; }
   get_sender(){ return this.senderid; }
   get_content(){ return this.content; }
   get_likes(){ return this.likes; }
+
+  add_like(){
+    this.likes += 1;
+    return this.likes;
+  }
 }
 
 class Comment{
@@ -157,12 +164,12 @@ module.exports = class Councils{
     return -1;
   }
 
-  add_message(council_id, sender, message_text){
+  add_message(council_id, mid, sender, message_text, likes){
     var council = this.get_council_by_id(council_id);
     if(council == -1){
       return;
     }
-    var new_message = new Message(sender, message_text, 0);
+    var new_message = new Message(mid, sender, message_text, likes);
     council.add_msg(new_message);
   }
 
@@ -271,6 +278,17 @@ module.exports = class Councils{
     let council = this.get_council_by_id(cid);
     let users = council.get_council_users();
     return users;
+  }
+
+  add_like_to_message(cid, mid){
+    let council = this.get_council_by_id(cid);
+    var messages = council.get_council_messages();
+    for(var i = 0; i < messages.length; ++i){
+      let msg = messages[i];
+      if(msg.get_id() == mid){
+        return msg.add_like();
+      }
+    }
   }
 
 }

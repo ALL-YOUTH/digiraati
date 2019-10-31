@@ -102,6 +102,7 @@ div .inactive{
 #message_list{
   height:800px;
   overflow-y:scroll;
+  margin-bottom: 50px;
 }
 
 #message_list::-webkit-scrollbar {
@@ -112,7 +113,7 @@ div .inactive{
 #chat_message_input{
   position:fixed;
   width:80%;
-  height:80px;
+  height:100px;
   bottom:0px;
   background-color: rgba(245,246,250,1);
   margin:10px;
@@ -160,11 +161,62 @@ div .inactive{
 .chat_message{
   height:auto;
   display:block;
-  padding:3px;
+  padding:5px;
   cursor:default;
   border-radius:2px;
+  padding-left: 20px;
 }
 
-.chat_message:hover{
+/*.chat_message:hover{
   background-color:gray;
+}*/
+
+.chat_avatar_ball{
+  border-radius: 50%;
+  display: inline-block;
+  padding:3px;
+  width:24px;
+  height:24px;
+  text-align: center;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.separator{
+  border-style:solid;
+  border-color: rgba(112,112,112,0.3);
+  width:100%;
+  border-width:1px;
+}
+
+.message_list_text{
+  font-family: Montserrat;
+  font-size:14px;
+  line-height: 20px;
+  margin-left: 40px;
+}
+
+.message_reactions{
+  padding:5px;
+  color:rgba(250, 105, 128,1);
+  cursor:pointer;
+  margin-left: 37px;
+}
+
+.likes_num{
+  display:inline-block;
+  margin-left:10px;
+  color:rgba(250, 105, 128,1);
+}
+
+.message_list_sender_name{
+  margin-left:10px;
+}
+
+.message_list_reply{
+  float:right;
+  font-family: Montserrat;
+  color:rgba(0,96,115,0.3);
+  font-size: 14px;
+  font-weight: bold;
 }

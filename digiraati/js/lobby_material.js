@@ -134,11 +134,7 @@ function draw() {
   c.style.width = rect.w + "px";
 }
 
-function add_classes_to_element(element, classes){
-  for(var i = 0; i < classes.length; ++i){
-    element.classList.add(classes[i]);
-  }
-}
+
 
 function remove_comment(id){
   id.target.parentElement.remove();

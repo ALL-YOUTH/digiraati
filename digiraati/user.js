@@ -44,6 +44,7 @@ class User{
 
   set_ip(ip){ this.ip = ip }
   get_ip(){ return this.ip; }
+
 }
 
 //Class for handling all users
@@ -67,6 +68,7 @@ module.exports = class Users{
     if(this.username_available(uname)){
       if(hash != null){pw = null;}
       var new_user = new User(id, uname, fname, lname, email, pw=pw, hash=hash);
+      console.log(new_user);
       this.users.push(new_user);
       return 0;
     }
