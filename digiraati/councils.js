@@ -1,4 +1,12 @@
 
+class Like{
+  constructor(id, liker){
+    this.id = id;
+    this.liker = liker;
+  }
+  get_liker(){ return this.liker; }
+}
+
 class Message{
   constructor(id, sender, text, likes){
     this.id = id;
@@ -11,9 +19,19 @@ class Message{
   get_content(){ return this.content; }
   get_likes(){ return this.likes; }
 
-  add_like(){
-    this.likes += 1;
-    return this.likes;
+  toggle_like(id, liker){
+    for(var i = 0; i < this.likes.length; ++i){
+      //If user already likes this message, the like is removed
+      let like = this.likes[i];
+      if(liker == like.get_liker()){
+        this.likes.splice(i, 1);
+        return this.likes.length;
+      }
+    }
+    //If user has not liked this message, add a new like
+    var like = new Like(id, liker);
+    this.likes.push(like);
+    return this.likes.length;
   }
 }
 
@@ -169,7 +187,14 @@ module.exports = class Councils{
     if(council == -1){
       return;
     }
-    var new_message = new Message(mid, sender, message_text, likes);
+    var l = [];
+    if(likes.length > 0){
+      for(var i = 0; i < likes.length; ++i){
+        var like = new Like(likes["id"], likes["liker"]);
+        l.push(like);
+      }
+    }
+    var new_message = new Message(mid, sender, message_text, l);
     council.add_msg(new_message);
   }
 
@@ -280,13 +305,13 @@ module.exports = class Councils{
     return users;
   }
 
-  add_like_to_message(cid, mid){
+  add_like_to_message(cid, mid, uid){
     let council = this.get_council_by_id(cid);
     var messages = council.get_council_messages();
     for(var i = 0; i < messages.length; ++i){
-      let msg = messages[i];
-      if(msg.get_id() == mid){
-        return msg.add_like();
+      if(messages[i].get_id() == mid){
+        var id = makeid();
+        return messages[i].toggle_like(id, uid);
       }
     }
   }

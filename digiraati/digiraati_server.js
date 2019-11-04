@@ -150,7 +150,7 @@ io.on('connection', function(socket){
       update_page();
     }
   });
-  
+
   socket.on('request join council', function(cid){
     socket.join(cid);
   });
@@ -221,13 +221,14 @@ io.on('connection', function(socket){
   //SENDING A MESSAGE PART
   socket.on('request new message', function(msg){
     var userid = users.get_userid_by_username(msg["sender"]);
-    councils.add_message(msg["council"], msg["id"], msg["sender"], msg["content"]);
+    msg["likes"] = [];
+    councils.add_message(msg["council"], msg["id"], msg["sender"], msg["content"], msg["likes"]);
     io.to(msg["council"]).emit('new message', msg);
   });
 
   socket.on('request add like', function(data){
-    console.log(data);
-    var likes = councils.add_like_to_message(data["council"], data["mid"]);
+    var uid = users.get_userid_by_username(data["liker"]);
+    var likes = councils.add_like_to_message(data["council"], data["mid"], uid);
     io.to(data["council"]).emit('update likes', data["mid"], likes);
   });
 

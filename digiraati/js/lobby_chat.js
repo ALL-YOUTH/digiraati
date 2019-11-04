@@ -33,7 +33,6 @@ socket.on('council data', function(data){
           document.getElementById('header').offsetHeight;
   $('#chat_container').css("height", h + "px");
   for(message of data["messages"]){
-    console.log(message);
     create_message(message);
   }
 });
@@ -110,7 +109,7 @@ function create_message(msg){
   var likes = document.createElement('div');
   add_classes_to_element(likes, ["fas", "fa-thumbs-up", "message_reactions", msg["id"]]);
   if(msg["likes"] == undefined){ msg["likes"] = 0; }
-  likes.innerHTML = "  " + msg["likes"];
+  likes.innerHTML = "  " + msg["likes"].length;
   nm.appendChild(likes);
   var reply = document.createElement('div');
   reply.classList.add("message_list_reply");
@@ -132,18 +131,19 @@ socket.on('new message', function(msg){
 });
 
 $(document).on('click', '.message_reactions', function(e){
+  if(logged_in.length < 1){
+    alert("sinun täytyy kirjautua sisään ensin.");
+    return;
+  }
   data = {};
   data["council"] = council;
   data["mid"] = e.target.parentElement.id;
-  console.log(data);
+  data["liker"] = logged_in;
   socket.emit('request add like', data);
 });
 
 socket.on('update likes', function(mid, likes){
-
   var message = document.getElementsByClassName(mid);
-  console.log(message[0]);
-  console.log(likes);
   message[0].innerHTML = "   "+likes;
 });
 
