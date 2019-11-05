@@ -190,7 +190,7 @@ module.exports = class Councils{
     var l = [];
     if(likes.length > 0){
       for(var i = 0; i < likes.length; ++i){
-        var like = new Like(likes["id"], likes["liker"]);
+        var like = new Like(likes[i]["id"], likes[i]["liker"]);
         l.push(like);
       }
     }

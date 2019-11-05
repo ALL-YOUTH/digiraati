@@ -291,8 +291,30 @@ function list_files(files){
   }
 }
 
+$('#all_documents_btn').click(function(){
+  showing = 0;
+  $('#all_documents_container').css("display", "block");
+  $('#document_container').css("display", "none");
+  $('#all_documents_btn').css("width", "86%");
+  $('#all_documents_btn').css("transition", "width 1s");
+  $('#current_document').css("width", "0%");
+  $('#current_document').css("transition", "width 1s");
+  $('#current_document').html(" ");
+
+})
+
 function file_clicked(e){
   if(e.id == showing){return;}
+  $('#all_documents_container').css("display", "none");
+  $('#document_container').css("display", "block");
+  $('#all_documents_btn').css("width", "43%");
+  $('#all_documents_btn').css("transition", "width 1s");
+  $('#current_document').css("width", "43%");
+  $('#current_document').css("transition", "width 1s");
+  $('#current_document').css("display", "inline-block");
+  $('#current_document').html(e.id);
+  console.log
+  $("html,body").animate({"scrollTop": $("#lobby_navigation").offset().top},1000);
   currPage = 1;
   thePDF = null;
   clear_child_elements(document.getElementById("comment_layer"));
@@ -300,6 +322,7 @@ function file_clicked(e){
   clear_child_elements(document.getElementById("pdf"));
   current_file = e.id;
   display_file(e.id);
+  console.log(e.id);
   socket.emit('request file comments', council, e.id);
 }
 

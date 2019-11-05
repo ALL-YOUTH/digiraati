@@ -14,25 +14,53 @@
 	<div id="container">
 		<header id="header">
 		</header>
-		<div id="lobby_navigation">
-			<div class="inactive" id="lobby_home_btn">Pääsivu</div>
-			<div class="inactive" id="lobby_chat_btn">Keskustelu</div>
-			<div class="active" id="lobby_document_btn">Lue asiakirja</div>
-		</div>
-		<div id="file_container">
-			<input type="file" id="file_input"></input>
-			<a id="add_file_btn">LISÄÄ TIEDOSTO</a>
-			<div id="file_list"></div>
-		</div>
-    <div id="comment_view">
-      <div id="pdf_div">
-				<div id="comment_layer"></div>
-				<div id="pdf"></div>
+		<div id="material_container">
+			<div id="left_menu">
+				<div id="left_menu_title"></div>
+				<div id="gonfind" class="fas fa-bars left_menu_title"> Mene ja löydä</div>
+				<div id="left_menu_councils" class="left_menu_title">Raadit</div>
+				<div id="left_menu_my_councils" class="left_menu_title">Omat Raadit</div>
+				<div id="left_menu_council_members" class="left_menu_title">Tyypit</div>
 			</div>
-		</div>
-		<div id="comment_list_div">
-			<div id="comment_list_title">Kommentit</div>
-			<div id="comment_list"></div>
+
+			<div id="material_content">
+				<div id="material_title">MATERIAALISIVU</div>
+				<div id="material_timetable">AIKATAULU RAADILLE</div>
+				<div id="lobby_navigation">
+					<div class="inactive" id="lobby_home_btn">Pääsivu</div>
+					<div class="inactive" id="lobby_chat_btn">Keskustelu</div>
+					<div class="active" id="lobby_document_btn">Lue asiakirja</div>
+				</div>
+				<div id="document_navigation">
+					<div id="all_documents_btn" class="document_navi_active">Kaikki dokumentit</div>
+					<div id="current_document" class="document_navi_inactive"></div>
+				</div>
+				<div id="all_documents_container">
+					<div id="file_filter">
+						<div id="newest_files_sorter">Uusimmat</div>
+						<div id="popularest_files_sorter">Kommentoiduimmat</div><br>
+						<div class="fas fa-search"></div>
+						<input type="text" id="file_search"></input>
+					</div>
+					<div id="file_container">
+						<input type="file" id="file_input"></input>
+						<div id="add_file_btn">LISÄÄ TIEDOSTO</div>
+						<div id="file_list"></div>
+					</div>
+				</div>
+				<div id="document_container">
+			    <div id="comment_view">
+			      <div id="pdf_div">
+							<div id="comment_layer"></div>
+							<div id="pdf"></div>
+						</div>
+					</div>
+					<div id="comment_list_div">
+						<div id="comment_list_title">Kommentit</div>
+						<div id="comment_list"></div>
+					</div>
+				</div>
+			</div>
 		</div>
     <footer id="footer">
   	</footer>
