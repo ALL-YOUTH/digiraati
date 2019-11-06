@@ -70,7 +70,7 @@ class File{
   get_comments(){return this.comments;}
 
   add_comment(comment){
-    this.comments.push(comment);
+    return this.comments.push(comment);
   }
 }
 

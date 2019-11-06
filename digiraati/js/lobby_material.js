@@ -1,11 +1,11 @@
 var socket = io();
 var rect = {};
 var drag = false;
-var comment_layer = document.getElementById("comment_layer");
+var cl = document.getElementById("comment_layer");
 var cw = document.getElementById("comment_view");
 var pdf_div = document.getElementById('pdf_div');
 var current_comment_id = null;
-var COMMENT_SIZE = 20;
+var COMMENT_SIZE = 10;
 var council = "";
 var current_file = "";
 var uploader = new SocketIOFileClient(socket);
@@ -47,9 +47,8 @@ function display_file(file){
 }
 
 function wheel(){
-  var cl = document.getElementById('comment_layer');
-  var move_var = (0 - parseInt(cw.scrollTop) + cw.offsetTop)+ "px";
-  cl.style.top = move_var;
+  var move_var = (parseInt(cw.scrollTop) - window.scrollY)+ "px";
+  cl.style.top -= move_var;
   rect.startY -= move_var;
   if(!current_comment_id){return;}
   draw();
@@ -57,21 +56,21 @@ function wheel(){
 
 function comment_wheel(e){
   if(cw.scrollTop == 0 && e.deltaY < 0){return;}
-  var cl = document.getElementById('comment_layer');
-  var move_var = (0 - parseInt(cw.scrollTop) + cw.offsetTop + e.deltaY)+ "px";
+  var move_var = (parseInt(cw.scrollTop) + e.deltaY)+ "px";
   cl.style.top = move_var;
   cw.scrollTo(0,cw.scrollTop + (e.deltaY/2));
 }
 
 function mouseDown(e){
-  if(e.target.id == "tmp_add" || e.target.id == "tmp_close"){return;}
+  if(e.target.id == "tmp_add" || e.target.id == "tmp_close"
+  || e.target.id == "comment_text_input"){return;}
   if(current_comment_id != null){
     document.getElementById(current_comment_id).remove();
     rect = {};
   }
   var temp = document.createElement("div");
-  rect.startX = e.pageX - this.offsetLeft;
-  rect.startY = e.pageY - this.offsetTop + cw.scrollTop;
+  rect.startX = e.pageX - cl.getBoundingClientRect().left;
+  rect.startY = e.pageY - cl.getBoundingClientRect().top - window.scrollY;
   rect.h = 0;
   rect.w = 0;
   drag = true;
@@ -81,14 +80,14 @@ function mouseDown(e){
   temp.style.top = rect.startY + "px";
   add_classes_to_element(temp, ["temp_comment"]);
   temp.addEventListener("mousewheel", comment_wheel);
-  comment_layer.appendChild(temp);
+  cl.appendChild(temp);
   draw();
 }
 
 function mouseMove(e){
   if (drag) {
-    rect.w = (e.pageX - this.offsetLeft) - rect.startX;
-    rect.h = (e.pageY - this.offsetTop + cw.scrollTop ) - rect.startY ;
+    rect.w = (e.pageX - cl.getBoundingClientRect().left) - rect.startX;
+    rect.h = (e.pageY - cl.getBoundingClientRect().top - window.scrollY) - rect.startY ;
     draw();
   }
 }
@@ -143,11 +142,14 @@ function remove_comment(id){
 
 function request_add_comment(){
   var comment_data = {};
+  if(document.getElementById('comment_text_input').value.length < 1){
+    return;
+  }
   comment_data["sender"] = logged_in;
   comment_data["id"] = makeid();
   comment_data["timestamp"] = timestamp();
   comment_data["dimentions"] = rect;
-  comment_data["text"] = current_comment_id;
+  comment_data["text"] = document.getElementById('comment_text_input').value;
   comment_data["council"] = council;
   comment_data["file"] = current_file;
   socket.emit("request add comment", comment_data);
@@ -161,22 +163,37 @@ socket.on('comment add success', function(data){
     c.removeChild(c.childNodes[0]);
   }
   var id = makeid();
+  c.id = id;
   c.classList.add(id);
   current_comment_id = null;
   var nc = document.createElement('div');
   nc.classList.add("comment_in_list");
   nc.classList.add(id);
-  nc.innerHTML = c.id;
+  for(var i = 0; i < data["text"].length; ++i){
+    nc.innerHTML += data["text"][i];
+    if(i == 40){
+      nc.innerHTML += "...";
+      break;
+    }
+  }
+
   c.addEventListener("mouseover", hightlight_comment);
   c.addEventListener("mouseout", unhighlight_comment);
   nc.addEventListener("mouseover", hightlight_comment);
   nc.addEventListener("mouseout", unhighlight_comment);
+  nc.addEventListener("click", gotoComment);
   document.getElementById('comment_list').appendChild(nc);
 });
+
+function gotoComment(e){
+  var c = document.getElementById(e.target.classList[1]);
+  cw.scrollTo(0, c.offsetTop - 300);
+}
 
 function continue_comment(){
   if(rect.h < 5 && rect.h > -5 && rect.w < 5 && rect.w > -5){return;}
   var comment = document.getElementById(current_comment_id);
+
   var nc_close = document.createElement('a');
   nc_close.id = "tmp_close";
   add_classes_to_element(nc_close, ["fas", "fa-times", "comment_close_btn", current_comment_id]);
@@ -188,6 +205,15 @@ function continue_comment(){
   nc_add.addEventListener("click", request_add_comment);
   nc_add.id = "tmp_add";
   comment.appendChild(nc_add);
+
+  var comment_text_area = document.createElement('textarea');
+  //add_classes_to_element();
+  comment_text_area.id = "comment_text_input";
+  comment_text_area.style.top = rect.h + "px";
+  comment_text_area.style.left = "0px";
+  comment_text_area.style.width = rect.w + "px";
+  comment_text_area.style.height = "100px";
+  comment.appendChild(comment_text_area);
 }
 
 function open_comment(){
@@ -313,7 +339,6 @@ function file_clicked(e){
   $('#current_document').css("transition", "width 1s");
   $('#current_document').css("display", "inline-block");
   $('#current_document').html(e.id);
-  console.log
   $("html,body").animate({"scrollTop": $("#lobby_navigation").offset().top},1000);
   currPage = 1;
   thePDF = null;
@@ -322,7 +347,6 @@ function file_clicked(e){
   clear_child_elements(document.getElementById("pdf"));
   current_file = e.id;
   display_file(e.id);
-  console.log(e.id);
   socket.emit('request file comments', council, e.id);
 }
 
@@ -330,7 +354,6 @@ socket.on('file comments', function(comments){
   for(var i = 0; i < comments.length; ++i){
     var com = comments[i];
     var c = document.createElement("div");
-    console.log(com);
     c.classList.add("comment");
     c.style.top = com["dimentions"]["startY"] + "px";
     c.style.left = com["dimentions"]["startX"] + "px";
@@ -343,13 +366,12 @@ socket.on('file comments', function(comments){
       c.style.top += (com["dimentions"]["startY"] + com["dimentions"]["h"] + "px");
     }
 
-    var id = makeid();
-    c.id = id;
-    c.classList.add(id);
+    c.id = makeid();
+    c.classList.add(c.id);
     c.addEventListener("mouseover", hightlight_comment);
     c.addEventListener("mouseout", unhighlight_comment);
     c.addEventListener("mousewheel", comment_wheel);
-    comment_layer.appendChild(c);
+    cl.appendChild(c);
 
     while(c.childNodes.length > 0){
       c.removeChild(c.childNodes[0]);
@@ -358,10 +380,17 @@ socket.on('file comments', function(comments){
     current_comment_id = null;
     var nc = document.createElement('div');
     nc.classList.add("comment_in_list");
-    nc.classList.add(id);
-    nc.innerHTML = c.id;
+    nc.classList.add(c.id);
+    for(var j = 0; j < com["text"].length; ++j){
+      nc.innerHTML += com["text"][j];
+      if(j == 40){
+        nc.innerHTML += "...";
+        j = 9999999;
+      }
+    }
     nc.addEventListener("mouseover", hightlight_comment);
     nc.addEventListener("mouseout", unhighlight_comment);
+    nc.addEventListener("click", gotoComment);
     document.getElementById('comment_list').appendChild(nc);
   }
 });

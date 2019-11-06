@@ -129,7 +129,7 @@ div .inactive{
 }
 
 #comment_layer{
-  position:absolute;
+  position:relative;
   z-index:7;
   height:0px;
   width:0px;
@@ -168,6 +168,11 @@ div .inactive{
   border-width:2px;
   border-color:black;
   background-color: rgb(200,200,200,0.5);
+}
+
+#comment_text_input{
+  position:absolute;
+  
 }
 
 .comment{
