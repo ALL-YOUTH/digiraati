@@ -90,7 +90,7 @@ function create_message(msg){
   nm.id = msg["id"];
   if(last_message_sender != msg["sender"]){
     var pic = document.createElement('div');
-    pic.innerHTML = msg["sender"][0].toUpperCase();
+    pic.textContent = msg["sender"][0].toUpperCase();
     var c = 0;
     for(var i = 0; i < msg["sender"].length; ++i){
       c += msg["sender"].charCodeAt(i);
@@ -98,22 +98,22 @@ function create_message(msg){
     pic.style.backgroundColor = colors[c % colors.length];
     pic.classList.add("chat_avatar_ball");
     var sender = document.createElement('a');
-    sender.innerHTML = msg["sender"];
+    sender.textContent = msg["sender"];
     sender.classList.add("message_list_sender_name");
     nm.appendChild(pic); nm.appendChild(sender);
   }
   var text = document.createElement('div');
-  text.innerHTML = msg["content"];
+  text.textContent = msg["content"];
   text.classList.add("message_list_text");
   nm.appendChild(text);
   var likes = document.createElement('div');
   add_classes_to_element(likes, ["fas", "fa-thumbs-up", "message_reactions", msg["id"]]);
   if(msg["likes"] == undefined){ msg["likes"] = 0; }
-  likes.innerHTML = "  " + msg["likes"].length;
+  likes.textContent = "  " + msg["likes"].length;
   nm.appendChild(likes);
   var reply = document.createElement('div');
   reply.classList.add("message_list_reply");
-  reply.innerHTML = "VASTAA";
+  reply.textContent = "VASTAA";
   nm.appendChild(reply);
 
   var ml = document.getElementById('message_list');
@@ -144,7 +144,7 @@ $(document).on('click', '.message_reactions', function(e){
 
 socket.on('update likes', function(mid, likes){
   var message = document.getElementsByClassName(mid);
-  message[0].innerHTML = "   "+likes;
+  message[0].textContent = "   "+likes;
 });
 
 

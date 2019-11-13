@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="/css/editprofile.css" type="text/css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat Alternates:extrabold' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Montserrat:bold' rel='stylesheet'>
+	<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<title>Digiraati 2.0</title>
+	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
+
+</head>
+<body>
+	<div id="container">
+		<header id="header">
+		</header>
+		<div id="hero">
+			<div id="hero_title">Muokkaa profiilia</div>
+		</div>
+		<div id="edit_profile_container">
+			<div id="username">Käyttäjänimi</div>
+			<input id="username_input" type="text"></input>
+
+			<div id="profile_picture">Profiilikuva</div>
+			<input id="picture_input" type="file"></input>
+			<a id="preview_picture"></a>
+
+			<div id="fname">Etunimi</div>
+			<input id="fname_input" type="text"></input>
+
+			<div id="lname">Sukunimi</div>
+			<input id="lname_input" type="text"></input>
+
+			<div id="email">Sähköposti</div>
+			<input id="email_input" type="email"></input>
+
+			<div id="description">Kuvaus</div>
+			<input id="description_input" type="text"></input>
+
+			<div id="hometown">Kotipaikkakunta</div>
+			<input id="hometown_input" type="text"></input>
+
+			<input type="button" id="update_profile_info" value="Päivitä tiedot"></input>
+
+			<br>
+			<div id="password_update">Vaihda salasana</div>
+			<div id="password">Salasana</div>
+			<input id="pw1_input" type="password"></input>
+
+			<div id="password_again">Salasana uudelleen</div>
+			<input id="pw2_input" type="password"></input>
+
+			<input type="button" id="update_pw" value="Vaihda salasana"></input>
+
+		</div>
+	</div>
+	<footer id="footer">
+	</footer>
+
+	<script src="/js/editprofile.js" type="text/javascript"></script>
+	<script src="/js/common.js"></script>
+</body>

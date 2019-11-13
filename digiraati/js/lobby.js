@@ -19,7 +19,7 @@ socket.on('council data', function(data){
   for(var i = 0; i < data["tags"].length; ++i){
     var tag = document.createElement('div');
     tag.classList.add("lobby_tag");
-    tag.innerHTML = data["tags"][i];
+    tag.textContent = data["tags"][i];
     document.getElementById("lobby_tags").appendChild(tag);
   }
 });

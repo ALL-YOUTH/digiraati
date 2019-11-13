@@ -49,6 +49,20 @@ app.get('/create', function(req, res){
   res.sendFile(__dirname + '/html/create.html');
 });
 
+//Digiraati info page
+app.get('/info', function(req, res){
+  res.sendFile(__dirname + '/html/info.html');
+});
+
+//Digiraati user profile page
+app.get('/profile', function(req, res){
+  res.sendFile(__dirname + '/html/profile.html');
+});
+
+//Digiraati user profile
+app.get('/editprofile', function(req, res){
+  res.sendFile(__dirname + '/html/editprofile.html');
+});
 
 //Council page
 app.get('/lobby/:id/material', function(req, res){

@@ -53,3 +53,7 @@ $('#confirm_create').click(function(){
 
   socket.emit('request council create', data);
 });
+
+socket.on('council create succeess', function(){
+  goToPage("/");
+});

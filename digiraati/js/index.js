@@ -18,7 +18,7 @@ function add_class_innerhtml(c, html){
   for(var i = 0; i < c.length; ++i){
       e.classList.add(c[i]);
   }
-  e.innerHTML = html;
+  e.textContent = html;
   return e;
 }
 

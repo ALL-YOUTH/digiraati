@@ -10,12 +10,15 @@ function hash(p){
 
 //Class a single user
 class User{
-  constructor(id, uname, fname, lname, email, h){
+  constructor(id, uname, fname, lname, email, h, location, description, picture){
     this.id = id;
     this.username = uname;
     this.fname = fname;
     this.lname = lname;
     this.email = email;
+    this.picture = picture;
+    this.description = description;
+    this.location = location;
     if(typeof h === 'string'){this.hash = hash(h); }
     else{this.hash = h; }
     this.online = false;
@@ -24,11 +27,11 @@ class User{
 
   get_id(){ return this.id; }
 
-  set_fname(fname){ this.first_name = fname; }
-  get_fname(){ return this.first_name; }
+  set_fname(fname){ this.fname = fname; }
+  get_fname(){ return this.fname; }
 
-  set_lname(lname){ this.last_name = lname; }
-  get_lname(){ return this.last_name; }
+  set_lname(lname){ this.lname = lname; }
+  get_lname(){ return this.lname; }
 
   set_username(uname){ this.username = uname; }
   get_username(){ return this.username; }
@@ -45,6 +48,14 @@ class User{
   set_ip(ip){ this.ip = ip }
   get_ip(){ return this.ip; }
 
+  set_location(loc){ this.location = loc; }
+  get_location(){ return this.location; }
+
+  set_description(d){ this.description = d; }
+  get_description(){ return this.description; }
+
+  set_picture(pic){ this.picture = pic; }
+  get_picture(){ return this.picture; }
 }
 
 //Class for handling all users
@@ -68,7 +79,6 @@ module.exports = class Users{
     if(this.username_available(uname)){
       if(hash != null){pw = null;}
       var new_user = new User(id, uname, fname, lname, email, pw=pw, hash=hash);
-      console.log(new_user);
       this.users.push(new_user);
       return 0;
     }
@@ -77,10 +87,10 @@ module.exports = class Users{
     }
   }
 
-  recover_user(id, uname, fname, lname, email, hash){
+  recover_user(id, uname, fname, lname, email, hash, loc, des, pic){
     //Checks if the username is already taken
     if(this.username_available(uname)){
-      var new_user = new User(id, uname, fname, lname, email, hash);
+      var new_user = new User(id, uname, fname, lname, email, hash, loc, des, pic);
       this.users.push(new_user);
       return 0;
     }
@@ -99,20 +109,7 @@ module.exports = class Users{
   }
 
   get_all_users(){
-    var all_users = [];
-    for(var i = 0; i < this.users.length; ++i){
-      var u = {};
-      u["id"] = this.users[i].get_id();
-      u["fname"] = this.users[i].get_fname();
-      u["lname"] = this.users[i].get_lname();
-      u["username"] = this.users[i].get_username();
-      u["email"] = this.users[i].get_user_email();
-      u["online"] = this.users[i].get_online_status();
-      u["hash"] = this.users[i].get_hash();
-      u["ip"] = this.users[i].get_ip();
-      all_users.push(u);
-    }
-    return all_users;
+    return this.users;
   }
 
   get_user(name){
@@ -139,6 +136,16 @@ module.exports = class Users{
       }
     }
     return null;
+  }
+
+  update_user_info(name, data){
+    let user = this.get_user(name);
+    user.set_username(data["username"]);
+    user.set_fname(data["fname"]);
+    user.set_lname(data["lname"]);
+    user.set_description(data["description"]);
+    user.set_location(data["location"]);
+    user.set_user_email(data["email"]);
   }
 
   get_all_usernames(){

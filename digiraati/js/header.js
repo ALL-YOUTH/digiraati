@@ -37,6 +37,13 @@ $("#Rekistroidy_btn").click(function(){
   goToPage("/register");
 });
 
+$('#Info_btn').click(function(){
+  goToPage("/info");
+})
+$('#Profile_avatar').click(function(){
+  goToPage("/profile");
+})
+
 function open_hamburger_menu(){
   $('#hamburger_menu').animate({right: "0"});
   hamburger_menu_open = true;
@@ -132,7 +139,7 @@ socket.on("login success", function(name){
 
 socket.on('logout success', function(){
   logged_in = "";
-  if($(window).width() > 799){
+  /*if($(window).width() > 799){
     $('#Profile_avatar').hide();
     $('#Kirjaudu_btn').show();
     $('#Kirjaudu_ulos_btn').hide();
@@ -143,7 +150,8 @@ socket.on('logout success', function(){
     $('#hamburger_signout').hide();
     $('#Kirjaudu_btn').hide();
     $('#Kirjaudu_ulos_btn').hide();
-  }
+  }*/
+  goToPage("/");
 });
 
 socket.on('not logged', function(){

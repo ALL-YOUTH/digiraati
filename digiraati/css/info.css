@@ -1,0 +1,127 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+body, html{
+  font-family: Montserrat;
+  margin:0;
+  height: 100%;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+#main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #arrow_left{
+  display:none;
+}
+
+#info_container{
+  max-width: 1200px;
+  margin:auto;
+}
+
+#info_title{
+  text-align: left;
+  font: Bold 32px/48px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+  margin-left: 20px;
+}
+
+#info_text{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#hero{
+  margin-top: 20px;
+  height:300px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-image: url("/res/hero_image_mobile.png");
+  background-repeat: no-repeat;
+  color:white;
+}
+
+#main_text_mobile, #secondary_text_mobile{
+  text-align: right;
+  display:block;
+  margin-right: 5%;
+  font-weight: bold;
+  text-shadow: 1px 1px 10px #000000;
+}
+
+#main_text_mobile{
+  font-family: Montserrat Alternates;
+  font-size: 28px;
+}
+
+#secondary_text_mobile{
+  position:relative;
+  font-family: Montserrat;
+  font-size: 16px;
+  bottom:-50px;
+}
+
+/*Everything below is css for desktop view of the website.*/
+@media (min-width:800px){
+  #main_text_mobile, #secondary_text_mobile{
+    display:none;
+  }
+
+  #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title{
+    display:inline-block;
+  }
+
+  #hero_text{
+    position:relative;
+    float:right;
+    width:70%;
+    padding: 50px;
+  }
+
+  #main_text_desktop{
+    position:relative;
+    font-family: Montserrat Alternates;
+    text-align: center;
+    display:block;
+    font-weight: bold;
+    text-shadow: 1px 1px 10px #000000;
+    font-size: 40px;
+    font-weight: bold;
+  }
+  #secondary_text_desktop{
+    position:relative;
+    font-family: Montserrat;
+    text-align: center;
+    display:block;
+    font-weight: bold;
+    text-shadow: 1px 1px 10px #000000;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  #hero{
+    position: relative;
+    height:450px;
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/res/hero_image.png");
+    background-repeat: no-repeat;
+    color:white;
+  }
+
+  #hero_search_councils_btn_desktop{
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+    cursor: pointer;
+    font-weight: bold;
+  }
+}

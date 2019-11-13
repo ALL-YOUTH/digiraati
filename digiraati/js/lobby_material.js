@@ -170,7 +170,7 @@ socket.on('comment add success', function(data){
   nc.classList.add("comment_in_list");
   nc.classList.add(id);
   for(var i = 0; i < data["text"].length; ++i){
-    nc.innerHTML += data["text"][i];
+    nc.textContent += data["text"][i];
     if(i == 40){
       nc.innerHTML += "...";
       break;
@@ -309,7 +309,7 @@ function list_files(files){
   for(var i = 0; i < files.length; ++i){
     var el = document.createElement('div');
     el.id = files[i]["id"];
-    el.innerHTML = files[i]["path"];
+    el.textContent = files[i]["path"];
     el.onclick = function(){
       file_clicked(this);
     }
@@ -382,7 +382,7 @@ socket.on('file comments', function(comments){
     nc.classList.add("comment_in_list");
     nc.classList.add(c.id);
     for(var j = 0; j < com["text"].length; ++j){
-      nc.innerHTML += com["text"][j];
+      nc.textContent += com["text"][j];
       if(j == 40){
         nc.innerHTML += "...";
         j = 9999999;

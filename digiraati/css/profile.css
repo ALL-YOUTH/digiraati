@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+body, html{
+  font-family: Montserrat;
+  margin:0;
+  height: 100%;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+#main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #arrow_left{
+  display:none;
+}
+
+#hero{
+  width: 1800px;
+  height: 358px;
+  background: transparent linear-gradient(180deg, #FFFFFF 0%, #7CE3B2 37%, #01AFC4 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 3px 3px 6px #00000029;
+  opacity: 0.4;
+}
+
+#profile_container{
+  position:relative;
+}
+
+
+#left_container, #right_container{
+  width:20%;
+  display: inline-block;
+}
+
+#left_container div{
+  text-align: left;
+  font: Medium 22px/42px Montserrat;
+  letter-spacing: 0;
+  color: #01AFC4;
+  opacity: 1;
+  margin:15px 30%;
+  cursor:pointer;
+}
+
+#middle_container{
+  position:absolute;
+  display: inline-block;
+  text-align: center;
+  width:60%;
+  margin:auto;
+  top: -300px;
+}
+
+#middle_container div{
+  cursor:default;
+}
+
+
+#profile_title{
+  display: inline-block;
+  text-align: center;
+  font: Bold 50px/42px Montserrat Alternates;
+  letter-spacing: 0;
+  color: #006073;
+  text-transform: capitalize;
+  opacity: 1;
+}
+
+#edit_profile{
+  position: absolute;
+  padding:10px;
+  margin-left: 20px;
+  display:inline-block;
+  color:#006073;
+  border-radius: 5px;
+}
+
+#edit_profile:hover{
+  color: #FFFFFF;
+  background-color: #01AFC4;
+  cursor:pointer;
+}
+
+#profile_avatar{
+  position:relative;
+  margin-left:auto;
+  margin-right: auto;
+  width: 268px;
+  height: 268px;
+  background: transparent 0% 0% no-repeat padding-box;
+  background-color: lightgreen;
+  box-shadow: 3px 3px 6px #00000029;
+  border: 5px solid #01AFC4;
+  border-radius: 50%;
+  opacity: 1;
+  margin-top:50px;
+}
+
+#profile_real_name{
+  position: relative;
+  text-align: center;
+  font: 50px/42px Montserrat;
+  letter-spacing: 0;
+  color: #01AFC4;
+  opacity: 1;
+  margin-top:50px;
+}
+
+#profile_user_level{
+  text-align: center;
+  font: Regular 20px/24px Montserrat;
+  letter-spacing: 0.4px;
+  color: #707070;
+  opacity: 1;
+}
+
+
+/*Everything below is css for desktop view of the website.*/
+@media (min-width:800px){
+  #main_text_mobile, #secondary_text_mobile{
+    display:none;
+  }
+
+  #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title{
+    display:inline-block;
+  }
+
+
+}

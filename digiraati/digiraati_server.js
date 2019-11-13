@@ -55,10 +55,15 @@ fs.readFile(backup_file, function (err, data) {
   for(var i = 0; i < recover_users.length; ++i){
     let user = recover_users[i];
     try{
-      users.recover_user(id=user["id"], uname=user["username"],
-                      fname=user["fname"], lname=user["lname"],
-                      email=user["email"], hash=user["hash"],
-                      online="false", ip=null);
+      users.recover_user( user["id"],
+                          user["username"],
+                          user["fname"],
+                          user["lname"],
+                          user["email"],
+                          user["hash"],
+                          user["location"],
+                          user["description"],
+                          user["picture"]);
     }
     catch(err){
       server_log(err);
@@ -67,18 +72,18 @@ fs.readFile(backup_file, function (err, data) {
 
   for(var i = 0; i <  recover_councils.length; ++i){
     let council = recover_councils[i];
-    councils.add_council( id=council["id"],
-                          name=council["name"],
-                          description=council["description"],
-                          creator=council["creator"],
-                          startdate=council["startdate"],
-                          starttime=council["starttime"],
-                          enddate=council["enddate"],
-                          endtime=council["endtime"],
-                          userlimit=council["userlimit"],
-                          tags=council["tags"],
-                          likes=council["likes"],
-                          dislikes=council["dislikes"]
+    councils.add_council( council["id"],
+                          council["name"],
+                          council["description"],
+                          council["creator"],
+                          council["startdate"],
+                          council["starttime"],
+                          council["enddate"],
+                          council["endtime"],
+                          council["userlimit"],
+                          council["tags"],
+                          council["likes"],
+                          council["dislikes"]
                         );
     for(let message of council["messages"]){
       councils.add_message(council["id"], message["id"], message["sender"], message["content"], message["likes"]);
@@ -179,9 +184,9 @@ io.on('connection', function(socket){
       socket.emit("invalid email");
       return;
     }
-    ret_val = users.add_user(id=data["id"], uname=data["username"],
-                              fname=data["firstname"], lname=data["lastname"],
-                              email=data["email"], pw=data["password1"]);
+    ret_val = users.add_user(data["id"], data["username"],
+                              data["firstname"], data["lastname"],
+                              data["email"], data["password1"]);
     if(ret_val != -1){
       socket.emit('register success', data["username"]);
       server_log(ip + ": " + data["username"] + " registered succesfully");
@@ -195,23 +200,24 @@ io.on('connection', function(socket){
   socket.on('request council create', function(info){
     server_log(ip + ": " + info["creator"] + " attempted to create council: " +
                 info["name"]);
-    ret_val = councils.add_council( id=info["id"],
-                                    name=info["name"],
-                                    description=info["description"],
-                                    creator=info["creator"],
-                                    startdate=info["startdate"],
-                                    starttime=info["starttime"],
-                                    enddate=info["enddate"],
-                                    endtime=info["endtime"],
-                                    userlimit=info["userlimit"],
-                                    tags=info["keywords"],
-                                    likes=0,
-                                    dislikes=0);
+    ret_val = councils.add_council( info["id"],
+                                    info["name"],
+                                    info["description"],
+                                    info["creator"],
+                                    info["startdate"],
+                                    info["starttime"],
+                                    info["enddate"],
+                                    info["endtime"],
+                                    info["userlimit"],
+                                    info["keywords"],
+                                    0,
+                                    0);
 
     if(ret_val == -1){
       return;
     }
     update_page();
+    socket.emit("council create succeess");
   });
 
   socket.on('request councils update', function(){
@@ -222,7 +228,12 @@ io.on('connection', function(socket){
   socket.on('request new message', function(msg){
     var userid = users.get_userid_by_username(msg["sender"]);
     msg["likes"] = [];
-    councils.add_message(msg["council"], msg["id"], msg["sender"], msg["content"], msg["likes"]);
+    councils.add_message( msg["council"],
+                          msg["id"],
+                          msg["sender"],
+                          msg["content"],
+                          msg["likes"]);
+
     io.to(msg["council"]).emit('new message', msg);
   });
 
@@ -370,6 +381,24 @@ io.on('connection', function(socket){
       return;
     }
     socket.emit('file comments', comments);
+  });
+
+  socket.on('request user data', function(){
+    var username = users.get_username_by_ip(ip);
+    var userdata = users.get_user(username);
+    socket.emit('user data', userdata);
+  });
+
+  socket.on('request update info', function(data){
+    var name = users.get_username_by_ip(ip);
+    var errors = users.update_user_info(name, data);
+    if(!errors){
+      socket.emit('info update success');
+      create_backup();
+    }
+    else{
+      socket.emit('info update failed', errors);
+    }
   });
 
   ///File upload stuff
