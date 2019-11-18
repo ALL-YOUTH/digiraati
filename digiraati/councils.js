@@ -94,6 +94,8 @@ class Council{
     this.files = [];
     this.users = [];
     this.messages = [];
+
+    this.conclusion = "";
   }
 
   get_council_name(){ return this.name; }
@@ -145,6 +147,14 @@ class Council{
       }
     }
     return ret;
+  }
+
+  add_conclusion(text){
+    this.conclusion = text;
+  }
+
+  get_conclusion(){
+    return this.conclusion;
   }
 }
 
@@ -303,6 +313,16 @@ module.exports = class Councils{
     let council = this.get_council_by_id(cid);
     let users = council.get_council_users();
     return users;
+  }
+
+  get_council_conclusion(cid){
+    let council = this.get_council_by_id(cid);
+    return council.get_conclusion();
+  }
+
+  add_counclusion_to_council(cid, text){
+    let council = this.get_council_by_id(cid);
+    council.add_conclusion(text);
   }
 
   add_like_to_message(cid, mid, uid){

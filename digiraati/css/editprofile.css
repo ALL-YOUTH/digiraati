@@ -18,6 +18,7 @@ body{
   height:150px;
   background: transparent linear-gradient(180deg, #FFFFFF 0%, #7CE3B2 37%, #01AFC4 100%) 0% 0% no-repeat padding-box;
   box-shadow: 3px 3px 6px #00000029;
+  opacity:0.4;
 }
 
 #hero_title{
@@ -39,6 +40,12 @@ body{
   font-family: Montserrat;
   margin: auto;
   width:100%;
+}
+
+#picture_input{
+  width:300px;
+  display:inline-block;
+
 }
 
 #edit_profile_container div{

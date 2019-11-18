@@ -201,6 +201,7 @@ module.exports = class Users{
     let user = this.get_user(name);
     user.set_online_status(false);
     user.set_ip(null);
+    console.log(user);
   }
 
   login_user(name, p, ip){

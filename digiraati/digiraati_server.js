@@ -401,6 +401,12 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on('request conclusion update', function(data){
+    councils.add_counclusion_to_council(data["council"], data["text"]);
+    var res = councils.get_council_conclusion(data["council"]);
+    socket.emit('update conclusion')
+  });
+
   ///File upload stuff
   //Todo tähän pitää keksiä vielä vähän sääntöjä että kuka voi lisäämistä
   //tiedostoja ja samannimiset tiedostot yms....

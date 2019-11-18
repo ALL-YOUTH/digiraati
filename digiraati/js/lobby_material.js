@@ -406,3 +406,7 @@ $('#lobby_chat_btn').click(function(){
 $('#lobby_document_btn').click(function(){
   goToPage("/lobby/" + council + "/material");
 });
+
+$('#lobby_conclusion_btn').click(function(){
+  goToPage("/lobby/" + council + "/conclusion");
+});
