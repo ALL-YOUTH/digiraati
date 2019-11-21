@@ -67,10 +67,10 @@ body, html{
   cursor:pointer;
 }
 
-div .active{
+.active{
   background-color: rgba(235,237,237,1);
 }
-div .inactive{
+.inactive{
   background-color: rgba(255,255,255,1);
 }
 
@@ -93,6 +93,7 @@ div .inactive{
 #conclusion_input{
   width:500px;
   height:600px;
+  display:block;
 }
 
 #conclusion_container{
@@ -101,8 +102,6 @@ div .inactive{
 
 #save_conclusion_text{
   cursor:pointer;
-  border-width: 2px;
-  border-radius: 2px;
-  border-style: solid;
+  margin-left:300px;
   width:auto;
 }

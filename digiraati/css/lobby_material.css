@@ -13,7 +13,7 @@ body, html{
 #left_menu{
   padding:5px;
   display:block;
-  width:14%;
+  width:10%;
   height:2000px;
   top:0px;
   background:rgb(0, 96, 115);
@@ -31,7 +31,7 @@ body, html{
   width:80%;
   height:auto;
   color:black;
-  margin-left:15%;
+  margin-left:11%;
   top:0px;
 }
 
@@ -63,7 +63,7 @@ body, html{
   height:auto;
   width:80%;
   background-color: rgb(255,255,255,1);
-  z-index: 15;
+  z-index: 5;
 }
 
 #lobby_navigation div{
@@ -137,18 +137,19 @@ div .inactive{
 
 #document_navigation{
   height:auto;
-  width:86%;
+  width:70%;
 }
 
 #document_navigation div{
   display: inline-block;
-  padding: 0px 30px;
+  padding: 0px 5%;
   width:86%;
   font-family: Montserrat;
   font-size: 32px;
   font-weight: bold;
   line-height: 48px;
   cursor:pointer;
+  position:relative;
 }
 
 .document_navi_active{
@@ -167,21 +168,22 @@ div .inactive{
   position:absolute;
   border-width:2px;
   border-color:black;
-  background-color: rgb(200,200,200,0.5);
+  background-color: rgba(196,237,241,0.5);
 }
 
 #comment_text_input{
   position:absolute;
-  
+
 }
 
 .comment{
   position:absolute;
   border-color: black;
-  background-color: rgb(255,255,0, 0.5);
+  background-color: rgba(196,237,241,0.5);
 }
 
 .page{
+  display: block;
   position:relative;
 }
 
@@ -211,26 +213,125 @@ div .inactive{
 }
 
 #comment_list_div {
+  left:0px;
   display:inline-block;
-  width:15%;
+  height:60%;
+  max-width:30%;
   float:right;
   right:30px;
+  background-color: #C4EDF1;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
-#comment_list_title{
+.noselect{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#comment_list_navigation{
+  position:relative;
+  width:100%;
+}
+
+#comment_list_navigation div{
+  position:relative;
+  border-radius: 3px;
+  padding:2px 5px;
   text-align: center;
+  display:inline-block;
+  font: Bold 15px/18px Montserrat;
+  letter-spacing: 0;
+  opacity: 1;
+  cursor:pointer;
+}
+
+#new_comments, #all_comments{
+  color: #FFFFFF;
+  text-transform: uppercase;
+  background: #10B3C7 0% 0% no-repeat padding-box;
+}
+
+#close_comment_list{
+  color:#006073;
 }
 
 .comment_in_list{
+  display:inline-block;
   position:relative;
   width:100%;
   height: auto;
   border:solid;
   border-radius:3px;
   border-width: 0px;
-  background:rgb(200,200,200, 0.5);
+  background:rgba(196,237,241,0.5);
   cursor:pointer;
   padding:5px;
+  text-align: left;
+  font: 18px/44px Montserrat;
+  letter-spacing: 0;
+  color: #006073;
+  opacity: 1;
+}
+
+.avatar_ball{
+  border-radius: 50%;
+  display: inline-block;
+  padding:3px;
+  width:24px;
+  height:24px;
+  text-align: center;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.comment_commenter{
+  width:auto;
+  display:inline-block;
+  margin-left:10px;
+  padding:5px;
+}
+
+.comment_text{
+  display:none;
+  text-align: left;
+  font: 12px/15px Montserrat;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.comment_reactions{
+  float:right;
+  display:block;
+  display:none;
+}
+
+.comment_reactions div{
+  margin-right:10px;
+  display:inline-block;
+  text-align: left;
+  font: 12px/48px Montserrat;
+  letter-spacing: 0;
+  color: #CBE781;
+  text-shadow: 1px 1px 2px #0000002F;
+  opacity: 1;
+}
+
+.reply_area{
+  display:none;
+}
+
+.reply_area textarea{
+  border-radius: 3px;
+  resize:none;
+  width:70%;
+  height:100px;
+  position:relative;
 }
 
 #add_file_btn{

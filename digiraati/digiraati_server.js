@@ -83,7 +83,8 @@ fs.readFile(backup_file, function (err, data) {
                           council["userlimit"],
                           council["tags"],
                           council["likes"],
-                          council["dislikes"]
+                          council["dislikes"],
+                          council["conclusion"]
                         );
     for(let message of council["messages"]){
       councils.add_message(council["id"], message["id"], message["sender"], message["content"], message["likes"]);
@@ -190,6 +191,7 @@ io.on('connection', function(socket){
     if(ret_val != -1){
       socket.emit('register success', data["username"]);
       server_log(ip + ": " + data["username"] + " registered succesfully");
+      create_backup();
     }
     else{
       socket.emit('invalid nickname');
@@ -211,13 +213,15 @@ io.on('connection', function(socket){
                                     info["userlimit"],
                                     info["keywords"],
                                     0,
-                                    0);
+                                    0,
+                                    "");
 
     if(ret_val == -1){
       return;
     }
     update_page();
     socket.emit("council create succeess");
+    create_backup();
   });
 
   socket.on('request councils update', function(){
@@ -291,8 +295,11 @@ io.on('connection', function(socket){
 
   socket.on('request council data', function(id){
     council_data = councils.get_council_data(id);
-    if(council_data != null){
+    if(council_data != -1){
       socket.emit('council data', council_data);
+    }
+    else{
+      socket.emit('invalid council id');
     }
   });
 
@@ -350,7 +357,6 @@ io.on('connection', function(socket){
     catch(err){
       console.log("no files in this council", err);
     }
-
   });
 
   socket.on('request file data', function(fid){
@@ -360,6 +366,7 @@ io.on('connection', function(socket){
         server_log(ip + ": " + " could not send file: " + fid);
       }
       socket.emit('file data', {data:buff, binary:true});
+      create_backup();
     });
   });
 
@@ -368,6 +375,7 @@ io.on('connection', function(socket){
     var res = councils.add_comment_to_file(data);
     if(res != -1){
       socket.emit("comment add success", data);
+      create_backup();
     }
     else{
       socket.emit("comment add failed");
@@ -401,10 +409,16 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on('request conclusion refresh', function(cid){
+    var res = councils.get_council_conclusion(cid);
+    socket.emit('update conclusion');
+  });
+
   socket.on('request conclusion update', function(data){
     councils.add_counclusion_to_council(data["council"], data["text"]);
     var res = councils.get_council_conclusion(data["council"]);
-    socket.emit('update conclusion')
+    create_backup();
+    socket.emit('update conclusion');
   });
 
   ///File upload stuff

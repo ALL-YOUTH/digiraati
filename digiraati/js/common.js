@@ -52,3 +52,7 @@ function add_classes_to_element(element, classes){
     element.classList.add(classes[i]);
   }
 }
+
+socket.on('invalid council id', function(){
+  goToPage('/');
+});

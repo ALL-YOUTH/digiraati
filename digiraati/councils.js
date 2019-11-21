@@ -44,8 +44,7 @@ class Comment{
     this.dimentions = dimentions;
     this.likes = 0;
     this.dislikes = 0;
-    this.parentid = null;
-    this.childid = null;
+    this.responses = [];
   }
   get_id(){ return this.id; }
   get_sender(){ return this.sender; }
@@ -53,8 +52,7 @@ class Comment{
   get_likes(){ return this.likes; }
   get_dislikes(){ return this.dislikes; }
   get_time(){ return this.time; }
-  get_child_comment_id(){ return this.childid; }
-  get_parent_comment_id(){ return this.parentid; }
+  get_responses(){ return this.responses }
 }
 
 class File{
@@ -77,7 +75,7 @@ class File{
 //Class for one chat room
 class Council{
   constructor(id, name, description, creator, startdate, starttime,
-              enddate, endtime, userlimit, tags, likes, dislikes){
+              enddate, endtime, userlimit, tags, likes, dislikes, conclusion){
     this.id = id;
     this.name = name;
     this.description = description;
@@ -95,7 +93,7 @@ class Council{
     this.users = [];
     this.messages = [];
 
-    this.conclusion = "";
+    this.conclusion = conclusion;
   }
 
   get_council_name(){ return this.name; }
@@ -164,13 +162,13 @@ module.exports = class Councils{
     this.councils = [];
   }
 
-  add_council(id, name, description, creator, startdate,
-              starttime, enddate, endtime, userlimit, tags, likes, dislikes){
-    let new_council = new Council(id=id, name=name,
-      description=description, creator=creator,
-      startdate=startdate, starttime=starttime, enddate=enddate,
-      endtime=endtime, userlimit=userlimit, tags=tags, likes=likes,
-      dislikes=dislikes);
+  add_council(id, name, description, creator, startdate, starttime, enddate,
+              endtime, userlimit, tags, likes, dislikes, conclusion){
+    let new_council = new Council(id, name,
+                                  description, creator,
+                                  startdate, starttime, enddate,
+                                  endtime, userlimit, tags, likes,
+                                  dislikes, conclusion);
     this.councils.push(new_council);
   }
 
@@ -277,10 +275,7 @@ module.exports = class Councils{
   }
 
   get_council_data(id){
-    let council = this.get_council_by_id(id);
-    var council_data = {};
-    if(council == -1){ return null; }
-    return council;
+    return this.get_council_by_id(id);
   }
 
   sign_user_in_council(cid, uid){

@@ -12,6 +12,7 @@ $(function(){
 });
 
 socket.on('council data', function(data){
+  console.log(data);
   $('#left_menu_title').html(data["name"]);
   $('#conclusion_input').text(data["conclusion"]);
 });
@@ -21,12 +22,16 @@ $('#save_conclusion_text').click(function(){
   data["council"] = council;
   data["text"] = $('#conclusion_input').val();
   socket.emit('request conclusion update', data);
-  goToPage("/lobby/" + council + "/conclusion");
 });
 
-/*socket.on('update conclusion', function(text){
-  $('#conclusion_input').text(text);
-});*/
+$('#refresh_conclusion_text').click(function(){
+  socket.emit('request conclusion refresh', council);
+});
+
+
+socket.on('update conclusion', function(){
+  goToPage("/lobby/" + council + "/conclusion");
+});
 
 socket.on("login success", function(){
   socket.emit("request join council", council);
