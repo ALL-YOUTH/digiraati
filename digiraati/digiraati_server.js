@@ -382,6 +382,18 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on('request add response', function(data){
+    server_log(ip + ": attempting to add response to comment: " + data["id"]);
+    councils.add_response_to_comment(data);
+    var res = councils.get_comment_data(data);
+    socket.emit('comment data', res);
+  });
+
+  socket.on("request comment data", function(data){
+    var res = councils.get_comment_data(data);
+    socket.emit('comment data', res);
+  });
+
   socket.on('request file comments', function(cid, fid){
     var comments = councils.get_file_comments(cid, fid);
     if(comments == -1){
@@ -486,7 +498,6 @@ function create_backup(){
         console.log("An error occured while writing JSON Object to File.");
         return console.log(err);
       }
-      console.log("Backup done");
     });
   }
   catch(err){

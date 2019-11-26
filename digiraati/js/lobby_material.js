@@ -233,9 +233,14 @@ function create_comment(data){
   comment_answer_btn.id = "reply_btn";
   comment_answer_btn.addEventListener('click', open_reply_view);
 
+  var reply_list = document.createElement('div');
+  reply_list.id = data["id"] + "replylist";
+  reply_list.classList.add("replylist");
+
   reaction_btns.appendChild(comment_like_btn);
   reaction_btns.appendChild(idk_btn);
   reaction_btns.appendChild(comment_answer_btn);
+
 
   var reply = document.createElement('div');
   reply.id = data["id"]+"reply_area";
@@ -244,11 +249,19 @@ function create_comment(data){
   var reply_text_input = document.createElement('textarea');
   reply_text_input.id = data["id"] + "replyinput";
 
-  reply.appendChild(reply_text_input);
+  var reply_send_btn = document.createElement('span');
+  add_classes_to_element(reply_send_btn, ["fas", "fa-arrow-circle-right", "fa-2x"]);
+  reply_send_btn.addEventListener('click', send_reply);
+  reply_send_btn.id = data["id"] + "replybtn";
+
+  reply.appendChild(reply_text_input); reply.appendChild(reply_send_btn);
+
 
   nc.appendChild(pic); nc.appendChild(commenter);
   nc.appendChild(ct);nc.appendChild(reaction_btns);
+  nc.appendChild(reply_list);
   nc.appendChild(reply)
+
 
   nc.addEventListener("mouseover", hightlight_comment);
   nc.addEventListener("mouseout", unhighlight_comment);
@@ -257,12 +270,48 @@ function create_comment(data){
   document.getElementById('comment_list').appendChild(nc);
 }
 
+function send_reply(e){
+  var id = e.target.id.replace('replybtn', '');
+  var data = {};
+  data["id"] = id;
+  data["text"] = $("#"+id+"replyinput").val();
+  data["sender"] = logged_in;
+  data["timestamp"] = timestamp();
+  data["council"] = council;
+  data["file"] = current_file;
+  socket.emit('request add response', data);
+  document.getElementById(id+"replyinput").value = "";
+}
+
+socket.on('comment data', function(data){
+  var list = document.getElementById(data["id"] + "replylist");
+  clear_child_elements(list);
+  for(var i = 0; i < data["responses"].length; ++i){
+    var r = data["responses"][i];
+    if(r["sender"] == ""){continue;}
+    var response = document.createElement('div');
+    var pic = document.createElement('div');
+    pic.classList.add("avatar_ball");
+    var c = 0;
+    for(var j = 0; j < r["sender"].length; ++j){
+      c += r["sender"].charCodeAt(j);
+    }
+    pic.style.backgroundColor = colors[c % colors.length];
+    pic.textContent = r["sender"][0].toUpperCase();
+    console.log(pic);
+    response.appendChild(pic);
+    response.textContent = r["text"];
+    list.appendChild(response);
+  }
+});
+
 function open_reply_view(){
     document.getElementById(current_comment_open + "reply_area").style.display = "block";
 }
 
 function gotoComment(e){
-  if(e.target.id == "reply_btn" || e.target.type == "textarea"){
+  if(e.target.id == "reply_btn" || e.target.type == "textarea" ||
+      e.target.id.includes('replybtn')){
     return;
   }
   var c = get_comment_id(e);
@@ -313,6 +362,10 @@ function close_all_comments(){
   for(var i = 0; i < reply.length; ++i){
     reply[i].style.display = "none";
   }
+  var replylist = document.getElementsByClassName('replylist');
+  for(var i = 0; i < replylist.length; ++i){
+    replylist[i].style.display = "none";
+  }
 }
 
 function open_comment(id){
@@ -330,7 +383,16 @@ function open_comment(id){
   for(var i = 0; i < reactions.length; ++i){
     reactions[i].style.display = "block";
   }
+
+  var replylist = document.getElementById(id+"replylist")
+  replylist.style.display = "block";
   current_comment_open = id;
+
+  var data = {};
+  data["id"] = id;
+  data["council"] = council;
+  data["file"] = current_file;
+  socket.emit("request comment data", data);
 }
 
 function get_comment_id(e){

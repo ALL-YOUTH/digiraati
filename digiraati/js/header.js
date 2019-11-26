@@ -83,7 +83,7 @@ $('#hamburger_index').click(function(){
 });
 
 $('#hamburger_register').click(function(){
-  goToPage("/2.0/register");
+  goToPage("/register");
 });
 
 $('#arrow_left').click(function(){
@@ -132,6 +132,19 @@ function mobile_header_fix(){
 
 socket.on("login success", function(name){
   logged_in = name;
+  var c = 0;
+  for(var i = 0; i < name.length; ++i){
+    c += name.charCodeAt(i);
+  }
+  console.log(c);
+  console.log(name[0]);
+  console.log(colors[c % colors.length]);
+  document.getElementById("Profile_avatar").style.backgroundColor = colors[c % colors.length];
+  document.getElementById("Profile_avatar").textContent = name[0].toUpperCase();
+
+  document.getElementById("hamburger_avatar").style.backgroundColor = colors[c % colors.length];
+  document.getElementById("hamburger_avatar").textContent = name[0].toUpperCase();
+
   if($(window).width() > 799){
     $('#login_div').css("display", "none");
     $('#Profile_avatar').show();
@@ -145,23 +158,13 @@ socket.on("login success", function(name){
     $('#hamburger_signout').show();
     $('#Kirjaudu_btn').hide();
     $('#Kirjaudu_ulos_btn').hide();
+    $('#Profile_avatar').hide();
+
   }
 });
 
 socket.on('logout success', function(){
   logged_in = "";
-  /*if($(window).width() > 799){
-    $('#Profile_avatar').hide();
-    $('#Kirjaudu_btn').show();
-    $('#Kirjaudu_ulos_btn').hide();
-  }
-  else{
-    $('#hamburger_avatar').hide()
-    $('#hamburger_signin').show();
-    $('#hamburger_signout').hide();
-    $('#Kirjaudu_btn').hide();
-    $('#Kirjaudu_ulos_btn').hide();
-  }*/
   goToPage("/");
 });
 

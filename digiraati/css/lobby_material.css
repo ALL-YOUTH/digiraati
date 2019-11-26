@@ -305,6 +305,21 @@ div .inactive{
   opacity: 1;
 }
 
+.replylist{
+  margin-top:60px;
+  display:none;
+  text-align: left;
+  font: 12px/15px Montserrat;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  opacity: 1;
+  margin: 30px 20px;
+}
+
+.replylist div{
+  margin: 5px 0px;
+}
+
 .comment_reactions{
   float:right;
   display:block;

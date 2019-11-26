@@ -53,6 +53,8 @@ class Comment{
   get_dislikes(){ return this.dislikes; }
   get_time(){ return this.time; }
   get_responses(){ return this.responses }
+
+  add_reponse(res){ this.responses.push(res); }
 }
 
 class File{
@@ -153,6 +155,47 @@ class Council{
 
   get_conclusion(){
     return this.conclusion;
+  }
+
+  get_file_by_id(id){
+    var file = -1;
+    for(var i = 0; i < this.files.length; ++i){
+      if(this.files[i].get_id() == id){
+        file = this.files[i];
+        break;
+      }
+    }
+    return file;
+  }
+
+  add_response_to_comment(data){
+    let file = this.get_file_by_id(data["file"]);
+    data["rid"] = makeid();
+    if(file == -1){
+      console.log("file not found", data["file"]);
+      return file;
+    }
+    let comments = file.get_comments();
+    for(var i = 0; i < comments.length; ++i){
+      if(comments[i]["id"] == data["id"]){
+        var response = new Comment(data["id"], data["sender"],
+                                  data["text"], data["time"]);
+        comments[i]["responses"].push(response);
+        return 0;
+      }
+    }
+  }
+  get_comment_data(data){
+    let file = this.get_file_by_id(data["file"]);
+    if(file == -1){
+      return file;
+    }
+    let comments = file.get_comments();
+    for(var i = 0; i < comments.length; ++i){
+      if(comments[i]["id"] == data["id"]){
+        return comments[i];
+      }
+    }
   }
 }
 
@@ -320,6 +363,18 @@ module.exports = class Councils{
     council.add_conclusion(text);
   }
 
+  add_response_to_comment(data){
+    let council = this.get_council_by_id(data["council"]);
+    let res = council.add_response_to_comment(data);
+    return res;
+  }
+
+  get_comment_data(data){
+    let council = this.get_council_by_id(data["council"]);
+    let res = council.get_comment_data(data);
+    return res;
+  }
+
   add_like_to_message(cid, mid, uid){
     let council = this.get_council_by_id(cid);
     var messages = council.get_council_messages();
@@ -334,5 +389,10 @@ module.exports = class Councils{
 }
 
 function makeid() {
-  return Math.round(new Date().getTime() + (Math.random() * 10000));
+  id = "";
+  var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  while(id.length < 12){
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id;
 }
