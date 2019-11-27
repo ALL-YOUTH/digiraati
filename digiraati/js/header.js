@@ -16,7 +16,7 @@ var colors = ["aqua", "blueviolet", "chartreuse", "chocolate", "coral",
 
 socket.emit('check login');
 
-if($(window).width() < 800){
+if($(window).width() < 983){
   view = "mobile";
 }
 else{
@@ -24,11 +24,11 @@ else{
 }
 
 window.onresize = function(){
-  if(view == "desktop" && $(window).width() < 800){
+  if(view == "desktop" && $(window).width() < 983){
     socket.emit('check login');
     view = "mobile";
   }
-  else if(view == "mobile" && $(window).width() > 799){
+  else if(view == "mobile" && $(window).width() >= 983){
     socket.emit('check login');
     view = "desktop";
   }
@@ -125,33 +125,25 @@ $('#login_confirm').click(function(){
   socket.emit('login attempt', email, password);
 });
 
-function mobile_header_fix(){
-  $('#Kirjaudu_btn').hide();
-  $('#Kirjaudu_ulos_btn').hide();
-}
-
 socket.on("login success", function(name){
   logged_in = name;
   var c = 0;
   for(var i = 0; i < name.length; ++i){
     c += name.charCodeAt(i);
   }
-  console.log(c);
-  console.log(name[0]);
-  console.log(colors[c % colors.length]);
   document.getElementById("Profile_avatar").style.backgroundColor = colors[c % colors.length];
   document.getElementById("Profile_avatar").textContent = name[0].toUpperCase();
 
   document.getElementById("hamburger_avatar").style.backgroundColor = colors[c % colors.length];
   document.getElementById("hamburger_avatar").textContent = name[0].toUpperCase();
-
-  if($(window).width() > 799){
+  console.log("logged", $(window).width());
+  if(view == "desktop"){
     $('#login_div').css("display", "none");
     $('#Profile_avatar').show();
     $('#Kirjaudu_btn').hide();
     $('#Kirjaudu_ulos_btn').show();
   }
-  else{
+  else if(view == "mobile"){
     $('#hamburger_avatar').show()
     $('#login_div').css("display", "none");
     $('#hamburger_signin').hide();
@@ -159,7 +151,6 @@ socket.on("login success", function(name){
     $('#Kirjaudu_btn').hide();
     $('#Kirjaudu_ulos_btn').hide();
     $('#Profile_avatar').hide();
-
   }
 });
 
@@ -170,12 +161,13 @@ socket.on('logout success', function(){
 
 socket.on('not logged', function(){
   logged_in = "";
-  if($(window).width() > 799){
+  console.log("not logged", $(window).width()+16);
+  if(view == "desktop"){
     $('#Profile_avatar').hide();
     $('#Kirjaudu_btn').show();
     $('#Kirjaudu_ulos_btn').hide();
   }
-  else{
+  else if(view == "mobile"){
     $('#hamburger_avatar').hide()
     $('#hamburger_signin').show();
     $('#hamburger_signout').hide();

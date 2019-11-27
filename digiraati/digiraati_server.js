@@ -421,6 +421,18 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on('request update password', function(data){
+    var name = users.get_username_by_ip(ip);
+    var errors = users.update_user_pw(name, data);
+    if(!errors){
+      socket.emit('password update success');
+      create_backup();
+    }
+    else{
+      socket.emit('password update failed', errors);
+    }
+  });
+
   socket.on('request conclusion refresh', function(cid){
     var res = councils.get_council_conclusion(cid);
     socket.emit('update conclusion');

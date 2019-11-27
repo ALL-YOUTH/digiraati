@@ -119,7 +119,7 @@
   margin-top: 20px;
 }
 
-@media (max-width:800px){
+@media (max-width:1000px){
   #login_div{
     left:50%;
     -webkit-transform: translate(-50%,0);
@@ -207,7 +207,7 @@
   font-weight: bold;
 }
 
-@media (min-width:800px){
+@media (min-width:1000px){
 
   #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Kirjaudu_ulos_btn, #Profile_avatar{
     display:inline-block;
@@ -237,7 +237,7 @@
   }
   #header_btns span{
     cursor:pointer;
-    margin-left: 20px;
+    margin-left: 35px;
     color: rgba(1,20,20,1);
   }
 

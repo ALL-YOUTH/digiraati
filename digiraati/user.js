@@ -148,6 +148,11 @@ module.exports = class Users{
     user.set_user_email(data["email"]);
   }
 
+  update_user_pw(name, data){
+    let user = this.get_user(name);
+    user.set_hash(data["pw1"]);
+  }
+
   get_all_usernames(){
     var all = [];
     for(var i = 0; i < this.users.length; ++i){

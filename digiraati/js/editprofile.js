@@ -51,7 +51,17 @@ socket.on('info update success', function(){
 
 $('#update_pw').click(function(){
   data = {};
+  data["username"] = logged_in;
   data["pw1"] = $('#pw1_input').val();
   data["pw2"] = $('#pw2_input').val();
+  if(data["pw1"] != data["pw2"]){
+    alert("Salasanat eivät täsmää");
+    $('#pw1_input').val("");
+    $('#pw2_input').val("");
+  }
   socket.emit("request update password", data);
+});
+
+socket.on('password update success', function(){
+  goToPage("profile");
 });
