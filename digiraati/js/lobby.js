@@ -23,6 +23,9 @@ socket.on('council data', function(data){
   $('#lobby_description_title').html(data["name"]);
   $('#lobby_description').html(data["description"]);
   for(var i = 0; i < data["tags"].length; ++i){
+    if(data["tags"][i] == ""){
+      continue;
+    }
     var tag = document.createElement('div');
     tag.classList.add("lobby_tag");
     tag.textContent = data["tags"][i];

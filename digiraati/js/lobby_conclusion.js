@@ -30,15 +30,7 @@ $('#refresh_conclusion_text').click(function(){
 
 $('#conclusion_input').keydown(function(e){
   var key = e.keyCode;
-    if (key === 13) {
-      e.preventDefault();
-      document.getElementById("conclusion_input").value += "\n";
-    }
-    else if(key == 9){
-      e.preventDefault();
-      document.getElementById("conclusion_input").value += "  ";
-    }
-    return;
+  return;
 });
 
 

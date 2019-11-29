@@ -1,16 +1,15 @@
 #footer {
   width:100%;
   min-width: 320px;
-  height: 250px;
+  height: 150px;
   clear:both;
-  background-color: rgba(1,175,196,0.7);
+  background-color: rgba(1,175,196,1);
   bottom:0px;
 }
 
 #footer_container{
   color:rgba(203,208,211,1);
   font-weight: bold;
-  padding-bottom: 50px;
   font-size: 15px;
   text-align: left;
   width:100%;
@@ -18,26 +17,31 @@
 }
 
 #footer_logo{
-  margin:5px;
+  display:inline-block;
+  width: 300px;
 }
 
 #footer_navi{
-  float:left;
-  margin:15px;
+  display: inline-block;
+  margin:30px;
 }
 #footer_navi2{
-  float:left;
-  margin:15px;
+  display: inline-block;
+  margin:30px;
 }
+#footer_social{
+  display: inline-block;
+  margin:30px;
+}
+
 #footer_logo_url{
   content:url("/res/digiraati_logo_valk.png");
 }
 
 @media (min-width:1000){
   #footer {
-    position:relative;
-    height: 150px;
-    width:100%;
+    position:absolute;
+    height: 250px;
     clear:both;
     background-color: rgba(1,175,196,1);
     bottom:0px;
@@ -48,20 +52,21 @@
     margin:auto;
   }
 
-  #footer_container #footer_logo{
-    float:left;
+  #footer_logo{
+    display:inline-block;
+    width: 300px;
   }
 
-  #footer_container #footer_navi{
-    float:left;
+  #footer_navi{
+    display: inline-block;
     margin:30px;
   }
-  #footer_container #footer_navi2{
-    float:left;
+  #footer_navi2{
+    display: inline-block;
     margin:30px;
   }
-  #footer_container #footer_social{
-    float:left;
+  #footer_social{
+    display: inline-block;
     margin:30px;
   }
 }
