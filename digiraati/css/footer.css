@@ -1,12 +1,10 @@
 #footer {
-  position:relative;
-  bottom:0px;
   width:100%;
   min-width: 320px;
-
   height: 250px;
   clear:both;
   background-color: rgba(1,175,196,0.7);
+  bottom:0px;
 }
 
 #footer_container{
@@ -35,18 +33,18 @@
   content:url("/res/digiraati_logo_valk.png");
 }
 
-@media (min-width:800px){
+@media (min-width:1000){
   #footer {
     position:relative;
     height: 150px;
-    bottom: 0px;
     width:100%;
     clear:both;
     background-color: rgba(1,175,196,1);
+    bottom:0px;
   }
 
   #footer_container{
-    max-width: 1000px;
+    max-width: 90%;
     margin:auto;
   }
 

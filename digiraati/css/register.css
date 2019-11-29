@@ -87,11 +87,10 @@ body{
     position: relative;
     height:300px;
     width: 100%;
-    margin-top: 20px;
     overflow: hidden;
     background-size: cover;
     background-position: center;
-    background-image: url("/res/register_hero.png");
+    background-image: url("/res/register_hero2.png");
     background-repeat: no-repeat;
     color:white;
   }

@@ -126,6 +126,16 @@ class Council{
     return result;
   }
 
+  remove_participant(uid){
+    var result = false;
+    var index = this.users.indexOf(uid);
+    if(index > -1){
+      this.users.splice(index, 1);
+      result = true;
+    }
+    return result;
+  }
+
   add_file(file){
     this.files.push(file);
   }
@@ -172,7 +182,6 @@ class Council{
     let file = this.get_file_by_id(data["file"]);
     data["rid"] = makeid();
     if(file == -1){
-      console.log("file not found", data["file"]);
       return file;
     }
     let comments = file.get_comments();
@@ -252,7 +261,6 @@ module.exports = class Councils{
   add_file(fileid, filename, council_id, uploader, comments=[]){
     var council = this.get_council_by_id(council_id);
     if(council == -1){
-      console.log("Unable to find council with id", council_id);
       return;
     }
     var file = new File(fileid, filename, uploader, comments);
@@ -321,31 +329,6 @@ module.exports = class Councils{
     return this.get_council_by_id(id);
   }
 
-  sign_user_in_council(cid, uid){
-    let council = this.get_council_by_id(cid);
-    //First check if user is already a member of the council
-    let users = council.get_council_users();
-    for(var i = 0; i < users.length; ++i){
-      if(uid == users[i]){
-        return false;
-      }
-    }
-    //add the participant
-    var res = council.add_participant(uid);
-    return res;
-  }
-
-  resign_user_from_council(cid, uid){
-    let council = this.get_council_by_id(cid);
-    let users = council.get_council_users();
-    for(var i = 0; i < users.length; ++i){
-      if(uid == users[i]){
-        users.splice(i, 1);
-        return true;
-      }
-    }
-  }
-
   get_council_members(cid){
     if(cid == undefined){return;}
     let council = this.get_council_by_id(cid);
@@ -384,6 +367,18 @@ module.exports = class Councils{
         return messages[i].toggle_like(id, uid);
       }
     }
+  }
+
+  add_user_to_council(data){
+    let council = this.get_council_by_id(data["council"]);
+    var res = council.add_participant(data["user"]);
+    return res;
+  }
+
+  remove_user_from_council(data){
+    let council = this.get_council_by_id(data["council"]);
+    var res = council.remove_participant(data["user"]);
+    return res;
   }
 
 }

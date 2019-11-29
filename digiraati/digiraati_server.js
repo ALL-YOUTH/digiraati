@@ -27,21 +27,6 @@ var Councils = require(path.join(__dirname + "/councils.js"));
 let users = new Users();
 let councils = new Councils();
 
-///////////////////////
-//Add a couple of test users for test purposes
-///////////////////////
-/*users.add_user("1111", "test", "F_test", "L_test", "L_test@test.com", "test");
-users.add_user("2222", "test2", "F_test", "L_test", "L_test@test.com", "test");
-users.add_user("3333", "test3", "F_test", "L_test", "L_test@test.com", "test");
-*/
-
-///////////////////////
-//Add a couple of councils for test purposes
-/*councils.add_council(id="AAAA", name="Raati, jolla on todella pitkä nimi, että nähdään kuinka otsikko asettuu laatikkoon.", description="Hehe", creator="test", startdate="12.12.2012", starttime="11:00", enddate="13.12.2013", endtime="12:00", userlimit=-1, tags=["General", "Ympäristö", "Ilmasto", "Nuoret"], likes=15, dislikes=8, userlimit=-1);
-councils.add_council(id="BBBB", name="All-Youth", description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sagittis velit massa, nec faucibus orci venenatis quis. Nulla venenatis scelerisque semper. Aliquam dictum posuere dignissim. Etiam pulvinar vulputate leo, at aliquet ipsum gravida sit amet. Sed varius, elit non placerat eleifend, lectus tellus vestibulum metus, eu euismod magna nibh vitae nisi. Aenean hendrerit turpis metus, id interdum massa dignissim eget. Etiam sed est in massa dictum auctor vel in enim. Maecenas vel consequat lorem. Duis gravida nisi eget augue maximus auctor. Nulla sem neque, ultrices sit amet sollicitudin vel, facilisis in massa. Quisque eu fermentum magna, a auctor lorem. Aliquam non tincidunt nibh. Integer tincidunt velit quis dictum viverra. Proin ligula dui, accumsan sit amet pretium ut, pharetra blandit nunc. Suspendisse ut gravida sapien. In pharetra efficitur porta. Cras in felis a ex dictum ullamcorper ac sed neque. Praesent fermentum commodo arcu at cursus. Suspendisse euismod aliquet urna. Sed sed eleifend sem. Phalus tortor magna, iaculis eget nunc et, congue ornare augue. Donec rutrum enim sit amet libero ullamcorper, in maximus enim suscipit. Donec metus magna, ultricies vel tristique ut, accumsan luctus mi. Suspendisse ut feugiat lorem. Proin sollicitudin ante mi, sed imperdiet nunc egestas ut. Phasellus mollis feugiat erat, non sagittis mauris varius eu. Phasellus tempor, risus at fermentum tempus, velit risus aliquam arcu, sed convallis nisl dui sed lorem.Etiam arcu nibh, hendrerit non mattis in, fringilla et turpis. Etiam at ante non risus venenatis posuere. Mauris convallis ligula efficitur arcu vehicula, a tincidunt massa lacinia. Pellentesque finibus fringilla neque, at eleifend neque laoreet tincidunt. Maecenas cursus ex eget velit ultricies ornare. Praesent tellus lectus, efficitur eget nibh volutpat, aliquet blandit magna. Phasellus nec sem efficitur risus laoreet mollis. Cras non libero in justo aliquam vestibulum. Vivamus neque dui, rhoncus a ex vitae, euismod maximus lacus. Quisque rhoncus accumsan aliquet.Nullam molestie mattis leo ac faucibus. Donec vel egestas risus, tincidunt pretium dui. Ut in est quis sapien varius consectetur. Quisque ornare libero at augue facilisis placerat. Maecenas eget tristique risus. Duis tortor nibh, egestas sit amet quam scelerisque, dignissim sollicitudin turpis. Maecenas diam turpis, molestie maximus turpis sed, laoreet fermentum magna. Nunc urna mauris, fringilla quis vehicula at, ornare nec nibh. Quisque maximus nibh et augue tristique faucibus. Aliquam nec metus libero.Sed gravida eros sed metus varius hendrerit. Maecenas rutrum vestibulum augue, vitae fermentum lacus laoreet id. Maecenas accumsan libero quis condimentum fermentum. Vivamus feugiat ultrices volutpat. Fusce dapibus dictum metus, ut placerat magna condimentum a. Maecenas ex dolor, fringilla eu tincidunt at, congue quis nulla. Aliquam consectetur nunc ut metus varius, sit amet finibus purus elementum. Praesent faucibus id diam eu dapibus. Morbi porttitor tellus urna, in ultrices lorem sodales id. Maecenas laoreet metus quis mauris dictum suscipit. Phasellus sit amet porttitor nisi, nec rhoncus arcu. Fusce iaculis, enim vel efficitur sagittis, sapien purus fermentum nisl, ut pretium purus ante vitae ipsum. Nulla nec odio porttitor ligula vulputate luctus. Donec elementum eleifend lacus, quis feugiat purus luctus et. Donec eleifend mattis lorem vitae fermentum. Vestibulum condimentum venenatis risus, ut posuere tellus congue in. In vel tortor nec leo eleifend pretium ut eget nisi. Fusce id ultrices leo, in feugiat ipsum. Duis lobortis velit ac ultricies rhoncus. Aliquam eu eros a velit gravida scelerisque id at nisl. Cras ultricies, metus a porta laoreet, ante nunc fringilla arcu, vitae ultricies tellus libero eget lacus. Fusce lobortis nibh lectus, vitae gravida purus ornare id. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris ultricies, ipsum eu auctor molestie, neque enim tincidunt libero, a euismod sapien quam in lectus. Ut vulputate vel est ut ultrices. Mauris aliquet blandit turpis nec faucibus. Donec posuere, urna id semper tempor, sapien felis pretium est, quis vestibulum tellus lorem sit amet mauris.", creator="test", startdate="12.12.2012", starttime="11:00", enddate="13.12.2013", endtime="12:00", files=[], tags=["General", "Ympäristö", "Ilmasto", "Nuoret"], likes=30, dislikes=0, userlimit=-1);
-*/
-///////////////////////
-
 
 //Recover digiraati from backupfile
 fs.readFile(backup_file, function (err, data) {
@@ -157,8 +142,30 @@ io.on('connection', function(socket){
     }
   });
 
-  socket.on('request join council', function(cid){
+  socket.on('request socket list', function(cid){
     socket.join(cid);
+  });
+
+  socket.on('request join council', function(data){
+    socket.join(data["user"]);
+    var res = councils.add_user_to_council(data);
+    if(res){
+      socket.emit('join success');
+    }
+    else{
+      socket.emit('join failed');
+    }
+  });
+
+  socket.on('request leave council', function(data){
+    socket.join(data["user"]);
+    var res = councils.remove_user_from_council(data);
+    if(res){
+      socket.emit('leave success');
+    }
+    else{
+      socket.emit('leave failed');
+    }
   });
 
   socket.on('login attempt', function(name, pw){
@@ -317,36 +324,9 @@ io.on('connection', function(socket){
     }
   });
 
-  socket.on('request council join', function(councilid, userid){
-    var res = councils.sign_user_in_council(councilid, userid);
-    server_log(ip + ": " + userid + " attempted to join council " + councilid);
-    if(!res){
-      server_log(ip + ": " + userid + " was prevented from joining council: "
-                  + councilid);
-      socket.emit("council join failed");
-    }
-    else{
-      server_log(ip + ": " + userid + " joined council: " + councilid);
-      socket.emit("council join success");
-    }
-  });
-
   socket.on('request council members', function(councilid){
     var members = councils.get_council_members(councilid);
     socket.emit('council members', members);
-  });
-
-  socket.on('request resign council', function(cid, uid){
-    var res = councils.resign_user_from_council(cid, uid);
-    server_log(ip + ": " + uid + " attempting to resign from council: " + cid);
-    if(!res){
-      server_log(ip + ": " + uid + " could not resign from council: " + cid);
-      socket.emit("council resign failed");
-    }
-    else{
-      server_log(ip + ": " + uid + " resigned from council: " + cid);
-      socket.emit("council resign success");
-    }
   });
 
   socket.on('update files request', function(cid){

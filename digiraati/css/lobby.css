@@ -30,15 +30,16 @@ body, html{
   max-width:1200px;
 }
 
-#lobby_timetable{
-  font-family: normal;
-  font-size:28px;
+#lobby_starttime, #lobby_endtime{
+  font-family: Montserrat;
+  font-size:23px;
   color: rgba(0,96,115,1);
   margin-top:20px;
   margin-left:5%;
 }
 
 #lobby_milestones{
+  display:none;
   margin-top:20px;
   background-size: contain;
   background-position: center;
@@ -49,6 +50,7 @@ body, html{
 }
 
 #lobby_navigation {
+  margin-top:50px;
   position:relative;
   padding-left: 5%;
   height:auto;
@@ -95,7 +97,7 @@ div .inactive{
   margin:auto;
   width:100%;
   padding:5%;
-  padding-top:30px;;
+  padding-top:30px
   max-width:1200px;
   height:auto;
 }
@@ -198,6 +200,34 @@ div .inactive{
   font-size:32px;
   font-weight: bold;
 }
+
 #lobby_latest_messages{
+
+}
+
+#join_council_btn, #leave_council_btn{
+  margin-top:20px;
+  font-family: Montserrat;
+  padding:5px 10px;
+  border-radius:5px;
+  float:left;
+  font-weight: bold;
+  font-size:10px;
+  cursor:pointer;
+  display:none;
+}
+
+#join_council_btn{
+  background-color:#CBE781;
+}
+
+#leave_council_btn{
+  background-color:#FE0456;
+}
+
+.disabled{
+  cursor:default;
+  color:rgba(0,0,0,0.5);
+  pointer-events: none;
 
 }

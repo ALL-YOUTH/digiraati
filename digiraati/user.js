@@ -140,7 +140,6 @@ module.exports = class Users{
 
   update_user_info(name, data){
     let user = this.get_user(name);
-    user.set_username(data["username"]);
     user.set_fname(data["fname"]);
     user.set_lname(data["lname"]);
     user.set_description(data["description"]);
@@ -209,7 +208,7 @@ module.exports = class Users{
   }
 
   login_user(name, p, ip){
-    let user;
+    let user = this.get_user(name);
     if(this.get_user(name) != null){ //Username login
       user = this.get_user(name);
     }

@@ -17,7 +17,7 @@ body, html{
   padding:5px;
   position: absolute;
   display:block;
-  width:14%;
+  width:10%;
   height:100%;
   top:0px;
   background:rgb(0, 96, 115);
@@ -32,10 +32,10 @@ body, html{
 #chat_content{
   position:absolute;
   display: inline-block;
-  width:80%;
+  width:89%;
   height:auto;
   color:black;
-  margin-left:15%;
+  margin-left:11%;
 }
 
 #chat_title, #chat_timetable, #chat_description, #lobby_navigation{

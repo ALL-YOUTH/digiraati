@@ -78,7 +78,7 @@ body, html{
   padding:5px;
   position: absolute;
   display:block;
-  width:14%;
+  width:10%;
   height:100%;
   top:0px;
   background:rgb(0, 96, 115);
@@ -94,14 +94,39 @@ body, html{
   width:500px;
   height:600px;
   display:block;
+  width:100%;
+  border-radius:3px;
+  padding:5px;
+  resize:none;
 }
 
-#conclusion_container{
+#conclusion_container_input{
   color:black;
+  margin-left:10px;
+}
+
+#conclusion_input_title{
+  margin-top:30px;
+  font-family: Monstserrat;
+  font-weight: bolder;
+  font-size:25px;
+  line-height: 30px;
 }
 
 #save_conclusion_text{
   cursor:pointer;
-  margin-left:300px;
+  float:right;
   width:auto;
+  padding:10px;
+  background-color: rgba(235,237,237,1);
+  border-radius:4px;
+}
+
+#refresh_conclusion_text{
+  cursor:pointer;
+  float:right;
+  width:auto;
+  padding:10px;
+  background-color: rgba(235,237,237,1);
+  border-radius:4px;
 }

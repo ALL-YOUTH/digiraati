@@ -28,13 +28,29 @@ $('#refresh_conclusion_text').click(function(){
   socket.emit('request conclusion refresh', council);
 });
 
+$('#conclusion_input').keydown(function(e){
+  var key = e.keyCode;
+    if (key === 13) {
+      e.preventDefault();
+      document.getElementById("conclusion_input").value += "\n";
+    }
+    else if(key == 9){
+      e.preventDefault();
+      document.getElementById("conclusion_input").value += "  ";
+    }
+    return;
+});
+
 
 socket.on('update conclusion', function(){
   goToPage("/lobby/" + council + "/conclusion");
 });
 
 socket.on("login success", function(){
-  socket.emit("request join council", council);
+  var data = {};
+  data["council"] = council;
+  data["user"] = logged_in;
+  socket.emit("request socket list", council);
 });
 
 

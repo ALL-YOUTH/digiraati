@@ -32,7 +32,7 @@ function create_council_face(c){
   res.appendChild(add_class_innerhtml(["council_likes", "far", "fa-thumbs-up", "council_btn"], 0));
   res.appendChild(add_class_innerhtml(["council_dislikes", "far", "fa-thumbs-down", "council_btn"], 0));
   res.appendChild(add_class_innerhtml(["council_people", "fas", "fa-users", "council_btn"], c["users"].length));
-  res.appendChild(add_class_innerhtml(["council_time", "far", "fa-clock", "council_btn"], c["startdate"] + " - "));
+  res.appendChild(add_class_innerhtml(["council_time", "far", "fa-clock", "council_btn"], c["startdate"] + " : " + c["enddate"]));
   return res;
 }
 

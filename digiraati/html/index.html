@@ -5,25 +5,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 	<link rel="stylesheet" href="/css/main.css" type="text/css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link href='https://fonts.googleapis.com/css?family=Montserrat Alternates:extrabold' rel='stylesheet'>
-	<link href='https://fonts.googleapis.com/css?family=Montserrat:bold' rel='stylesheet'>
 	<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates&display=swap" rel="stylesheet">
 	<title>Digiraati 2.0</title>
 	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
 </head>
 <body>
 	<div id="container">
 
-		<header id="header">
-		</header>
+		<header id="header"></header>
 
 		<div id="hero">
 			<div id="hero_text">
 				<p id="main_text_desktop">Osallistu<br>yhteiskunnalliseen<br>vaikuttamiseen!</p>
-				<p id="secondary_text_desktop">Digiraati.fi -palvelussa voit osallistua<br> digitaalisiin kansalaisraateihin</p><br>
-				<div id="hero_search_councils_btn_desktop" class="active">Hae raateja</div>
+				<p id="secondary_text_desktop">Digiraati.fi -palvelussa voit osallistua digitaalisiin kansalaisraateihin</p><br>
+				<div id="hero_search_councils_btn_desktop" class="active">HAE RAATEJA</div>
 				<h1 id="main_text_mobile">Ideoi,<br>Keskustele,<br>Vaikuta!</h1>
 				<h4 id="secondary_text_mobile">Digiraati.fi -palvelussa voit<br>osallistua digitaalisiin kansalaisraateihin</h4><br>
 			</div>
@@ -42,7 +40,7 @@
 					<div class="fas fa-th-large sorter_inactive sorter_btn" id="large_grid"></div>
 				</div>
 				<div id="search" class="fas fa-search">
-					<input type="text"></input>
+					<input type="text" id="search_input"></input>
 				</div>
 			</div>
 			<div id="council_title">KÄYNNISSÄ OLEVAT RAADIT</div>
@@ -51,8 +49,8 @@
 		</div>
 	</div>
 
-	<footer id="footer">
-	</footer>
+	<div id="footer">
+	</div>
 
 	<script src="/js/index.js" type="text/javascript"></script>
 	<script src="/js/common.js"></script>

@@ -38,7 +38,7 @@ socket.on('council data', function(data){
 });
 
 socket.on("login success", function(){
-  socket.emit("request join council", council);
+  socket.emit("request socket list", council);
 });
 
 window.onscroll = function(e){

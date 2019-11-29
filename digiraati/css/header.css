@@ -6,11 +6,12 @@
 }
 
 #header_div{
-  padding-top: 20px;
   overflow-x: hidden;
   z-index:15;
   background-color: white;
-  margin-bottom: 30px;
+  background-color: #F6F8F9;
+  padding:10px 0px 20px 0px;
+
 }
 
 #hamburger_div{
@@ -99,11 +100,12 @@
   display:inline-block;
   float:left;
   cursor:pointer;
-  margin-left: 5%;
+  width:255px;
+  height:48px;
 }
 
 #logo_url{
-  width:160px;
+
 }
 
 #arrow_left{
@@ -226,19 +228,24 @@
     float:right;
     margin-right: 8%;
     font-size: 13px;
+    margin-top:15px;
     font-weight: bold;
     color: rgba(52,54,56,1);
   }
 
   #header_btns{
     width:100%;
-    margin:25px;
-    margin-right:2%;
+    margin:25px 0px 0px 72px;
   }
+
   #header_btns span{
     cursor:pointer;
     margin-left: 35px;
     color: rgba(1,20,20,1);
+  }
+
+  #header_btns span:hover{
+    color: #01AFC4;
   }
 
   #login_div{
@@ -254,16 +261,6 @@
     background-color: rgb(95,213,227,1);
     border-radius: 3px;
     box-shadow: 1px 1px 10px rgb(0, 0, 0, 1);
-  }
-
-  .header_active{
-    padding:5px;
-    background: rgba(1,205,226,0.5);
-    color:white;
-    border-radius: 5px;
-    border-width: 1px;
-    border:solid;
-    border-color: white;
   }
 
 }

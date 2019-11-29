@@ -33,12 +33,12 @@ $('#confirm_create').click(function(){
   var data = {};
   data["id"] = makeid(8);
   data["name"] = $('#name_input').val();
-  data["keywords"] = $('#create_tags').val().split();
+  data["keywords"] = $('#create_tags').val().split(" ");
   data["description"] = $('#create_description_text_input').val();
-  data["startdate"] = $('#startdate_input').val();
-  data["starttime"] = $('#startdate_input').val();
-  data["enddate"] = $('#startdate_input').val();
-  data["endtime"] = $('#startdate_input').val();
+  data["startdate"] = document.getElementById('startdate_input').value;
+  data["starttime"] = document.getElementById('starttime_input').value;
+  data["enddate"] = document.getElementById('enddate_input').value;
+  data["endtime"] = document.getElementById('endtime_input').value;
   data["creator"] = logged_in;
   data["userlimit"] = -1;
   data["open"] = true;
@@ -50,7 +50,7 @@ $('#confirm_create').click(function(){
   if(document.getElementById('limit_radiobtn').checked){
     data["userlimit"] = $('#limit_number').val();
   }
-
+  console.log(data);
   socket.emit('request council create', data);
 });
 

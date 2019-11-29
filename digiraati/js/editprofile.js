@@ -17,7 +17,6 @@ $('#create_new_council').click(function(){
 });
 
 socket.on('user data', function(data){
-  $("#username_input").val(data["username"]);
   $("#fname_input").val(data["fname"]);
   $("#lname_input").val(data["lname"]);
   $("#email_input").val(data["email"]);
@@ -36,7 +35,6 @@ function mark_errors(err){
 
 $('#update_profile_info').click(function(){
   var data = {};
-  data["username"] = $('#username_input').val();
   data["fname"] = $('#fname_input').val();
   data["lname"] = $('#lname_input').val();
   data["email"] = $('#email_input').val();
@@ -58,6 +56,7 @@ $('#update_pw').click(function(){
     alert("Salasanat eivät täsmää");
     $('#pw1_input').val("");
     $('#pw2_input').val("");
+    return;
   }
   socket.emit("request update password", data);
 });

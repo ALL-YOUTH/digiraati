@@ -136,7 +136,6 @@ socket.on("login success", function(name){
 
   document.getElementById("hamburger_avatar").style.backgroundColor = colors[c % colors.length];
   document.getElementById("hamburger_avatar").textContent = name[0].toUpperCase();
-  console.log("logged", $(window).width());
   if(view == "desktop"){
     $('#login_div').css("display", "none");
     $('#Profile_avatar').show();
@@ -161,7 +160,6 @@ socket.on('logout success', function(){
 
 socket.on('not logged', function(){
   logged_in = "";
-  console.log("not logged", $(window).width()+16);
   if(view == "desktop"){
     $('#Profile_avatar').hide();
     $('#Kirjaudu_btn').show();
@@ -174,4 +172,8 @@ socket.on('not logged', function(){
     $('#Kirjaudu_btn').hide();
     $('#Kirjaudu_ulos_btn').hide();
   }
+});
+
+socket.on("login reload", function(){
+  location.reaload();
 });

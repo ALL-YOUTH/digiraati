@@ -1,12 +1,16 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
-body, html{
-  font-family: Montserrat;
+html, body{
+  padding:0;
   margin:0;
-  height: 100%;
+}
+
+html{
+  background-size: cover;
 }
 
 body{
-  overflow-x:hidden;
+  overflow-x: hidden;
+  min-height: 100%;
+  background: linear-gradient(180deg, rgba(246, 248, 249, 0.3), rgba(124, 227, 178, 0.3)) no-repeat;
 }
 
 #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #arrow_left{
@@ -25,14 +29,13 @@ img {
 }
 
 #hero{
-  margin-top: 20px;
   height:300px;
   position: relative;
   width: 100%;
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  background-image: url("/res/hero_image_mobile.png");
+  background-image: url("/res/hero_image.jpg");
   background-repeat: no-repeat;
   color:white;
 }
@@ -60,12 +63,13 @@ img {
 #council_container{
   max-width: 320px;
   margin:auto;
+
 }
 
 /*Council css*/
 .council_box{
   float:left;
-  margin:10px;
+  margin:0px 40px 40px 0px;
   position:relative;
   border-radius: 5px;
   height:300px;
@@ -73,9 +77,8 @@ img {
   backround:white;
   border:solid;
   border-width: 0px;
-  margin-top:40px;
   cursor:pointer;
-  box-shadow: 1px 1px 5px #000000;
+  background-color: white;
   z-index: 5;
 }
 
@@ -84,7 +87,7 @@ img {
 }
 
 .council_box .council_picture{
-  background-image: url("/res/council_picture.png");
+  background-image: url("/res/council_image.png");
   position:relative;
   height:150px;
   width:100%;
@@ -140,7 +143,7 @@ img {
 }
 
 /*Everything below is css for desktop view of the website.*/
-@media (min-width:800px){
+@media (min-width:1000px){
   #main_text_mobile, #secondary_text_mobile{
     display:none;
   }
@@ -152,39 +155,50 @@ img {
   #hero_text{
     position:relative;
     float:right;
-    width:70%;
+    width:50%;
     padding: 50px;
   }
 
   #main_text_desktop{
     position:relative;
-    font-family: Montserrat Alternates;
-    text-align: center;
     display:block;
-    font-weight: bold;
-    text-shadow: 1px 1px 10px #000000;
-    font-size: 40px;
-    font-weight: bold;
+    text-align: center;
+    font-family: 'Montserrat Alternates', sans-serif;
+    line-height: 57px;
+    font-size: 55px;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #0000006F;
+    opacity: 1;
+    margin-top:30px;
   }
+
   #secondary_text_desktop{
+    margin-top:35px;
     position:relative;
-    font-family: Montserrat;
-    text-align: center;
     display:block;
-    font-weight: bold;
-    text-shadow: 1px 1px 10px #000000;
+    text-align: center;
     font-size: 24px;
+    line-height: 34px;
+    font-family: Montserrat;
     font-weight: bold;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #00000029;
+    opacity: 1;
   }
 
   #hero{
+    padding:0px;
+    margin:0px;
     position: relative;
-    height:450px;
+    height:479px;
     width: 100%;
     overflow: hidden;
     background-size: cover;
     background-position: center;
-    background-image: url("/res/hero_image.png");
+    background-image: url("/res/hero_image.jpg");
     background-repeat: no-repeat;
     color:white;
   }
@@ -194,43 +208,59 @@ img {
     position: absolute;
     left: 50%;
     -webkit-transform: translate(-50%,0);
-    transform: translate(-50%,0);
+    transform: translate(-50%,-10%);
     cursor: pointer;
+
+    padding: 5px 15px;
+    letter-spacing: 0;
+    font-size:10px;
+    line-height: 15px;
+    font-family: Montserrat;
     font-weight: bold;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    opacity: 1;
   }
 
   #council_container{
-    max-width: 1200px;
+    min-width:90%;
+    height:auto;
     margin:auto;
   }
 
   #filter{
-    margin:20px;
-    max-width: 1200px;
-    position:relative;
-    display: -ms-flex;
-    display: -webkit-flex;
-    display: flex;
+    width:auto;
+    margin-top:20px;
+    width:90%;
     font-weight: bold;
   }
 
-  #filter #selector, #sorter, #search{
+  #selector, #sorter, #search{
     float:left;
-    margin: 0 auto;
     cursor: pointer;
+  }
+
+  #sorter{
+    margin-left:10%;
+  }
+
+  .selector_btn{
+    position:relative;
+    margin-right: 40px;
+    padding: 20px;
+    font-size:10px;
+    line-height: 15px;
+    font-family: Montserrat;
+    font-weight: bold;
+    color: #FFFFFF;
+    opacity: 1;
+    float:left;
   }
 
   .selector_btn:hover{
     box-shadow: 1px 1px 5px rgba(254,4,86,1);
   }
 
-  #selector #ongoing, #newest, #popularest{
-    float:left;
-    margin-left:10px;
-    margin-right:10px;
-    font-family: Montserrat;
-
-  }
 
   .inactive{
     padding:5px;
@@ -257,17 +287,27 @@ img {
     position:relative;
   }
 
+  .sorter_btn{
+    padding:5px;
+    border-radius: 5px;
+    font-size: 20px;
+    line-height: 31px;
+    background-color:black;
+    width: 31px;
+    height: 31px;
+    text-align: center;
+    vertical-align: bottom;
+  }
+
   .sorter_active{
     background: rgba(1,175,196,1);
     border-color: white;
-    border-radius: 2px;
     color: white;
   }
 
   .sorter_inactive{
     background: white;
     border-color: rgba(1,175,196,1);
-    border-radius: 2px;
     color: rgba(1,175,196,1);
   }
 
@@ -275,19 +315,26 @@ img {
     margin-left:50px;
   }
 
-  #council_title {
-    margin: 20px;
-    margin-left: 50px;
-    font-size: 24px;
-    font-weight: bold;
+  #search{
+    color:#01AFC4;
+    float:right;
   }
 
-  #council_list{
+  #search_input{
+    margin-left:7px;
+    border-color:rgba(1, 175, 196, 0.3);
+    border-radius:5px;
+  }
+
+  #council_title {
+    margin:20px 0px;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Montserrat;
   }
 
   .council_box{
     float:left;
-    margin:40px;
     position:relative;
     border-radius: 5px;
     height:300px;
@@ -295,8 +342,20 @@ img {
     backround:white;
     border:solid;
     border-width: 0px;
-    margin-top:40px;
     cursor:pointer;
-    box-shadow: 1px 1px 5px #000000;
+  }
+}
+
+@media (min-width:1000px) and (max-width:1200px){
+  #main_text_desktop{
+    text-align: right;
+  }
+
+  #secondary_text_desktop{
+    text-align: right;
+  }
+
+  #hero_text{
+    width:70%;
   }
 }
