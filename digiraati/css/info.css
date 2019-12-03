@@ -39,7 +39,7 @@ body{
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  background-image: url("/res/hero_image_mobile.png");
+  background-image: url("/res/info_hero.png");
   background-repeat: no-repeat;
   color:white;
 }
@@ -109,7 +109,7 @@ body{
     overflow: hidden;
     background-size: cover;
     background-position: center;
-    background-image: url("/res/hero_image.jpg");
+    background-image: url("/res/info_hero.png");
     background-repeat: no-repeat;
     color:white;
   }

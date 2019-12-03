@@ -17,7 +17,7 @@ socket.on('login success', function(name){
 });
 
 socket.on('council data', function(data){
-  $('#lobby_title').text(data["name"]);
+  $('#lobby_title').text(data["name"].toUpperCase());
   $('#lobby_starttime').text("Alkaa: " + data["startdate"] + " " + data["starttime"]);
   $('#lobby_endtime').text('Loppuu: ' + data["enddate"] + " " + data["endtime"]);
   $('#lobby_description_title').html(data["name"]);

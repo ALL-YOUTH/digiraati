@@ -9,8 +9,9 @@ html{
 
 body{
   overflow-x: hidden;
-  min-height: 100%;
-  background: linear-gradient(180deg, rgba(246, 248, 249, 0.3), rgba(124, 227, 178, 0.3)) no-repeat;
+  min-height: 150%;
+  background-color: #F6F8F9;
+
 }
 
 #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #arrow_left{
@@ -19,7 +20,7 @@ body{
 
 #container {
   width:100%;
-  min-height: 100%;
+  min-height: 1500px;
   overflow-x: hidden;
 }
 
@@ -74,7 +75,7 @@ img {
   border-radius: 5px;
   height:300px;
   width:300px;
-  backround:white;
+  background-color:white;
   border:solid;
   border-width: 0px;
   cursor:pointer;
@@ -247,7 +248,6 @@ img {
   .selector_btn{
     position:relative;
     margin-right: 40px;
-    padding: 20px;
     font-size:10px;
     line-height: 15px;
     font-family: Montserrat;
@@ -255,6 +255,10 @@ img {
     color: #FFFFFF;
     opacity: 1;
     float:left;
+  }
+
+  #ongoing, #newest, #popularest{
+    padding:5px 15px;
   }
 
   .selector_btn:hover{
@@ -339,10 +343,14 @@ img {
     border-radius: 5px;
     height:300px;
     width:300px;
-    backround:white;
+    background-color:white;
     border:solid;
     border-width: 0px;
     cursor:pointer;
+  }
+
+  .council_box div{
+    font-family: Montserrat;
   }
 }
 

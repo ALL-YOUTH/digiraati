@@ -4,20 +4,24 @@ body, html{
   max-width:100%;
   margin:auto;
   height:100%;
+  overflow-x: hidden;
 }
 
 #container {
   width:100%;
   min-height: 100%;
   overflow-x: hidden;
+  background-color: rgba(246,248,249,1);
 }
 
 #lobby_container{
   margin:auto;
+  width:90%;
+  margin:0px 5%;
 }
 
 #lobby_title{
-  margin-top:50px;
+  padding:30px 0px 10px;
   position:relative;
   font-size: 32px;
   font-family: Montserrat;
@@ -27,15 +31,18 @@ body, html{
 
 #lobby_header{
   margin:auto;
-  max-width:1200px;
+  width:100%;
+  padding:0px 5%;
+  background-color:white;
 }
 
 #lobby_starttime, #lobby_endtime{
+  margin-right:50px;
+  display:inline-block;
   font-family: Montserrat;
   font-size:23px;
   color: rgba(0,96,115,1);
-  margin-top:20px;
-  margin-left:5%;
+  margin-top:10px;
 }
 
 #lobby_milestones{
@@ -50,28 +57,24 @@ body, html{
 }
 
 #lobby_navigation {
-  margin-top:50px;
+  margin-top:80px;
   position:relative;
-  padding-left: 5%;
   height:auto;
   width:100%;
   background-color: rgb(255,255,255,1);
 }
+
 #lobby_navigation div{
   display: inline-block;
-  margin:10px;
   font-size:11px;
   font-weight: bold;
   font-family: Montserrat;
-  padding:10px;
-  padding-left:20px;
-  padding-right:20px;
-  border-radius:3px;
+  padding:10px 20px 10px 20px;
   cursor:pointer;
 }
 
 div .active{
-  background-color: rgba(235,237,237,1);
+  background-color: rgba(246,248,249,1);
 }
 div .inactive{
   background-color: rgba(255,255,255,1);
@@ -96,13 +99,13 @@ div .inactive{
   position:relative;
   margin:auto;
   width:100%;
-  padding:5%;
-  padding-top:30px
+  padding:20px;
   max-width:1200px;
   height:auto;
 }
 
 #lobby_content_description{
+
   float:left;
   width:30%;
   height:100%;
@@ -113,21 +116,20 @@ div .inactive{
 }
 
 #lobby_description_title{
-  line-height: 42px;
   text-align: left;
-  font-family: acumin-pro, sans-serif;
-  font-weight: bold;
-  font-style: normal;
-  font-size:32px;
-  padding-right:10px;
+  font: Bold 32px/42px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
 }
 
 #lobby_description{
-  font-family:Helvetica;
-  color:rgba(166,173,180,1);
-  font-size:14px;
-  line-height: 26px;
-  margin-top:30px;
+  margin:20px 0px;
+  text-align: left;
+  font: 14px/26px Montserrat;
+  letter-spacing: 0;
+  color: #A6ADB4;
+  opacity: 1;
 }
 
 #lobby_social{
@@ -142,13 +144,12 @@ div .inactive{
 }
 
 #lobby_creator_title{
-  line-height: 26px;
-  font-family: acumin-pro;
-  font-style:normal;
-  font-weight: bold;
-  font-size:16px;
-  color:rgba(32,33,36,1);
-  margin-top:30px;
+  text-align: left;
+  margin-top:20px;
+  font: Bold 16px/26px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
 }
 
 #lobby_creator{
@@ -193,36 +194,34 @@ div .inactive{
   padding-left: 30px;
 }
 
-.lobby_title_font{
-  line-height: 42px;
-  text-align: left;
-  font-family: acumin-pro, sans-serif;
-  font-size:32px;
-  font-weight: bold;
-}
-
-#lobby_latest_messages{
-
-}
-
-#join_council_btn, #leave_council_btn{
+#join_council_btn{
   margin-top:20px;
-  font-family: Montserrat;
-  padding:5px 10px;
+  padding:5px 15px;
   border-radius:5px;
   float:left;
-  font-weight: bold;
-  font-size:10px;
   cursor:pointer;
   display:none;
-}
-
-#join_council_btn{
+  text-align: center;
+  font: Bold 11px/20px Montserrat;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  opacity: 1;
   background-color:#CBE781;
 }
 
 #leave_council_btn{
+  margin-top:20px;
+  padding:5px 15px;
+  border-radius:5px;
+  float:left;
+  cursor:pointer;
+  display:none;
   background-color:#FE0456;
+  text-align: center;
+  font: Bold 11px/20px Montserrat;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  opacity: 1;
 }
 
 .disabled{

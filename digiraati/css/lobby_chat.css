@@ -14,7 +14,6 @@ body, html{
 }
 
 #left_menu{
-  padding:5px;
   position: absolute;
   display:block;
   width:10%;
@@ -22,7 +21,6 @@ body, html{
   top:0px;
   background:rgb(0, 96, 115);
   z-index: -5;
-  padding-top:130px;
 }
 
 .left_menu_title{
@@ -32,10 +30,10 @@ body, html{
 #chat_content{
   position:absolute;
   display: inline-block;
-  width:89%;
+  width:90%;
   height:auto;
   color:black;
-  margin-left:11%;
+  margin-left:10%;
 }
 
 #chat_title, #chat_timetable, #chat_description, #lobby_navigation{
@@ -62,14 +60,11 @@ body, html{
 
 #lobby_navigation div{
   display: inline-block;
-  margin:10px;
+  margin:10px 10px 0px 10px;
   font-size:11px;
   font-weight: bold;
   font-family: Montserrat;
-  padding:10px;
-  padding-left:20px;
-  padding-right:20px;
-  border-radius:3px;
+  padding:10px 20px 10px 20px;
   cursor:pointer;
 }
 
@@ -78,11 +73,6 @@ div .active{
 }
 div .inactive{
   background-color: rgba(255,255,255,1);
-}
-
-#chat_hashtag{
-  background:rgba(1,175,196,1);
-  color:white;
 }
 
 #lobby_navigation{
@@ -94,9 +84,9 @@ div .inactive{
 
 #chat_hashtag{
   background-color:rgba(1,175,196,1);
-  padding:10px;
   font-weight: bold;
-  padding-left:20px;
+  padding:10px 20px;
+  color:white;
 }
 
 #message_list{
