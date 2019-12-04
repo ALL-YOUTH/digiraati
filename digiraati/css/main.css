@@ -22,6 +22,10 @@ body{
   width:100%;
   min-height: 1500px;
   overflow-x: hidden;
+  background-color: #F6F8F9;
+  background-image: url("/res/banneriinopysty.png"), url("/res/banneriinopysty.png");
+  background-position: right top, left top;
+  background-repeat: repeat-y, repeat-y;
 }
 
 img {
