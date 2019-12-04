@@ -30,10 +30,10 @@ body, html{
 #chat_content{
   position:absolute;
   display: inline-block;
-  width:90%;
+  width:89%;
   height:auto;
   color:black;
-  margin-left:10%;
+  margin-left:11%;
 }
 
 #chat_title, #chat_timetable, #chat_description, #lobby_navigation{
@@ -155,6 +155,7 @@ div .inactive{
   cursor:default;
   border-radius:2px;
   padding-left: 20px;
+
 }
 
 /*.chat_message:hover{
@@ -201,6 +202,11 @@ div .inactive{
 
 .message_list_sender_name{
   margin-left:10px;
+  text-align: left;
+  font: Bold 14px/42px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
 }
 
 .message_list_reply{

@@ -100,17 +100,16 @@ div .inactive{
   margin:auto;
   width:100%;
   padding:20px;
-  max-width:1200px;
+  max-width:90%;
   height:auto;
 }
 
 #lobby_content_description{
-
   float:left;
   width:30%;
   height:100%;
   margin-top:20px;
-  padding-right: 10px;
+  padding:0px 10px 200px 0px;
   border-style: none solid none none;
   border-color: rgb(0,0,0,0.1);
 }
@@ -135,12 +134,11 @@ div .inactive{
 #lobby_social{
   border-style: none none dashed none;
   border-color: rgb(0,0,0,0.1);
-  padding-bottom:30px;
-  padding-top:30px;
+  padding:30px 0px;
 }
 
 #lobby_social span{
-  margin:5px;
+  margin:5px 5px 0px 5px;
 }
 
 #lobby_creator_title{
@@ -170,7 +168,7 @@ div .inactive{
 .lobby_tag{
   display:inline-block;
   text-align: center;
-  font-family: Helvetica;
+  font-family: Montserrat;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -228,5 +226,81 @@ div .inactive{
   cursor:default;
   color:rgba(0,0,0,0.5);
   pointer-events: none;
+}
 
+.lobby_title_font{
+  line-height: 42px;
+  text-align: left;
+  font-family: acumin-pro, sans-serif;
+  font-size:32px;
+  font-weight: bold;
+}
+
+.lobby_title_font{
+  margin: 15px 0px;
+  text-align: left;
+  font: Bold 20px/24px Montserrat;
+  letter-spacing: 0;
+  color: #006073;
+  opacity: 1;
+}
+
+
+.chat_avatar_ball{
+  border-radius: 50%;
+  display: inline-block;
+  padding:3px;
+  width:24px;
+  height:24px;
+  text-align: center;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.message_list_sender_name{
+  margin-left:10px;
+  display:inline-block;
+  text-align: left;
+  font: Bold 24px/42px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+}
+
+.message_text{
+  text-align: left;
+  font: 16px/26px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+  font-weight: 500;
+  margin: 10px 0px;
+}
+
+#lobby_likes, #lobby_dislikes, #lobby_people{
+  text-align: left;
+  font: 13px/26px Helvetica;
+  letter-spacing: 0;
+  color: #FA6980;
+  opacity: 1;
+  display:inline-block;
+  padding: 0px 0px 5px 0px;
+}
+
+#lobby_likes_icon, #lobby_dislikes_icon, #lobby_people_icon{
+  display:inline-block;
+  height:15px;
+  width:15px;
+}
+
+#lobby_likes_icon{
+  background:url("/res/thumbup.png") no-repeat;
+}
+
+#lobby_dislikes_icon{
+  background:url("/res/thumbdown.png") no-repeat;
+}
+
+#lobby_people_icon{
+  background:url("/res/person.png") no-repeat;
 }

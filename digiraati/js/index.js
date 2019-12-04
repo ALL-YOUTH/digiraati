@@ -29,10 +29,20 @@ function create_council_face(c){
   res.appendChild(add_class_innerhtml(["council_picture", "council_btn"], ""));
   res.appendChild(add_class_innerhtml(["council_title", "council_btn"], c["name"]));
   res.appendChild(add_class_innerhtml(["council_description", "council_btn"], c["description"]));
-  res.appendChild(add_class_innerhtml(["council_likes", "far", "fa-thumbs-up", "council_btn"], 0));
-  res.appendChild(add_class_innerhtml(["council_dislikes", "far", "fa-thumbs-down", "council_btn"], 0));
-  res.appendChild(add_class_innerhtml(["council_people", "fas", "fa-users", "council_btn"], c["users"].length));
-  res.appendChild(add_class_innerhtml(["council_time", "far", "fa-clock", "council_btn"], c["startdate"] + " : " + c["enddate"]));
+  res.appendChild(add_class_innerhtml(["council_likes_icon"], ""));
+  res.appendChild(add_class_innerhtml(["council_likes", "council_btn"], 0));
+  res.appendChild(add_class_innerhtml(["council_dislikes_icon"], ""));
+  res.appendChild(add_class_innerhtml(["council_dislikes", "council_btn"], 0));
+  res.appendChild(add_class_innerhtml(["council_people_icon"], ""));
+  if(c["userlimit"] == -1){
+    res.appendChild(add_class_innerhtml(["council_people", "council_btn"], c["users"].length));
+  }
+  else{
+    res.appendChild(add_class_innerhtml(["council_people", "council_btn"], c["users"].length + " / " + c["userlimit"]));
+  }
+  if(c["startdate"] != "" && c["enddate"] != ""){
+    res.appendChild(add_class_innerhtml(["council_time", "council_btn"], reformatDate(c["startdate"]) + " - " + reformatDate(c["enddate"])));
+  }
   return res;
 }
 
@@ -82,3 +92,13 @@ $('.sorter_btn').click(function(){
 $('#hero_search_councils_btn_desktop').click(function(){
   goToPage("/search");
 });
+
+function reformatDate(input){
+  try{
+    var arr = input.split("-");
+    return arr[2]+ "/" + arr[1]+ "/" + arr[0];
+  }
+  catch(err){
+
+  }
+}

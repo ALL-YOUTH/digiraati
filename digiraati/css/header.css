@@ -8,10 +8,8 @@
 #header_div{
   overflow-x: hidden;
   z-index:15;
-  background-color: white;
-  background-color: #F6F8F9;
   padding:10px 0px 20px 0px;
-
+  background:url("/res/bannerinograffa.png") no-repeat center center;
 }
 
 #hamburger_div{
@@ -102,10 +100,6 @@
   cursor:pointer;
   width:255px;
   height:48px;
-}
-
-#logo_url{
-
 }
 
 #arrow_left{

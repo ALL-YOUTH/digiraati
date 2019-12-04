@@ -70,7 +70,7 @@ img {
 /*Council css*/
 .council_box{
   float:left;
-  margin:0px 40px 40px 0px;
+  margin:20px 40px 20px 0px;
   position:relative;
   border-radius: 5px;
   height:300px;
@@ -108,7 +108,8 @@ img {
   font-weight: bold;
 }
 
-.council_box .council_description{
+.council_description{
+  display: block;
   position:relative;
   color:#BBBBBB;
   font-size: 14px;
@@ -118,29 +119,42 @@ img {
   overflow:hidden;
 }
 
-.council_box .council_likes{
-  margin-top:5px;
+.council_likes, .council_dislikes, .council_people, .council_time{
   position:relative;
   float:left;
-  margin-left: 10px;
-}
-.council_box .council_dislikes{
-  margin-top:5px;
-  position:relative;
-  float:center;
-  margin-left:5px;
-}
-.council_box .council_people{
-  margin-top:5px;
-  position:relative;
-  float:right;
-  margin-left: 5px;
-  margin-right:10px;
+  display: block;
+  margin-right:15px;
 }
 
-.council_box .council_time{
-  position:relative;
+.council_time{
+  display:block;
   margin-left: 10px;
+}
+
+.council_likes_icon, .council_dislikes_icon, .council_people_icon{
+  float:left;
+  display:inline-block;
+  height:15px;
+  width:15px;
+  margin:0px 5px 0px 10px;
+}
+
+.council_likes_icon{
+  background:url("/res/thumbup.png") no-repeat;
+  display:block;
+}
+
+.council_dislikes_icon{
+  background:url("/res/thumbdown.png") no-repeat;
+}
+
+.council_people_icon{
+  background:url("/res/person.png") no-repeat;
+}
+
+.council_btn{
+  float:left;
+  display:inline-block;
 }
 
 /*Everything below is css for desktop view of the website.*/

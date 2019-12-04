@@ -2,6 +2,19 @@ var socket = io();
 var host = socket["io"]["uri"] + ":" + location.port;
 var council = "";
 var logged_in = "";
+var council_updated = false;
+
+var colors = ["aqua", "blueviolet", "chartreuse", "chocolate", "coral",
+              "cyan", "darkkhaki", "darkorange", "darksalmon", "darkturquoise",
+              "deepskyblue", "forestgreen", "fuchsia", "gold", "greenyellow",
+              "hotpink", "khaki", "lightgreen", "lightsalmon", "lightskyblue",
+              "lime", "limegreen", "mediumaquamarine", "mediumorchid",
+              "mediumspringgreen", "olive", "olivedrab", "orange", "orchid",
+              "palevioletred", "peachpuff", "plum", "powderblue", "sandybrown",
+              "silver", "salmon", "royalblue", "red", "springgreen", "tan",
+              "thistle", "tomato", "turquoise", "violet", "wheat", "yellow",
+              "yellowgreen"];
+
 
 $(function(){
   $('#header').load(host + "/html/header.html");
@@ -16,12 +29,29 @@ socket.on('login success', function(name){
   socket.emit("request council data", council);
 });
 
+function reformatDate(input){
+  try{
+    var arr = input.split("-");
+    return arr[2]+ "/" + arr[1]+ "/" + arr[0];
+  }
+  catch(err){
+
+  }
+}
+
 socket.on('council data', function(data){
+  if(council_updated){
+    clear_child_elements(document.getElementById("lobby_tags"));
+    clear_child_elements(document.getElementById("lobby_latest_messages"));
+  }
+  council_updated = true;
   $('#lobby_title').text(data["name"].toUpperCase());
-  $('#lobby_starttime').text("Alkaa: " + data["startdate"] + " " + data["starttime"]);
-  $('#lobby_endtime').text('Loppuu: ' + data["enddate"] + " " + data["endtime"]);
-  $('#lobby_description_title').html(data["name"]);
-  $('#lobby_description').html(data["description"]);
+  $('#lobby_starttime').text("Alkaa: " + data["starttime"] + " " + reformatDate(data["startdate"]));
+  $('#lobby_endtime').text('Loppuu: ' + data["endtime"] + " " + reformatDate(data["enddate"]));
+  $('#lobby_description_title').text(data["name"]);
+  $('#lobby_description').text(data["description"]);
+
+  $('#lobby_creator').text("Aloittanut: " + data["creator"]);
   for(var i = 0; i < data["tags"].length; ++i){
     if(data["tags"][i] == ""){
       continue;
@@ -46,7 +76,34 @@ socket.on('council data', function(data){
         break;
       }
     }
+    var msgs = data["messages"];
+    try{
+      for(var i = 4; i > 0; --i){               //Showing the last 4 messages
+        var message = document.createElement('div');
+        var msg = msgs[msgs.length-i];        //The last four messages sent to the chat
+        var pic = document.createElement('div');
+        pic.textContent = msg["sender"][0].toUpperCase();
+        var c = 0;
+        for(var j = 0; j < msg["sender"].length; ++j){
+          c += msg["sender"].charCodeAt(j);
+        }
+        pic.style.backgroundColor = colors[c % colors.length];
+        pic.classList.add("chat_avatar_ball");
+        var sender = document.createElement('div');
+        sender.textContent = msg["sender"];
+        sender.classList.add("message_list_sender_name");
+        var msg_text = document.createElement('div');
+        msg_text.textContent = msg["content"];
+        msg_text.classList.add("message_text");
+        message.appendChild(pic); message.appendChild(sender);
+        message.appendChild(msg_text);
 
+        document.getElementById("lobby_latest_messages").appendChild(message);
+      }
+    }
+    catch(error){
+      console.log("lol", error);
+    }
   }
 });
 
