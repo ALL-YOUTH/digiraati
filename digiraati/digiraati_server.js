@@ -3,15 +3,19 @@ var util = require('util');
 var SocketIOFile = require('socket.io-file');
 var fs = require('fs');
 var cors = require('cors');
+
 var server = require('./routes.js');
 var app = server["app"];
 var io = server["io"];
 var http = server["http"];
 
+//Define the port
 var port = process.env.PORT || 3000;
-var host = "localhost";
+
+//Define the backup file
 var backup_file = path.join(__dirname, "backup.json");
 
+//Define the logfile
 var log_filename = __dirname + '/logs/' + new Date().toISOString().slice(-24).replace(/\D/g,'').slice(0, 14); + ".log";
 fs.closeSync(fs.openSync(log_filename, 'w'));
 fs.writeFile(log_filename, 'Server started at: ' + timestamp() , function (err) {
@@ -21,9 +25,11 @@ fs.writeFile(log_filename, 'Server started at: ' + timestamp() , function (err) 
 var log_file = fs.createWriteStream(log_filename, {flags : 'w'});
 var log_stdout = process.stdout;
 
+//import users.js and councils.js modules
 var Users = require(path.join(__dirname + "/user.js"));
 var Councils = require(path.join(__dirname + "/councils.js"));
 
+//Create objects for user and council
 let users = new Users();
 let councils = new Councils();
 
@@ -81,6 +87,7 @@ fs.readFile(backup_file, function (err, data) {
 
 });
 
+//Start listening to the server:port
 http.listen(port);
 
 var corsOptions = {
@@ -88,14 +95,12 @@ var corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
-//Backup functions
+//Backup interval
 setInterval(function () {
   create_backup();
 }, 1 * 60 * 1000); // 1 min
 
 app.use(cors(corsOptions));
-
-MESSAGES2PRINT = 50;
 
 //===================================================================
 //===================================================================
@@ -107,8 +112,11 @@ MESSAGES2PRINT = 50;
 
 //Connection
 io.on('connection', function(socket){
+
+  //ip variable is parsed from the incoming socket
   var ip = socket.request.connection.remoteAddress;
-  //server_log(ip + " connected to the server");
+
+  //uploader for file transfers
   var uploader = new SocketIOFile(socket, {
     uploadDir: 'files',			// simple directory
     maxFileSize: 4194304, 	// 4 MB.
@@ -264,7 +272,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('get prev messages', function(c){
-    //This should be done in chat.js
     msgs = councils.get_previous_messages_from_council(c, MESSAGES2PRINT);
     if(msgs == undefined){return 0;}
     for(var i = 0; i < msgs.length; ++i){
@@ -425,9 +432,8 @@ io.on('connection', function(socket){
     socket.emit('update conclusion');
   });
 
+  //////////////////////////////////////////////////////////////////////////////
   ///File upload stuff
-  //Todo tähän pitää keksiä vielä vähän sääntöjä että kuka voi lisäämistä
-  //tiedostoja ja samannimiset tiedostot yms....
   uploader.on('start', (fileInfo) => {
     server_log(ip + ": " + " started to upload a file: " + fileInfo["data"]["filename"]);
   });
@@ -458,6 +464,8 @@ io.on('connection', function(socket){
   uploader.on('abort', (fileInfo) => {
     server_log(ip + ": file upload ABORT");
   });
+
+  /////////////////////////////////////////////////////////////////////////////
 });
 
 function update_page(){
@@ -469,10 +477,7 @@ function update_councils(){
   io.emit('councils update', all_councils);
 }
 
-function update_users(){
-  //TODO
-}
-
+//Create a backup
 function create_backup(){
   try{
     var backup_data = {};
@@ -497,26 +502,12 @@ function create_backup(){
   }
 }
 
+//Create a timestamp
 function timestamp(){
   return new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
 }
 
-//////////////////////////////////////////////////////////////////////////////
-// DEBUG FUNCTIONS
-//////////////////////////////////////////////////////////////////////////////
-
-function print_councils(c){
-  for(var i = 0; i < c.length; ++i){
-    server_log("Council name: ", c[i]["name"], "|", "Council ID:", c[i]["id"])
-  }
-}
-
-function print_users(u){
-  for(var i = 0; i < u.length; ++i){
-    server_log(u[i]);
-  }
-}
-
+//Write a server log message
 function server_log(str){
   log_file.write(util.format(str) + '\n');
   log_stdout.write(util.format(str) + '\n');

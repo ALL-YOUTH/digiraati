@@ -7,7 +7,7 @@
 
 #header_div{
   overflow-x: hidden;
-  z-index:15;
+  z-index:99;
   padding:10px 0px 20px 0px;
   background:url("/res/bannerinograffa6.png") no-repeat center center;
 }

@@ -6,17 +6,22 @@ $(function(){
 })
 
 function initial_register_text_inputs(){
-  color_input_text("#username_input", "initial");
-  color_input_text("#firstname_input", "initial");
-  color_input_text("#lastname_input", "initial");
-  color_input_text("#email_input", "initial");
-  color_input_text("#password_input", "initial");
-  color_input_text("#password_input2", "initial");
+  color_input_text("#username_input", "#EBEDED");
+  color_input_text("#firstname_input", "#EBEDED");
+  color_input_text("#lastname_input", "#EBEDED");
+  color_input_text("#email_input", "#EBEDED");
+  color_input_text("#password_input", "#EBEDED");
+  color_input_text("#password_input2", "#EBEDED");
   $('#register_error_text').css("display", "none");
+  $('#policy_agreement_checkbox').css("outline", "initial");
+
 }
 
 function color_input_text(element, color){
   $(element).css("border-color", color);
+  $(element).css("border-width", "2px");
+  $(element).css("border-style", "solid");
+
 }
 
 $('#confirm_register').click(function(){
@@ -27,6 +32,7 @@ $('#confirm_register').click(function(){
   if($('#email_input').val() == ""){ color_input_text('#email_input', "red"); }
   if($('#password_input').val() == ""){ color_input_text('#password_input', "red"); }
   if($('#password_input2').val() == ""){ color_input_text('#password_input2', "red"); }
+  if(!$('#policy_agreement_checkbox').is(':checked')){ $('#policy_agreement_checkbox').css("outline", "1px solid red"); }
   if( $('#username_input').val() == "" ||
       $('#firstname_input').val() == "" ||
       $('#lastname_input').val() == "" ||
