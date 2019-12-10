@@ -11,7 +11,7 @@ body, html{
 }
 
 #left_menu{
-  padding:5px;
+
   display:block;
   width:10%;
   height:2000px;
@@ -31,7 +31,7 @@ body, html{
   width:80%;
   height:auto;
   color:black;
-  margin-left:11%;
+  margin-left:10%;
   top:0px;
 }
 
@@ -59,7 +59,6 @@ body, html{
 #lobby_navigation {
   position:relative;
   display:inline-block;
-  padding-left: 5%;
   height:auto;
   width:80%;
   background-color: rgb(255,255,255,1);
@@ -68,13 +67,11 @@ body, html{
 
 #lobby_navigation div{
   display: inline-block;
-  margin:10px;
+  margin:10px 10px 0px 0px;
   font-size:11px;
   font-weight: bold;
   font-family: Montserrat;
-  padding:10px;
-  padding-left:20px;
-  padding-right:20px;
+  padding:10px 20px 10px 20px;
   cursor:pointer;
 }
 
@@ -88,7 +85,6 @@ div .inactive{
 #file_list{
   float:left;
   width:50%;
-  margin-left:10%;
 }
 
 #current_document{
@@ -96,7 +92,8 @@ div .inactive{
 }
 
 #all_documents_btn{
-  width:86%;
+  width:80%;
+  padding:0px 0px 0px 50px;
 }
 
 #file_list div{
@@ -141,7 +138,7 @@ div .inactive{
 
 #document_navigation div{
   display: inline-block;
-  padding: 0px 5%;
+  padding:0px 0px 0px 50px;
   width:86%;
   font-family: Montserrat;
   font-size: 32px;
@@ -361,7 +358,7 @@ div .inactive{
 }
 
 #file_filter{
-  margin: 15px 15px 15px 15px;
+  margin: 15px 15px 15px 50px;
 }
 
 #file_filter input{
@@ -370,10 +367,37 @@ div .inactive{
   border-width: 1px;
 }
 
-#newest_files_sorter, #popularest_files_sorter{
-  padding:5px 10px;
+#newest_files_sorter, #popularest_files_sorter, #file_container{
   display:inline-block;
   border-radius: 3px;
-  background-color: rgba(200,200,200,1);
   cursor:pointer;
+  font: Bold 14px/22px Montserrat;
+  letter-spacing: 0.2px;
+  color: #006073;
+  opacity: 1;
+}
+
+#newest_files_sorter, #popularest_files_sorter{
+  margin-right:30px;
+  background-color:
+}
+
+#file_container{
+  margin: 15px 15px 15px 50px;
+  padding:0px;
+}
+
+#add_file_btn{
+  margin: 10px 0px 0px 0px;
+}
+
+#file_search, #search_icon{
+  color: #01AFC4;
+
+}
+
+#file_search{
+  border-color: rgba(1, 175, 196, 0.3);
+  border-radius: 5px;
+  margin:20px 0px 0px 22px !important;
 }

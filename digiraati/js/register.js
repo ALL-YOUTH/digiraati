@@ -3,7 +3,7 @@ var socket = io();
 $(function(){
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
-})
+});
 
 function initial_register_text_inputs(){
   color_input_text("#username_input", "#EBEDED");

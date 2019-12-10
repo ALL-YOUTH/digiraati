@@ -24,11 +24,11 @@ $(function(){
 });
 
 socket.on('council data', function(data){
-  $('#left_menu_title').html(data["name"]);
-  $('#chat_title').html(data["name"]);
+  $('#left_menu_title').html(data["name"].toUpperCase());
+  $('#chat_title').html(data["name"].toUpperCase());
   //$('#chat_timetable').html("Käynnissä:", data["startdate"], data["starttime"], " - ", data["enddate"], data["endtime"]);
   $('#chat_description').html(data["description"]);
-  $('#chat_hashtag').html("#"+data["name"].toLowerCase());
+  $('#chat_hashtag').html("#"+data["name"].toLowerCase().replace(" ", ""));
   var h = document.getElementById('chat_content').offsetHeight +
           document.getElementById('header').offsetHeight;
   $('#chat_container').css("height", h + "px");

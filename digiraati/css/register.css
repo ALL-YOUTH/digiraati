@@ -105,9 +105,11 @@ body{
   }
 
   #register_hero{
+    padding:0px;
+    margin:0px;
     position: relative;
-    height:300px;
     width: 100%;
+    height:250px;
     overflow: hidden;
     background-size: cover;
     background-position: center;
@@ -121,18 +123,33 @@ body{
   }
 
   #register_main_text_desktop{
-    font-size: 55px;
-    font-family: Montserrat Alternates;
-    font-weight: bold;
+    position:relative;
+    display:block;
     text-align: center;
+    font-family: 'Montserrat Alternates', sans-serif;
+    line-height: 57px;
+    font-size: 55px;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #0000006F;
+    opacity: 1;
+    margin-top:30px;
   }
 
   #register_secondary_text_desktop{
+    margin-top:35px;
+    position:relative;
+    display:block;
     text-align: center;
-    font-family: Montserrat;
-    font-style: normal;
-    font-weight: bold;
     font-size: 24px;
+    line-height: 34px;
+    font-family: Montserrat;
+    font-weight: bold;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #00000029;
+    opacity: 1;
   }
 
   #register_hero_search_councils_btn_desktop{
