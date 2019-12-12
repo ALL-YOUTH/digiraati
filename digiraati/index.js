@@ -83,6 +83,13 @@ fs.readFile(backup_file, function (err, data) {
     for(let file of council["files"]){
       councils.add_file(file["id"], file["path"], council["id"], file["sender"], file["comments"]);
     }
+    for(let user of council["users"]){
+      //socket.join(data["user"]);
+      var data = {};
+      data["user"] = user;
+      data["council"] = council["id"];
+      councils.add_user_to_council(data);
+    }
   }
 
 });
@@ -155,10 +162,11 @@ io.on('connection', function(socket){
   });
 
   socket.on('request join council', function(data){
-    socket.join(data["user"]);
+    //&socket.join(data["user"]);
     var res = councils.add_user_to_council(data);
     if(res){
       socket.emit('join success');
+      create_backup();
     }
     else{
       socket.emit('join failed');
@@ -254,6 +262,7 @@ io.on('connection', function(socket){
                           msg["likes"]);
 
     io.to(msg["council"]).emit('new message', msg);
+    create_backup();
   });
 
   socket.on('request add like', function(data){

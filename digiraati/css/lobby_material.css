@@ -84,7 +84,7 @@ div .inactive{
 
 #file_list{
   float:left;
-  width:50%;
+  width:80%;
 }
 
 #current_document{
@@ -385,6 +385,7 @@ div .inactive{
 #file_container{
   margin: 15px 15px 15px 50px;
   padding:0px;
+  width:70%;
 }
 
 #add_file_btn{

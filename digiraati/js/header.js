@@ -153,6 +153,10 @@ socket.on("login success", function(name){
   }
 });
 
+socket.on('invalid login', function(){
+  alert("Kirjautuminen epäonnistui");
+});
+
 socket.on('logout success', function(){
   logged_in = "";
   goToPage("/");
