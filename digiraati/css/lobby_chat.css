@@ -192,13 +192,11 @@ div .inactive{
   font-size:14px;
   line-height: 20px;
   margin-left: 40px;
+  white-space: pre;
 }
 
 .message_reactions{
-  padding:5px;
-  color:rgba(250, 105, 128,1);
-  cursor:pointer;
-  margin-left: 37px;
+
 }
 
 .likes_num{
@@ -222,4 +220,30 @@ div .inactive{
   color:rgba(0,96,115,0.3);
   font-size: 14px;
   font-weight: bold;
+}
+
+.likes_btn{
+  margin: 10px 5px 0px 40px;
+  width:15px;
+  height:15px;
+  display:inline-block;
+  background:url("/res/thumbup.png") no-repeat;
+  cursor:pointer;
+}
+
+.likes_number{
+  font-size: 13px;
+  font-style:italic;
+  color:#FA6980;
+  font-family: Montserrat;
+  display:inline-block;
+}
+
+.noselect{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

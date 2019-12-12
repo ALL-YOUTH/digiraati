@@ -81,6 +81,7 @@
 }
 
 #Profile_avatar, #hamburger_avatar{
+  font-family: Montserrat;
   border-radius: 50%;
   display: inline-block;
   width:24px;

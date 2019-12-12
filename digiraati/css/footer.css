@@ -1,12 +1,17 @@
+#footer_navi, #footer_navi2, #footer_social{
+  display:none;
+}
+
 #footer {
   width:100%;
-  height: 150px;
+  height: 200px;
   clear:both;
   background-color: rgba(1,175,196,1);
   bottom:0px;
 }
 
 #footer_container{
+  max-height: 175px;
   width:90%;
   margin:0px 5%;
   vertical-align: top;
@@ -18,7 +23,6 @@
 }
 
 #footer_container, #footer_navi, #footer_navi2, #footer_social{
-  display:inline-block;
   vertical-align: top;
 }
 
@@ -37,18 +41,20 @@
   content:url("/res/digiraati_logo_fi_valk.png");
 }
 
-@media (min-width:1000){
+@media (min-width:1000px){
+
   #footer {
-    position:absolute;
-    height: 150px;
+    height: 175px;
     clear:both;
     background-color: rgba(1,175,196,1);
     bottom:0px;
   }
 
   #footer_container{
-    max-width: 90%;
-    margin:50px 0px 0px 0px;
+    width:90%;
+    max-height: 150px;
+    margin:0px 5%;
+    vertical-align: top;
   }
 
   #footer_logo{
@@ -62,7 +68,7 @@
   }
 
   #footer_navi, #footer_navi2, #footer_social{
-    margin:0px 30px 0px 30px;
+    margin:50px 30px 0px 50px;
     color:rgba(203,208,211,1);
     text-align: left;
     font: 13px/20px Montserrat;

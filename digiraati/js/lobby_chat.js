@@ -42,9 +42,8 @@ socket.on("login success", function(){
 });
 
 window.onscroll = function(e){
-  var h = window.scrollY + screen.height - $(document).height() - $('#footer').height();
-  if (h > -200) {
-    h = 200 + h;
+  if ($(window).height() + $(window).scrollTop() > $(document).height() - $("#footer").height()) {
+    var h = $(document).height() - $(window).height() - $(window).scrollTop() - $("#footer").height()
     $('#chat_message_input').css("bottom", Math.abs(h)+"px");
   }
   else{
@@ -54,7 +53,10 @@ window.onscroll = function(e){
 
 $("#message_input").keypress(function (e) {
   if(e.which == 13 && e.shiftKey){
-    return;
+    e.preventDefault();
+    var position = this.selectionEnd;
+    this.value = this.value.substring(0, position) + '\n' + this.value.substring(position);
+    this.selectionEnd = position+1;
   }
   else if(e.which == 13) {
     e.preventDefault();
@@ -98,21 +100,28 @@ function create_message(msg){
     pic.style.backgroundColor = colors[c % colors.length];
     pic.classList.add("chat_avatar_ball");
     var sender = document.createElement('a');
-    sender.textContent = msg["sender"];
+    sender.innerHTML = msg["sender"];
     sender.classList.add("message_list_sender_name");
     nm.appendChild(pic); nm.appendChild(sender);
   }
   var text = document.createElement('div');
+  console.log(msg["content"]);
   text.textContent = msg["content"];
   text.classList.add("message_list_text");
   nm.appendChild(text);
-  var likes = document.createElement('div');
-  add_classes_to_element(likes, ["fas", "fa-thumbs-up", "message_reactions", msg["id"]]);
+  var likes_btn = document.createElement('div');
+  likes_btn.classList.add("likes_btn"); likes_btn.classList.add("message_reactions"); likes_btn.classList.add("noselect");
+
   if(msg["likes"] == undefined){ msg["likes"] = 0; }
-  likes.textContent = "  " + msg["likes"].length;
-  nm.appendChild(likes);
+
+  var likes_number = document.createElement('div');
+  likes_number.id = msg["id"] + "likes";
+  likes_number.classList.add("likes_number"); likes_number.classList.add("noselect");
+
+  likes_number.textContent = "  " + msg["likes"].length;
+  nm.appendChild(likes_btn); nm.appendChild(likes_number);
   var reply = document.createElement('div');
-  reply.classList.add("message_list_reply");
+  reply.classList.add("message_list_reply"); reply.classList.add("noselect");
   reply.textContent = "VASTAA";
   nm.appendChild(reply);
 
@@ -143,8 +152,8 @@ $(document).on('click', '.message_reactions', function(e){
 });
 
 socket.on('update likes', function(mid, likes){
-  var message = document.getElementsByClassName(mid);
-  message[0].textContent = "   "+likes;
+  var message = document.getElementById(mid+"likes");
+  message.textContent = "   "+likes;
 });
 
 
