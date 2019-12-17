@@ -1,0 +1,389 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+
+html, body{
+  padding:0;
+  margin:0;
+}
+
+html{
+  background-size: cover;
+}
+
+body{
+  overflow-x: hidden;
+  min-height: 150%;
+  background-color: #F6F8F9;
+
+}
+
+#main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #arrow_left{
+  display:none;
+}
+
+#container {
+  width:100%;
+  min-height: 1500px;
+  overflow-x: hidden;
+  background-color: #F6F8F9;
+  background-image: url("/res/banneriinopysty.png"), url("/res/banneriinopysty.png");
+  background-position: right top, left top;
+  background-repeat: repeat-y, repeat-y;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#hero{
+  height:300px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-image: url("/res/hero_image.jpg");
+  background-repeat: no-repeat;
+  color:white;
+}
+
+#main_text_mobile, #secondary_text_mobile{
+  text-align: right;
+  display:block;
+  margin-right: 5%;
+  font-weight: bold;
+  text-shadow: 1px 1px 10px #000000;
+}
+
+#main_text_mobile{
+  font-family: Montserrat Alternates;
+  font-size: 28px;
+}
+
+#secondary_text_mobile{
+  position:relative;
+  font-family: Montserrat;
+  font-size: 16px;
+  bottom:-50px;
+}
+
+#council_container{
+  max-width: 320px;
+  margin:auto;
+
+}
+
+/*Council css*/
+.council_box{
+  float:left;
+  margin:20px 40px 20px 0px;
+  position:relative;
+  border-radius: 5px;
+  height:300px;
+  width:300px;
+  background-color:white;
+  border:solid;
+  border-width: 0px;
+  cursor:pointer;
+  background-color: white;
+  z-index: 5;
+}
+
+.council_box:hover{
+  box-shadow: 2px 2px 10px #000000;
+}
+
+.council_box .council_picture{
+  background-image: url("/res/council_image.png");
+  position:relative;
+  height:150px;
+  width:100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 3px;
+}
+
+.council_box .council_title{
+  position:relative;
+  max-height: 60px;
+  overflow: hidden;
+  width:100%;
+  z-index: 1;
+  padding:10px;
+  font-weight: bold;
+}
+
+.council_description{
+  display: block;
+  position:relative;
+  color:#BBBBBB;
+  font-size: 14px;
+  margin-left:10px;
+  margin-right:10px;
+  max-height: 42px;
+  overflow:hidden;
+}
+
+.council_likes, .council_dislikes, .council_people, .council_time{
+  position:relative;
+  float:left;
+  display: block;
+  margin-right:15px;
+}
+
+.council_time{
+  display:block;
+  margin-left: 10px;
+}
+
+.council_likes_icon, .council_dislikes_icon, .council_people_icon{
+  float:left;
+  display:inline-block;
+  height:15px;
+  width:15px;
+  margin:0px 5px 0px 10px;
+}
+
+.council_likes_icon{
+  background:url("/res/thumbup.png") no-repeat;
+  display:block;
+}
+
+.council_dislikes_icon{
+  background:url("/res/thumbdown.png") no-repeat;
+}
+
+.council_people_icon{
+  background:url("/res/person.png") no-repeat;
+}
+
+.council_btn{
+  float:left;
+  display:inline-block;
+}
+
+/*Everything below is css for desktop view of the website.*/
+@media (min-width:1000px){
+  #main_text_mobile, #secondary_text_mobile{
+    display:none;
+  }
+
+  #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title{
+    display:inline-block;
+  }
+
+  #hero_text{
+    position:relative;
+    float:right;
+    width:50%;
+    padding: 50px;
+  }
+
+  #main_text_desktop{
+    position:relative;
+    display:block;
+    text-align: center;
+    font-family: 'Montserrat Alternates', sans-serif;
+    line-height: 57px;
+    font-size: 55px;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #0000006F;
+    opacity: 1;
+    margin-top:30px;
+  }
+
+  #secondary_text_desktop{
+    margin-top:35px;
+    position:relative;
+    display:block;
+    text-align: center;
+    font-size: 24px;
+    line-height: 34px;
+    font-family: Montserrat;
+    font-weight: bold;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #00000029;
+    opacity: 1;
+  }
+
+  #hero{
+    padding:0px;
+    margin:0px;
+    position: relative;
+    height:479px;
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/res/hero_image.jpg");
+    background-repeat: no-repeat;
+    color:white;
+  }
+
+  #hero_search_councils_btn_desktop{
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,-10%);
+    cursor: pointer;
+
+    padding: 5px 15px;
+    letter-spacing: 0;
+    font-size:10px;
+    line-height: 15px;
+    font-family: Montserrat;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    opacity: 1;
+  }
+
+  #council_container{
+    min-width:90%;
+    height:auto;
+    margin:auto;
+  }
+
+  #filter{
+    width:auto;
+    margin-top:20px;
+    width:90%;
+    font-weight: bold;
+  }
+
+  #selector, #sorter, #search{
+    float:left;
+    cursor: pointer;
+  }
+
+  #sorter{
+    margin-left:10%;
+  }
+
+  .selector_btn{
+    position:relative;
+    margin-right: 40px;
+    font-size:10px;
+    line-height: 15px;
+    font-family: Montserrat;
+    font-weight: bold;
+    color: #FFFFFF;
+    opacity: 1;
+    float:left;
+  }
+
+  #ongoing, #newest, #popularest{
+    padding:5px 15px;
+  }
+
+  .selector_btn:hover{
+    box-shadow: 1px 1px 5px rgba(254,4,86,1);
+  }
+
+
+  .inactive{
+    padding:5px;
+    border: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: rgba(254,4,86,1);
+    color: rgba(254,4,86,1);
+  }
+
+  .active {
+    padding:5px;
+    background: rgba(254,4,86,1);
+    color:white;
+    border-radius: 5px;
+    border-width: 1px;
+    border:solid;
+    border-color: rgba(254,4,86,1);
+  }
+
+  #sorter #list, #small_grid, #large_grid{
+    margin-left:1px;
+    padding: 5px;
+    position:relative;
+  }
+
+  .sorter_btn{
+    padding:5px;
+    border-radius: 5px;
+    font-size: 20px;
+    line-height: 31px;
+    background-color:black;
+    width: 31px;
+    height: 31px;
+    text-align: center;
+    vertical-align: bottom;
+  }
+
+  .sorter_active{
+    background: rgba(1,175,196,1);
+    border-color: white;
+    color: white;
+  }
+
+  .sorter_inactive{
+    background: white;
+    border-color: rgba(1,175,196,1);
+    color: rgba(1,175,196,1);
+  }
+
+  #filter #search {
+    margin-left:50px;
+  }
+
+  #search{
+    color:#01AFC4;
+    float:right;
+  }
+
+  #search_input{
+    margin-left:7px;
+    border-color:rgba(1, 175, 196, 0.3);
+    border-radius:5px;
+  }
+
+  #council_title {
+    margin:20px 0px;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Montserrat;
+  }
+
+  .council_box{
+    float:left;
+    position:relative;
+    border-radius: 5px;
+    height:300px;
+    width:300px;
+    background-color:white;
+    border:solid;
+    border-width: 0px;
+    cursor:pointer;
+  }
+
+  .council_box div{
+    font-family: Montserrat;
+  }
+}
+
+@media (min-width:1000px) and (max-width:1200px){
+  #main_text_desktop{
+    text-align: right;
+  }
+
+  #secondary_text_desktop{
+    text-align: right;
+  }
+
+  #hero_text{
+    width:70%;
+  }
+}

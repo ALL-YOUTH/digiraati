@@ -1,0 +1,241 @@
+body, html{
+  font-family: Montserrat;
+  margin:0;
+  height: 100%;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+#register_error_text{
+  display:none;
+  color:red;
+  font-size: 15px;
+  padding-top:50px;
+}
+
+#register_title{
+  padding-top: 10px;
+  font-size: 20px;
+  text-align: left;
+  font: Bold 32pt/42pt Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+}
+
+#register_hero, #register_hero_text{
+  display:none;
+}
+
+#register_container{
+  max-width: 320px;
+  margin:auto;
+}
+
+#confirm_register{
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px 15px;
+  letter-spacing: 0;
+  font-size:10px;
+  line-height: 15px;
+  font-family: Montserrat;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  opacity: 1;
+  background-color: rgba(254,4,86,1);
+}
+
+#register_avatar_preview{
+  border:solid;
+  border-width: 1px;
+  width: 50px;
+  height: 50px;
+}
+
+#register_inputs p{
+  font-size: 13px;
+  font-family: Montserrat;
+  font-weight: normal;
+  text-align: left;
+  margin-left:20%;
+  position:relative;
+  font-weight: bold;
+  margin-top:14px;
+  margin-bottom:2px;
+}
+
+#register_inputs input[type=text], input[type=email], input[type=password]{
+  position:relative;
+  width:60%;
+  margin-left: 20%;
+  border-radius: 3px;
+  height: 30px;
+  border: 2pt solid #EBEDED;
+  border-radius: 6pt;
+}
+
+#footer_separator{
+  height:300px;
+  width:100%;
+  cursor:default;
+}
+
+#register_disclaimer{
+  margin-top: 0px;
+  display:inline-block;
+  float:left;
+  margin: 0px 0px 0px 10px;
+}
+
+#policy_agreement_checkbox{
+  display:inline-block;
+  margin-left:20%;
+  margin:20px 20% 20px;
+  float:left;
+}
+
+@media (min-width:800px){
+  #register_hero, #register_hero_text{
+    display:block;
+  }
+
+  #register_hero{
+    padding:0px;
+    margin:0px;
+    position: relative;
+    width: 100%;
+    height:250px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/res/register_hero2.png");
+    background-repeat: no-repeat;
+    color:white;
+  }
+  #register_hero_text{
+    position:relative;
+    text-align: center;
+  }
+
+  #register_main_text_desktop{
+    position:relative;
+    display:block;
+    text-align: center;
+    font-family: 'Montserrat Alternates', sans-serif;
+    line-height: 57px;
+    font-size: 55px;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #0000006F;
+    opacity: 1;
+    margin-top:30px;
+  }
+
+  #register_secondary_text_desktop{
+    margin-top:35px;
+    position:relative;
+    display:block;
+    text-align: center;
+    font-size: 24px;
+    line-height: 34px;
+    font-family: Montserrat;
+    font-weight: bold;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #00000029;
+    opacity: 1;
+  }
+
+  #register_hero_search_councils_btn_desktop{
+    margin: auto;
+    position: absolute;
+    bottom:-30px;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    width: 130px;
+    height: auto;
+  }
+
+  #register_title{
+    float:left;
+    margin-left:20%;
+    padding-top: 20px;
+    font-size: 20px;
+    font-family: Montserrat;
+    font-weight: bold;
+  }
+
+  #register_container{
+    max-width: 1200px;
+    margin:auto;
+  }
+
+  #register_avatar_preview{
+    border:solid;
+    border-width: 1px;
+    width: 50px;
+    height: 50px;
+  }
+
+  #register_inputs input[type=text], input[type=email], input[type=password]{
+    position:relative;
+    width:60%;
+    border-radius: 3px;
+    height: 30px;
+  }
+  #register_inputs p{
+    position:relative;
+    font-weight: normal;
+    margin-top:14px;
+    margin-bottom:2px;
+  }
+
+  #register_disclaimer{
+    margin-top: 0px;
+    display:inline-block;
+    float:left;
+    margin: 0px 0px 0px 10px;
+  }
+
+  #policy_agreement_checkbox{
+    display:inline-block;
+    margin-left:20%;
+    margin:20px 0px 20px 20%;;
+    float:left;
+  }
+
+  .active {
+    padding:5px;
+    background: rgba(254,4,86,1);
+    color:white;
+    border-radius: 5px;
+    border-width: 1px;
+    border:solid;
+    border-color: rgba(254,4,86,1);
+  }
+
+  #confirm_register{
+    position:relative;
+    width:80px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 50px 20% 0px;
+    padding: 5px 15px;
+    letter-spacing: 0;
+    font: Bold 11px/20px Montserrat;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    opacity: 1;
+    background-color: rgba(254,4,86,1);
+  }
+}

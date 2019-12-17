@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+body, html{
+  font-family: Montserrat;
+  margin:0;
+  height: 100%;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+#main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #arrow_left{
+  display:none;
+}
+
+#info_container{
+  max-width: 1200px;
+  margin:auto;
+}
+
+#info_title{
+  text-align: left;
+  font: Bold 32px/48px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+  margin-left: 20px;
+}
+
+#info_text{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#hero{
+  height:300px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-image: url("/res/info_hero.png");
+  background-repeat: no-repeat;
+  color:white;
+}
+
+#main_text_mobile, #secondary_text_mobile{
+  float:right;
+  text-align: center;
+  display:block;
+  margin-right: 5%;
+  font-weight: bold;
+  text-shadow: 1px 2px 6px #0000006F;
+  width:70%;
+}
+
+#main_text_mobile{
+  margin: 20px 5% 0px 0px;
+  font-family: Montserrat Alternates;
+  font-size:38px;
+}
+
+#secondary_text_mobile{
+  position:relative;
+  font-family: Montserrat;
+  font-size: 16px;
+  margin-top:20px;
+}
+
+.active {
+  padding:5px;
+  background: rgba(254,4,86,1);
+  color:white;
+  border-radius: 5px;
+  border-width: 1px;
+  border:solid;
+  border-color: rgba(254,4,86,1);
+}
+
+/*Everything below is css for desktop view of the website.*/
+@media (min-width:1000px){
+  #main_text_mobile, #secondary_text_mobile{
+    display:none;
+  }
+
+  #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title{
+    display:inline-block;
+  }
+
+  #hero_text{
+    position:relative;
+    float:right;
+    width:50%;
+    padding: 50px;
+  }
+
+  #main_text_desktop{
+    position:relative;
+    display:block;
+    text-align: center;
+    font-family: 'Montserrat Alternates', sans-serif;
+    line-height: 57px;
+    font-size: 55px;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #0000006F;
+    opacity: 1;
+    margin-top:30px;
+  }
+
+  #secondary_text_desktop{
+    margin-top:35px;
+    position:relative;
+    display:block;
+    text-align: center;
+    font-size: 24px;
+    line-height: 34px;
+    font-family: Montserrat;
+    font-weight: bold;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #00000029;
+    opacity: 1;
+  }
+
+  #hero{
+    position: relative;
+    height:479px;
+    width: 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-image: url("/res/info_hero_picture.jpg");
+    background-repeat: no-repeat;
+    color:white;
+  }
+
+  #hero_search_councils_btn_desktop{
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,-10%);
+    cursor: pointer;
+
+    padding: 5px 15px;
+    letter-spacing: 0;
+    font-size:10px;
+    line-height: 15px;
+    font-family: Montserrat;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    opacity: 1;
+  }
+}

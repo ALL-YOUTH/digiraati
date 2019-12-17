@@ -1,0 +1,53 @@
+<link rel="stylesheet" href="/css/header.css" type="text/css"/>
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<header id="header">
+  <div id="header_div">
+    <div id="header_btns">
+      <div id="arrow_left" class="fas fa-arrow-left fa-2x"></div>
+      <div id="logo_div">
+        <img id="logo_url"></img>
+      </div>
+      <div id="header_navi_btns">
+        <span class="header_active" id="Etusivu_btn">ETUSIVU</span>
+        <span id="Info_btn">INFO</span>
+        <span id="Rekistroidy_btn">REKISTERÖIDY</span>
+        <span id="Kirjaudu_btn">KIRJAUDU SISÄÄN</span>
+        <span id="Kirjaudu_ulos_btn">KIRJAUDU ULOS</span>
+        <span id="Profile_avatar">
+          <img id="avatar_url"></img>
+        </span>
+        <div id="hamburger_div">
+          <span class="fas fa-bars fa-2x" id="hamburger_icon"></span>
+        </div>
+        <div id="hamburger_menu">
+          <div id="hamburger_close" class="fas fa-times"></div>
+          <div id="hamburger_avatar">
+            <img id="hamburger_avatar_url"></img>
+          </div>
+          <ul>
+            <li id="hamburger_index">ETUSIVU</li>
+            <li id="hamburger_info">INFO</li>
+            <li id="hamburger_signin">KIRJAUDU SISÄÄN</li>
+            <li id="hamburger_signout">KIRJAUDU ULOS</li>
+            <li id="hamburger_register">REKISTERÖIDY</li>
+          <ul>
+      </div>
+    </div>
+  </div>
+  <div id="login_div" class="input-icons">
+    <div id="login_title">KIRJAUDU SISÄÄN</div>
+    <a class="fas fa-times" id="login_close_btn"></a>
+    <hr id="separator"></hr>
+    <p>KÄYTTÄJÄNIMI</p>
+    <i class="fas fa-envelope icon"></i>
+    <input class="input-field" type="text" id="login_email"></input>
+    <p>SALASANA</p>
+    <i class="fas fa-unlock-alt icon"></i>
+    <input class="input-field" type="password" id="login_password"></input><br><br>
+    <input type="button" id="login_confirm" value="KIRJAUDU"></input>
+  </div>
+</header>
+<script src="/js/common.js"></script>
+<script src="/js/header.js"></script>

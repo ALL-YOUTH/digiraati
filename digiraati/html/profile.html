@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="/css/profile.css" type="text/css">
+	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat Alternates:extrabold' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Montserrat:bold' rel='stylesheet'>
+	<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<title>Digiraati 2.0</title>
+</head>
+<body>
+	<div id="container">
+		<header id="header">
+		</header>
+		<div id="hero"></div>
+		<div id="profile_container">
+			<div id="left_container">
+				<div id="my_councils">Omat raadit</div>
+				<div id="all_councils">Kaikki raadit</div>
+				<div id="followed_councils">Seuratut raadit</div>
+				<div id="my_activity">Aktiivisuus</div>
+				<div id="tags">Aiheet</div>
+				<div id="create_new_council">Luo uusi raati</div>
+			</div>
+
+			<div id="middle_container">
+				<div>
+					<div id="profile_title">Oma Profiili</div>
+					<div class="far fa-edit" id="edit_profile"></div>
+				<div id="profile_avatar"></div>
+				<div id="profile_real_name"></div>
+				<div id="profile_username"></div>
+				<div id="profile_user_level">Kuntapoliitikko</div>
+				<div id="profile_description"></div>
+				<div id="profile_hometown"></div>
+				<div id="profile_graph"></div>
+			</div>
+			<div id="right_container"></div>
+		</div>
+	</div>
+	<footer id="footer">
+	</footer>
+
+	<script src="/js/profile.js" type="text/javascript"></script>
+	<script src="/js/common.js"></script>
+</body>

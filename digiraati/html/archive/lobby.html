@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+  <head>
+    <title id="room_title"></title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link  type="text/css" href="css/resizer.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script type="text/javascript" src="/js/jquery.gdocsviewer.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0">
+    <link rel='icon' href='../res/favicon.ico' type='image/x-icon'/ >
+  </head>
+
+  <body>
+    <div class="container">
+    <!--START NAV BAR -->
+      <div class="topnav row">
+        <div id="navilogo" class="topnav-left"><a href="/"><img src="../res/digiraati_logo.png"/></a></div>
+        <div class="topnav-right">
+          <a href="/" class="active">Etusivu</a>
+          <a href="/info">Info</a>
+          <a id="raatini_btn" style="display:none">Raatini
+            <div class="dropdown dropbtn">
+              <div class="dropdown-content">
+                <a onclick="create_new_council_clicked()">Luo raati</a>
+              </div>
+            </div>
+          </a>
+          <a class="dropdown dropbtn" id="homepage_profile_element">
+            <div class="dropdown-content">
+              <a onclick="logout()">Kirjaudu ulos</a>
+            </div>
+          </a>
+          <a href="/register" id="register_btn" >Rekisteröidy</a>
+          <a id="login_btn" onclick="login_modal()">Kirjaudu sisään</a>
+        </div>
+
+        <!--Login modal-->
+        <div id="login_modal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="cancel_login_modal()">&times;</span><br>
+            <span id="login_instruction">Kirjaudu sisään Digiraati-palveluun</span><br><br><br>
+            <h2>Sähköposti tai käyttäjätunnus</h2>
+            <input class="modal-input" type="text" id="user_username_email"></input><br>
+            <h2>Salasana</h2>
+            <input class="modal-input" type="password" id="user_password"></input><br>
+            <input class="modal-input modal-button" type="button" value="Kirjaudu" id="login_modal_login_btn" onclick="login()"></button>
+          </div>
+        </div>
+      </div>
+      <!--END NAV BAR-->
+
+      <!--New council creation popup-->
+      <div id="new_council_modal" class="modal">
+        <div class="modal-content">
+          <div class="close" onclick="cancel_council_modal()">&times;</div>
+          <h2>Raadin nimi</h2>
+          <input type="text" id="council_name"></input><br>
+          <h2>Kuvaus</h2>
+          <input type="text" id="council_description"></input><br>
+          <h2>Alkamisaika</h2>
+          <input type="date" id="council_start_date"></input><input type="time" id="council_start_time"></input><br>
+          <h2>Loppumisaika</h2>
+          <input type="date" id="council_end_date"></input><input type="time" id="council_end_time"></input><br>
+          <h2>Avainsanat</h2>
+          <input type="text" id="council_keywords"></input><br>
+          <input type="button" onclick="cancel_council_modal()" value="Peruuta"></input>
+          <input type="button" id="council_creation_btn" onclick="create_raati()" value="Luo"></input>
+        </div>
+      </div>
+
+      <div class="lobby-nav" id="lobby_nav">
+        <a onclick="open_council_info()" class="active" id="info_btn">Raati</a>
+        <a onclick="open_council_chat()" id="chat_btn">Keskustelu</a>
+        <a onclick="open_council_material()" id="material_btn">Materiaali</a>
+        <a onclick="open_council_participants()" id="participant_btn">Osallistujat</a>
+        <a onclick="open_council_statistics()" id="statistics_btn">Statistiikka</a>
+      </div>
+      <div class="row center-title content">
+        <h1 id="lobby-title" class="center-title"></h1>
+        <div id="lobby-content">
+          <div id="council-info-container" class="row">
+            <div class="row center-title">
+              <h2><p id="lobby-keywords"/></h2>
+            </div>
+            <div id=lobby-description>
+              <h2>Kuvaus</h2>
+              <p id="lobby-description-text"/>
+              <h2>Raati alkaa</h2>
+              <p id="lobby-startdatetime-text"/>
+              <h2>Raati päättyy</h2>
+              <p id="lobby-enddatetime-text"/>
+              <h2>Osallistujia</h2>
+              <p id="number_council_participants"/>
+            </div>
+            <div id="sign_container" class="col-sm-10">
+              <input type="button" onclick="sign_in_council()" id="join_council_btn" value="Liity"/>
+              <input type="button" onclick="resign_from_council() "id="resign_council_btn" value="Poistu Raadista"/>
+            </div>
+          </div>
+
+          <div id="council-chat-container">
+            <div id="messages"></div>
+            <form class="message_form" id="message_form" action="">
+              <input id="message_input" disabled="disabled" autocomplete="off" />
+              <button id="send_btn" class="disabled">Send</button>
+            </form>
+          </div>
+
+          <div id="council-material-container">
+            <div id="material-files" class="column-20"><h2>Tiedostot</h2>
+              <form id="files" action="fileupload" method="post" enctype="multipart/form-data">
+                <input type="file" id="fileselect" onchange="file_select_check()"></input>
+                <input type="button" id="file-select-btn" onclick="file_select_clicked()" value="Valitse Tiedosto"></input>
+                <br><span id="filename"></span>
+                <input type="submit" value="Lähetä" id="submit_file"></input>
+              </form>
+              --------------------
+              <span id="file_list"></span>
+            </div>
+            <div id="material-file-viewer" class="column-50">
+              <div id="canvas-div">
+                <canvas id="material-url"></canvas>
+              </div>
+              <div id="text-selector">
+                <div id="text-selectorheader"></div>
+              </div>
+            </div>
+            <div id="material-file-comments" class="column-30"><h2>Kommentit</h2></div>
+          </div>
+
+          <div id="council-participant-container" class="row">
+            <div>Participants</div>
+            <div class="center_list" id="list_participants"></div>
+          </div>
+
+          <div id="council-statistics-container" class="row">
+            <div>Stats</div>
+          </div>
+          <div id='rclickmenu'>
+            <div id="rclickmenuheader">Kommentti</div>
+            <ul>
+              <li id="wtf_btn" onclick="add_comment('???')" class="options">Mitä tämä tarkoittaa?</li>
+              <li id="thumbs_up_btn" onclick="add_comment('tykkäys')" class="options">Peukku</li>
+              <li id="thumbs_down_btn" onclick="add_comment('epätykkäys')" class="options">Peukku alas</li>
+            </ul>
+            <input id="comment_text" type="text" style="resize:both;"></input>
+            <ul>
+              <li class="options" onclick="add_custom_comment()">Lisää Kommentti</li>
+              <hr>
+              <li class="options" onclick="close_comment_menu()">Peru</li>
+            </ul>
+          </div>
+          <div id="pane">
+          </div>
+          <div id="ghostpane"></div>
+
+        </div>
+      </div>
+    </div>
+    <script src="../socket.io-file-client.js"></script>
+    <script src="../js/lobby.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/chat.js"></script>
+    <script src="../socket.io.js"></script>
+    <script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script src="../js/resizer.js" type="script/js"></script>
+
+
+  </body>
+</html>

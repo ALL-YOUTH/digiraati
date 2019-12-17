@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/css/lobby_conclusion.css" type="text/css">
+  <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
+
+	<title>Digiraati 2.0</title>
+</head>
+<body>
+	<header id="header"></header>
+
+	<div id="conclusion_container">
+		<div id="left_menu">
+			<!--<div id="left_menu_title"></div>
+			<div id="gonfind" class="fas fa-bars left_menu_title"> Mene ja löydä</div>
+			<div id="left_menu_councils" class="left_menu_title">Raadit</div>
+			<div id="left_menu_my_councils" class="left_menu_title">Omat Raadit</div>
+			<div id="left_menu_council_members" class="left_menu_title">Tyypit</div>-->
+		</div>
+
+		<div id="conclusion_content">
+			<div id="conclusion_title"></div>
+			<div id="conclusion_timetable"></div>
+			<div id="conclusion_description"></div>
+			<div id="lobby_navigation">
+				<div class="inactive" id="lobby_home_btn">Pääsivu</div>
+				<div class="inactive" id="lobby_chat_btn">Keskustelu</div>
+				<div class="inactive" id="lobby_document_btn">Lue asiakirja</div>
+				<div class="active" id="lobby_conclusion_btn">Loppulausuma</div>
+			</div>
+
+
+			<div id="conclusion_container_input">
+				<div id="conclusion_hashtag">Loppulausuma</div>
+				<div id="refresh_conclusion_text" class="fas fa-sync">  Päivitä</div>
+				<textarea id="conclusion_input" tabindex="-1"></textarea>
+				<div id="save_conclusion_text" class="fas fa-save">  Tallenna</div>
+			</div>
+		</div>
+	</div>
+
+
+  <footer id="footer">
+  </footer>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/lobby_conclusion.js"></script>
+</body>

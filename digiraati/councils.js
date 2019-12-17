@@ -1,25 +1,50 @@
 
+class Like{
+  constructor(id, liker){
+    this.id = id;
+    this.liker = liker;
+  }
+  get_liker(){ return this.liker; }
+}
+
 class Message{
-  constructor(sender, text, likes){
+  constructor(id, sender, text, likes){
+    this.id = id;
     this.sender = sender;
     this.content = text;
     this.likes = likes;
   }
+  get_id(){ return this.id; }
   get_sender(){ return this.senderid; }
   get_content(){ return this.content; }
   get_likes(){ return this.likes; }
+
+  toggle_like(id, liker){
+    for(var i = 0; i < this.likes.length; ++i){
+      //If user already likes this message, the like is removed
+      let like = this.likes[i];
+      if(liker == like.get_liker()){
+        this.likes.splice(i, 1);
+        return this.likes.length;
+      }
+    }
+    //If user has not liked this message, add a new like
+    var like = new Like(id, liker);
+    this.likes.push(like);
+    return this.likes.length;
+  }
 }
 
 class Comment{
-  constructor(id, sender, text, time, likes, dislikes, parentid, childid){
+  constructor(id, sender, text, time, dimentions){
     this.id = id;
     this.sender = sender;
     this.text = text;
     this.time = time;
-    this.likes = likes;
-    this.dislikes = dislikes;
-    this.parentid = parentid;
-    this.childid = childid;
+    this.dimentions = dimentions;
+    this.likes = 0;
+    this.dislikes = 0;
+    this.responses = [];
   }
   get_id(){ return this.id; }
   get_sender(){ return this.sender; }
@@ -27,25 +52,32 @@ class Comment{
   get_likes(){ return this.likes; }
   get_dislikes(){ return this.dislikes; }
   get_time(){ return this.time; }
-  get_child_comment_id(){ return this.childid; }
-  get_parent_comment_id(){ return this.parentid; }
+  get_responses(){ return this.responses }
+
+  add_reponse(res){ this.responses.push(res); }
 }
 
 class File{
-  constructor(id, path, sender){
+  constructor(id, path, sender, comments){
     this.id = id;
     this.path = path;
     this.sender = sender;
+    this.comments = comments;
   }
   get_id(){return this.id;}
   get_path(){return this.path;}
   get_sender(){return this.sender;}
+  get_comments(){return this.comments;}
+
+  add_comment(comment){
+    return this.comments.push(comment);
+  }
 }
 
 //Class for one chat room
 class Council{
   constructor(id, name, description, creator, startdate, starttime,
-              enddate, endtime, userlimit=-1, tags){
+              enddate, endtime, userlimit, tags, likes, dislikes, conclusion){
     this.id = id;
     this.name = name;
     this.description = description;
@@ -56,11 +88,14 @@ class Council{
     this.endtime = endtime;
     this.tags = tags;
     this.userlimit = userlimit;
+    this.likes = likes;
+    this.dislikes = dislikes;
 
+    this.files = [];
     this.users = [];
     this.messages = [];
-    this.files = [];
-    this.comments = [];
+
+    this.conclusion = conclusion;
   }
 
   get_council_name(){ return this.name; }
@@ -91,16 +126,22 @@ class Council{
     return result;
   }
 
+  remove_participant(uid){
+    var result = false;
+    var index = this.users.indexOf(uid);
+    if(index > -1){
+      this.users.splice(index, 1);
+      result = true;
+    }
+    return result;
+  }
+
   add_file(file){
     this.files.push(file);
   }
 
   add_msg(msg){
     this.messages.push(msg);
-  }
-
-  add_comment(comment){
-    this.comments.push(comment)
   }
 
   get_n_messages(n){
@@ -117,6 +158,54 @@ class Council{
     }
     return ret;
   }
+
+  add_conclusion(text){
+    this.conclusion = text;
+  }
+
+  get_conclusion(){
+    return this.conclusion;
+  }
+
+  get_file_by_id(id){
+    var file = -1;
+    for(var i = 0; i < this.files.length; ++i){
+      if(this.files[i].get_id() == id){
+        file = this.files[i];
+        break;
+      }
+    }
+    return file;
+  }
+
+  add_response_to_comment(data){
+    let file = this.get_file_by_id(data["file"]);
+    data["rid"] = makeid();
+    if(file == -1){
+      return file;
+    }
+    let comments = file.get_comments();
+    for(var i = 0; i < comments.length; ++i){
+      if(comments[i]["id"] == data["id"]){
+        var response = new Comment(data["id"], data["sender"],
+                                  data["text"], data["time"]);
+        comments[i]["responses"].push(response);
+        return 0;
+      }
+    }
+  }
+  get_comment_data(data){
+    let file = this.get_file_by_id(data["file"]);
+    if(file == -1){
+      return file;
+    }
+    let comments = file.get_comments();
+    for(var i = 0; i < comments.length; ++i){
+      if(comments[i]["id"] == data["id"]){
+        return comments[i];
+      }
+    }
+  }
 }
 
 //Class container for all chat rooms
@@ -125,12 +214,13 @@ module.exports = class Councils{
     this.councils = [];
   }
 
-  add_council(id, name, description, creator, startdate,
-              starttime, enddate, endtime, userlimit=-1, tags){
-    let new_council = new Council(id=id, name=name,
-      description=description, creator=creator,
-      startdate=startdate, starttime=starttime, enddate=enddate,
-      endtime=endtime, tags=tags, userlimit=userlimit);
+  add_council(id, name, description, creator, startdate, starttime, enddate,
+              endtime, userlimit, tags, likes, dislikes, conclusion){
+    let new_council = new Council(id, name,
+                                  description, creator,
+                                  startdate, starttime, enddate,
+                                  endtime, userlimit, tags, likes,
+                                  dislikes, conclusion);
     this.councils.push(new_council);
   }
 
@@ -138,14 +228,7 @@ module.exports = class Councils{
   //If there are no councils, returns -1
   get_councils(){
     if(this.councils.length == 0){ return -1; }
-    var all_councils = [];
-    for(var i = 0; i < this.councils.length; ++i){
-      var council = {};
-      council["id"] = this.councils[i].get_council_id();
-      council["name"] = this.councils[i].get_council_name();
-      all_councils.push(council);
-    }
-    return all_councils;
+    return this.councils;
   }
 
   get_council_by_id(id){
@@ -159,37 +242,65 @@ module.exports = class Councils{
     return -1;
   }
 
-  add_message(council_id, sender, message_text){
+  add_message(council_id, mid, sender, message_text, likes){
     var council = this.get_council_by_id(council_id);
     if(council == -1){
       return;
     }
-    var new_message = new Message(sender, message_text, 0);
+    var l = [];
+    if(likes.length > 0){
+      for(var i = 0; i < likes.length; ++i){
+        var like = new Like(likes[i]["id"], likes[i]["liker"]);
+        l.push(like);
+      }
+    }
+    var new_message = new Message(mid, sender, message_text, l);
     council.add_msg(new_message);
   }
 
-  add_file(fileid, filename, council_id, uploader){
+  add_file(fileid, filename, council_id, uploader, comments=[]){
     var council = this.get_council_by_id(council_id);
     if(council == -1){
-      console.log("Unable to find council with id", council_id);
       return;
     }
-    var file = new File(fileid, filename, uploader);
+    var file = new File(fileid, filename, uploader, comments);
     council.add_file(file);
   }
 
-  add_comment_to_council(cid, c){
+  add_comment_to_file(data){
     try{
-      var council = this.get_council_by_id(cid);
-      var comment = new Comment(makeid(8), c["sender"], c["text"], c["time"],
-                                c["likes"], c["dislikes"], c["parent"], null);
-      var res = council.add_comment(comment);
+      var council = this.get_council_by_id(data["council"]);
+      var files = council.get_council_files();
+      var file = null;
+      for(var i = 0; i < files.length; ++i){
+        if(files[i]["id"] == data["file"]){
+          file = files[i];
+        }
+      }
+      if(file == null){
+        return -1;
+      }
+      var comment = new Comment(data["id"], data["sender"], data["text"], data["timestamp"],
+                                data["dimentions"]);
+      var res = file.add_comment(comment);
     }
     catch(err){
       console.log(err);
       return -1;
     }
     return 0;
+  }
+
+  get_file_comments(cid, fid){
+    var council = this.get_council_by_id(cid);
+    var files = council.get_council_files();
+    var file = null;
+    for(var i = 0; i < files.length; ++i){
+      if(files[i]["id"] == fid){
+        return files[i].get_comments();
+      }
+    }
+    return -1;
   }
 
   is_user_joined(councilid, userid){
@@ -215,49 +326,7 @@ module.exports = class Councils{
   }
 
   get_council_data(id){
-    let council = this.get_council_by_id(id);
-    var council_data = {};
-    if(council == -1){ return null; }
-    else{
-      council_data["title"] = council.get_council_name();
-      council_data["description"] = council.get_council_description();
-      council_data["creator"] = council.get_council_creator();
-      council_data["startdate"] = council.get_council_startdate();
-      council_data["starttime"] = council.get_council_starttime();
-      council_data["enddate"] = council.get_council_enddate();
-      council_data["endtime"] = council.get_council_endtime();
-      council_data["users"] = council.get_council_users();
-      council_data["userlimit"] = council.get_council_userlimit();
-      council_data["tags"] = council.get_council_tags();
-      council_data["files"] = council.get_council_files();
-    }
-
-    return council_data;
-  }
-
-  sign_user_in_council(cid, uid){
-    let council = this.get_council_by_id(cid);
-    //First check if user is already a member of the council
-    let users = council.get_council_users();
-    for(var i = 0; i < users.length; ++i){
-      if(uid == users[i]){
-        return false;
-      }
-    }
-    //add the participant
-    var res = council.add_participant(uid);
-    return res;
-  }
-
-  resign_user_from_council(cid, uid){
-    let council = this.get_council_by_id(cid);
-    let users = council.get_council_users();
-    for(var i = 0; i < users.length; ++i){
-      if(uid == users[i]){
-        users.splice(i, 1);
-        return true;
-      }
-    }
+    return this.get_council_by_id(id);
   }
 
   get_council_members(cid){
@@ -267,14 +336,58 @@ module.exports = class Councils{
     return users;
   }
 
+  get_council_conclusion(cid){
+    let council = this.get_council_by_id(cid);
+    return council.get_conclusion();
+  }
+
+  add_counclusion_to_council(cid, text){
+    let council = this.get_council_by_id(cid);
+    council.add_conclusion(text);
+  }
+
+  add_response_to_comment(data){
+    let council = this.get_council_by_id(data["council"]);
+    let res = council.add_response_to_comment(data);
+    return res;
+  }
+
+  get_comment_data(data){
+    let council = this.get_council_by_id(data["council"]);
+    let res = council.get_comment_data(data);
+    return res;
+  }
+
+  add_like_to_message(cid, mid, uid){
+    let council = this.get_council_by_id(cid);
+    var messages = council.get_council_messages();
+    for(var i = 0; i < messages.length; ++i){
+      if(messages[i].get_id() == mid){
+        var id = makeid();
+        return messages[i].toggle_like(id, uid);
+      }
+    }
+  }
+
+  add_user_to_council(data){
+    let council = this.get_council_by_id(data["council"]);
+    var res = council.add_participant(data["user"]);
+    return res;
+  }
+
+  remove_user_from_council(data){
+    let council = this.get_council_by_id(data["council"]);
+    var res = council.remove_participant(data["user"]);
+    return res;
+  }
+
 }
 
-function makeid(length) {
-  var result           = '';
-  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for ( var i = 0; i < length; i++ ) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+function makeid() {
+  id = "";
+  var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  while(id.length < 12){
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
   }
-  return result;
+  return id;
 }

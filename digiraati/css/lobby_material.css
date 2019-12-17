@@ -1,0 +1,404 @@
+body, html{
+  max-width:100%;
+  margin:auto;
+  height:100%;
+}
+
+#material_container{
+  position:relative;
+  width:100%;
+  height:130%;
+}
+
+#left_menu{
+
+  display:block;
+  width:10%;
+  height:2000px;
+  top:0px;
+  background:rgb(0, 96, 115);
+  padding-top:130px;
+  color:white;
+}
+
+.left_menu_title{
+  margin:5px;
+}
+
+#material_content{
+  position:absolute;
+  display: inline-block;
+  width:80%;
+  height:auto;
+  color:black;
+  margin-left:10%;
+  top:0px;
+}
+
+#material_title, #material_timetable, #material_description, #lobby_navigation{
+  margin-top:20px;
+  margin-left:50px;
+  font-family: Montserrat;
+}
+
+#material_title{
+  font-size: 32px;
+  margin-top:50px;
+  font-weight: bold;
+}
+
+#material_timetable{
+  color:rgba(0,96,115,1);
+}
+
+#material_description{
+  font-size:18px;
+  line-height: 26px;
+}
+
+#lobby_navigation {
+  position:relative;
+  display:inline-block;
+  height:auto;
+  width:80%;
+  background-color: rgb(255,255,255,1);
+  z-index: 5;
+}
+
+#lobby_navigation div{
+  display: inline-block;
+  margin:10px 10px 0px 0px;
+  font-size:11px;
+  font-weight: bold;
+  font-family: Montserrat;
+  padding:10px 20px 10px 20px;
+  cursor:pointer;
+}
+
+div .active{
+  background-color: rgba(235,237,237,1);
+}
+div .inactive{
+  background-color: rgba(255,255,255,1);
+}
+
+#file_list{
+  float:left;
+  width:80%;
+}
+
+#current_document{
+  display:none;
+}
+
+#all_documents_btn{
+  width:80%;
+  padding:0px 0px 0px 50px;
+}
+
+#file_list div{
+  text-align: left;
+  font: Bold 30px/37px Montserrat;
+  letter-spacing: 0;
+  color: #006073;
+  opacity: 1;
+  border-bottom-style: solid;
+  border-color:#01AFC4;
+  border-width:1px;
+  padding: 15px 5px;
+  cursor:pointer;
+}
+
+#comment_view{
+  position:absolute;
+  min-width:70%;
+  height:70%;
+  overflow-y: scroll;
+  display:inline-block;
+}
+
+#pdf_div{
+  width:auto;
+  border-style:solid;
+  border-width:1px;
+  border-color:rgba(40,40,40,0.5);
+}
+
+#comment_layer{
+  position:relative;
+  z-index:7;
+  height:0px;
+  width:0px;
+}
+
+#document_navigation{
+  height:auto;
+  width:70%;
+}
+
+#document_navigation div{
+  display: inline-block;
+  padding:0px 0px 0px 50px;
+  width:86%;
+  font-family: Montserrat;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 48px;
+  cursor:pointer;
+  position:relative;
+}
+
+.document_navi_active{
+  background-color:rgba(1,175,196,1);
+  color:white;
+}
+
+.document_navi_inactive{
+  background-color:rgba(204,255,255,1);
+  color:rgba(0,96,115,1);
+}
+
+
+.temp_comment{
+  border:dashed;
+  position:absolute;
+  border-width:2px;
+  border-color:black;
+  background-color: rgba(196,237,241,0.5);
+}
+
+#comment_text_input{
+  position:absolute;
+
+}
+
+.comment{
+  position:absolute;
+  border-color: black;
+  background-color: rgba(196,237,241,0.5);
+}
+
+.page{
+  display: block;
+  position:relative;
+}
+
+.comment_close_btn{
+  float:right;
+  right:-15px;
+  top:-15px;
+  border-radius:50%;
+  background-color: rgb(200,200,200,0.5);
+  z-index: 10;
+  color:red;
+  cursor:pointer;
+  padding:2px;
+}
+
+.comment_add_btn{
+  float:left;
+  left:-15px;
+  top:-15px;
+  background-color: rgb(200,200,200,0.5);
+  color:green;
+  border-radius:50%;
+  position:relative;
+  z-index: 10;
+  cursor:pointer;
+  padding:2px;
+}
+
+#comment_list_div {
+  left:0px;
+  display:inline-block;
+  height:60%;
+  max-width:30%;
+  float:right;
+  right:30px;
+  background-color: #C4EDF1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.noselect{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#comment_list_navigation{
+  position:relative;
+  width:100%;
+}
+
+#comment_list_navigation div{
+  position:relative;
+  border-radius: 3px;
+  padding:2px 5px;
+  text-align: center;
+  display:inline-block;
+  font: Bold 15px/18px Montserrat;
+  letter-spacing: 0;
+  opacity: 1;
+  cursor:pointer;
+}
+
+#new_comments, #all_comments{
+  color: #FFFFFF;
+  text-transform: uppercase;
+  background: #10B3C7 0% 0% no-repeat padding-box;
+}
+
+#close_comment_list{
+  color:#006073;
+}
+
+.comment_in_list{
+  display:inline-block;
+  position:relative;
+  width:100%;
+  height: auto;
+  border:solid;
+  border-radius:3px;
+  border-width: 0px;
+  background:rgba(196,237,241,0.5);
+  cursor:pointer;
+  padding:5px;
+  text-align: left;
+  font: 18px/44px Montserrat;
+  letter-spacing: 0;
+  color: #006073;
+  opacity: 1;
+}
+
+.avatar_ball{
+  border-radius: 50%;
+  display: inline-block;
+  padding:3px;
+  width:24px;
+  height:24px;
+  text-align: center;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.comment_commenter{
+  width:auto;
+  display:inline-block;
+  margin-left:10px;
+  padding:5px;
+}
+
+.comment_text{
+  display:none;
+  text-align: left;
+  font: 12px/15px Montserrat;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.replylist{
+  margin-top:60px;
+  display:none;
+  text-align: left;
+  font: 12px/15px Montserrat;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  opacity: 1;
+  margin: 30px 20px;
+}
+
+.replylist div{
+  margin: 5px 0px;
+}
+
+.comment_reactions{
+  float:right;
+  display:block;
+  display:none;
+}
+
+.comment_reactions div{
+  margin-right:10px;
+  display:inline-block;
+  text-align: left;
+  font: 12px/48px Montserrat;
+  letter-spacing: 0;
+  color: #CBE781;
+  text-shadow: 1px 1px 2px #0000002F;
+  opacity: 1;
+}
+
+.reply_area{
+  display:none;
+}
+
+.reply_area textarea{
+  border-radius: 3px;
+  resize:none;
+  width:70%;
+  height:100px;
+  position:relative;
+}
+
+#add_file_btn{
+  cursor: pointer;
+}
+
+#message_list hr{
+  opacity:0.5;
+}
+
+#document_container{
+  display:none;
+}
+
+#file_filter{
+  margin: 15px 15px 15px 50px;
+}
+
+#file_filter input{
+  border-radius:5px;
+  margin:20px 20px 20px 20px;
+  border-width: 1px;
+}
+
+#newest_files_sorter, #popularest_files_sorter, #file_container{
+  display:inline-block;
+  border-radius: 3px;
+  cursor:pointer;
+  font: Bold 14px/22px Montserrat;
+  letter-spacing: 0.2px;
+  color: #006073;
+  opacity: 1;
+}
+
+#newest_files_sorter, #popularest_files_sorter{
+  margin-right:30px;
+  background-color:
+}
+
+#file_container{
+  margin: 15px 15px 15px 50px;
+  padding:0px;
+  width:70%;
+}
+
+#add_file_btn{
+  margin: 10px 0px 0px 0px;
+}
+
+#file_search, #search_icon{
+  color: #01AFC4;
+
+}
+
+#file_search{
+  border-color: rgba(1, 175, 196, 0.3);
+  border-radius: 5px;
+  margin:20px 0px 0px 22px !important;
+}

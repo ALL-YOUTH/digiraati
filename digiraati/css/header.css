@@ -1,0 +1,261 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+@import url("https://fonts.googleapis.com/css?family=Montserrat Alternates:400,700");
+
+#Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar, #Kirjaudu_ulos_btn{
+  display:none;
+}
+
+#header_div{
+  overflow-x: hidden;
+  z-index:99;
+  padding:10px 0px 20px 0px;
+  background:url("/res/bannerinograffa6.png") no-repeat center center;
+}
+
+#hamburger_div{
+  z-index:10;
+  position:relative;
+  display:inline-block;
+  float:right;
+  width:48px;
+  height:48px;
+  cursor:pointer;
+}
+
+#logo_url{
+  content:url("/res/digiraati_logo.png");
+}
+
+#hamburger_icon{
+  position:absolute;
+  top:50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+#hamburger_menu{
+  z-index: 9;
+  height:100%;
+  width:200px;
+  position:fixed;
+  right:-200px;
+  background: transparent linear-gradient(180deg, #FFFFFF 0%, #7CE3B2 37%, #01AFC4 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 3px 3px 6px #00000029;
+  opacity: 0.9;
+  border-radius: 3px;
+}
+
+#hamburger_menu ul{
+  font-weight: bold;
+  padding-top: 100px;
+  cursor:pointer;
+  font-size:13px;
+  padding-left:0px;
+}
+
+#hamburger_menu ul li{
+  list-style-type: none;
+  margin-top:10px;
+  width:100%;
+  font-family: Montserrat;
+  line-height: 24px;
+  padding: 10px 40px;
+}
+
+#hamburger_menu ul li:hover{
+  background-color: white;
+  box-shadow: 0px 3px 6px #00000019;
+}
+
+#hamburger_close{
+  float:left;
+  padding:20px;
+  cursor:pointer;
+}
+
+#hamburger_avatar{
+  position:absolute;
+  top:60px;
+  left:40px;
+}
+
+#Profile_avatar, #hamburger_avatar{
+  font-family: Montserrat;
+  border-radius: 50%;
+  display: inline-block;
+  width:24px;
+  height:24px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#Profile_avatar{
+  padding:3px;
+}
+
+#logo_div{
+  display:inline-block;
+  float:left;
+  cursor:pointer;
+  width:255px;
+  height:48px;
+}
+
+#arrow_left{
+  float:left;
+  margin:10px;
+  width: 48px;
+  height: 48px;
+}
+
+#register_disclaimer{
+  text-align: center;
+  font-size: 10px;
+  margin-top: 20px;
+}
+
+@media (max-width:1000px){
+  #login_div{
+    left:50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+    position:fixed;
+    top:100px;
+    width:320px;
+    height:360px;
+    display:none;
+    z-index:15;
+    background-color: rgb(95,213,227,1);
+    border-radius: 3px;
+    box-shadow: 1px 1px 5px rgb(1, 175, 196, 1);
+  }
+}
+#login_div #login_title{
+  display:inline-block;
+  padding:10px;
+  font-weight: bold;
+}
+
+#login_div a{
+  margin-right: 10px;
+  float:right;
+  padding:10px;
+}
+
+#login_div #header_title{
+  font-family: Montserrat;
+  margin-top:300px;
+  margin-left:10px;
+  color:rgba(0,96,115,1);
+}
+
+#login_div #separator{
+  background-color: rgb(255,255,255,0.5);
+  height:2px;
+  margin:0;
+}
+
+#login_div p{
+  margin:0;
+  margin-left: 10%;
+  margin-top:20px;
+  font-weight: bold;
+  font-family: Montserrat;
+}
+
+#login_div input{
+  width:80%;
+  margin-left: 10%;
+  margin-top:5px;
+  border-radius: 5px;
+  height:40px;
+  border-width: 0.5px;
+  border-color: rgb(95,213,227,1);
+}
+
+.input-icons i {
+  position: absolute;
+}
+
+.input-icons {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.icon {
+  padding-top: 17px;
+  padding-left: 10px;
+  min-width: 40px;
+  margin-left: 10%;
+  color:rgb(0, 96, 115);
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+#login_confirm{
+  color:white;
+  background-color: rgb(1, 175, 196, 1);
+  font-weight: bold;
+}
+
+@media (min-width:1000px){
+
+  #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Kirjaudu_ulos_btn, #Profile_avatar{
+    display:inline-block;
+  }
+
+  #hamburger_div, #hamburger_menu, #arrow_left{
+    display:none;
+  }
+
+  #logo_url{
+    width:auto;
+  }
+
+  #header_navi_btns{
+    font-family: Montserrat;
+    float:right;
+    margin-right: 8%;
+    font-size: 13px;
+    margin-top:15px;
+    font-weight: bold;
+    color: rgba(52,54,56,1);
+  }
+
+  #header_btns{
+    width:100%;
+    margin:25px 0px 0px 72px;
+  }
+
+  #header_btns span{
+    cursor:pointer;
+    margin-left: 35px;
+    color: rgba(1,20,20,1);
+  }
+
+  #header_btns span:hover{
+    color: #01AFC4;
+  }
+
+  #login_div{
+    right:10%;
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+    position:fixed;
+    top:100px;
+    width:300px;
+    height:360px;
+    display:none;
+    z-index:15;
+    background-color: rgb(95,213,227,1);
+    border-radius: 3px;
+    box-shadow: 1px 1px 10px rgb(0, 0, 0, 1);
+  }
+
+}

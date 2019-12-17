@@ -1,0 +1,306 @@
+@import url("https://use.typekit.net/gbv0ney.css");
+
+body, html{
+  max-width:100%;
+  margin:auto;
+  height:100%;
+  overflow-x: hidden;
+}
+
+#container {
+  width:100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background-color: rgba(246,248,249,1);
+}
+
+#lobby_container{
+  margin:auto;
+  width:90%;
+  margin:0px 5%;
+}
+
+#lobby_title{
+  padding:30px 0px 10px;
+  position:relative;
+  font-size: 32px;
+  font-family: Montserrat;
+  font-weight: bold;
+  color: rgba(32,33,36,1);
+}
+
+#lobby_header{
+  margin:auto;
+  width:100%;
+  padding:0px 5%;
+  background-color:white;
+}
+
+#lobby_starttime, #lobby_endtime{
+  margin-right:50px;
+  display:inline-block;
+  font-family: Montserrat;
+  font-size:23px;
+  color: rgba(0,96,115,1);
+  margin-top:10px;
+}
+
+#lobby_milestones{
+  display:none;
+  margin-top:20px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("/res/temp_milestone.png");
+  height:130px;
+  margin-left:5%;
+}
+
+#lobby_navigation {
+  margin-top:80px;
+  position:relative;
+  height:auto;
+  width:100%;
+  background-color: rgb(255,255,255,1);
+}
+
+#lobby_navigation div{
+  display: inline-block;
+  font-size:11px;
+  font-weight: bold;
+  font-family: Montserrat;
+  padding:10px 20px 10px 20px;
+  cursor:pointer;
+}
+
+div .active{
+  background-color: rgba(246,248,249,1);
+}
+div .inactive{
+  background-color: rgba(255,255,255,1);
+}
+
+.wrapper{
+  display:table;
+}
+
+.row{
+  display:table-row;
+}
+
+#lobby_content_background{
+  width:100%;
+  float:left;
+  height:auto;
+  background-color: rgba(246,248,249,1);
+}
+
+#lobby_content{
+  position:relative;
+  margin:auto;
+  width:100%;
+  padding:20px;
+  max-width:90%;
+  height:auto;
+}
+
+#lobby_content_description{
+  float:left;
+  width:30%;
+  height:100%;
+  margin-top:20px;
+  padding:0px 10px 200px 0px;
+  border-style: none solid none none;
+  border-color: rgb(0,0,0,0.1);
+}
+
+#lobby_description_title{
+  text-align: left;
+  font: Bold 32px/42px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+}
+
+#lobby_description{
+  margin:20px 0px;
+  text-align: left;
+  font: 14px/26px Montserrat;
+  letter-spacing: 0;
+  color: #A6ADB4;
+  opacity: 1;
+}
+
+#lobby_social{
+  border-style: none none dashed none;
+  border-color: rgb(0,0,0,0.1);
+  padding:30px 0px;
+}
+
+#lobby_social span{
+  margin:5px 5px 0px 5px;
+}
+
+#lobby_creator_title{
+  text-align: left;
+  margin-top:20px;
+  font: Bold 16px/26px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+}
+
+#lobby_creator{
+  line-height: 26px;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 13px;
+  color:rgba(166,173,180,1);
+  margin-top:5px;
+  margin-left:5px;
+}
+
+#lobby_tags{
+  margin-top:30px;
+}
+
+.lobby_tag{
+  display:inline-block;
+  text-align: center;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  padding: 4px;
+  color: rgba(1,175,196,1);
+  border: 1px solid !important;
+  border-color: rgb(1, 175, 196);
+  border-radius: 3px;
+  border: rgb(1, 175, 196);
+  background-color: white;
+  margin-top:3px;
+  margin-left:3px;
+  cursor:pointer;
+}
+
+#lobby_recent_activity{
+  float:left;
+  width:65%;
+  height:100%;
+  margin-top:20px;
+  padding-left: 30px;
+}
+
+#join_council_btn{
+  margin-top:20px;
+  padding:5px 15px;
+  border-radius:5px;
+  float:left;
+  cursor:pointer;
+  display:none;
+  text-align: center;
+  font: Bold 11px/20px Montserrat;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  opacity: 1;
+  background-color:#CBE781;
+}
+
+#leave_council_btn{
+  margin-top:20px;
+  padding:5px 15px;
+  border-radius:5px;
+  float:left;
+  cursor:pointer;
+  display:none;
+  background-color:#FE0456;
+  text-align: center;
+  font: Bold 11px/20px Montserrat;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.disabled{
+  cursor:default;
+  color:rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+.lobby_title_font{
+  line-height: 42px;
+  text-align: left;
+  font-family: acumin-pro, sans-serif;
+  font-size:32px;
+  font-weight: bold;
+}
+
+.lobby_title_font{
+  margin: 15px 0px;
+  text-align: left;
+  font: Bold 20px/24px Montserrat;
+  letter-spacing: 0;
+  color: #006073;
+  opacity: 1;
+}
+
+
+.chat_avatar_ball{
+  border-radius: 50%;
+  display: inline-block;
+  padding:3px;
+  width:24px;
+  height:24px;
+  text-align: center;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+.message_list_sender_name{
+  margin-left:10px;
+  display:inline-block;
+  text-align: left;
+  font: Bold 24px/42px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+}
+
+.message_text{
+  text-align: left;
+  font: 16px/26px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+  font-weight: 500;
+  margin: 10px 0px;
+}
+
+#lobby_likes, #lobby_dislikes, #lobby_people{
+  text-align: left;
+  font: 13px/26px Helvetica;
+  letter-spacing: 0;
+  color: #FA6980;
+  opacity: 1;
+  display:inline-block;
+  padding: 0px 0px 5px 0px;
+}
+
+#lobby_likes_icon, #lobby_dislikes_icon, #lobby_people_icon{
+  display:inline-block;
+  height:15px;
+  width:15px;
+}
+
+#lobby_likes_icon{
+  background:url("/res/thumbup.png") no-repeat;
+}
+
+#lobby_dislikes_icon{
+  background:url("/res/thumbdown.png") no-repeat;
+}
+
+#lobby_people_icon{
+  background:url("/res/person.png") no-repeat;
+}

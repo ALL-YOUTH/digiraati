@@ -1,69 +1,53 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Rekisteröi käyttäjätunnus</title>
-    <link href="../css/style.css" rel="stylesheet" type="text/css">
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <meta charset="UTF-8">
-    <link rel='icon' href='../res/favicon.ico' type='image/x-icon'/ >
-  </head>
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/css/register.css" type="text/css">
+  <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<title>Digiraati 2.0</title>
+	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
 
-  <body>
-    <div class="topnav row">
-      <div id="navilogo" class="topnav-left"><a href="/"><img src="../res/digiraatilogo_trans.PNG"/></a></div>
-      <div class="topnav-right">
-        <a href="/" class="active">Etusivu</a>
-        <a href="/info">Info</a>
-        <a id="raatini_btn" style="display:none">Raatini
-          <div class="dropdown dropbtn">
-            <div class="dropdown-content">
-              <a onclick="create_new_council_clicked()">Luo raati</a>
-            </div>
-          </div>
-        </a>
-        <a class="dropdown dropbtn" id="homepage_profile_element">
-          <div class="dropdown-content">
-            <a onclick="logout()">Kirjaudu ulos</a>
-          </div>
-        </a>
-        <a href="/register" id="register_btn" >Rekisteröidy</a>
-        <a id="login_btn" onclick="login_modal()">Kirjaudu sisään</a>
+</head>
+<body>
+	<div id="container">
+		<header id="header">
+		</header>
+
+		<div id="register_hero">
+			<div id="register_hero_text">
+        <p id="register_main_text_desktop">Rekisteröidy</p>
+				<p id="register_secondary_text_desktop">Digiraati.fi -palvelussa voit hakea digitaalisia kansalaisraateja</p><br>
+			</div>
+		</div>
+
+    <div id="register_container">
+      <div id="register_inputs">
+				<div id="register_error_text"></div>
+        <div id="register_title">REKISTERÖIDY</div><br><br><br><br><br>
+        <p>Käyttäjänimi *</p>
+        <input id="username_input" type="text" required></input>
+        <p>Etunimi *</p>
+        <input id="firstname_input" type="text" required></input>
+        <p>Sukunimi *</p>
+        <input id="lastname_input" type="text" required></input>
+        <p>Sähköposti *</p>
+        <input id="email_input" type="email" required></input>
+        <p>Salasana *</p>
+        <input id="password_input" type="password" required></input>
+        <p>Salasana uudelleen *</p>
+        <input id="password_input2" type="password" required></input>
+        <br>
+				<input id="policy_agreement_checkbox" type="checkbox"></input>
+				<div id="register_disclaimer">Olen lukenut ja hyväksyn palvelun <a href="">käyttösäännöt</a></div><br>
+        <div id="confirm_register">LUO PROFIILI</div>
       </div>
     </div>
-
-    <div class="register_container">
-      <h1> Rekisteröinti </h1>
-      <h3>Käyttäjänimi</h3>
-      <input type="text" id="register_username"></input>
-      <h3>Etunimi</h3>
-      <input type="text" id="register_name"></input>
-      <h3>Sukunimi</h3>
-      <input type="text" id="register_lastname"></input>
-      <h3>Sähköposti</h3>
-      <input type="text" id="register_email"></input>
-      <h3>Salasana</h3>
-      <input type="password" id="register_pw1"></input>
-      <h3>Salasana uudelleen</h3>
-      <input type="password" id="register_pw2"></input><br><br>
-      <input type="button" onclick="register_btn_clicked()" value="Rekisteröidy"></input>
-    </div>
-
-    <!--Login modal-->
-    <div id="login_modal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="cancel_login_modal()">&times;</span><br>
-        <span id="login_instruction">Kirjaudu sisään Digiraati-palveluun</span><br><br><br>
-        <h2>Sähköposti tai käyttäjätunnus</h2>
-        <input class="modal-input" type="text" id="user_username_email"></input><br>
-        <h2>Salasana</h2>
-        <input class="modal-input" type="password" id="user_password"></input><br>
-        <input class="modal-input modal-button" type="button" value="Kirjaudu" id="login_modal_login_btn" onclick="login()"></button>
-
-      </div>
-    </div>
-
-    <script src="../js/register.js"></script>
-    <script src="../js/common.js"></script>
-  </body>
-</html>
+		<div id="footer_separator"></div>
+		<footer id="footer"></footer>
+	</div>
+  <script src="../js/common.js"></script>
+  <script src="../js/register.js"></script>
+</body>

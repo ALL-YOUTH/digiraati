@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Tietoa Digiraadista</title>
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <meta charset="UTF-8">
+    <link rel='icon' href='../res/favicon.ico' type='image/x-icon'/ >
+  </head>
+
+  <body>
+    <div class="topnav row">
+      <div id="navilogo" class="topnav-left"><a href="/"><img src="../res/digiraatilogo_trans.PNG"/></a></div>
+      <div class="topnav-right">
+        <a href="/" class="active">Etusivu</a>
+        <a href="/info">Info</a>
+        <a id="raatini_btn" style="display:none">Raatini
+          <div class="dropdown dropbtn">
+            <div class="dropdown-content">
+              <a onclick="create_new_council_clicked()">Luo raati</a>
+            </div>
+          </div>
+        </a>
+        <a class="dropdown dropbtn" id="homepage_profile_element">
+          <div class="dropdown-content">
+            <a onclick="logout()">Kirjaudu ulos</a>
+          </div>
+        </a>
+        <a href="/register" id="register_btn" >Rekisteröidy</a>
+        <a id="login_btn" onclick="login_modal()">Kirjaudu sisään</a>
+      </div>
+    </div>
+
+    <div>
+      <h1>Mikä on Digiraati?</h1>
+      <p>Digiraati on ALL-YOUTH hankkeen kehitteillä oleva digitaalinen verkkopalvelu,
+        jolla on tarkoitus osallistaa ja mahdollistaa helpompi osallistuminen
+        yhteiskunnallisiin asioihin. Digiraadin toteutus tehdään nuoret (16-25v)
+        edellä.
+    </div>
+
+
+    <!--Login modal-->
+    <div id="login_modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="cancel_login_modal()">&times;</span><br>
+        <span id="login_instruction">Kirjaudu sisään Digiraati-palveluun</span><br><br><br>
+        <h2>Sähköposti tai käyttäjätunnus</h2>
+        <input class="modal-input" type="text" id="user_username_email"></input><br>
+        <h2>Salasana</h2>
+        <input class="modal-input" type="password" id="user_password"></input><br>
+        <input class="modal-input modal-button" type="button" value="Kirjaudu" id="user_creation_btn" onclick="login()"></button>
+
+      </div>
+    </div>
+
+
+    <script src="../js/info.js"></script>
+    <script src="../js/common.js"></script>
+  </body>
+</html>

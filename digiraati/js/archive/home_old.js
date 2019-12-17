@@ -6,7 +6,29 @@ council_colors = {
   "culture":"#FFB2FF"
 }
 
-socket.emit('request councils update');
+//socket.emit('request councils update');
+
+///////////////////////////////////////////
+//CLICKS
+//////////////////////////////////////////
+$('#ETUSIVU').click(function(){
+  home();
+});
+
+$('#Etusivu').click(function(){
+  home();
+});
+$('#digiraati_logo').click(function(){
+  home();
+});
+
+$('#REKISTER_IDY').click(function(){
+  goToPage("/register");
+});
+
+$('#Rekister_idy').click(function(){
+  goToPage("/register");
+});
 
 socket.on('councils update', function(all_councils){
   display_councils(all_councils);

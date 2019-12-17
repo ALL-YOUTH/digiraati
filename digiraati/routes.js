@@ -1,44 +1,37 @@
 var app = require('express')();
+var express = require('express');
 var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var SocketIOFile = require('socket.io-file');
 
-//Digiraati pages
-//HOME
-app.get('/js/home.js', function(req, res) {
-  res.sendFile(path.join(__dirname + '/js/home.js'));
+//app.use(express.static(path.join(__dirname, '/public')));
+
+app.get('/', function(req, res){
+  res.sendFile(path.join(__dirname + '/html/index.html'));
 });
-app.get('/js/common.js', function(req, res) {
-  res.sendFile(path.join(__dirname + '/js/common.js'));
+
+app.get('/test.pdf', function(req, res){
+  res.sendFile(path.join(__dirname + '/test.pdf'));
 });
+
+app.get('/large_test.pdf', function(req, res){
+  res.sendFile(path.join(__dirname + '/large_test.pdf'));
+});
+
 app.get('/', function(req, res){
   res.sendFile(path.join(__dirname + '/html/home.html'));
 });
-app.get('/css/style.css', function(req, res) {
-  res.sendFile(path.join(__dirname + '/css/style.css'));
-});
-app.get('/res/digiraati_logo.png', function(req, res) {
-  res.sendFile(path.join(__dirname + '/res/digiraati_logo.png'));
-});
-app.get('/res/favicon.ico', function(req, res) {
-  res.sendFile(path.join(__dirname + '/res/favicon.ico'));
-});
 
-//DigiRaatiChat
+//DigiRaatiChat OLD
 app.get('/chat', function(req, res){
   res.sendFile(__dirname + '/html/chat.html');
 });
-app.get('/js/chat.js', function(req, res) {
-  res.sendFile(path.join(__dirname + '/js/chat.js'));
-});
+
 //Register page
 app.get('/register', function(req, res){
   res.sendFile(__dirname + '/html/register.html');
-});
-app.get('/js/register.js', function(req, res){
-  res.sendFile(__dirname + '/js/register.js');
 });
 
 //Info page
@@ -46,23 +39,46 @@ app.get('/info', function(req, res){
   res.sendFile(__dirname + '/html/info.html');
 });
 
-app.get('/js/info.js', function(req, res){
-  res.sendFile(__dirname + '/js/info.js');
+//Council search page
+app.get('/search', function(req, res){
+  res.sendFile(__dirname + '/html/search.html');
 });
 
-//Info page
-app.get('/lobby', function(req, res){
+//Create council page
+app.get('/create', function(req, res){
+  res.sendFile(__dirname + '/html/create.html');
+});
+
+//Digiraati info page
+app.get('/info', function(req, res){
+  res.sendFile(__dirname + '/html/info.html');
+});
+
+//Digiraati user profile page
+app.get('/profile', function(req, res){
+  res.sendFile(__dirname + '/html/profile.html');
+});
+
+//Digiraati user profile
+app.get('/editprofile', function(req, res){
+  res.sendFile(__dirname + '/html/editprofile.html');
+});
+
+//Council page
+app.get('/lobby/:id/material', function(req, res){
+  res.sendFile(__dirname + '/html/lobby_material.html');
+});
+app.get('/lobby/:id/index', function(req, res){
   res.sendFile(__dirname + '/html/lobby.html');
 });
-app.get('/js/lobby.js', function(req, res){
-  res.sendFile(__dirname + '/js/lobby.js');
+app.get('/lobby/:id/chat', function(req, res){
+  res.sendFile(__dirname + '/html/lobby_chat.html');
 });
-
-app.get('/js/resizer.js', function(req, res){
-  res.sendFile(__dirname + '/js/resizer.js');
+app.get('/lobby/:id/stats', function(req, res){
+  res.sendFile(__dirname + '/html/lobby_stats.html');
 });
-app.get('/css/resizer.css', function(req, res){
-  res.sendFile(__dirname + '/css/resizer.js');
+app.get('/lobby/:id/conclusion', function(req, res){
+  res.sendFile(__dirname + '/html/lobby_conclusion.html');
 });
 
 app.get('/socket.io.js', (req, res, next) => {
@@ -76,5 +92,32 @@ app.get('/files/:id', (req, res, next) => {
   var fid = req.params.id;
   return res.sendFile(path.join(__dirname, "/files/" + fid));
 });
+
+app.get('/js/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/js/" + fid));
+});
+
+app.get('/html/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/html/" + fid));
+});
+
+app.get('/css/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/css/" + fid));
+});
+
+app.get('/res/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/res/" + fid));
+});
+
+
+///////////////////////////////////////////////////////
+// images
+///////////////////////////////////////////////////////
+
+
 
 module.exports = {"app":app, "http":http, "io":io};

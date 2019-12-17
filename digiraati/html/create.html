@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="/css/create.css" type="text/css">
+	<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+	<title>Digiraati 2.0</title>
+	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
+
+</head>
+<body>
+	<header id="header">
+	</header>
+		<div id="container">
+			<div id="hero">
+				<div id="hero_text_area">
+					<div id="hero_main_text">Luo uusia raateja</div>
+					<div id="hero_secondary_text">Digiraati.fi -palvelussa voit hakea digitaalisia kansalaisraateja</div>
+					<div id="hero_create_councils_btn">Hae raateja</div>
+				</div>
+			</div>
+			<div id="create_container">
+				<form>
+					<div id="create_container_title">LUO UUSI RAATI</div>
+					<div class="create_text" id="create_name_title">Raadin nimi</div>
+					<textarea id="name_input" type="text"></textarea><br>
+					<div class="create_text" id="create_tag_title">Aihepiiri</div>
+					<textarea id="create_tags" type="text"></textarea><br>
+					<div class="create_text" id="create_description_title">Raadin kuvaus</div>
+					<textarea id="create_description_text_input"></textarea><br>
+					<div class="create_text">Raati alkaa</div>
+					<input type="date" id="startdate_input"></input>
+					<input type="time" id="starttime_input"></input>
+					<div class="create_text">Raati päättyy</div>
+					<input type="date" id="enddate_input"></input>
+					<input type="time" id="endtime_input"></input>
+					<div class="create_text" id="crate_open_closed_title">Raadin luonne<br>
+						<input type="radio" name="closed_open" value="Avoin" checked="checked" id="open_radio"> Avoin <br>
+						<input type="radio" name="closed_open" value="Suljettu" id="closed_radio"> Suljettu <br>
+					</div>
+
+					<div class="create_text">Osallistujien määrä<br>
+						<input id="no_limit_radiobtn"name="userlimit" type="radio" checked="checked">Ei rajoitettu<br>
+						<input id="limit_radiobtn" name="userlimit" type="radio">Rajoitettu
+						<input id="limit_number" type="number" value="20">
+					</div>
+					<div id="confirm_create">Luo raati</div>
+				</form>
+			</div>
+		</div>
+	<footer id="footer">
+	</footer>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="/js/create.js" type="text/javascript"></script>
+	<script src="/js/common.js"></script>
+</body>

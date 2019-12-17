@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="/css/lobby_material.css" type="text/css">
+  <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+	<title>Digiraati 2.0</title>
+	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
+
+</head>
+<body>
+	<div id="container">
+		<header id="header">
+		</header>
+		<div id="material_container">
+			<div id="left_menu"></div>
+
+			<div id="material_content">
+				<div id="material_title">RAADIN DOKUMENTIT</div>
+				<div id="material_timetable"></div>
+				<div id="lobby_navigation">
+					<div class="inactive" id="lobby_home_btn">Pääsivu</div>
+					<div class="inactive" id="lobby_chat_btn">Keskustelu</div>
+					<div class="active" id="lobby_document_btn">Lue asiakirja</div>
+					<div class="inactive" id="lobby_conclusion_btn">Loppulausuma</div>
+				</div>
+				<div id="document_navigation">
+					<div id="all_documents_btn" class="document_navi_active">Kaikki dokumentit</div>
+					<div id="current_document" class="document_navi_inactive"></div>
+				</div>
+				<div id="all_documents_container">
+					<div id="file_filter">
+						<div id="newest_files_sorter">Uusimmat</div>
+						<div id="popularest_files_sorter">Kommentoiduimmat</div><br>
+						<div id="search_icon" class="fas fa-search"></div>
+						<input type="text" id="file_search"></input>
+					</div>
+					<div id="file_container">
+						<input type="file" id="file_input"></input>
+						<div id="add_file_btn">LISÄÄ TIEDOSTO</div>
+						<div id="file_list"></div>
+					</div>
+				</div>
+				<div id="document_container">
+			    <div id="comment_view">
+			      <div id="pdf_div">
+							<div id="comment_layer"></div>
+							<div id="pdf"></div>
+						</div>
+					</div>
+					<div id="comment_list_div" class="noselect">
+						<div id="comment_list_navigation">
+							<div id="new_comments">UUSIMMAT<br>KOMMENTIT</div>
+							<div id="all_comments">KAIKKI<br>KOMMENTIT</div>
+							<div id="close_comment_list">SULJE X</div>
+						</div>
+						<div id="comment_list"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+    <footer id="footer">
+  	</footer>
+  </div>
+	<script src="/socket.io-file-client.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/lobby_material.js"></script>
+</body>
