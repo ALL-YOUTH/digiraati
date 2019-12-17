@@ -4,7 +4,7 @@ var SocketIOFile = require('socket.io-file');
 var fs = require('fs');
 var cors = require('cors');
 
-var server = require('./routes.js');
+var server = require('./routes.js');  //All the urls defined
 var app = server["app"];
 var io = server["io"];
 var http = server["http"];
@@ -132,6 +132,7 @@ io.on('connection', function(socket){
     overwrite: true 				// overwrite file if exists, default is true.
   });
 
+  //login check request. Checks the login according to the IP parsed from a socket
   socket.on('check login', function(){
     var name = users.get_login_by_ip(ip);
     if(name == false){
@@ -144,6 +145,8 @@ io.on('connection', function(socket){
     }
   });
 
+  //login check request. Checks the login according to the IP parsed from a socket
+  //Like 'check login' ,but modified for council check
   socket.on('check login council', function(cid){
     var name = users.get_login_by_ip(ip);
     if(name == false){
@@ -157,6 +160,7 @@ io.on('connection', function(socket){
     }
   });
 
+  //Request for a socket to join a room. Rooms are defined with council ID
   socket.on('request socket list', function(cid){
     socket.join(cid);
   });
@@ -173,6 +177,7 @@ io.on('connection', function(socket){
     }
   });
 
+  //Request to leave a council
   socket.on('request leave council', function(data){
     socket.join(data["user"]);
     var res = councils.remove_user_from_council(data);
@@ -184,6 +189,7 @@ io.on('connection', function(socket){
     }
   });
 
+  //User tries to log in.
   socket.on('login attempt', function(name, pw){
     if(users.login_user(name, pw, ip) == false){
       socket.emit('invalid login');
@@ -199,6 +205,9 @@ io.on('connection', function(socket){
     }
   });
 
+  //User tries to register a new account.
+  //Checks the availability of username and email.
+  //TODO: password strength check(?)
   socket.on('register attempt', function(data){
     if(users.get_user(data["username"]) != null){ //Username already in use
       socket.emit("invalid username");
@@ -222,6 +231,10 @@ io.on('connection', function(socket){
     update_page();
   });
 
+  //Request to create a new council.
+  //TODO: this should also check the user type. Official user should always be able
+  //to create a council and those councils should stand out from the normal user
+  //created councils.
   socket.on('request council create', function(info){
     server_log(ip + ": " + info["creator"] + " attempted to create council: " +
                 info["name"]);
@@ -252,6 +265,8 @@ io.on('connection', function(socket){
   });
 
   //SENDING A MESSAGE PART
+  //Request to send a message to a council
+  //TODO: Timestamp is missing from the metadata of a message. This needs to be done
   socket.on('request new message', function(msg){
     var userid = users.get_userid_by_username(msg["sender"]);
     msg["likes"] = [];
@@ -265,6 +280,8 @@ io.on('connection', function(socket){
     create_backup();
   });
 
+  //Request to add a like to a message. If user has already liked this message,
+  //the like will be removed.
   socket.on('request add like', function(data){
     var uid = users.get_userid_by_username(data["liker"]);
     var likes = councils.add_like_to_message(data["council"], data["mid"], uid);
@@ -280,6 +297,9 @@ io.on('connection', function(socket){
     logged_in = "";
   });
 
+  //request to get previous messages.
+  //TODO: This is kind of a relic here. This data is fetchable with
+  //'request council data'.
   socket.on('get prev messages', function(c){
     msgs = councils.get_previous_messages_from_council(c, MESSAGES2PRINT);
     if(msgs == undefined){return 0;}
@@ -288,6 +308,7 @@ io.on('connection', function(socket){
     }
   });
 
+  //
   function check_page_comments(page){
     var keys = [];
     for(var key in comments) keys.push(key);
@@ -301,14 +322,8 @@ io.on('connection', function(socket){
     return 0;
 
   }
-  socket.on('add comment', function(page, comment, ref_text){
-    if(check_page_comments(page) == 0){
-      comments[page] = [];
-    }
-    comments[page].push([comment, ref_text]);
-    io.emit('refresh comments', comments[page]);
-  });
 
+  //request to get the comments
   socket.on('comment refresh request', function(page){
     if(check_page_comments(page) == 0){
       comments[page] = [];
@@ -316,6 +331,7 @@ io.on('connection', function(socket){
     io.emit('refresh comments', comments[page]);
   });
 
+  //request to fetch all data of a council
   socket.on('request council data', function(id){
     council_data = councils.get_council_data(id);
     if(council_data != -1){
@@ -326,6 +342,7 @@ io.on('connection', function(socket){
     }
   });
 
+  //check if user is 1. logged in and 2. joined the council.
   socket.on('check joined', function(councilid, userid){
     if(userid.length == 0){
       socket.emit('user not logged in');
@@ -340,11 +357,13 @@ io.on('connection', function(socket){
     }
   });
 
+  //request to get members of a council
   socket.on('request council members', function(councilid){
     var members = councils.get_council_members(councilid);
     socket.emit('council members', members);
   });
 
+  //request to get the files of a council
   socket.on('update files request', function(cid){
     var files = councils.get_council_data(cid);
     try{
@@ -355,6 +374,7 @@ io.on('connection', function(socket){
     }
   });
 
+  //request to get single files content
   socket.on('request file data', function(fid){
     server_log(ip + ": requested file: " + fid);
     fs.readFile(path.join(__dirname, "/files/", fid), function(err, buff){
@@ -366,6 +386,7 @@ io.on('connection', function(socket){
     });
   });
 
+  //request to add a comment to a file
   socket.on('request add comment', function(data){
     server_log(ip + ": " + "attempting to add a comment: " + data["id"] + " to a council " + data["council"]);
     var res = councils.add_comment_to_file(data);
@@ -378,6 +399,7 @@ io.on('connection', function(socket){
     }
   });
 
+  //request to add a response to a comment
   socket.on('request add response', function(data){
     server_log(ip + ": attempting to add response to comment: " + data["id"]);
     councils.add_response_to_comment(data);
@@ -385,11 +407,13 @@ io.on('connection', function(socket){
     socket.emit('comment data', res);
   });
 
+  //request to fetch comment data
   socket.on("request comment data", function(data){
     var res = councils.get_comment_data(data);
     socket.emit('comment data', res);
   });
 
+  //request to fetch files comments
   socket.on('request file comments', function(cid, fid){
     var comments = councils.get_file_comments(cid, fid);
     if(comments == -1){
@@ -399,12 +423,14 @@ io.on('connection', function(socket){
     socket.emit('file comments', comments);
   });
 
+  //request to fetch user data
   socket.on('request user data', function(){
     var username = users.get_username_by_ip(ip);
     var userdata = users.get_user(username);
     socket.emit('user data', userdata);
   });
 
+  //request to make changes in user data
   socket.on('request update info', function(data){
     var name = users.get_username_by_ip(ip);
     var errors = users.update_user_info(name, data);
@@ -417,6 +443,7 @@ io.on('connection', function(socket){
     }
   });
 
+  //request to change users password
   socket.on('request update password', function(data){
     var name = users.get_username_by_ip(ip);
     var errors = users.update_user_pw(name, data);
@@ -429,11 +456,13 @@ io.on('connection', function(socket){
     }
   });
 
+  //request to fetch latest conclusion data
   socket.on('request conclusion refresh', function(cid){
     var res = councils.get_council_conclusion(cid);
     socket.emit('update conclusion');
   });
 
+  //request to save changed conclusion
   socket.on('request conclusion update', function(data){
     councils.add_counclusion_to_council(data["council"], data["text"]);
     var res = councils.get_council_conclusion(data["council"]);
@@ -521,3 +550,13 @@ function server_log(str){
   log_file.write(util.format(str) + '\n');
   log_stdout.write(util.format(str) + '\n');
 }
+
+//OBSOLETE
+//requet to add a comment
+/*socket.on('add comment', function(page, comment, ref_text){
+  if(check_page_comments(page) == 0){
+    comments[page] = [];
+  }
+  comments[page].push([comment, ref_text]);
+  io.emit('refresh comments', comments[page]);
+});*/
