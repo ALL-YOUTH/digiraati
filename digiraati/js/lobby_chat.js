@@ -99,7 +99,10 @@ function create_message(msg){
     pic.style.backgroundColor = colors[c % colors.length];
     pic.classList.add("chat_avatar_ball");
     var sender = document.createElement('a');
-    sender.innerHTML = msg["sender"];
+    // Try to fetch timestamp, if message does not have a timestamp or it is undefined, handle gracefully.
+    if (!msg.hasOwnProperty('timestamp') || msg["timestamp"] != undefined) {var msg_timestamp = "???"}
+    else {var msg_timestamp = msg["timestamp"]}
+    sender.innerHTML = msg["sender"] + " - " + msg_timestamp;
     sender.classList.add("message_list_sender_name");
     nm.appendChild(pic); nm.appendChild(sender);
   }

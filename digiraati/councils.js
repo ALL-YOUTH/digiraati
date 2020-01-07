@@ -8,14 +8,16 @@ class Like{
 }
 
 class Message{
-  constructor(id, sender, text, likes){
+  constructor(id, sender, timestamp, text, likes){
     this.id = id;
     this.sender = sender;
+    this.timestamp = timestamp;
     this.content = text;
     this.likes = likes;
   }
   get_id(){ return this.id; }
   get_sender(){ return this.senderid; }
+  get_timestamp() { return this.timestamp;}
   get_content(){ return this.content; }
   get_likes(){ return this.likes; }
 

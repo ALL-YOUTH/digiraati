@@ -78,7 +78,7 @@ fs.readFile(backup_file, function (err, data) {
                           council["conclusion"]
                         );
     for(let message of council["messages"]){
-      councils.add_message(council["id"], message["id"], message["sender"], message["content"], message["likes"]);
+      councils.add_message(council["id"], message["id"], message["sender"], message["timestamp"], message["content"], message["likes"]);
     }
     for(let file of council["files"]){
       councils.add_file(file["id"], file["path"], council["id"], file["sender"], file["comments"]);
@@ -266,13 +266,14 @@ io.on('connection', function(socket){
 
   //SENDING A MESSAGE PART
   //Request to send a message to a council
-  //TODO: Timestamp is missing from the metadata of a message. This needs to be done
   socket.on('request new message', function(msg){
     var userid = users.get_userid_by_username(msg["sender"]);
+    var commentTime = Date.toLocaleString('fi-FI')
     msg["likes"] = [];
     councils.add_message( msg["council"],
                           msg["id"],
                           msg["sender"],
+                          commentTime,
                           msg["content"],
                           msg["likes"]);
 
