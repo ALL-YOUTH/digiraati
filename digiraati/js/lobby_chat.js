@@ -89,6 +89,8 @@ function create_message(msg){
   var nm = document.createElement('div');
   nm.classList.add("chat_message");
   nm.id = msg["id"];
+  if (!msg.hasOwnProperty('timestamp') || msg["timestamp"] == undefined) {var msg_timestamp = ""}
+  else {var msg_timestamp = msg["timestamp"] + " "}
   if(last_message_sender != msg["sender"]){
     var pic = document.createElement('div');
     pic.textContent = msg["sender"][0].toUpperCase();
@@ -100,18 +102,26 @@ function create_message(msg){
     pic.classList.add("chat_avatar_ball");
     var sender = document.createElement('a');
     // Try to fetch timestamp, if message does not have a timestamp or it is undefined, handle gracefully.
-    if (!msg.hasOwnProperty('timestamp') || msg["timestamp"] != undefined) {var msg_timestamp = "???"}
-    else {var msg_timestamp = msg["timestamp"]}
-    sender.innerHTML = msg["sender"] + " - " + msg_timestamp;
+    sender.innerHTML = msg["sender"] + "-" + timestamp;
     sender.classList.add("message_list_sender_name");
     nm.appendChild(pic); nm.appendChild(sender);
   }
-  var text = document.createElement('div');
+  else
+  {
+    var sender = document.createElement('a');
+    // Try to fetch timestamp, if message does not have a timestamp or it is undefined, handle gracefully.
+    sender.innerHTML = timestamp;
+    sender.classList.add("message_list_sender_name");
+    nm.appendChild(sender);
+  }
+  var text = document.createElement('div'); // Actual text body
   console.log(msg["content"]);
   text.textContent = msg["content"];
   text.classList.add("message_list_text");
   nm.appendChild(text);
-  var likes_btn = document.createElement('div');
+  
+  var likes_btn = document.createElement('div'); // Beginning of likes?
+  likes_btn.innerHTML = msg_timestamp;
   likes_btn.classList.add("likes_btn"); likes_btn.classList.add("message_reactions"); likes_btn.classList.add("noselect");
 
   if(msg["likes"] == undefined){ msg["likes"] = 0; }
@@ -122,6 +132,7 @@ function create_message(msg){
 
   likes_number.textContent = "  " + msg["likes"].length;
   nm.appendChild(likes_btn); nm.appendChild(likes_number);
+  
   var reply = document.createElement('div');
   reply.classList.add("message_list_reply"); reply.classList.add("noselect");
   reply.textContent = "VASTAA";

@@ -268,7 +268,9 @@ io.on('connection', function(socket){
   //Request to send a message to a council
   socket.on('request new message', function(msg){
     var userid = users.get_userid_by_username(msg["sender"]);
-    var commentTime = Date.toLocaleString('fi-FI')
+    var d = new Date()
+    var commentTime = d.toLocaleString('fi-FI');
+    console.log("d:" + d + " commentTime: " + commentTime);
     msg["likes"] = [];
     councils.add_message( msg["council"],
                           msg["id"],
