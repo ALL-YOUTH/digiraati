@@ -89,7 +89,7 @@ function create_message(msg){
   var nm = document.createElement('div');
   nm.classList.add("chat_message");
   nm.id = msg["id"];
-  if (!msg.hasOwnProperty('timestamp') || msg["timestamp"] == undefined) {var msg_timestamp = ""}
+  if (!msg.hasOwnProperty("timestamp") || msg["timestamp"] == undefined) {var msg_timestamp = ""}
   else {var msg_timestamp = msg["timestamp"] + " "}
   if(last_message_sender != msg["sender"]){
     var pic = document.createElement('div');
@@ -102,7 +102,7 @@ function create_message(msg){
     pic.classList.add("chat_avatar_ball");
     var sender = document.createElement('a');
     // Try to fetch timestamp, if message does not have a timestamp or it is undefined, handle gracefully.
-    sender.innerHTML = msg["sender"] + "-" + timestamp;
+    sender.innerHTML = msg["sender"] + " - " + msg_timestamp;
     sender.classList.add("message_list_sender_name");
     nm.appendChild(pic); nm.appendChild(sender);
   }
@@ -110,7 +110,7 @@ function create_message(msg){
   {
     var sender = document.createElement('a');
     // Try to fetch timestamp, if message does not have a timestamp or it is undefined, handle gracefully.
-    sender.innerHTML = timestamp;
+    sender.innerHTML = msg_timestamp;
     sender.classList.add("message_list_sender_name");
     nm.appendChild(sender);
   }
@@ -121,7 +121,6 @@ function create_message(msg){
   nm.appendChild(text);
   
   var likes_btn = document.createElement('div'); // Beginning of likes?
-  likes_btn.innerHTML = msg_timestamp;
   likes_btn.classList.add("likes_btn"); likes_btn.classList.add("message_reactions"); likes_btn.classList.add("noselect");
 
   if(msg["likes"] == undefined){ msg["likes"] = 0; }
