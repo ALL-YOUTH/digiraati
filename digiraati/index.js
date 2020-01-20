@@ -78,7 +78,7 @@ fs.readFile(backup_file, function (err, data) {
                           council["conclusion"]
                         );
     for(let message of council["messages"]){
-      councils.add_message(council["id"], message["id"], message["sender"], message["timestamp"], message["content"], message["likes"]);
+      councils.add_message(council["id"], message["id"], message["sender"], message["timestamp"], message["content"], message["likes"], message["dislikes"], message["goodargs"]);
     }
     for(let file of council["files"]){
       councils.add_file(file["id"], file["path"], council["id"], file["sender"], file["comments"]);
@@ -268,16 +268,17 @@ io.on('connection', function(socket){
   //Request to send a message to a council
   socket.on('request new message', function(msg){
     var userid = users.get_userid_by_username(msg["sender"]);
-    var d = new Date()
-    var commentTime = d.toLocaleString('fi-FI');
-    console.log("d:" + d + " commentTime: " + commentTime);
     msg["likes"] = [];
+    msg["dislikes"] = [];
+    msg["goodargs"] = [];
     councils.add_message( msg["council"],
                           msg["id"],
                           msg["sender"],
-                          commentTime,
+                          msg["timestamp"],
                           msg["content"],
-                          msg["likes"]);
+                          msg["likes"],
+                          msg["dislikes"],
+                          msg["goodargs"]);
 
     io.to(msg["council"]).emit('new message', msg);
     create_backup();
@@ -289,6 +290,22 @@ io.on('connection', function(socket){
     var uid = users.get_userid_by_username(data["liker"]);
     var likes = councils.add_like_to_message(data["council"], data["mid"], uid);
     io.to(data["council"]).emit('update likes', data["mid"], likes);
+  });
+
+    //Request to add a dislike to a message. If user has already liked this message,
+  //the like will be removed.
+  socket.on('request add dislike', function(data){
+    var uid = users.get_userid_by_username(data["liker"]);
+    var dislikes = councils.add_dislike_to_message(data["council"], data["mid"], uid);
+    io.to(data["council"]).emit('update dislikes', data["mid"], dislikes);
+  });
+
+    //Request to add a good argument to a message. If user has already liked this message,
+  //the like will be removed.
+  socket.on('request add goodarg', function(data){
+    var uid = users.get_userid_by_username(data["liker"]);
+    var goodargs = councils.add_goodarg_to_message(data["council"], data["mid"], uid);
+    io.to(data["council"]).emit('update goodargs', data["mid"], goodargs);
   });
 
   //User logged out of the chat
@@ -401,6 +418,12 @@ io.on('connection', function(socket){
       socket.emit("comment add failed");
     }
   });
+
+  socket.on('request delete message', function(data){
+    server_log(ip + ": " + "attempting to delete message: " + data["mid"] + " in council " + data["council"]);
+    councils.delete_message(data["council"], data["mid"]);
+    io.to(data["council"]).emit('delete message', data["mid"]);
+  })
 
   //request to add a response to a comment
   socket.on('request add response', function(data){

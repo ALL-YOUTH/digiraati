@@ -77,9 +77,12 @@ function send_message(){
     alert("Et ole kirjautuneena sisään. Jotta voit lähettää viestin, sinun täytyy olla kirjautunut.");
     return;
   }
+  var msg_time = new Date();
+  var msg_timestamp = msg_time.getDate() + "." + (msg_time.getMonth() + 1) + "." + msg_time.getFullYear() + " " + ("0" + msg_time.getHours()).slice(-2) + ":" + ("0" + msg_time.getMinutes()).slice(-2) + ":" + ("0" + msg_time.getSeconds()).slice(-2);
   msg["sender"] = logged_in;
   msg["council"] = council;
   msg["content"] = document.getElementById('message_input').value;
+  msg["timestamp"] = msg_timestamp;
   msg["id"] = makeid();
   socket.emit('request new message', msg);
   document.getElementById('message_input').value = "";
@@ -115,27 +118,56 @@ function create_message(msg){
     nm.appendChild(sender);
   }
   var text = document.createElement('div'); // Actual text body
-  console.log(msg["content"]);
+  //console.log(msg["content"]);
   text.textContent = msg["content"];
   text.classList.add("message_list_text");
   nm.appendChild(text);
   
   var likes_btn = document.createElement('div'); // Beginning of likes?
   likes_btn.classList.add("likes_btn"); likes_btn.classList.add("message_reactions"); likes_btn.classList.add("noselect");
+  likes_btn.setAttribute("aria-label", "Samaa mieltä"); likes_btn.setAttribute("title", "Samaa mieltä");
+
+  var dislikes_btn = document.createElement('div'); 
+  dislikes_btn.classList.add("dislikes_btn"); dislikes_btn.classList.add("dislike_reactions"); dislikes_btn.classList.add("noselect");
+  dislikes_btn.setAttribute("aria-label", "Eri mieltä"); dislikes_btn.setAttribute("title", "Eri mieltä");
+
+  var goodargs_btn = document.createElement('div');
+  goodargs_btn.classList.add("goodargs_btn"); goodargs_btn.classList.add("goodarg_reactions"); goodargs_btn.classList.add("noselect");
+  goodargs_btn.setAttribute("aria-label", "Hyvin argumentoitu"); goodargs_btn.setAttribute("title", "Hyvin argumentoitu");
 
   if(msg["likes"] == undefined){ msg["likes"] = 0; }
+  if(msg["dislikes"] == undefined) { msg["dislikes"] = 0;}
+  if(msg["goodargs"] == undefined) { msg["goodargs"] = 0;}
 
   var likes_number = document.createElement('div');
   likes_number.id = msg["id"] + "likes";
   likes_number.classList.add("likes_number"); likes_number.classList.add("noselect");
 
+  var dislikes_number = document.createElement('div');
+  dislikes_number.id = msg["id"] + "dislikes";
+  dislikes_number.classList.add("dislikes_number"); dislikes_number.classList.add("noselect");
+
+  var goodargs_number = document.createElement('div');
+  goodargs_number.id = msg["id"] + 'goodargs';
+  goodargs_number.classList.add("goodargs_number"); goodargs_number.classList.add("noselect");
+
   likes_number.textContent = "  " + msg["likes"].length;
-  nm.appendChild(likes_btn); nm.appendChild(likes_number);
+  dislikes_number.textContent = "   " + msg["dislikes"].length;
+  goodargs_number.textContent = "   " + msg["goodargs"].length;
+  nm.appendChild(likes_btn); nm.appendChild(likes_number); nm.appendChild(dislikes_btn); nm.appendChild(dislikes_number); nm.appendChild(goodargs_btn); nm.appendChild(goodargs_number);
   
   var reply = document.createElement('div');
   reply.classList.add("message_list_reply"); reply.classList.add("noselect");
   reply.textContent = "VASTAA";
   nm.appendChild(reply);
+
+  if (msg["sender"] == logged_in)
+  {
+    var deleteMessage = document.createElement('div');
+    deleteMessage.classList.add("message_list_delete"); deleteMessage.classList.add("noselect");
+    deleteMessage.textContent = "POISTA VIESTI";
+    nm.appendChild(deleteMessage);
+  }
 
   var ml = document.getElementById('message_list');
   ml.appendChild(nm);
@@ -151,9 +183,16 @@ socket.on('new message', function(msg){
   create_message(msg);
 });
 
+$(document).on('click', ".message_list_delete", function(e){
+  data = {}
+  data["council"] = council;
+  data["mid"] = e.target.parentElement.id;
+  socket.emit('request delete message', data);
+})
+
 $(document).on('click', '.message_reactions', function(e){
   if(logged_in.length < 1){
-    alert("sinun täytyy kirjautua sisään ensin.");
+    alert("Et voi reagoida viesteihin ellet ole kirjautunut sisään!");
     return;
   }
   data = {};
@@ -168,6 +207,49 @@ socket.on('update likes', function(mid, likes){
   message.textContent = "   "+likes;
 });
 
+
+$(document).on('click', '.dislike_reactions', function(e){
+  if(logged_in.length < 1){
+    alert("Et voi reagoida viesteihin ellet ole kirjautunut sisään!");
+    return;
+  }
+  data = {};
+  data["council"] = council;
+  data["mid"] = e.target.parentElement.id;
+  data["liker"] = logged_in;
+  socket.emit('request add dislike', data);
+});
+
+socket.on('update dislikes', function(mid, dislikes){
+  var message = document.getElementById(mid+"dislikes");
+  message.textContent = "   "+dislikes;
+});
+
+
+$(document).on('click', '.goodarg_reactions', function(e){
+  if(logged_in.length < 1){
+    alert("Et voi reagoida viesteihin ellet ole kirjautunut sisään!");
+    return;
+  }
+  data = {};
+  data["council"] = council;
+  data["mid"] = e.target.parentElement.id;
+  data["liker"] = logged_in;
+  socket.emit('request add goodarg', data);
+});
+
+socket.on('update goodargs', function(mid, goodargs){
+  var message = document.getElementById(mid+"goodargs");
+  message.textContent = "   "+goodargs;
+});
+
+socket.on('delete message', function(mid){
+  var message = document.getElementById(mid);
+  console.log(message);
+  var message_text = message.querySelector(".message_list_text");
+  message_text.textContent = "Käyttäjä on poistanut tämän viestin.";
+  //message.getElementsByClassName
+});
 
 $('#lobby_home_btn').click(function(){
   goToPage("/lobby/" + council + "/index");

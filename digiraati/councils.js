@@ -7,19 +7,40 @@ class Like{
   get_liker(){ return this.liker; }
 }
 
+class Dislike{
+  constructor(id, liker){
+    this.id = id;
+    this.disliker = liker;
+  }
+  get_disliker(){ return this.disliker; }
+}
+
+class Goodarg{
+  costructor(id, liker){
+    this.id = id;
+    this.goodarger = liker;
+  }
+  get_goodarger() { return this.goodarger; }
+}
+
 class Message{
-  constructor(id, sender, timestamp, text, likes){
+  constructor(id, sender, timestamp, text, likes, dislikes, goodargs){
     this.id = id;
     this.sender = sender;
     this.timestamp = timestamp;
     this.content = text;
     this.likes = likes;
+    this.dislikes = dislikes;
+    this.goodargs = goodargs;
   }
   get_id(){ return this.id; }
   get_sender(){ return this.senderid; }
   get_timestamp() { return this.timestamp;}
   get_content(){ return this.content; }
   get_likes(){ return this.likes; }
+  get_dislikes() { return this.dislikes; }
+  get_goodargs() { return this.goodargs; }
+  set_content(text) {this.content = text;}
 
   toggle_like(id, liker){
     for(var i = 0; i < this.likes.length; ++i){
@@ -35,7 +56,40 @@ class Message{
     this.likes.push(like);
     return this.likes.length;
   }
+
+  
+toggle_dislike(id, liker){
+  for(var i = 0; i < this.dislikes.length; ++i){
+    //If user already likes this message, the like is removed
+    let like = this.dislikes[i];
+    if(liker == like.get_disliker()){
+      this.dislikes.splice(i, 1);
+      return this.dislikes.length;
+    }
+  }
+  //If user has not liked this message, add a new like
+  var like = new Dislike(id, liker);
+  this.dislikes.push(like);
+  return this.dislikes.length;
+  }
+
+
+  toggle_goodarg(id, liker){
+    for(var i = 0; i < this.goodargs.length; ++i){
+      //If user already likes this message, the like is removed
+      let like = this.goodargs[i];
+      if(liker == like.get_goodarger()){
+        this.goodargs.splice(i, 1);
+        return this.goodargs.length;
+      }
+    }
+    //If user has not liked this message, add a new like
+    var like = new Goodarg(id, liker);
+    this.goodargs.push(like);
+    return this.goodargs.length;
+  }
 }
+
 
 class Comment{
   constructor(id, sender, text, time, dimentions){
@@ -244,7 +298,7 @@ module.exports = class Councils{
     return -1;
   }
 
-  add_message(council_id, mid, sender, message_text, likes){
+  add_message(council_id, mid, sender, timestamp, message_text, likes, dislikes, goodargs){
     var council = this.get_council_by_id(council_id);
     if(council == -1){
       return;
@@ -256,7 +310,23 @@ module.exports = class Councils{
         l.push(like);
       }
     }
-    var new_message = new Message(mid, sender, message_text, l);
+
+    var d = [];
+    if(dislikes.length > 0){
+      for(var i = 0; i < dislikes.length; ++i){
+        var like = new Dislike(dislikes[i]["id"], dislikes[i]["disliker"]);
+        d.push(like);
+      }
+    }
+
+    var g = [];
+    if(goodargs.length > 0){
+      for(var i = 0; i < goodargs.length; ++i){
+        var like = new Goodarg(goodargs[i]["id"], goodargs[i]["goodarger"]);
+        g.push(like);
+      }
+    }
+    var new_message = new Message(mid, sender, timestamp, message_text, l, d, g);
     council.add_msg(new_message);
   }
 
@@ -367,6 +437,39 @@ module.exports = class Councils{
       if(messages[i].get_id() == mid){
         var id = makeid();
         return messages[i].toggle_like(id, uid);
+      }
+    }
+  }
+
+  add_dislike_to_message(cid, mid, uid){
+    let council = this.get_council_by_id(cid);
+    var messages = council.get_council_messages();
+    for(var i = 0; i < messages.length; ++i){
+      if(messages[i].get_id() == mid){
+        var id = makeid();
+        return messages[i].toggle_dislike(id, uid);
+      }
+    }
+  }
+
+  delete_message(cid, mid){
+    let council = this.get_council_by_id(cid);
+    var messages = council.get_council_messages();
+    for(var i = 0; i < messages.length; ++i)
+    {
+      if(messages[i].get_id() == mid){
+        messages[i].set_content("Käyttäjä on poistanut tämän viestin.");
+      }
+    }
+  }
+
+  add_goodarg_to_message(cid, mid, uid){
+    let council = this.get_council_by_id(cid);
+    var messages = council.get_council_messages();
+    for(var i = 0; i < messages.length; ++i){
+      if(messages[i].get_id() == mid){
+        var id = makeid();
+        return messages[i].toggle_goodarg(id, uid);
       }
     }
   }
