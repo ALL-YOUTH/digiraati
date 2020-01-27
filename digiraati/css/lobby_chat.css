@@ -122,6 +122,19 @@ div .inactive{
   z-index: 20;
 }
 
+.reply_box{
+  width:80%;
+  height:100px;
+  bottom:0px;
+  background-color: rgba(245,246,250,1);
+  margin:10px;
+  border-radius:5px;
+  border-color:rgba(112,112,112,0.263);
+  border-style: solid;
+  border-width: 2px;
+  z-index: 20;
+}
+
 #message_input{
   position:relative;
   resize:none;
@@ -150,6 +163,14 @@ div .inactive{
   cursor:pointer;
 }
 
+.reply_btn{
+  float:right;
+  color:rgba(1,175,196,1);
+  margin:10px;
+  margin-top:5px;
+  cursor:pointer;
+}
+
 #template_message{
   height:70px;
   border:solid;
@@ -164,6 +185,16 @@ div .inactive{
   border-radius:2px;
   padding-left: 20px;
 
+}
+
+.reply_message{
+  height:auto;
+  display:block;
+  padding:5px;
+  cursor:default;
+  border-radius:2px;
+  padding-left: 40px;
+  border-left: 6px rgba(1,175,196,1);
 }
 
 /*.chat_message:hover{

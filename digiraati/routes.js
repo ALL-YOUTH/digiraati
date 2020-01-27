@@ -113,6 +113,11 @@ app.get('/res/:id', (req, res, next) => {
   return res.sendFile(path.join(__dirname, "/res/" + fid));
 });
 
+app.get('/glide/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/node_modules/@glidejs/glide/dist/" + fid));
+});
+
 
 ///////////////////////////////////////////////////////
 // images

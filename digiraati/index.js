@@ -63,6 +63,8 @@ fs.readFile(backup_file, function (err, data) {
 
   for(var i = 0; i <  recover_councils.length; ++i){
     let council = recover_councils[i];
+    var council_password = council["password"] || "";
+    console.log("Luin salasanan " + council_password);
     councils.add_council( council["id"],
                           council["name"],
                           council["description"],
@@ -75,10 +77,11 @@ fs.readFile(backup_file, function (err, data) {
                           council["tags"],
                           council["likes"],
                           council["dislikes"],
-                          council["conclusion"]
+                          council["conclusion"],
+                          council_password
                         );
     for(let message of council["messages"]){
-      councils.add_message(council["id"], message["id"], message["sender"], message["timestamp"], message["content"], message["likes"], message["dislikes"], message["goodargs"]);
+      councils.add_message(council["id"], message["id"], message["sender"], message["timestamp"], message["content"], message["likes"], message["dislikes"], message["goodargs"], message["parent"]);
     }
     for(let file of council["files"]){
       councils.add_file(file["id"], file["path"], council["id"], file["sender"], file["comments"]);
@@ -168,12 +171,18 @@ io.on('connection', function(socket){
   socket.on('request join council', function(data){
     //&socket.join(data["user"]);
     var res = councils.add_user_to_council(data);
-    if(res){
-      socket.emit('join success');
-      create_backup();
+    if(res == -1){
+      socket.emit('password incorrect');
     }
     else{
-      socket.emit('join failed');
+      if(res)
+      {
+        socket.emit('join success');
+        create_backup();
+      }
+      else{
+        socket.emit('join failed');
+      }
     }
   });
 
@@ -250,7 +259,8 @@ io.on('connection', function(socket){
                                     info["keywords"],
                                     0,
                                     0,
-                                    "");
+                                    "",
+                                    info["password"]);
 
     if(ret_val == -1){
       return;
@@ -268,6 +278,8 @@ io.on('connection', function(socket){
   //Request to send a message to a council
   socket.on('request new message', function(msg){
     var userid = users.get_userid_by_username(msg["sender"]);
+    if (msg["parent"] != undefined && msg["parent"] != "") { var parent = (msg["parent"]); }
+    else { var parent = ""; }
     msg["likes"] = [];
     msg["dislikes"] = [];
     msg["goodargs"] = [];
@@ -278,7 +290,8 @@ io.on('connection', function(socket){
                           msg["content"],
                           msg["likes"],
                           msg["dislikes"],
-                          msg["goodargs"]);
+                          msg["goodargs"],
+                          parent);
 
     io.to(msg["council"]).emit('new message', msg);
     create_backup();

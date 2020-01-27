@@ -30,6 +30,7 @@ $('#limit_radiobtn').change(function(){
 });
 
 $('#confirm_create').click(function(){
+  console.log("Creating a council!");
   var data = {};
   data["id"] = makeid(8);
   data["name"] = $('#name_input').val();
@@ -42,6 +43,7 @@ $('#confirm_create').click(function(){
   data["creator"] = logged_in;
   data["userlimit"] = -1;
   data["open"] = true;
+  data["password"] = $('#password_text').val();
   var open = true;
   var limit = -1;
   if(document.getElementById('closed_radio').checked){
@@ -50,6 +52,7 @@ $('#confirm_create').click(function(){
   if(document.getElementById('limit_radiobtn').checked){
     data["userlimit"] = $('#limit_number').val();
   }
+  console.log("Salasana: " + data["password"]);
   console.log(data);
   socket.emit('request council create', data);
 });

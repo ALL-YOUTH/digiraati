@@ -1,4 +1,3 @@
-
 class Like{
   constructor(id, liker){
     this.id = id;
@@ -16,7 +15,7 @@ class Dislike{
 }
 
 class Goodarg{
-  costructor(id, liker){
+  constructor(id, liker){
     this.id = id;
     this.goodarger = liker;
   }
@@ -24,7 +23,7 @@ class Goodarg{
 }
 
 class Message{
-  constructor(id, sender, timestamp, text, likes, dislikes, goodargs){
+  constructor(id, sender, timestamp, text, likes, dislikes, goodargs, parent =""){
     this.id = id;
     this.sender = sender;
     this.timestamp = timestamp;
@@ -32,7 +31,9 @@ class Message{
     this.likes = likes;
     this.dislikes = dislikes;
     this.goodargs = goodargs;
+    this.parent = parent;
   }
+  get_parent(){ return this.parent; }
   get_id(){ return this.id; }
   get_sender(){ return this.senderid; }
   get_timestamp() { return this.timestamp;}
@@ -69,22 +70,29 @@ toggle_dislike(id, liker){
   }
   //If user has not liked this message, add a new like
   var like = new Dislike(id, liker);
+  console.log("liker:" + liker + " " + "disliker: " + like.get_disliker());
   this.dislikes.push(like);
   return this.dislikes.length;
   }
 
 
   toggle_goodarg(id, liker){
+    console.log("toggling goodarg")
+    console.log(liker);
     for(var i = 0; i < this.goodargs.length; ++i){
       //If user already likes this message, the like is removed
       let like = this.goodargs[i];
+      console.log("Liker:" + liker + " " + "goodarger: " + like.get_goodarger());
       if(liker == like.get_goodarger()){
+        console.log("Removing goodarg");
         this.goodargs.splice(i, 1);
         return this.goodargs.length;
       }
     }
     //If user has not liked this message, add a new like
+    console.log("Adding goodarg");
     var like = new Goodarg(id, liker);
+    console.log(like);
     this.goodargs.push(like);
     return this.goodargs.length;
   }
@@ -133,7 +141,7 @@ class File{
 //Class for one chat room
 class Council{
   constructor(id, name, description, creator, startdate, starttime,
-              enddate, endtime, userlimit, tags, likes, dislikes, conclusion){
+              enddate, endtime, userlimit, tags, likes, dislikes, conclusion, password){
     this.id = id;
     this.name = name;
     this.description = description;
@@ -150,8 +158,10 @@ class Council{
     this.files = [];
     this.users = [];
     this.messages = [];
+    this.replies = [];
 
     this.conclusion = conclusion;
+    this.password = password;
   }
 
   get_council_name(){ return this.name; }
@@ -167,6 +177,7 @@ class Council{
   get_council_userlimit(){ return this.userlimit; }
   get_council_users(){ return this.users; }
   get_council_files(){ return this.files; }
+  get_council_password() { return this.password; }
 
   add_participant(uid){
     var result = false;
@@ -271,12 +282,12 @@ module.exports = class Councils{
   }
 
   add_council(id, name, description, creator, startdate, starttime, enddate,
-              endtime, userlimit, tags, likes, dislikes, conclusion){
+              endtime, userlimit, tags, likes, dislikes, conclusion, password){
     let new_council = new Council(id, name,
                                   description, creator,
                                   startdate, starttime, enddate,
                                   endtime, userlimit, tags, likes,
-                                  dislikes, conclusion);
+                                  dislikes, conclusion, password);
     this.councils.push(new_council);
   }
 
@@ -298,35 +309,33 @@ module.exports = class Councils{
     return -1;
   }
 
-  add_message(council_id, mid, sender, timestamp, message_text, likes, dislikes, goodargs){
+  get_replies_by_id(id){
+    let messages_to_parse = this.messages;
+    let returnable = messages_to_parse.filter(message => message.get_parent() == id);
+    return returnable;
+  }
+
+  add_message(council_id, mid, sender, timestamp, message_text, likes, dislikes, goodargs, parent){
     var council = this.get_council_by_id(council_id);
     if(council == -1){
       return;
     }
     var l = [];
     if(likes.length > 0){
-      for(var i = 0; i < likes.length; ++i){
-        var like = new Like(likes[i]["id"], likes[i]["liker"]);
-        l.push(like);
-      }
+      likes.forEach(element => l.push(new Like(element["id"], element["liker"])));
     }
 
     var d = [];
     if(dislikes.length > 0){
-      for(var i = 0; i < dislikes.length; ++i){
-        var like = new Dislike(dislikes[i]["id"], dislikes[i]["disliker"]);
-        d.push(like);
-      }
+      dislikes.forEach(element => d.push(new Dislike(element["id"], element["liker"])));
     }
 
     var g = [];
     if(goodargs.length > 0){
-      for(var i = 0; i < goodargs.length; ++i){
-        var like = new Goodarg(goodargs[i]["id"], goodargs[i]["goodarger"]);
-        g.push(like);
-      }
+      goodargs.forEach(element => g.push(new Goodarg(element["id"], element["liker"])));
     }
-    var new_message = new Message(mid, sender, timestamp, message_text, l, d, g);
+
+    var new_message = new Message(mid, sender, timestamp, message_text, l, d, g, parent);
     council.add_msg(new_message);
   }
 
@@ -458,7 +467,7 @@ module.exports = class Councils{
     for(var i = 0; i < messages.length; ++i)
     {
       if(messages[i].get_id() == mid){
-        messages[i].set_content("Käyttäjä on poistanut tämän viestin.");
+        messages[i].set_content("<em>Käyttäjä on poistanut tämän viestin.</em>");
       }
     }
   }
@@ -476,6 +485,11 @@ module.exports = class Councils{
 
   add_user_to_council(data){
     let council = this.get_council_by_id(data["council"]);
+    console.log("Vertaan salasanoja " + data["password"] + " ja " + council["password"]);
+    if (data["password"] != council["password"])
+    {
+      return -1
+    }
     var res = council.add_participant(data["user"]);
     return res;
   }

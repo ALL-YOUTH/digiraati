@@ -2,6 +2,7 @@ var socket = io();
 var host = socket["io"]["uri"] + ":" + location.port;
 var council = "";
 var logged_in = "";
+var council_password = false;
 var council_updated = false;
 
 var colors = ["aqua", "blueviolet", "chartreuse", "chocolate", "coral",
@@ -40,6 +41,7 @@ function reformatDate(input){
 }
 
 socket.on('council data', function(data){
+  if (data["password"] != "") {council_password = true; }
   if(council_updated){
     clear_child_elements(document.getElementById("lobby_tags"));
     clear_child_elements(document.getElementById("lobby_latest_messages"));
@@ -108,9 +110,15 @@ socket.on('council data', function(data){
 });
 
 $('#join_council_btn').click(function(){
+  if (council_password == true)
+  {
+    var entered_password = window.prompt("Tämä raati on suojattu salasanalla. Syötä saamasi salasana alle. Jos sinulla ei ole salasanaa, voit pyytää sitä kontaktihenkilöltäsi.");
+  }
   var data = {};
   data["council"] = council;
   data["user"] = logged_in;
+  data["password"] = entered_password;
+  console.log("yritän liittyä raatiin: " + data["password"]);
   socket.emit('request join council', data);
 });
 
@@ -120,6 +128,10 @@ $('#leave_council_btn').click(function(){
   data["user"] = logged_in;
   socket.emit('request leave council', data);
 });
+
+socket.on('password incorrect', function(){
+    window.alert("Salasana ei ollut oikein. Jos et ole varma raadin salasanasta, ota yhteys kontaktihenkilöösi.");
+})
 
 socket.on('join success', function(){
   location.reload();
