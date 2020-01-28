@@ -29,16 +29,33 @@ function create_council_face(c){
   res.appendChild(add_class_innerhtml(["council_picture", "council_btn"], ""));
   res.appendChild(add_class_innerhtml(["council_title", "council_btn"], c["name"]));
   res.appendChild(add_class_innerhtml(["council_description", "council_btn"], c["description"]));
-  res.appendChild(add_class_innerhtml(["council_likes_icon"], ""));
-  res.appendChild(add_class_innerhtml(["council_likes", "council_btn"], 0));
-  res.appendChild(add_class_innerhtml(["council_dislikes_icon"], ""));
-  res.appendChild(add_class_innerhtml(["council_dislikes", "council_btn"], 0));
-  res.appendChild(add_class_innerhtml(["council_people_icon"], ""));
+  var peukkuboksi = document.createElement('div');
+  peukkuboksi.classList.add("reaction_box");
+  
+  var council_likes = document.createElement('div');
+  council_likes.classList.add("council_likes_icon"); 
+  var council_likes_number = document.createElement('div');
+  council_likes_number.classList.add("council_likes_number");
+
+  var council_dislikes = document.createElement('div');
+  council_dislikes.classList.add("council_dislikes_icon"); 
+  var council_dislikes_number = document.createElement('div');
+  council_dislikes_number.classList.add("council_dislikes_number");
+
+  var council_people = document.createElement('div');
+  council_people.classList.add("council_people_icon");
+  var council_people_number = document.createElement('div');
+  council_people_number.classList.add("council_people_number");
+  
+  peukkuboksi.appendChild(council_likes); peukkuboksi.appendChild(council_likes_number); peukkuboksi.appendChild(council_dislikes); peukkuboksi.appendChild(council_dislikes_number); peukkuboksi.appendChild(council_people); peukkuboksi.appendChild(council_people_number);
+  res.appendChild(peukkuboksi);
+  council_likes_number.innerText = 0;
+  council_dislikes_number.innerText = 0;
   if(c["userlimit"] == -1){
-    res.appendChild(add_class_innerhtml(["council_people", "council_btn"], c["users"].length));
+    council_people_number.innerText = c["users"].length;
   }
   else{
-    res.appendChild(add_class_innerhtml(["council_people", "council_btn"], c["users"].length + " / " + c["userlimit"]));
+    council_people_number.innerText = c["users"].length + " / " + c["userlimit"];
   }
   if(c["startdate"] != "" && c["enddate"] != ""){
     res.appendChild(add_class_innerhtml(["council_time", "council_btn"], reformatDate(c["startdate"]) + " - " + reformatDate(c["enddate"])));
@@ -96,7 +113,7 @@ $('#hero_search_councils_btn_desktop').click(function(){
 function reformatDate(input){
   try{
     var arr = input.split("-");
-    return arr[2]+ "/" + arr[1]+ "/" + arr[0];
+    return arr[2]+ "." + arr[1]+ "." + arr[0];
   }
   catch(err){
 

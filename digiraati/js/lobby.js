@@ -31,9 +31,10 @@ socket.on('login success', function(name){
 });
 
 function reformatDate(input){
+  console.log("Yo I'm reformatting over here!");
   try{
     var arr = input.split("-");
-    return arr[2]+ "/" + arr[1]+ "/" + arr[0];
+    return arr[2]+ "." + arr[1]+ "." + arr[0];
   }
   catch(err){
 

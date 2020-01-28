@@ -34,10 +34,15 @@ window.onresize = function(){
   }
 }
 
+$('#Hae_btn').hide();
 $('#Kirjaudu_ulos_btn').hide();
 
 $("#Etusivu_btn").click(function(){
   goToPage("/");
+});
+
+$("#Hae_btn").click(function(){
+  goToPage("/search");
 });
 
 $("#logo_div").click(function(){
@@ -141,6 +146,9 @@ socket.on("login success", function(name){
     $('#Profile_avatar').show();
     $('#Kirjaudu_btn').hide();
     $('#Kirjaudu_ulos_btn').show();
+    $('#Rekistroidy_btn').hide();
+    $('#Hae_btn').show();
+
   }
   else if(view == "mobile"){
     $('#hamburger_avatar').show()

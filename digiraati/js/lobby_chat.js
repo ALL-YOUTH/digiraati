@@ -175,6 +175,11 @@ function create_message(msg){
     deleteMessage.classList.add("message_list_delete"); deleteMessage.classList.add("noselect");
     deleteMessage.textContent = "POISTA VIESTI";
     nm.appendChild(deleteMessage);
+
+    var editMessage = document.createElement('div');
+    editMessage.classList.add("message_list_edit"); editMessage.classList.add("noselect");
+    editMessage.textContent = "MUOKKAA VIESTIÄ";
+    nm.appendChild(editMessage);
   }
 
   var ml = document.getElementById('message_list');
@@ -212,6 +217,7 @@ function create_reply(msg){
   //console.log(msg["content"]);
   text.innerHTML = msg["content"];
   text.classList.add("message_list_text");
+  text.id = nm.id + ("text");
   nm.appendChild(text);
   
   var likes_btn = document.createElement('div'); // Beginning of likes?
@@ -258,6 +264,11 @@ function create_reply(msg){
     deleteMessage.classList.add("message_list_delete"); deleteMessage.classList.add("noselect");
     deleteMessage.textContent = "POISTA VIESTI";
     nm.appendChild(deleteMessage);
+
+    var editMessage = document.createElement('div');
+    editMessage.classList.add("message_list_edit"); editMessage.classList.add("noselect");
+    editMessage.textContent = "MUOKKAA VIESTIÄ";
+    nm.appendChild(editMessage);
   }
 
   var ml = document.getElementById('message_list');
@@ -277,6 +288,27 @@ socket.on('new message', function(msg){
 socket.on('new reply', function(msg){
   create_reply(msg)
 });
+
+$(document).on('click', ".message_list_edit", function(e)
+{
+  var original_message = e.currentTarget.parentElement;
+  var editContainer = document.createElement('div');
+  editContainer.setAttribute('data-parent', e.currentTarget.parentElement.id);
+  editContainer.id = makeid();
+  var separator = document.createElement('div');
+  separator.classList.add('separator');
+  editContainer.appendChild(separator);
+  var editBox = document.createElement('TEXTAREA');
+  editBox.id = editContainer.id + "editbox";
+  editBox.value = document.getElementById(e.currentTarget.parentElement.id+"text").value;
+  editBox.classList.add("reply_box");
+  var saveButton = document.createElement('div');
+  saveButton.innerHTML = '<i class="fas fa-arrow-circle-right fa-2x"></i>';
+  saveButton.classList.add('noselect'); saveButton.classList.add("save_edit_btn");
+  saveButton.id = editContainer.id + "saveButton";
+  saveContainer.appendChild(editBox); saveContainer.appendChild(saveButton);
+  original_message.innerHTML = saveContainer;
+})
 
 $(document).on('click', ".message_list_reply", function(e)
 {

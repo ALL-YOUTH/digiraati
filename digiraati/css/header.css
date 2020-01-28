@@ -206,8 +206,16 @@
 
 @media (min-width:1000px){
 
-  #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Kirjaudu_ulos_btn, #Profile_avatar{
+  #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Kirjaudu_ulos_btn, #Hae_btn{
     display:inline-block;
+    margin-left: 40px;
+  }
+
+  #Profile_avatar{
+    height: 25px;
+    width: 25px;
+    margin-left: 40px;
+    display: inline-block;
   }
 
   #hamburger_div, #hamburger_menu, #arrow_left{
@@ -235,7 +243,7 @@
 
   #header_btns span{
     cursor:pointer;
-    margin-left: 35px;
+    margin-left: 60px;
     color: rgba(1,20,20,1);
   }
 
