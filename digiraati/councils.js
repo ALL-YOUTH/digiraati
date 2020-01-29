@@ -315,6 +315,24 @@ module.exports = class Councils{
     return returnable;
   }
 
+  edit_message(council_id, msg_id, content)
+  {
+    var council = this.get_council_by_id(council_id);
+    var messages = council.get_council_messages();
+    
+    for (var i = 0; i < messages.length; ++i)
+    {
+        if (messages[i]["id"] == msg_id)
+        {
+          console.log("Hit");
+          messages[i]["content"] = content;
+          return true;
+        }
+    }
+
+    return false;
+  }
+
   add_message(council_id, mid, sender, timestamp, message_text, likes, dislikes, goodargs, parent){
     var council = this.get_council_by_id(council_id);
     if(council == -1){

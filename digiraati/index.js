@@ -274,6 +274,15 @@ io.on('connection', function(socket){
     update_page();
   });
 
+  socket.on('request message edit', function(msg){
+    console.log("Received edit request.");
+    if (councils.edit_message(msg["council"], msg["msg_id"], msg["content"]) == true)
+    {
+        create_backup();
+        socket.emit('reload_chat_lobby');
+    }
+  });
+
   //SENDING A MESSAGE PART
   //Request to send a message to a council
   socket.on('request new message', function(msg){

@@ -122,7 +122,7 @@ div .inactive{
   z-index: 20;
 }
 
-.reply_box{
+.reply_box, .edit_box{
   width:80%;
   height:100px;
   bottom:0px;
@@ -163,7 +163,7 @@ div .inactive{
   cursor:pointer;
 }
 
-.reply_btn{
+.reply_btn, .save_edit_btn{
   float:right;
   color:rgba(1,175,196,1);
   margin:10px;
@@ -190,11 +190,11 @@ div .inactive{
 .reply_message{
   height:auto;
   display:block;
-  padding:5px;
+  padding:10px;
   cursor:default;
   border-radius:2px;
-  padding-left: 40px;
-  border-left: 6px rgba(1,175,196,1);
+  margin-left: 20px;
+  border-left: thick solid rgba(1,175,196,1);
 }
 
 /*.chat_message:hover{
@@ -267,11 +267,12 @@ div .inactive{
   opacity: 1;
 }
 
-.message_list_reply{
+.message_list_reply, .message_list_edit{
   float:right;
   font-family: Montserrat;
-  color:rgba(0,96,115,0.3);
+  color:rgba(0,96,115,1.0);
   font-size: 14px;
+  margin-right: 10px;
   font-weight: bold;
 }
 

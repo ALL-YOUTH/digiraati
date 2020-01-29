@@ -126,6 +126,7 @@ function create_message(msg){
     nm.appendChild(sender);
   }
   var text = document.createElement('div'); // Actual text body
+  text.id = nm.id + "text";
   //console.log(msg["content"]);
   text.innerHTML = msg["content"];
   text.classList.add("message_list_text");
@@ -291,23 +292,23 @@ socket.on('new reply', function(msg){
 
 $(document).on('click', ".message_list_edit", function(e)
 {
-  var original_message = e.currentTarget.parentElement;
+  var original_message = document.getElementById(e.currentTarget.parentElement.id);
   var editContainer = document.createElement('div');
   editContainer.setAttribute('data-parent', e.currentTarget.parentElement.id);
+  console.log("Parent: " + editContainer.getAttribute('data-parent'));
   editContainer.id = makeid();
-  var separator = document.createElement('div');
-  separator.classList.add('separator');
-  editContainer.appendChild(separator);
   var editBox = document.createElement('TEXTAREA');
   editBox.id = editContainer.id + "editbox";
-  editBox.value = document.getElementById(e.currentTarget.parentElement.id+"text").value;
-  editBox.classList.add("reply_box");
+  editContainer.setAttribute('data-editbox', editBox.id);
+  editBox.classList.add("edit_box");
   var saveButton = document.createElement('div');
   saveButton.innerHTML = '<i class="fas fa-arrow-circle-right fa-2x"></i>';
   saveButton.classList.add('noselect'); saveButton.classList.add("save_edit_btn");
   saveButton.id = editContainer.id + "saveButton";
-  saveContainer.appendChild(editBox); saveContainer.appendChild(saveButton);
-  original_message.innerHTML = saveContainer;
+  editBox.defaultValue = document.getElementById(e.currentTarget.parentElement.id+"text").innerHTML;
+  console.log("Found value " + document.getElementById(e.currentTarget.parentElement.id+"text").innerHTML);
+  editContainer.appendChild(editBox); editContainer.appendChild(saveButton);
+  original_message.innerHTML = editContainer.innerHTML;
 })
 
 $(document).on('click', ".message_list_reply", function(e)
@@ -331,6 +332,15 @@ $(document).on('click', ".message_list_reply", function(e)
   replyContainer.appendChild(replyButton);
   original_message.insertAdjacentElement('afterend', replyContainer);
 });
+
+$(document).on('click', '.save_edit_btn', function(e){
+  var msg = {}
+  msg["council"] = council;
+  msg["content"] = e.currentTarget.previousElementSibling.value;
+  msg["msg_id"] = e.currentTarget.parentElement.id;
+  console.log("sending message " + msg["council"] + " " + msg["msg_id"] + " " + msg["content"]);
+  socket.emit('request message edit', msg);
+})
 
 $(document).on('click', ".reply_btn", function(e){
   var textbox = document.getElementById(e.currentTarget.parentElement.id + "replybox");
@@ -370,6 +380,12 @@ $(document).on('click', '.message_reactions', function(e){
 socket.on('update likes', function(mid, likes){
   var message = document.getElementById(mid+"likes");
   message.textContent = "   "+likes;
+});
+
+socket.on('reload_chat_lobby', function()
+{
+  console.log("Reloading");
+  window.location.reload();
 });
 
 $(document).on('click', '.dislike_reactions', function(e){
