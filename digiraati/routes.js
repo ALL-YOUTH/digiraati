@@ -118,6 +118,10 @@ app.get('/glide/:id', (req, res, next) => {
   return res.sendFile(path.join(__dirname, "/node_modules/@glidejs/glide/dist/" + fid));
 });
 
+app.get('/admin', function(req, res){
+  res.sendFile(__dirname + '/html/admin.html');
+});
+
 
 ///////////////////////////////////////////////////////
 // images

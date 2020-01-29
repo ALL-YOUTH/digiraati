@@ -33,7 +33,6 @@ var Councils = require(path.join(__dirname + "/councils.js"));
 let users = new Users();
 let councils = new Councils();
 
-
 //Recover digiraati from backupfile
 fs.readFile(backup_file, function (err, data) {
   if (err) {
