@@ -73,14 +73,15 @@ body{
 }
 
 textarea{
-  border-radius:3px;
-  border-color:rgba(114,172,255,1);
-  width:100%;
+  font-family: Montserrat;
+  font-size: 14px;
+  border-radius: 5px;
+  width: 100%;
   height:30px;
-  line-height:15px;
-  transition: width 0.25s;
-  resize:none;
-  overflow:hidden;
+  border-width: 2px;
+  border-style: solid;
+  background-color: rgba(246,248,249,1);
+  border-color:rgba(235,237,237,1);
 }
 
 #create_container_title{
@@ -105,11 +106,20 @@ textarea{
 .create_text{
   margin-top:20px;
   line-height: 20px;
-  font-family: Acumin Pro;
+  font-family: Montserrat;
   font-style: normal;
   font-weight: bold;
-  font-size:13px;
+  font-size:14px;
   color:rgba(32,33,36,1);
+}
+
+.startdate_input, .enddate_input{
+  font-family: Montserrat;
+  font-size: 14px;
+  border-width: 2px;
+  border-style: solid;
+  background-color: rgba(246,248,249,1);
+  border-color:rgba(235,237,237,1);
 }
 
 .active{
@@ -124,6 +134,12 @@ textarea{
   border-color: rgba(254, 4, 86, 1);
   background-color: white;
   border:solid;
+}
+
+input[type="time"], input[type="date"]
+{
+  font-family: Montserrat;
+  font-size: 14px;
 }
 
 #create_description_text_input {

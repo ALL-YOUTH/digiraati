@@ -68,17 +68,21 @@ body, html{
 #lobby_navigation div{
   display: inline-block;
   margin:10px 10px 0px 0px;
-  font-size:11px;
-  font-weight: bold;
-  font-family: Montserrat;
   padding:10px 20px 10px 20px;
   cursor:pointer;
 }
 
 div .active{
-  background-color: rgba(235,237,237,1);
+  background-color: rgba(157,224,232,1);
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Montserrat;
+  
 }
 div .inactive{
+  font-size: 11px;
+  font-weight: bold;
+  font-family: Montserrat;
   background-color: rgba(255,255,255,1);
 }
 

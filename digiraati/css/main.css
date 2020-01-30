@@ -175,12 +175,10 @@ img {
   }
 
   #hero_text{
-      position: absolute;
-      width: 671px;
-      height: 347px;
-      left: 969px;
-      top: 76px;
-      overflow: visible;
+    position:relative;
+    float:right;
+    width:50%;
+    padding: 50px;
   }
 
   #main_text_desktop{
@@ -199,21 +197,18 @@ img {
   }
 
   #secondary_text_desktop{
-    filter: drop-shadow(1px 2px 6px rgba(0, 0, 0, 0.161));
-		position: absolute;
-		left: 11px;
-		top: 211px;
-		overflow: visible;
-		width: 661px;
-		height: 70px;
-		line-height: 34px;
-		margin-top: -5px;
-		text-align: center;
-		font-family: Montserrat;
-		font-style: normal;
-		font-weight: bold;
-		font-size: 24px;
-		color: rgba(255,255,255,1);
+    margin-top:35px;
+    position:relative;
+    display:block;
+    text-align: center;
+    font-size: 24px;
+    line-height: 34px;
+    font-family: Montserrat;
+    font-weight: bold;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-shadow: 1px 2px 6px #00000029;
+    opacity: 1;
   }
 
   #hero{
@@ -231,21 +226,18 @@ img {
   }
 
   #hero_search_councils_btn_desktop{
+    margin: auto;
     position: absolute;
-		width: 134px;
-		height: 41px;
-		left: 277px;
-		top: 306px;
-		overflow: visible;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,-10%);
     cursor: pointer;
 
     padding: 5px 15px;
     letter-spacing: 0;
-    text-align: center;
-    font-size: 12px;
+    font-size:10px;
     line-height: 15px;
     font-family: Montserrat;
-    font-style: normal;
     font-weight: bold;
     color: #FFFFFF;
     text-transform: uppercase;

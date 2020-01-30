@@ -62,17 +62,21 @@ body, html{
 #lobby_navigation div{
   display: inline-block;
   margin:10px 10px 0px 0px;
-  font-size:11px;
-  font-weight: bold;
-  font-family: Montserrat;
   padding:10px 20px 10px 20px;
   cursor:pointer;
 }
 
 div .active{
-  background-color: rgba(235,237,237,1);
+  background-color: rgba(157,224,232,1);
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Montserrat; 
 }
+
 div .inactive{
+  font-size: 11px;
+  font-weight: bold;
+  font-family: Montserrat;
   background-color: rgba(255,255,255,1);
 }
 
@@ -109,8 +113,10 @@ div .inactive{
 }
 
 #chat_message_input{
+  width: 60%;
+  font-family: Montserrat;
+  font-size:14px;
   position:fixed;
-  width:80%;
   height:100px;
   bottom:0px;
   background-color: rgba(245,246,250,1);
@@ -122,20 +128,46 @@ div .inactive{
   z-index: 20;
 }
 
-.reply_box, .edit_box{
-  width:80%;
+.reply_box{
+  font-family: Montserrat;
+  font-size:14px;
+  width:65%;
   height:100px;
   bottom:0px;
   background-color: rgba(245,246,250,1);
   margin:10px;
+  margin-left: 40px;
   border-radius:5px;
   border-color:rgba(112,112,112,0.263);
   border-style: solid;
   border-width: 2px;
   z-index: 20;
+  line-height: 20px;
 }
+
+.edit_box{
+  font-family: Montserrat;
+  font-size:14px;
+  width:90%;
+  height:100px;
+  bottom:0px;
+  background-color: rgba(245,246,250,1);
+  margin:10px;
+  margin-left: 40px;
+  border-radius:5px;
+  border-color:rgba(112,112,112,0.263);
+  border-style: solid;
+  border-width: 2px;
+  z-index: 20;
+  line-height: 20px;
+}
+
 
 #message_input{
+  font-family: Montserrat;
+  font-size: 14px;
+  width: 95%;
+  height: 80%;
   position:relative;
   resize:none;
   background-color: rgba(245,246,250,1);
@@ -144,8 +176,6 @@ div .inactive{
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  width: 80%;
-  height: 80%;
   overflow-y: scroll;
   padding:10px;
 }
@@ -163,12 +193,18 @@ div .inactive{
   cursor:pointer;
 }
 
+.text-container{
+  position: relative;
+}
+
 .reply_btn, .save_edit_btn{
-  float:right;
   color:rgba(1,175,196,1);
   margin:10px;
   margin-top:5px;
   cursor:pointer;
+  position: absolute;
+  left: 65%;
+  top: 10%;
 }
 
 #template_message{
@@ -178,6 +214,7 @@ div .inactive{
 }
 
 .chat_message{
+  width: 70%;
   height:auto;
   display:block;
   padding:5px;
@@ -188,6 +225,7 @@ div .inactive{
 }
 
 .reply_message{
+  width: 70%;
   height:auto;
   display:block;
   padding:10px;
@@ -195,6 +233,7 @@ div .inactive{
   border-radius:2px;
   margin-left: 20px;
   border-left: thick solid rgba(1,175,196,1);
+  line-height: 20px;
 }
 
 /*.chat_message:hover{
@@ -215,7 +254,7 @@ div .inactive{
 .separator{
   border-style:solid;
   border-color: rgba(112,112,112,0.3);
-  width:100%;
+  width:71%;
   border-width:1px;
 }
 
@@ -274,6 +313,7 @@ div .inactive{
   font-size: 14px;
   margin-right: 10px;
   font-weight: bold;
+  line-height: 20px;
 }
 
 .message_list_delete{

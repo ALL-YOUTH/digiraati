@@ -295,6 +295,7 @@ $(document).on('click', ".message_list_edit", function(e)
   var original_message = document.getElementById(e.currentTarget.parentElement.id);
   var editContainer = document.createElement('div');
   editContainer.setAttribute('data-parent', e.currentTarget.parentElement.id);
+  editContainer.classList.add("text-container");
   console.log("Parent: " + editContainer.getAttribute('data-parent'));
   editContainer.id = makeid();
   var editBox = document.createElement('TEXTAREA');
@@ -315,6 +316,7 @@ $(document).on('click', ".message_list_reply", function(e)
 {
   var original_message = e.target.parentElement;
   var replyContainer = document.createElement('div');
+  replyContainer.classList.add("text-container");
   replyContainer.setAttribute('data-parent', e.target.parentElement.id);
   replyContainer.id = makeid();
   var separator = document.createElement('div');

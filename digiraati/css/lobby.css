@@ -66,17 +66,22 @@ body, html{
 
 #lobby_navigation div{
   display: inline-block;
-  font-size:11px;
-  font-weight: bold;
-  font-family: Montserrat;
+  margin:10px 10px 0px 0px;
   padding:10px 20px 10px 20px;
   cursor:pointer;
 }
 
 div .active{
-  background-color: rgba(246,248,249,1);
+  background-color: rgba(157,224,232,1);
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Montserrat;
+  
 }
 div .inactive{
+  font-size: 11px;
+  font-weight: bold;
+  font-family: Montserrat;
   background-color: rgba(255,255,255,1);
 }
 
@@ -125,9 +130,9 @@ div .inactive{
 #lobby_description{
   margin:20px 0px;
   text-align: left;
-  font: 14px/26px Montserrat;
+  font: 18px/26px Montserrat;
   letter-spacing: 0;
-  color: #A6ADB4;
+  color: rgb(0,0,0,1);
   opacity: 1;
 }
 

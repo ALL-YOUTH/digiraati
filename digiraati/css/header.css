@@ -133,6 +133,7 @@
   }
 }
 #login_div #login_title{
+  color: rgba(0,96,115,1);
   display:inline-block;
   padding:10px;
   font-weight: bold;
@@ -165,14 +166,18 @@
   font-family: Montserrat;
 }
 
-#login_div input{
+.input-field{
   width:80%;
   margin-left: 10%;
   margin-top:5px;
   border-radius: 5px;
   height:40px;
-  border-width: 0.5px;
-  border-color: rgb(95,213,227,1);
+  border-width: 2px;
+  border-style: solid;
+  background-color: rgba(246,248,249,1);
+  border-color:rgba(235,237,237,1);
+  padding: 10px;
+  text-align: center;
 }
 
 .input-icons i {
@@ -192,16 +197,22 @@
   color:rgb(0, 96, 115);
 }
 
-.input-field {
-  width: 100%;
-  padding: 10px;
-  text-align: center;
-}
-
 #login_confirm{
+  text-align: center;
+  text-decoration: none;
+  font-family: Montserrat;
+  font-size: 11px;
   color:white;
   background-color: rgb(1, 175, 196, 1);
   font-weight: bold;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: rgb(1, 175, 196, 1);
+  padding: 11px 33px;
+  width: 45%;
+  margin-left: 30%;
+  margin-top: 5%;
+
 }
 
 @media (min-width:1000px){
@@ -252,18 +263,21 @@
   }
 
   #login_div{
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: bold;
     right:10%;
     -webkit-transform: translate(0,0);
     transform: translate(0,0);
     position:fixed;
     top:100px;
+    right: 20px;
     width:300px;
     height:360px;
     display:none;
     z-index:15;
-    background-color: rgb(95,213,227,1);
+    background-color: rgb(255,255,255,1);
     border-radius: 3px;
-    box-shadow: 1px 1px 10px rgb(0, 0, 0, 1);
   }
 
 }
