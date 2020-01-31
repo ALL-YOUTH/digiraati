@@ -22,6 +22,33 @@ class Goodarg{
   get_goodarger() { return this.goodarger; }
 }
 
+class Questionnaire{
+  constructor(id, sender, timestamp, questions)
+  {
+    this.id = id;
+    this.sender = sender;
+    this.timestamp = timestamp;
+    this.questions = questions;
+  }
+
+  
+  get_id() { return this.id; }
+  get_sender() { return this.sender; }
+  get_timestamp() { return this.timestamp; }
+  get_questions() { return this.questions; }
+  get_question(i) { return this.questions[i]; }
+
+}
+
+class ConsclusionAnswers{
+  constructor(id, sender, timestamp, answers)
+  {
+    this.id = id;
+    this.sender = sender;
+    
+  }
+}
+
 class Message{
   constructor(id, sender, timestamp, text, likes, dislikes, goodargs, parent =""){
     this.id = id;

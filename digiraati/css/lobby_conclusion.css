@@ -23,6 +23,22 @@ body, html{
   top:0px;
 }
 
+#conclusion_navigator{
+  position: relative;
+  display: inline-block;
+  height: auto;
+  width: 60%;
+  padding: 5px 20px;
+}
+
+#conclusion_navigator div{
+  display: inline-block;
+  margin:10px 10px 0px 0px;
+  padding:10px 20px 10px 20px;
+  cursor:pointer;
+}
+
+
 #conclusion_hashtag{
   background-color:rgba(1,175,196,1);
   font-weight: bold;
@@ -113,6 +129,11 @@ div .inactive{
 #conclusion_container_input{
   color:black;
   margin-left:10px;
+}
+
+#questionnaire_container{
+  color: black;
+  margin-left: 10px;
 }
 
 #conclusion_input_title{

@@ -28,10 +28,18 @@ var log_stdout = process.stdout;
 //import users.js and councils.js modules
 var Users = require(path.join(__dirname + "/user.js"));
 var Councils = require(path.join(__dirname + "/councils.js"));
+var Logger = require(path.join(__dirname + "/datalog.js"));
+var Conclusions = require(path.join(__dirname + "/conclusioner.js"));
 
 //Create objects for user and council
 let users = new Users();
 let councils = new Councils();
+let logger = new Logger();
+let conclusioner = new Conclusions();
+
+// Add temporary questionnaire for testing purposes
+let temp_data = {"council_id": "iiWE5tcVNrBe", "questions": ["What is tasty?", "Are cats or dogs better?", "I think we'd better get at least one long question in here as well to see just how well the data is formatted if the question is longer. I am tired of these jokes about my giant hand. The first such incident occured in 1956 when..."]};
+conclusioner.add_questionnaire(temp_data["council_id"], temp_data["questions"]);
 
 //Recover digiraati from backupfile
 fs.readFile(backup_file, function (err, data) {
@@ -152,6 +160,7 @@ io.on('connection', function(socket){
   socket.on('check login council', function(cid){
     var name = users.get_login_by_ip(ip);
     if(name == false){
+      console.log("You're not logged in");
       socket.emit('not logged');
     }
     else{
@@ -177,6 +186,7 @@ io.on('connection', function(socket){
       if(res)
       {
         socket.emit('join success');
+        logger.AppendLog("e03", users.get_userid_by_username(data["user"]), new Date().getTime(), data["council"]);
         create_backup();
       }
       else{
@@ -190,6 +200,7 @@ io.on('connection', function(socket){
     socket.join(data["user"]);
     var res = councils.remove_user_from_council(data);
     if(res){
+      logger.AppendLog("e04", users.get_userid_by_username(data["user"]), new Date().getTime(), data["council"]);
       socket.emit('leave success');
     }
     else{
@@ -207,6 +218,7 @@ io.on('connection', function(socket){
     else{
       var uid = users.get_userid_by_username(name);
       socket.emit('login success', name);
+      logger.AppendLog("e01", uid, new Date().getTime());
       server_log(ip + ": " + uid + " (" + name + ") logged in");
       update_page();
       return;
@@ -230,6 +242,7 @@ io.on('connection', function(socket){
                               data["email"], data["password1"]);
     if(ret_val != -1){
       socket.emit('register success', data["username"]);
+      logger.AppendLog("e12", data["id"], new Date().getTime());
       server_log(ip + ": " + data["username"] + " registered succesfully");
       create_backup();
     }
@@ -266,6 +279,7 @@ io.on('connection', function(socket){
     }
     update_page();
     socket.emit("council create succeess");
+    logger.AppendLog("e13", users.get_userid_by_username(info["creator"]), new Date().getTime(), info["id"]);
     create_backup();
   });
 
@@ -277,6 +291,7 @@ io.on('connection', function(socket){
     console.log("Received edit request.");
     if (councils.edit_message(msg["council"], msg["msg_id"], msg["content"]) == true)
     {
+        logger.AppendLog("e07", users.get_userid_by_username(msg["user_id"]), new Date().getTime(), msg["msg_id"]);
         create_backup();
         socket.emit('reload_chat_lobby');
     }
@@ -302,6 +317,9 @@ io.on('connection', function(socket){
                           parent);
 
     io.to(msg["council"]).emit('new message', msg);
+    if (parent == "") { logger.AppendLog("e05", users.get_userid_by_username(msg["sender"]), new Date().getTime(), msg["id"]); }
+    else {logger.AppendLog("e06", users.get_userid_by_username(msg["sender"]), new Date().getTime(), parent);}
+    
     create_backup();
   });
 
@@ -310,6 +328,7 @@ io.on('connection', function(socket){
   socket.on('request add like', function(data){
     var uid = users.get_userid_by_username(data["liker"]);
     var likes = councils.add_like_to_message(data["council"], data["mid"], uid);
+    logger.AppendLog("e09", uid, new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('update likes', data["mid"], likes);
   });
 
@@ -318,6 +337,7 @@ io.on('connection', function(socket){
   socket.on('request add dislike', function(data){
     var uid = users.get_userid_by_username(data["liker"]);
     var dislikes = councils.add_dislike_to_message(data["council"], data["mid"], uid);
+    logger.AppendLog("e10", uid, new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('update dislikes', data["mid"], dislikes);
   });
 
@@ -326,6 +346,7 @@ io.on('connection', function(socket){
   socket.on('request add goodarg', function(data){
     var uid = users.get_userid_by_username(data["liker"]);
     var goodargs = councils.add_goodarg_to_message(data["council"], data["mid"], uid);
+    logger.AppendLog("e11", uid, new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('update goodargs', data["mid"], goodargs);
   });
 
@@ -333,6 +354,7 @@ io.on('connection', function(socket){
   socket.on('logout attempt', function(name){
     users.logout_user(name);
     server_log(ip + ": " + name + " logged out");
+    logger.AppendLog("e02", users.get_userid_by_username(name), new Date().getTime());
     socket.emit('logout success');
     update_page();
     logged_in = "";
@@ -363,6 +385,12 @@ io.on('connection', function(socket){
     return 0;
 
   }
+
+  socket.on('request userid by username', function(username){
+    console.log("Trying to find " + username);
+    var returnable =  users.get_userid_by_username(username);
+    socket.emit("userid request response", returnable);
+  });
 
   //request to get the comments
   socket.on('comment refresh request', function(page){
@@ -433,6 +461,7 @@ io.on('connection', function(socket){
     var res = councils.add_comment_to_file(data);
     if(res != -1){
       socket.emit("comment add success", data);
+      logger.AppendLog("e15", users.get_userid_by_username(data["sender"]), new Date().getTime(), data["file"]);
       create_backup();
     }
     else{
@@ -443,12 +472,14 @@ io.on('connection', function(socket){
   socket.on('request delete message', function(data){
     server_log(ip + ": " + "attempting to delete message: " + data["mid"] + " in council " + data["council"]);
     councils.delete_message(data["council"], data["mid"]);
+    logger.AppendLog("e08", users.get_userid_by_username(data["user_id"]), new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('delete message', data["mid"]);
   })
 
   //request to add a response to a comment
   socket.on('request add response', function(data){
     server_log(ip + ": attempting to add response to comment: " + data["id"]);
+    logger.AppendLog("e16", users.get_userid_by_username(data["sender"]), new Date().getTime(), data["id"]);
     councils.add_response_to_comment(data);
     var res = councils.get_comment_data(data);
     socket.emit('comment data', res);
@@ -517,6 +548,35 @@ io.on('connection', function(socket){
     socket.emit('update conclusion');
   });
 
+  socket.on('request logged in answers', function(){
+    var returnable = conclusioner.get_answers_by_user_id(users.get_userid_by_username(logged_in))
+    socket.emit("logged in answers response", returnable);
+  });
+
+  socket.on('request add questionnaire', function(data){
+    conclusioner.add_questionnaire(data["council_id"], data["questions"]);
+  });
+
+  socket.on('request questionnaire', function(data){
+    console.log("Received request");
+    var returnable = conclusioner.get_questionnaire_by_council(data["council_id"]);
+    socket.emit("questionnaire request response", returnable);
+  });
+
+  socket.on('request add conclusion answers', function(data){
+    conclusioner.add_conclusion(data["user_id"], data["council_id"], data["answers"]);
+  });
+
+  socket.on('request answers by userid', function(data){
+    var returnable = conclusioner.get_answers_by_user_id(data["user_id"]);
+    socket.emit("userid answers response", returnable);
+  });
+
+  socket.on('request answers by index', function(data){
+    var returnable = conclusioner.get_answers_by_index(data["council_id"], data["index"]);
+      socket.emit("index answers request", returnable);
+    });
+
   //////////////////////////////////////////////////////////////////////////////
   ///File upload stuff
   uploader.on('start', (fileInfo) => {
@@ -534,6 +594,8 @@ io.on('connection', function(socket){
                       fileInfo["data"]["council"],
                       fileInfo["data"]["uploader"],
                       []);
+
+    logger.AppendLog("e14", users.get_userid_by_username(fileInfo["data"]["uploader"]), new Date().getTime(), fileInfo["data"]["id"]);
 
     fs.rename(__dirname + "/files/" + fileInfo["data"]["filename"],
     __dirname + '/files/' + fileInfo["data"]["id"],

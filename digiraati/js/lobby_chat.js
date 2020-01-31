@@ -337,10 +337,10 @@ $(document).on('click', ".message_list_reply", function(e)
 
 $(document).on('click', '.save_edit_btn', function(e){
   var msg = {}
+  msg["user_id"] = logged_in;
   msg["council"] = council;
   msg["content"] = e.currentTarget.previousElementSibling.value;
   msg["msg_id"] = e.currentTarget.parentElement.id;
-  console.log("sending message " + msg["council"] + " " + msg["msg_id"] + " " + msg["content"]);
   socket.emit('request message edit', msg);
 })
 
@@ -362,6 +362,7 @@ $(document).on('click', ".reply_btn", function(e){
 
 $(document).on('click', ".message_list_delete", function(e){
   data = {}
+  data["user_id"] = logged_in;
   data["council"] = council;
   data["mid"] = e.target.parentElement.id;
   socket.emit('request delete message', data);
