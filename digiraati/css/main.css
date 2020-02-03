@@ -106,12 +106,14 @@ img {
 }
 
 .council_box .council_title{
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: bold;
   position:relative;
   max-height: 60px;
   overflow: hidden;
   width:100%;
   z-index: 1;
-  padding:10px;
   font-weight: bold;
 }
 
@@ -126,16 +128,15 @@ img {
   overflow:hidden;
 }
 
-.council_likes, .council_dislikes, .council_people, .council_time{
-  position:relative;
-  float:left;
-  display: block;
-  margin-right:15px;
-}
 
 .council_time{
   display:block;
   margin-left: 10px;
+}
+
+.reaction_box{
+  width: 80%;
+  display: inline-block;
 }
 
 .council_likes_icon, .council_dislikes_icon, .council_people_icon{
@@ -352,6 +353,7 @@ img {
   }
 
   .council_title {
+    padding-top: 10px;
     position: relative;
     left: 40px;
     top: 10px;
@@ -359,13 +361,14 @@ img {
 		width: 281px;
 		height: 26px;
 		line-height: 20px;
-		margin-top: -2px;
+		margin-top: 10px;
 		text-align: left;
 		font-family: Montserrat;
 		font-style: normal;
 		font-weight: bold;
 		font-size: 16px;
-		color: rgba(32,33,36,1);
+    color: rgba(32,33,36,1);
+    margin-bottom: 15px;
   }
 
   .council_box{
@@ -384,15 +387,53 @@ img {
     display: inline-block;
     position: relative;
     left: 40px;
-    width: auto;
+    width: 80%;
     height: 40px;
   }
 
-  .council_likes_icon, .council_likes_number, .council_dislikes_icon, .council_dislikes_number, .council_people_icon, .council_people_number{
+  .people_box, .likes_box, .dislikes_box{
     display: inline-block;
+    padding-right: 10%;
+  }
+
+  .council_likes_icon, .council_dislikes_icon, .council_people_icon
+  {
+    padding-top: 5px;
+    float: left;
+  }
+
+  .council_time_box{
+    position: relative;
+    left: 40px;
+    display: inline-block;
+    width: 80%;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+   
+  .council_likes_number, .council_dislikes_number, .council_people_number{
+    float: left;
+    padding-left: 5px;
+    padding-bottom: 3px;
+  }
+
+  .description_box{
+    position: relative;
+    left: 40px;
+    display: inline-block;
+    width: 80%;
+    height: 50px;
+    font-family: Montserrat;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
   }
 
   .council_description{
+    display: inline-block;
     position: relative;
 		left: 40px;
 		top: 25px;
@@ -408,8 +449,6 @@ img {
 		font-size: 13px;
 		color: rgba(166,173,180,1);
   }
-
-
 
   .council_box div{
     font-family: Montserrat;

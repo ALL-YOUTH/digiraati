@@ -89,7 +89,41 @@ socket.on("userid request response", function(user_id){
 socket.on("questionnaire request response", function(response)
 {
   data["questions"] = response;
-  console.log("received questions " + response);
+  console.log("received questions " + response.length);
+  var qf = document.getElementById('questionnaire_viewer');
+
+  console.log("Creating questions");
+  for (var i = 0; i < data["questions"].length; ++i)
+  {
+    console.log("Creating question");
+    var temp_question = document.createElement('div');
+    temp_question.classList.add("conclusion_question");
+    temp_question.id = "conclusion_question" + i;
+    temp_question.innerText = data["questions"][i];
+    qf.appendChild(temp_question);
+    
+    var answer_box = document.createElement('TEXTAREA');
+    answer_box.classList.add("answer_box");
+    answer_box.id = "answer_box" + i;
+    answer_box.defaultValue = "Syötä vastauksesi tähän";
+    qf.appendChild(answer_box);
+  }
+
+  if (data["questions"].length > 0)
+  {
+
+    var save_btn = document.createElement('button');
+    save_btn.classList.add("save_conclusion_btn");
+    save_btn.innerHTML = "Tallenna vastauksesi";
+    qf.appendChild(save_btn);
+  }
+
+  else {
+    var no_questionnaire = document.createElement("div");
+    no_questionnaire.classList.add("no_question_text");
+    no_questionnaire.innerText = "Tälle raadille ei ole luotu loppulausumakyselyä.";
+    qf.appendChild(no_questionnaire);
+  }
 });
 
 socket.on("login success", function(response){

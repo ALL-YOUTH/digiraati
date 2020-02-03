@@ -4,17 +4,9 @@ var council = "";
 var logged_in = "";
 var council_password = false;
 var council_updated = false;
+var progress_updated = false;
 
-var colors = ["aqua", "blueviolet", "chartreuse", "chocolate", "coral",
-              "cyan", "darkkhaki", "darkorange", "darksalmon", "darkturquoise",
-              "deepskyblue", "forestgreen", "fuchsia", "gold", "greenyellow",
-              "hotpink", "khaki", "lightgreen", "lightsalmon", "lightskyblue",
-              "lime", "limegreen", "mediumaquamarine", "mediumorchid",
-              "mediumspringgreen", "olive", "olivedrab", "orange", "orchid",
-              "palevioletred", "peachpuff", "plum", "powderblue", "sandybrown",
-              "silver", "salmon", "royalblue", "red", "springgreen", "tan",
-              "thistle", "tomato", "turquoise", "violet", "wheat", "yellow",
-              "yellowgreen"];
+var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 
 $(function(){
@@ -48,8 +40,62 @@ socket.on('council data', function(data){
   }
   council_updated = true;
   $('#lobby_title').text(data["name"].toUpperCase());
-  $('#lobby_starttime').text("Alkaa: " + data["starttime"] + " " + reformatDate(data["startdate"]));
-  $('#lobby_endtime').text('Loppuu: ' + data["endtime"] + " " + reformatDate(data["enddate"]));
+
+  // Council progress
+  var lb = document.getElementById("lobby_progress");
+
+  if (progress_updated == false)
+  {
+    var councilStart = document.createElement('div');
+    councilStart.classList.add("council_start");
+    var startBall = document.createElement('img');
+    startBall.classList.add("start_ball");
+    startBall.setAttribute('src', '/res/ball_gold.png');
+    var startText = document.createElement('div');
+    startText.classList.add("start_date");
+    startText.innerText = reformatDate(data["startdate"]);
+    councilStart.appendChild(startBall); councilStart.appendChild(startText);
+
+    if(new Date() > Date.parse(data["startdate"]))
+    {
+      console.log("Council has started");
+      startBall.setAttribute('src', '/res/checkball.png');
+    }
+    
+    var progressBar = document.createElement('div');
+    progressBar.classList.add("council_progress_bar");
+    var progress = document.createElement('div');
+    progress.classList.add("council_timeline");
+    progress.id = "progress_bar";
+    progressBar.appendChild(progress);
+
+    var dateDiff = new Date() - Date.parse(data["startdate"]);
+    var progressPerc = dateDiff / (Date.parse(data["enddate"]) - Date.parse(data["startdate"]));
+
+    console.log("Progress percentage: " + progressPerc);
+
+    progress.style.width = progressPerc * 100 + "%";
+
+    var councilEnd = document.createElement('div');
+    councilEnd.classList.add("council_end");
+    var endBall = document.createElement('img');
+    endBall.setAttribute('src', '/res/ball_gold.png');
+    endBall.classList.add("end_ball");
+    var endText = document.createElement("div");
+    endText.classList.add("end_date");
+    endText.innerText = reformatDate(data["enddate"]);
+    councilEnd.appendChild(endBall); councilEnd.appendChild(endText);
+
+    if(new Date() > Date.parse(data["enddate"]))
+    {
+      console.log("Council has started");
+      endBall.setAttribute('src', '/res/checkball.png');
+    }
+
+    lb.appendChild(councilStart); lb.appendChild(progressBar); lb.appendChild(councilEnd);
+    progress_updated = true;
+  }  
+
   $('#lobby_description_title').text(data["name"]);
   $('#lobby_description').text(data["description"]);
 
@@ -80,7 +126,7 @@ socket.on('council data', function(data){
     }
     var msgs = data["messages"];
     try{
-      for(var i = 4; i > 0; --i){               //Showing the last 4 messages
+      for(var i = 1; i <= 4; ++i){               //Showing the last 4 messages
         var message = document.createElement('div');
         var msg = msgs[msgs.length-i];        //The last four messages sent to the chat
         var pic = document.createElement('div');
@@ -90,6 +136,7 @@ socket.on('council data', function(data){
           c += msg["sender"].charCodeAt(j);
         }
         pic.style.backgroundColor = colors[c % colors.length];
+        console.log("Picked colour " + colors[c % colors.length]);
         pic.classList.add("chat_avatar_ball");
         var sender = document.createElement('div');
         sender.textContent = msg["sender"];

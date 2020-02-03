@@ -19,16 +19,7 @@ var current_comment_open = "";
 
 var host = socket["io"]["uri"] + ":" + location.port;
 
-var colors = ["aqua", "blueviolet", "chartreuse", "chocolate", "coral",
-              "cyan", "darkkhaki", "darkorange", "darksalmon", "darkturquoise",
-              "deepskyblue", "forestgreen", "fuchsia", "gold", "greenyellow",
-              "hotpink", "khaki", "lightgreen", "lightsalmon", "lightskyblue",
-              "lime", "limegreen", "mediumaquamarine", "mediumorchid",
-              "mediumspringgreen", "olive", "olivedrab", "orange", "orchid",
-              "palevioletred", "peachpuff", "plum", "powderblue", "sandybrown",
-              "silver", "salmon", "royalblue", "red", "springgreen", "tan",
-              "thistle", "tomato", "turquoise", "violet", "wheat", "yellow",
-              "yellowgreen"];
+var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 $(function(){
   council = window.location.href.split("/").slice(-2)[0];

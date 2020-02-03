@@ -250,6 +250,62 @@ div .inactive{
   opacity: 1;
 }
 
+#lobby_progress
+{
+  margin-top: 5%;
+  margin-left:5%;
+  position: relative;
+  display: inline-block;
+  width: 40%;
+  z-index: 1;
+}
+
+.start_ball, .end_ball{
+  position: relative;
+  display: inline-block;
+  height: 60px;
+  width: 60px;
+  align-self: center;
+  z-index: 2;
+}
+
+.council_timeline{
+  position: relative;
+  width: 1%;
+  background-color: rgba(1,175,196,1);
+  height: 15px;
+  z-index: 2;
+}
+
+.passed {
+  mix-blend-mode: hue;
+  color: rgba(255, 206, 78 , 1);
+}
+
+.council_start, .council_end{
+  position: relative;
+  float: left;
+  text-align: center;
+}
+
+.start_date, .end_date
+{
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.council_progress_bar{
+  margin-top: 23px;
+  margin-left: -10px;
+  margin-right: -16px;
+  float: left;
+  height: 15px;
+  width: 60%;
+  background-color: rgba(245,246,250,1);
+}
+
 
 .chat_avatar_ball{
   border-radius: 50%;
@@ -259,6 +315,9 @@ div .inactive{
   height:24px;
   text-align: center;
   line-height: 24px;
+  font-weight: bold;
+  font-family: Montserrat;
+  font-size: 16px;
   font-weight: bold;
 }
 

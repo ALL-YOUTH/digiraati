@@ -3,16 +3,7 @@ var socket = io();
 var logged_in = "";
 var view = "";
 
-var colors = ["aqua", "blueviolet", "chartreuse", "chocolate", "coral",
-              "cyan", "darkkhaki", "darkorange", "darksalmon", "darkturquoise",
-              "deepskyblue", "forestgreen", "fuchsia", "gold", "greenyellow",
-              "hotpink", "khaki", "lightgreen", "lightsalmon", "lightskyblue",
-              "lime", "limegreen", "mediumaquamarine", "mediumorchid",
-              "mediumspringgreen", "olive", "olivedrab", "orange", "orchid",
-              "palevioletred", "peachpuff", "plum", "powderblue", "sandybrown",
-              "silver", "salmon", "royalblue", "red", "springgreen", "tan",
-              "thistle", "tomato", "turquoise", "violet", "wheat", "yellow",
-              "yellowgreen"];
+var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 socket.emit('check login');
 

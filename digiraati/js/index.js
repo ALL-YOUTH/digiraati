@@ -27,27 +27,45 @@ function create_council_face(c){
   res.classList.add('council_box');
   res.id = c["id"];
   res.appendChild(add_class_innerhtml(["council_picture", "council_btn"], ""));
-  res.appendChild(add_class_innerhtml(["council_title", "council_btn"], c["name"]));
-  res.appendChild(add_class_innerhtml(["council_description", "council_btn"], c["description"]));
+  
+  var council_title = document.createElement('div');
+  council_title.classList.add("council_title");
+  council_title.innerText = c['name'];
+  res.appendChild(council_title);
+
+  var description_box = document.createElement('div');
+  description_box.classList.add("description_box");
+  description_box.innerText = c['description'];
+  res.appendChild(description_box);
+
   var peukkuboksi = document.createElement('div');
   peukkuboksi.classList.add("reaction_box");
   
+  var likes_box = document.createElement('div');
+  likes_box.classList.add("likes_box");
   var council_likes = document.createElement('div');
   council_likes.classList.add("council_likes_icon"); 
   var council_likes_number = document.createElement('div');
   council_likes_number.classList.add("council_likes_number");
+  likes_box.appendChild(council_likes); likes_box.appendChild(council_likes_number);
 
+  var dislikes_box = document.createElement('div');
+  dislikes_box.classList.add('dislikes_box');
   var council_dislikes = document.createElement('div');
   council_dislikes.classList.add("council_dislikes_icon"); 
   var council_dislikes_number = document.createElement('div');
   council_dislikes_number.classList.add("council_dislikes_number");
+  dislikes_box.appendChild(council_dislikes); dislikes_box.appendChild(council_dislikes_number);
 
+  var people_box = document.createElement('div');
+  people_box.classList.add("people_box");
   var council_people = document.createElement('div');
   council_people.classList.add("council_people_icon");
   var council_people_number = document.createElement('div');
   council_people_number.classList.add("council_people_number");
+  people_box.appendChild(council_people); people_box.appendChild(council_people_number);
   
-  peukkuboksi.appendChild(council_likes); peukkuboksi.appendChild(council_likes_number); peukkuboksi.appendChild(council_dislikes); peukkuboksi.appendChild(council_dislikes_number); peukkuboksi.appendChild(council_people); peukkuboksi.appendChild(council_people_number);
+  peukkuboksi.appendChild(likes_box); peukkuboksi.appendChild(dislikes_box); peukkuboksi.appendChild(people_box);
   res.appendChild(peukkuboksi);
   council_likes_number.innerText = 0;
   council_dislikes_number.innerText = 0;
@@ -58,7 +76,10 @@ function create_council_face(c){
     council_people_number.innerText = c["users"].length + " / " + c["userlimit"];
   }
   if(c["startdate"] != "" && c["enddate"] != ""){
-    res.appendChild(add_class_innerhtml(["council_time", "council_btn"], reformatDate(c["startdate"]) + " - " + reformatDate(c["enddate"])));
+    var council_time_box = document.createElement('div');
+    council_time_box.classList.add("council_time_box");
+    council_time_box.innerText = reformatDate(c["startdate"]) + " - " + reformatDate(c["enddate"]);
+    res.appendChild(council_time_box);
   }
   return res;
 }
