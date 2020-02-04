@@ -250,9 +250,10 @@ io.on('connection', function(socket){
       socket.emit("invalid email");
       return;
     }
+    console.log("Registering user " + data["testing_id"]);
     ret_val = users.add_user(data["id"], data["username"],
                               data["firstname"], data["lastname"],
-                              data["email"], data["password1"], data["testing_id"]);
+                              data["email"], data["password1"], "", data["testing_id"]);
     if(ret_val != -1){
       socket.emit('register success', data["username"]);
       logger.AppendLog("e12", data["id"], new Date().getTime());

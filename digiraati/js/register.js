@@ -58,6 +58,7 @@ $('#confirm_register').click(function(){
   register["password1"] = $('#password_input').val();
   register["password2"] = $('#password_input2').val();
   register["testing_id"] = $('#id_input').val();
+  console.log("Registering: " + register["testing_id"]);
   socket.emit("register attempt", register);
 });
 

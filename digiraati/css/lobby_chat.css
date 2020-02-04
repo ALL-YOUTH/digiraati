@@ -102,7 +102,8 @@ div .inactive{
 }
 
 #message_list{
-  height:800px;
+  min-height: 300px;
+  max-height:800px;
   overflow-y:scroll;
   margin-bottom: 50px;
 }
@@ -113,10 +114,9 @@ div .inactive{
 }
 
 #chat_message_input{
-  width: 60%;
+  width: 70%;
   font-family: Montserrat;
   font-size:14px;
-  position:fixed;
   height:100px;
   bottom:0px;
   background-color: rgba(245,246,250,1);
@@ -129,7 +129,6 @@ div .inactive{
 }
 
 .reply_box{
-  float: left;
   font-family: Montserrat;
   font-size:14px;
   width:80%;
@@ -147,7 +146,6 @@ div .inactive{
 }
 
 .edit_box{
-  float: left;
   font-family: Montserrat;
   font-size:14px;
   width:80%;
@@ -169,7 +167,7 @@ div .inactive{
   font-family: Montserrat;
   font-size: 14px;
   width: 95%;
-  height: 80%;
+  height: 60%;
   position:relative;
   resize:none;
   background-color: rgba(245,246,250,1);
@@ -188,7 +186,9 @@ div .inactive{
 }
 
 #send_btn{
-  float:right;
+  position: absolute;
+  right: 20px;
+  top: 20px;
   color:rgba(1,175,196,1);
   margin:10px;
   margin-top:5px;
@@ -196,12 +196,21 @@ div .inactive{
 }
 
 .text-container{
-  display: inline-block;
+  position: relative;
   width: 75%;
 }
 
-.reply_btn, .save_edit_btn{
-  float: left;
+.reply_btn{
+  position: absolute;
+  right: 105px;
+  top: 15px;
+  color:rgba(1,175,196,1);
+  margin:10px;
+  margin-top:5px;
+  cursor:pointer;
+}
+.save_edit_btn{
+  float: right;
   color:rgba(1,175,196,1);
   margin:10px;
   margin-top:5px;

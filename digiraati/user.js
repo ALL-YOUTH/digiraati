@@ -82,7 +82,8 @@ module.exports = class Users{
     //Checks if the username is already taken
     if(this.username_available(uname)){
       if(hash != null){pw = null;}
-      var new_user = new User(id, uname, fname, lname, email, pw=pw, hash=hash, "", "", "", testing_number);
+      var new_user = new User(id, uname, fname, lname, email, pw=pw, hash=hash, "", "", testing_number);
+      console.log("Registered: " + testing_number);
       this.users.push(new_user);
       return 0;
     }
