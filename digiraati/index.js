@@ -251,9 +251,9 @@ io.on('connection', function(socket){
       return;
     }
     console.log("Registering user " + data["testing_id"]);
-    ret_val = users.add_user(data["id"], data["username"],
+    ret_val = users.add_user(data["id"], data["username"], data["testing_id"],
                               data["firstname"], data["lastname"],
-                              data["email"], data["password1"], "", data["testing_id"]);
+                              data["email"], data["password1"]);
     if(ret_val != -1){
       socket.emit('register success', data["username"]);
       logger.AppendLog("e12", data["id"], new Date().getTime());

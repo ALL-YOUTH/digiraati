@@ -78,7 +78,7 @@ module.exports = class Users{
     }
   }
 
-  add_user(id, uname, fname, lname, email, pw, hash, testing_number){
+  add_user(id, uname, testing_number, fname, lname, email, pw, hash){
     //Checks if the username is already taken
     if(this.username_available(uname)){
       if(hash != null){pw = null;}
