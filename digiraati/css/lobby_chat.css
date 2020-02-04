@@ -114,6 +114,7 @@ div .inactive{
 }
 
 #chat_message_input{
+  position: fixed;
   width: 70%;
   font-family: Montserrat;
   font-size:14px;
@@ -187,8 +188,8 @@ div .inactive{
 
 #send_btn{
   position: absolute;
-  right: 20px;
-  top: 20px;
+  right: 5px;
+  top: 5px;
   color:rgba(1,175,196,1);
   margin:10px;
   margin-top:5px;

@@ -143,7 +143,7 @@ socket.on('council data', function(data){
         sender.textContent = msg["sender"];
         sender.classList.add("message_list_sender_name");
         var msg_text = document.createElement('div');
-        msg_text.textContent = msg["content"];
+        msg_text.innerHTML = msg["content"];
         msg_text.classList.add("message_text");
         message.appendChild(pic); message.appendChild(sender);
         message.appendChild(msg_text);

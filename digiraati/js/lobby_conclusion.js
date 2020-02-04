@@ -163,7 +163,7 @@ socket.on("questionnaire request response", function(response)
           tempAnswers[i] = data["answers"][i];
         }
         else {
-          tempAnswers[i] = "Syötä vastauksesi tähän."
+          tempAnswers[i] = "Kirjoita vastauksesi tähän."
         }
       }
     }
@@ -173,7 +173,7 @@ socket.on("questionnaire request response", function(response)
 
     for (var i = 0; i < data["questions"].length; ++i)
     {
-      tempAnswers[i] = "Syötä vastauksesi tähän";
+      tempAnswers[i] = "Kirjoita vastauksesi tähän";
     }
   }
 
