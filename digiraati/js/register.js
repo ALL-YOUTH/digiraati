@@ -29,6 +29,7 @@ $('#confirm_register').click(function(){
   if($('#username_input').val() == ""){ color_input_text('#username_input', "red"); }
   if($('#firstname_input').val() == ""){ color_input_text('#firstname_input', "red"); }
   if($('#lastname_input').val() == ""){ color_input_text('#lastname_input', "red"); }
+  if($('#id_input').val() == ""){ color_input_text('#id_input', "red"); }
   if($('#email_input').val() == ""){ color_input_text('#email_input', "red"); }
   if($('#password_input').val() == ""){ color_input_text('#password_input', "red"); }
   if($('#password_input2').val() == ""){ color_input_text('#password_input2', "red"); }
@@ -56,6 +57,7 @@ $('#confirm_register').click(function(){
   register["email"] = $('#email_input').val();
   register["password1"] = $('#password_input').val();
   register["password2"] = $('#password_input2').val();
+  register["testing_id"] = $('#id_input').val();
   socket.emit("register attempt", register);
 });
 

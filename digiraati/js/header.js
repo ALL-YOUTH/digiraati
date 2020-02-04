@@ -123,6 +123,7 @@ $('#login_confirm').click(function(){
 
 socket.on("login success", function(name){
   logged_in = name;
+  console.log("Success! Logged in: " + logged_in);
   var c = 0;
   for(var i = 0; i < name.length; ++i){
     c += name.charCodeAt(i);

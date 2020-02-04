@@ -15,10 +15,11 @@ $(function(){
 
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit("request council data", council);
+  console.log("Logged in: " + logged_in);
 });
 
-socket.on('login success', function(name){
-  logged_in = name;
+socket.on('login success', function(){
+  console.log("success");
   socket.emit("request council data", council);
 });
 

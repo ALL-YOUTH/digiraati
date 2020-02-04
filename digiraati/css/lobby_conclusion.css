@@ -23,17 +23,49 @@ body, html{
   top:0px;
 }
 
+.question_container{
+  margin-left: 50px;
+  width: 80%;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.conclusion_sender{
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: italic;
+  color: rgba(1,175,196,1);
+}
+
+.conclusion_content{
+  margin-top: 5px;
+  font-family: Montserrat;
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.separator{
+
+  margin-top: 15px;
+  height: 2px;
+  width:100%;
+  background: -moz-linear-gradient(left, rgba(214,214,214,0) 0%, rgba(203,203,203,0.6) 24%, rgba(191,191,191,1) 50%, rgba(203,203,203,0.6) 76%, rgba(214,214,214,0) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(214,214,214,0) 0%,rgba(203,203,203,0.6) 24%,rgba(191,191,191,1) 50%,rgba(203,203,203,0.6) 76%,rgba(214,214,214,0) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(214,214,214,0) 0%,rgba(203,203,203,0.6) 24%,rgba(191,191,191,1) 50%,rgba(203,203,203,0.6) 76%,rgba(214,214,214,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00d6d6d6', endColorstr='#00d6d6d6',GradientType=1 ); /* IE6-9 */
+}
+
 #conclusion_navigator{
   position: relative;
   display: inline-block;
   height: auto;
   width: 60%;
-  padding: 5px 20px;
+  padding: 0px20px;
 }
 
 #conclusion_navigator div{
   display: inline-block;
-  margin:10px 10px 0px 0px;
+  margin:0px 10px 0px 0px;
   padding:10px 20px 10px 20px;
   cursor:pointer;
 }
@@ -45,7 +77,6 @@ body, html{
   padding:0px 50px;
   width:100%;
   color:white;
-  margin-bottom:30px;
   text-align: left;
   font: Bold 32px/48px Montserrat;
   letter-spacing: 0;
@@ -97,8 +128,60 @@ div .active{
   font-family: Montserrat;
   
 }
+
+div .valid{
+  background-color: rgba(157,224,232,1);
+  color: black;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: rgba(157,224,232,1);
+
+}
+
+.question_nav_container{
+  width: 100%;
+  display: flex;
+  text-align: center;
+}
+
+.back_button, .forw_button{
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 5%;
+  background-color: rgba(235,237,237,1);
+  color: white;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: rgba(235,237,237,1);
+  border-width: 1px;
+  width: 10%;
+  text-align: center;
+  padding: 10px 15px;
+}
+
+.forw_button{
+  margin-right: 5%;
+  margin-left: auto;
+  background-color: rgba(235,237,237,1);
+  color: black;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: rgba(112,112,112,0.263);
+  width: 10%;
+  text-align: center;
+  padding: 10px 15px;
+}
+
+.viewer_question_title{
+  font-family: Montserrat;
+  font-size: 20px;
+  color: rgba(1,175,196,1);
+  text-align: center;
+}
+
 div .inactive{
-  font-size: 11px;
+  font-size: 14px;
   font-weight: bold;
   font-family: Montserrat;
   background-color: rgba(255,255,255,1);
@@ -183,9 +266,10 @@ div .inactive{
   margin-left:10px;
 }
 
-#questionnaire_container{
+#conclusion_editor, #questionnaire_container{
   color: black;
   margin-left: 10px;
+  margin-top: 40px;
 }
 
 #conclusion_input_title{

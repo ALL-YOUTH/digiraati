@@ -38,8 +38,8 @@ let logger = new Logger();
 let conclusioner = new Conclusions();
 
 // Add temporary questionnaire for testing purposes
-let temp_data = {"council_id": "HW3kprXx14FW", "questions": ["What is tasty?", "Are cats or dogs better?", "I think we'd better get at least one long question in here as well to see just how well the data is formatted if the question is longer. I am tired of these jokes about my giant hand. The first such incident occured in 1956 when..."]};
-conclusioner.add_questionnaire(temp_data["council_id"], temp_data["questions"]);
+//let temp_data = {"council_id": "HW3kprXx14FW", "questions": ["What is tasty?", "Are cats or dogs better?", "I think we'd better get at least one long question in here as well to see just how well the data is formatted if the question is longer. I am tired of these jokes about my giant hand. The first such incident occured in 1956 when..."]};
+//conclusioner.add_questionnaire(temp_data["council_id"], temp_data["questions"]);
 
 //Recover digiraati from backupfile
 fs.readFile(backup_file, function (err, data) {
@@ -50,6 +50,7 @@ fs.readFile(backup_file, function (err, data) {
   data = JSON.parse(data);
   var recover_users = data["users"];
   var recover_councils = data["councils"];
+  var recover_concs = data["conclusions"];
   for(var i = 0; i < recover_users.length; ++i){
     let user = recover_users[i];
     try{
@@ -61,7 +62,8 @@ fs.readFile(backup_file, function (err, data) {
                           user["hash"],
                           user["location"],
                           user["description"],
-                          user["picture"]);
+                          user["picture"],
+                          user["testing_id"]);
     }
     catch(err){
       server_log(err);
@@ -100,6 +102,17 @@ fs.readFile(backup_file, function (err, data) {
       data["council"] = council["id"];
       councils.add_user_to_council(data);
     }
+    
+  }
+
+  try{
+    console.log("concs: " + recover_concs.length);
+    conclusioner.recover_backup_data(recover_concs);
+  }
+
+  catch(err)
+  {
+    console.log("Error: " + err);
   }
 
 });
@@ -239,7 +252,7 @@ io.on('connection', function(socket){
     }
     ret_val = users.add_user(data["id"], data["username"],
                               data["firstname"], data["lastname"],
-                              data["email"], data["password1"]);
+                              data["email"], data["password1"], data["testing_id"]);
     if(ret_val != -1){
       socket.emit('register success', data["username"]);
       logger.AppendLog("e12", data["id"], new Date().getTime());
@@ -250,6 +263,23 @@ io.on('connection', function(socket){
       socket.emit('invalid nickname');
     }
     update_page();
+  });
+
+  socket.on('request avatar change', function(data){
+    console.log("changing avatar");
+    var user_id = users.get_userid_by_username(data["username"]);
+    users.get_user(data["username"]).set_picture("/res/" + data["avatar"] + ".png");
+    logger.AppendLog("e82", data["username"], new Date().getTime(), data["avatar"]);
+    socket.emit('avatar change complete');
+    create_backup();
+  });
+
+  socket.on('request save conclusion answers', function(data){
+    console.log("received conclusion save request");
+    var user_id = users.get_userid_by_username(data["username"]);
+    conclusioner.add_conclusion(user_id, data["council_id"], data["answers"]);
+    create_backup();
+    socket.emit('conclusion answers updated');
   });
 
   //Request to create a new council.
@@ -559,12 +589,16 @@ io.on('connection', function(socket){
 
   socket.on('request questionnaire', function(data){
     console.log("Received request");
-    var returnable = conclusioner.get_questionnaire_by_council(data["council_id"]);
+    var returnable = {};
+    returnable["questionnaire"] = conclusioner.get_questionnaire_by_council(data["council_id"]);
+    returnable["answers"] = conclusioner.get_answers_by_user_id(data["council_id"], data["user_id"]);
+    returnable["all_answers"] = conclusioner.get_all_answers(data["council_id"]);
     socket.emit("questionnaire request response", returnable);
   });
 
   socket.on('request add conclusion answers', function(data){
     conclusioner.add_conclusion(data["user_id"], data["council_id"], data["answers"]);
+    logger.AppendLog("e20", data['user_id'], new Date().getTime(), data["council_id"]);
   });
 
   socket.on('request answers by userid', function(data){
@@ -636,6 +670,7 @@ function create_backup(){
       let c = _councils[i];
       backup_data["councils"].push(councils.get_council_by_id(c["id"]));
     }
+    backup_data["conclusions"] = conclusioner.get_all_data();
     var json_data = JSON.stringify(backup_data);
     fs.writeFile(backup_file, json_data, 'utf8', function (err) {
       if (err) {

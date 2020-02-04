@@ -10,8 +10,9 @@ function hash(p){
 
 //Class a single user
 class User{
-  constructor(id, uname, fname, lname, email, h, location, description, picture){
+  constructor(id, uname, fname, lname, email, h, location, description, picture, testing_number = 999){
     this.id = id;
+    this.testing_number = testing_number;
     this.username = uname;
     this.fname = fname;
     this.lname = lname;
@@ -56,6 +57,9 @@ class User{
 
   set_picture(pic){ this.picture = pic; }
   get_picture(){ return this.picture; }
+
+  set_testing_number(number) { this.testing_number = number; }
+  get_testing_number() { return this.testing_number; }
 }
 
 //Class for handling all users
@@ -74,11 +78,11 @@ module.exports = class Users{
     }
   }
 
-  add_user(id, uname, fname, lname, email, pw, hash){
+  add_user(id, uname, fname, lname, email, pw, hash, testing_number){
     //Checks if the username is already taken
     if(this.username_available(uname)){
       if(hash != null){pw = null;}
-      var new_user = new User(id, uname, fname, lname, email, pw=pw, hash=hash);
+      var new_user = new User(id, uname, fname, lname, email, pw=pw, hash=hash, "", "", "", testing_number);
       this.users.push(new_user);
       return 0;
     }
@@ -87,10 +91,10 @@ module.exports = class Users{
     }
   }
 
-  recover_user(id, uname, fname, lname, email, hash, loc, des, pic){
+  recover_user(id, uname, fname, lname, email, hash, loc, des, pic, testing_number){
     //Checks if the username is already taken
     if(this.username_available(uname)){
-      var new_user = new User(id, uname, fname, lname, email, hash, loc, des, pic);
+      var new_user = new User(id, uname, fname, lname, email, hash, loc, des, pic, testing_number);
       this.users.push(new_user);
       return 0;
     }

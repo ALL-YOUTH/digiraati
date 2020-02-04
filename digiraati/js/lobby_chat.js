@@ -2,16 +2,18 @@ var socket = io();
 var host = socket["io"]["uri"] + ":" + location.port;
 var council = "";
 var last_message_sender = null;
+var window_open = false;
+var messages = [];
 
 var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 $(function(){
+
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
 
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit("check login council", council);
-  socket.emit("request council data", council);
 });
 
 socket.on('council data', function(data){
@@ -23,19 +25,51 @@ socket.on('council data', function(data){
           document.getElementById('header').offsetHeight;
   $('#chat_container').css("height", h + "px");
 
+  var ml = document.getElementById('message_list');
+  ml.innerHTML = "";
+  ml.id = "message_list";
+  messages = data["messages"];
   var original_messages = data["messages"].filter(element => element["parent"] == "");
   
   for(message of original_messages){
-    create_message(message);
-    var replies = data["messages"].filter(element => element["parent"] == message["id"]);
-    for (reply of replies)
-    {
-      create_reply(reply);
-    }
+    ParseMessage(message, 1);
   }
 });
 
+function ParseMessage(message, level)
+{
+  if (level == 1)
+  {
+    create_message(message)
+    var replies = messages.filter(element => element["parent"] == message["id"]);
+    for (reply of replies)
+    {
+      ParseMessage(reply, 2);
+    }
+  }
+  if (level == 2)
+  {
+    create_reply(message), level;
+    var replies = messages.filter(element => element["parent"] == message["id"]);
+    for (reply of replies)
+    {
+      ParseMessage(reply, 3);
+    }
+  }
+  if (level >= 3)
+  {
+    create_reply(message, level);
+    var replies = messages.filter(element => element["parent"] == message["id"]);
+    for (reply of replies)
+    {
+      ParseMessage(reply, 3);
+    }
+  }
+  
+}
+
 socket.on("login success", function(){
+  socket.emit("request council data", council);
   socket.emit("request socket list", council);
 });
 
@@ -102,19 +136,26 @@ function create_message(msg){
     }
     pic.style.backgroundColor = colors[c % colors.length];
     pic.classList.add("chat_avatar_ball");
+    var senderContainer = document.createElement('div');
+    senderContainer.classList.add("sender_container");
     var sender = document.createElement('a');
-    // Try to fetch timestamp, if message does not have a timestamp or it is undefined, handle gracefully.
-    sender.innerHTML = msg["sender"] + " - " + msg_timestamp;
+    sender.innerHTML = msg["sender"]
     sender.classList.add("message_list_sender_name");
-    nm.appendChild(pic); nm.appendChild(sender);
+    var timeStamp = document.createElement('a');
+    timeStamp.innerHTML = msg_timestamp;
+    timeStamp.classList.add("message_list_timestamp");
+    senderContainer.appendChild(pic); senderContainer.appendChild(sender); senderContainer.appendChild(timeStamp); 
+    nm.appendChild(senderContainer);
   }
   else
   {
-    var sender = document.createElement('a');
-    // Try to fetch timestamp, if message does not have a timestamp or it is undefined, handle gracefully.
-    sender.innerHTML = msg_timestamp;
-    sender.classList.add("message_list_sender_name");
-    nm.appendChild(sender);
+    var senderContainer = document.createElement('div');
+    senderContainer.classList.add("sender_container");
+    var timeStamp = document.createElement('a');
+    timeStamp.innerHTML = msg_timestamp;
+    timeStamp.classList.add("message_list_timestamp");
+    senderContainer.appendChild(timeStamp);
+    nm.appendChild(senderContainer);
   }
   var text = document.createElement('div'); // Actual text body
   text.id = nm.id + "text";
@@ -161,6 +202,7 @@ function create_message(msg){
   reply.textContent = "VASTAA";
   nm.appendChild(reply);
 
+  console.log("sender: " + msg["sender"] + " logged in " + logged_in);
   if (msg["sender"] == logged_in)
   {
     var deleteMessage = document.createElement('div');
@@ -184,9 +226,10 @@ function create_message(msg){
   window.scrollTop = window.scrollHeight;
 }
 
-function create_reply(msg){
+function create_reply(msg, level){
   var nm = document.createElement('div');
-  nm.classList.add("reply_message");
+  if (level == 3){   nm.classList.add("second_tier_reply"); }
+  else { nm.classList.add("reply_message"); }
   nm.id = msg["id"];
   if (!msg.hasOwnProperty("timestamp") || msg["timestamp"] == undefined) {var msg_timestamp = ""}
   else {var msg_timestamp = msg["timestamp"] + " "}
@@ -199,11 +242,16 @@ function create_reply(msg){
   }
   pic.style.backgroundColor = colors[c % colors.length];
   pic.classList.add("chat_avatar_ball");
+  var senderContainer = document.createElement('div');
+  senderContainer.classList.add("sender_container");
   var sender = document.createElement('a');
-  // Try to fetch timestamp, if message does not have a timestamp or it is undefined, handle gracefully.
-  sender.innerHTML = msg["sender"] + " - " + msg_timestamp;
-  sender.classList.add("message_list_sender_name");
-  nm.appendChild(pic); nm.appendChild(sender);
+    sender.innerHTML = msg["sender"]
+    sender.classList.add("message_list_sender_name");
+  var timeStamp = document.createElement('a');
+    timeStamp.innerHTML = msg_timestamp;
+    timeStamp.classList.add("message_list_timestamp");
+  senderContainer.appendChild(pic);senderContainer.appendChild(sender); senderContainer.appendChild(timeStamp); 
+  nm.appendChild(senderContainer);
   
   var text = document.createElement('div'); // Actual text body
   //console.log(msg["content"]);
@@ -250,6 +298,8 @@ function create_reply(msg){
   reply.textContent = "VASTAA";
   nm.appendChild(reply);
 
+  console.log("sender: " + msg["sender"] + " logged in " + logged_in);
+
   if (msg["sender"] == logged_in)
   {
     var deleteMessage = document.createElement('div');
@@ -283,47 +333,55 @@ socket.on('new reply', function(msg){
 
 $(document).on('click', ".message_list_edit", function(e)
 {
-  var original_message = document.getElementById(e.currentTarget.parentElement.id);
-  var editContainer = document.createElement('div');
-  editContainer.setAttribute('data-parent', e.currentTarget.parentElement.id);
-  editContainer.classList.add("text-container");
-  console.log("Parent: " + editContainer.getAttribute('data-parent'));
-  editContainer.id = makeid();
-  var editBox = document.createElement('TEXTAREA');
-  editBox.id = editContainer.id + "editbox";
-  editContainer.setAttribute('data-editbox', editBox.id);
-  editBox.classList.add("edit_box");
-  var saveButton = document.createElement('div');
-  saveButton.innerHTML = '<i class="fas fa-arrow-circle-right fa-2x"></i>';
-  saveButton.classList.add('noselect'); saveButton.classList.add("save_edit_btn");
-  saveButton.id = editContainer.id + "saveButton";
-  editBox.defaultValue = document.getElementById(e.currentTarget.parentElement.id+"text").innerHTML;
-  console.log("Found value " + document.getElementById(e.currentTarget.parentElement.id+"text").innerHTML);
-  editContainer.appendChild(editBox); editContainer.appendChild(saveButton);
-  original_message.innerHTML = editContainer.innerHTML;
+  if (window_open == false)
+  {
+    window_open = true;
+    var original_message = document.getElementById(e.currentTarget.parentElement.id);
+    var editContainer = document.createElement('div');
+    editContainer.setAttribute('data-parent', e.currentTarget.parentElement.id);
+    editContainer.classList.add("text-container");
+    console.log("Parent: " + editContainer.getAttribute('data-parent'));
+    editContainer.id = makeid();
+    var editBox = document.createElement('TEXTAREA');
+    editBox.id = editContainer.id + "editbox";
+    editContainer.setAttribute('data-editbox', editBox.id);
+    editBox.classList.add("edit_box");
+    var saveButton = document.createElement('div');
+    saveButton.innerHTML = '<i class="fas fa-arrow-circle-right fa-2x"></i>';
+    saveButton.classList.add('noselect'); saveButton.classList.add("save_edit_btn");
+    saveButton.id = editContainer.id + "saveButton";
+    editBox.defaultValue = document.getElementById(e.currentTarget.parentElement.id+"text").innerHTML;
+    console.log("Found value " + document.getElementById(e.currentTarget.parentElement.id+"text").innerHTML);
+    editContainer.appendChild(editBox); editContainer.appendChild(saveButton);
+    original_message.innerHTML = editContainer.innerHTML;
+  }
 })
 
 $(document).on('click', ".message_list_reply", function(e)
 {
-  var original_message = e.target.parentElement;
-  var replyContainer = document.createElement('div');
-  replyContainer.classList.add("text-container");
-  replyContainer.setAttribute('data-parent', e.target.parentElement.id);
-  replyContainer.id = makeid();
-  var separator = document.createElement('div');
-  separator.classList.add("separator");
-  replyContainer.appendChild(separator);
-  var replyBox = document.createElement('TEXTAREA');
-  replyBox.id = replyContainer.id + "replybox";
-  console.log("Replybox id: " + replyBox.id);
-  replyBox.classList.add("reply_box");
-  var replyButton = document.createElement('div');
-  replyButton.innerHTML = '<i class="fas fa-arrow-circle-right fa-2x"></i>';
-  replyButton.classList.add("noselect"); replyButton.classList.add("reply_btn");
-  replyButton.id = replyContainer.id + "replyButton";
-  replyContainer.appendChild(replyBox);
-  replyContainer.appendChild(replyButton);
-  original_message.insertAdjacentElement('afterend', replyContainer);
+  if (window_open == false)
+  {
+    window_open = true;
+    var original_message = e.target.parentElement;
+    var replyContainer = document.createElement('div');
+    replyContainer.classList.add("text-container");
+    replyContainer.setAttribute('data-parent', e.target.parentElement.id);
+    replyContainer.id = makeid();
+    var separator = document.createElement('div');
+    separator.classList.add("separator");
+    replyContainer.appendChild(separator);
+    var replyBox = document.createElement('TEXTAREA');
+    replyBox.id = replyContainer.id + "replybox";
+    console.log("Replybox id: " + replyBox.id);
+    replyBox.classList.add("reply_box");
+    var replyButton = document.createElement('div');
+    replyButton.innerHTML = '<i class="fas fa-arrow-circle-right fa-2x"></i>';
+    replyButton.classList.add("noselect"); replyButton.classList.add("reply_btn");
+    replyButton.id = replyContainer.id + "replyButton";
+    replyContainer.appendChild(replyBox);
+    replyContainer.appendChild(replyButton);
+    original_message.insertAdjacentElement('afterend', replyContainer);
+  }
 });
 
 $(document).on('click', '.save_edit_btn', function(e){
@@ -332,6 +390,7 @@ $(document).on('click', '.save_edit_btn', function(e){
   msg["council"] = council;
   msg["content"] = e.currentTarget.previousElementSibling.value;
   msg["msg_id"] = e.currentTarget.parentElement.id;
+  window_open = false;
   socket.emit('request message edit', msg);
 })
 
@@ -348,15 +407,20 @@ $(document).on('click', ".reply_btn", function(e){
   msg["parent"] = (e.currentTarget.parentElement.getAttribute('data-parent'));
   socket.emit('request new message', msg);
   document.getElementById(e.currentTarget.parentElement.id).parentNode.removeChild(e.currentTarget.parentElement);
+  window_open = false;
   window.location.reload();
 });
 
 $(document).on('click', ".message_list_delete", function(e){
-  data = {}
-  data["user_id"] = logged_in;
-  data["council"] = council;
-  data["mid"] = e.target.parentElement.id;
-  socket.emit('request delete message', data);
+  if(window.confirm("Oletko varma että haluat poistaa tämän viestin?"))
+  {
+    data = {}
+    data["user_id"] = logged_in;
+    data["council"] = council;
+    data["mid"] = e.target.parentElement.id;
+    socket.emit('request delete message', data);
+    window.location.reload();
+  }
 });
 
 $(document).on('click', '.message_reactions', function(e){

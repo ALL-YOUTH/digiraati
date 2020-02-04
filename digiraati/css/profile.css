@@ -34,6 +34,12 @@ body{
 
 }
 
+.selected{
+  border-style: solid;
+  border-width: 5px;
+  border-color: greenyellow;
+}
+
 #left_container{
   background: -moz-linear-gradient(left, rgba(255,255,255,0.37) 0%, rgba(124,227,178,0.37) 50%, rgba(1,175,196,0.37) 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(left, rgba(255,255,255,0.37) 0%,rgba(124,227,178,0.37) 50%,rgba(1,175,196,0.37) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -53,7 +59,9 @@ body{
 
 #left_container div{
   text-align: left;
-  font: Medium 22px/42px Montserrat;
+  font-family: Montserrat;
+  font-size: 13px;
+  font-weight: bold;
   letter-spacing: 0;
   color: black;
   opacity: 1;
@@ -119,6 +127,21 @@ body{
   margin-top:30px;
 }
 
+.picture{
+  position:absolute;
+  left: -6px;
+  top: -35px;
+  width: 177px;
+  height: 177px;
+  background: transparent 0% 0% no-repeat padding-box;
+  background-color: lightgreen;
+  box-shadow: 3px 3px 6px #00000029;
+  border: 5px solid #01AFC4;
+  border-radius: 50%;
+  opacity: 1;
+  margin-top:30px;
+}
+
 #profile_real_name{
   position: relative;
   text-align: center;
@@ -147,8 +170,9 @@ body{
 
 #button_row{
   display:inline-block;
-  width: 30%;
+  width: 100%;
   margin: 15px;
+  text-align: center;
 }
 
 #save_btn, #cancel_btn{
@@ -174,6 +198,7 @@ body{
   margin-top: 35px;
   margin-bottom: 35px;
   display: inline-block;
+  text-align: center;
 }
 
 .avatar_pic{
@@ -184,15 +209,16 @@ body{
 
 #avatar_row{
   display:inline-block;
+  width: 100%;
   margin: 15px;
 }
 
 #avatar_content {
   background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 10% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 75%; /* Could be more or less, depending on screen size */
 }
 
 .modal {
