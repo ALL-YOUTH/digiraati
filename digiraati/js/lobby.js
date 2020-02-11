@@ -125,34 +125,38 @@ socket.on('council data', function(data){
         break;
       }
     }
-    var msgs = data["messages"];
-    try{
-      for(var i = 1; i <= 4; ++i){               //Showing the last 4 messages
-        var message = document.createElement('div');
-        var msg = msgs[msgs.length-i];        //The last four messages sent to the chat
-        var pic = document.createElement('div');
-        pic.textContent = msg["sender"][0].toUpperCase();
-        var c = 0;
-        for(var j = 0; j < msg["sender"].length; ++j){
-          c += msg["sender"].charCodeAt(j);
-        }
-        pic.style.backgroundColor = colors[c % colors.length];
-        console.log("Picked colour " + colors[c % colors.length]);
-        pic.classList.add("chat_avatar_ball");
-        var sender = document.createElement('div');
-        sender.textContent = msg["sender"];
-        sender.classList.add("message_list_sender_name");
-        var msg_text = document.createElement('div');
-        msg_text.innerHTML = msg["content"];
-        msg_text.classList.add("message_text");
-        message.appendChild(pic); message.appendChild(sender);
-        message.appendChild(msg_text);
+    if (logged_in != "")
+    {
+      var msgs = data["messages"];
+      try{
+        for(var i = 1; i <= 4; ++i){               //Showing the last 4 messages
+          var message = document.createElement('div');
+          var msg = msgs[msgs.length-i];        //The last four messages sent to the chat
+          var pic = document.createElement('div');
+          pic.textContent = msg["sender"][0].toUpperCase();
+          var c = 0;
+          for(var j = 0; j < msg["sender"].length; ++j){
+            c += msg["sender"].charCodeAt(j);
+          }
+          pic.style.backgroundColor = colors[c % colors.length];
+          console.log("Picked colour " + colors[c % colors.length]);
+          pic.classList.add("chat_avatar_ball");
+          var sender = document.createElement('div');
+          sender.textContent = msg["sender"];
+          sender.classList.add("message_list_sender_name");
+          var msg_text = document.createElement('div');
+          msg_text.innerHTML = msg["content"];
+          msg_text.classList.add("message_text");
+          message.appendChild(pic); message.appendChild(sender);
+          message.appendChild(msg_text);
 
-        document.getElementById("lobby_latest_messages").appendChild(message);
+          document.getElementById("lobby_latest_messages").appendChild(message);
+        }
       }
+    
+      catch(error){
+        console.log("lol", error);
     }
-    catch(error){
-      console.log("lol", error);
     }
   }
 });

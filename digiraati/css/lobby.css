@@ -1,4 +1,5 @@
 @import url("https://use.typekit.net/gbv0ney.css");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap');
 
 body, html{
   max-width:100%;
@@ -333,11 +334,13 @@ div .inactive{
 
 .message_text{
   text-align: left;
-  font: 16px/26px Montserrat;
+  font-family: 'Open Sans';
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 22px;
   letter-spacing: 0;
   color: #202124;
   opacity: 1;
-  font-weight: 500;
   margin: 10px 0px;
 }
 

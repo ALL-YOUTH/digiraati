@@ -17,7 +17,7 @@ body{
 
 }
 
-#main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #arrow_left{
+#main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title, #arrow_left,{
   display:none;
 }
 
@@ -46,6 +46,16 @@ img {
   background-image: url("/res/hero_image.jpg");
   background-repeat: no-repeat;
   color:white;
+}
+
+.council_time_box{
+  margin-left: 37px;
+  display: inline-block;
+  width: 80%;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: italic;
+  margin-bottom: 10px;
 }
 
 #main_text_mobile, #secondary_text_mobile{
@@ -80,8 +90,8 @@ img {
   margin:20px 40px 20px 0px;
   position:relative;
   border-radius: 5px;
-  height:300px;
-  width:300px;
+  height:360px;
+  width:350px;
   background-color:white;
   border:solid;
   border-width: 0px;
@@ -106,6 +116,9 @@ img {
 }
 
 .council_box .council_title{
+  padding-top: 5px;
+  padding-left: 10px;
+  left: 30px;
   font-family: Montserrat;
   font-size: 16px;
   font-weight: bold;
@@ -128,6 +141,19 @@ img {
   overflow:hidden;
 }
 
+.description_box{
+  position: relative;
+  left: 40px;
+  display: inline-block;
+  width: 80%;
+  height: 65px;
+  font-family: Montserrat;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
 
 .council_time{
   display:block;
@@ -135,13 +161,20 @@ img {
 }
 
 .reaction_box{
+  display: flex;
+  position: relative;
+  left: 30px;
   width: 80%;
-  display: inline-block;
+  height: 30px;
+}
+
+.people_box, .likes_box, .dislikes_box{
+  display: flex;
+  padding-right: 10%;
 }
 
 .council_likes_icon, .council_dislikes_icon, .council_people_icon{
   float:left;
-  display:inline-block;
   height:15px;
   width:15px;
   margin:0px 5px 0px 10px;
@@ -355,7 +388,7 @@ img {
   .council_title {
     padding-top: 10px;
     position: relative;
-    left: 40px;
+    left: 30px;
     top: 10px;
 		overflow: hidden;
 		width: 281px;
@@ -384,15 +417,15 @@ img {
   }
 
   .reaction_box{
-    display: inline-block;
+    display: flex;
     position: relative;
-    left: 40px;
+    left: 30px;
     width: 80%;
-    height: 40px;
+    height: 30px;
   }
 
   .people_box, .likes_box, .dislikes_box{
-    display: inline-block;
+    display: flex;
     padding-right: 10%;
   }
 
@@ -403,8 +436,7 @@ img {
   }
 
   .council_time_box{
-    position: relative;
-    left: 40px;
+    margin-left: 37px;
     display: inline-block;
     width: 80%;
     font-family: Montserrat;
@@ -424,7 +456,7 @@ img {
     left: 40px;
     display: inline-block;
     width: 80%;
-    height: 50px;
+    height: 65px;
     font-family: Montserrat;
     font-size: 14px;
     margin-top: 10px;

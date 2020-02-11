@@ -40,7 +40,7 @@ socket.on('receive all council answers', function(data){ // Receives an array of
 
 socket.on('council data', function(data){
   $('#left_menu_title').html(data["name"]);
-  $('#conclusion_input').text(data["conclusion"]);
+  document.getElementById('editor').getRootNode().innerHTML = data["conclusion"];
 });
 
 $('#questionnaire_btn').click(function(){
@@ -94,7 +94,7 @@ socket.on('conclusion answers updated', function(e){
 $('#save_conclusion_text').click(function(){
   var coun_data = {};
   coun_data["council"] = council;
-  coun_data["text"] = $('#conclusion_input').val();
+  coun_data["text"] = document.getElementById('editor').getRootNode().innerHTML;
   socket.emit('request conclusion update', coun_data);
 });
 
@@ -137,7 +137,8 @@ socket.on("questionnaire request response", function(response)
 
   data["questions"] = response["questionnaire"];
 
-  var conc_value = document.getElementById("conclusion_input").val;
+  var qeditor = document.getElementById("editor");
+  var conc_value = qeditor.getRootNode().innerHTML;
   console.log("Conc value: " + conc_value);
   
   if (conc_value = undefined)
@@ -148,7 +149,7 @@ socket.on("questionnaire request response", function(response)
     {
       base_text += i+1 + ". " + data["questions"][i] + "\n\n";
     }
-    $('#conclusion_input').text(base_text);
+    qeditor.getRootNode().innerHTML = base_text;
   }
   
   try {

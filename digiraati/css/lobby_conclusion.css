@@ -145,11 +145,12 @@ div .valid{
 }
 
 .back_button, .forw_button{
+  cursor: pointer;
   font-family: Montserrat;
   font-size: 14px;
   font-weight: bold;
   margin-left: 5%;
-  background-color: rgba(235,237,237,1);
+  background-color: rgba(143, 153, 153, 1);
   color: white;
   border-style: solid;
   border-radius: 5px;
@@ -163,11 +164,6 @@ div .valid{
 .forw_button{
   margin-right: 5%;
   margin-left: auto;
-  background-color: rgba(235,237,237,1);
-  color: black;
-  border-style: solid;
-  border-radius: 5px;
-  border-color: rgba(112,112,112,0.263);
   width: 10%;
   text-align: center;
   padding: 10px 15px;
@@ -266,10 +262,18 @@ div .inactive{
   margin-left:10px;
 }
 
-#conclusion_editor, #questionnaire_container{
+#questionnaire_container{
   color: black;
   margin-left: 10px;
   margin-top: 40px;
+}
+
+#conclusion_editor{
+  color: black;
+  margin-left: 10px;
+  padding-left: 40px;
+  margin-top: 40px;
+  width: 60%;
 }
 
 #conclusion_input_title{

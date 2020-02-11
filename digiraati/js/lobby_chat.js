@@ -76,10 +76,10 @@ socket.on("login success", function(){
 window.onscroll = function(e){
   if ($(window).height() + $(window).scrollTop() > $(document).height() - $("#footer").height()) {
     var h = $(document).height() - $(window).height() - $(window).scrollTop() - $("#footer").height()
-    $('#chat_message_input').css("bottom", Math.abs(h)+"px");
+    $('#chat_message_container').css("bottom", Math.abs(h)+"px");
   }
   else{
-    $('#chat_message_input').css("bottom", "0px");
+    $('#chat_message_container').css("bottom", "0px");
   }
 }
 
@@ -138,10 +138,10 @@ function create_message(msg){
     pic.classList.add("chat_avatar_ball");
     var senderContainer = document.createElement('div');
     senderContainer.classList.add("sender_container");
-    var sender = document.createElement('a');
+    var sender = document.createElement('div');
     sender.innerHTML = msg["sender"]
     sender.classList.add("message_list_sender_name");
-    var timeStamp = document.createElement('a');
+    var timeStamp = document.createElement('div');
     timeStamp.innerHTML = msg_timestamp;
     timeStamp.classList.add("message_list_timestamp");
     senderContainer.appendChild(pic); senderContainer.appendChild(sender); senderContainer.appendChild(timeStamp); 
@@ -151,7 +151,7 @@ function create_message(msg){
   {
     var senderContainer = document.createElement('div');
     senderContainer.classList.add("sender_container");
-    var timeStamp = document.createElement('a');
+    var timeStamp = document.createElement('div');
     timeStamp.innerHTML = msg_timestamp;
     timeStamp.classList.add("message_list_timestamp");
     senderContainer.appendChild(timeStamp);
@@ -244,10 +244,10 @@ function create_reply(msg, level){
   pic.classList.add("chat_avatar_ball");
   var senderContainer = document.createElement('div');
   senderContainer.classList.add("sender_container");
-  var sender = document.createElement('a');
+  var sender = document.createElement('div');
     sender.innerHTML = msg["sender"]
     sender.classList.add("message_list_sender_name");
-  var timeStamp = document.createElement('a');
+  var timeStamp = document.createElement('div');
     timeStamp.innerHTML = msg_timestamp;
     timeStamp.classList.add("message_list_timestamp");
   senderContainer.appendChild(pic);senderContainer.appendChild(sender); senderContainer.appendChild(timeStamp); 

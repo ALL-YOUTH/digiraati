@@ -1,4 +1,5 @@
 @import url("https://use.typekit.net/gbv0ney.css");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 body, html{
   max-width:100%;
@@ -114,12 +115,11 @@ div .inactive{
 }
 
 #chat_message_input{
-  position: fixed;
-  width: 70%;
+  position: relative;
+  width: 90%;
   font-family: Montserrat;
   font-size:14px;
-  height:100px;
-  bottom:0px;
+  height:90%;
   background-color: rgba(245,246,250,1);
   margin:10px;
   border-radius:5px;
@@ -143,7 +143,7 @@ div .inactive{
   border-style: solid;
   border-width: 2px;
   z-index: 20;
-  line-height: 20px;
+  line-height: 22px;
 }
 
 .edit_box{
@@ -160,7 +160,7 @@ div .inactive{
   border-style: solid;
   border-width: 2px;
   z-index: 20;
-  line-height: 20px;
+  line-height: 22px;
 }
 
 
@@ -244,7 +244,7 @@ div .inactive{
   border-radius:2px;
   margin-left: 10px;
   border-left: 4px solid rgba(1,175,196,1);
-  line-height: 20px;
+  line-height: 22px;
 }
 
 .vertical_line{
@@ -264,7 +264,7 @@ div .inactive{
   border-left: 8px double  rgba(1,175,196,1);
   border-radius:2px;
   margin-left: 10px;
-  line-height: 20px;
+  line-height: 22px;
 }
 
 /*.chat_message:hover{
@@ -272,6 +272,7 @@ div .inactive{
 }*/
 
 .chat_avatar_ball{
+  order: 0;
   border-radius: 50%;
   display: inline-block;
   padding:3px;
@@ -293,10 +294,11 @@ div .inactive{
 }
 
 .message_list_text{
-  font-family: Montserrat;
+  font-family: 'Open Sans';
   font-size:14px;
-  line-height: 20px;
-  margin-left: 40px;
+  line-height: 22px;
+  margin-left: 15px;
+  font-weight: 300;
   white-space: pre-wrap;
 }
 
@@ -317,15 +319,29 @@ div .inactive{
 }
 
 .goodargs_num{
-  display:inline-block;
+  display: flex;
   margin-left:10px;
   color:rgba(250, 105, 128,1);
 }
 
+
+.message_list_timestamp{
+  padding-top: 7px;
+  order: 2;
+  color: rgba(112,112,112,0.263);
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: italic;
+}
+
 .message_list_sender_name{
+  order: 1;
+  padding-top: 7px;
   margin-left:10px;
-  text-align: left;
-  font: Bold 14px/42px Montserrat;
+  margin-right: 10px;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: bold;
   letter-spacing: 0;
   color: #202124;
   opacity: 1;
@@ -347,7 +363,7 @@ div .inactive{
   font-size: 14px;
   margin-right: 10px;
   font-weight: bold;
-  line-height: 20px;
+  line-height: 22px;
 }
 
 .message_list_delete{
@@ -360,7 +376,7 @@ div .inactive{
 }
 
 .likes_btn{
-  margin: 10px 5px 0px 40px;
+  margin: 10px 5px 0px 15px;
   width:15px;
   height:15px;
   display:inline-block;
@@ -377,16 +393,22 @@ div .inactive{
   cursor:pointer;
 }
 
-.message_list_timestamp{
-  padding-left: 10px;
-  color: rgba(112,112,112,0.263);
-  font-family: Montserrat;
-  font-size: 14px;
-  font-style: italic;
+#chat_message_container{
+  width: 70%;
+  height:100px;
+  bottom:0px;
+  background-color: white;
+  border-style: solid;
+  border-color: white;
+  border-radius: 3px;
 }
 
 .sender_container{
+  display: flex;
   margin-left: 15px;
+  margin-bottom: 10px;
+  height: 35px;
+  width: 40%;
 }
 
 .goodargs_btn{
