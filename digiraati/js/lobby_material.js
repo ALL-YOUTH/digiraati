@@ -23,7 +23,7 @@ var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 $(function(){
   council = window.location.href.split("/").slice(-2)[0];
-  socket.emit('request council data', council);
+  socket.emit("check login council", window.sessionStorage.getItem('token'), council);
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
   $('#comment_view').css("height", $(window).height()-100);

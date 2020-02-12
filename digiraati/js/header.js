@@ -5,7 +5,7 @@ var view = "";
 
 var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
-socket.emit('check login');
+socket.emit('check login', window.sessionStorage.getItem('token'));
 
 if($(window).width() < 983){
   view = "mobile";
@@ -16,11 +16,11 @@ else{
 
 window.onresize = function(){
   if(view == "desktop" && $(window).width() < 983){
-    socket.emit('check login');
+    socket.emit('check login', window.sessionStorage.getItem('token'));
     view = "mobile";
   }
   else if(view == "mobile" && $(window).width() >= 983){
-    socket.emit('check login');
+    socket.emit('check login', window.sessionStorage.getItem('token'));
     view = "desktop";
   }
 }
@@ -108,11 +108,11 @@ $('#Kirjaudu_btn').click(function(){
 });
 
 $('#Kirjaudu_ulos_btn').click(function(){
-  socket.emit('logout attempt', logged_in);
+  socket.emit('logout attempt', sessionStorage.getItem('token'));
 });
 
 $('#hamburger_signout').click(function(){
-  socket.emit('logout attempt', logged_in);
+  socket.emit('logout attempt', sessionStorage.getItem('token'));
 });
 
 $('#login_confirm').click(function(){
@@ -121,9 +121,11 @@ $('#login_confirm').click(function(){
   socket.emit('login attempt', email, password);
 });
 
-socket.on("login success", function(name){
+socket.on("login success", function(name, user_token){
   logged_in = name;
   console.log("Success! Logged in: " + logged_in);
+  window.sessionStorage.setItem('token', user_token);
+  window.sessionStorage.setItem('logged_in', name);
   var c = 0;
   for(var i = 0; i < name.length; ++i){
     c += name.charCodeAt(i);
@@ -158,6 +160,8 @@ socket.on('invalid login', function(){
 });
 
 socket.on('logout success', function(){
+  console.log("Cleared session storage.");
+  sessionStorage.clear();
   logged_in = "";
   goToPage("/");
 });

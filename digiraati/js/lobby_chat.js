@@ -13,7 +13,7 @@ $(function(){
   $('#footer').load(host + "/html/footer.html");
 
   council = window.location.href.split("/").slice(-2)[0];
-  socket.emit("check login council", council);
+  socket.emit("check login council", window.sessionStorage.getItem('token'), council);
 });
 
 socket.on('council data', function(data){

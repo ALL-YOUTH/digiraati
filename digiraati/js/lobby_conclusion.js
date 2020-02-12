@@ -15,7 +15,7 @@ $(function(){
   $('#footer').load(host + "/html/footer.html");
 
   council = window.location.href.split("/").slice(-2)[0];
-  socket.emit("check login council", council);
+  socket.emit("check login council", window.sessionStorage.getItem('token'), council);
   socket.emit("request council data", council);
   $('#conclusion_editor').hide();
   $('#questionnaire_container').show();
@@ -40,7 +40,7 @@ socket.on('receive all council answers', function(data){ // Receives an array of
 
 socket.on('council data', function(data){
   $('#left_menu_title').html(data["name"]);
-  document.getElementById('editor').getRootNode().innerHTML = data["conclusion"];
+  $('#conclusion_input').text(data["conclusion"]);
 });
 
 $('#questionnaire_btn').click(function(){
@@ -72,7 +72,6 @@ $('#conclusion_btn').click(function(){
 $(document).on('click', '.save_conclusion_btn', function(e){
   for (var i = 0; i < data["questions"].length; ++i)
   {
-    console.log("Loop de loop + " + i);
     var temp_answer = document.getElementById('answer_box' + i).value;
     if (temp_answer != undefined)
     {
@@ -94,7 +93,7 @@ socket.on('conclusion answers updated', function(e){
 $('#save_conclusion_text').click(function(){
   var coun_data = {};
   coun_data["council"] = council;
-  coun_data["text"] = document.getElementById('editor').getRootNode().innerHTML;
+  coun_data["text"] = $('#conclusion_input').val();
   socket.emit('request conclusion update', coun_data);
 });
 
@@ -137,9 +136,7 @@ socket.on("questionnaire request response", function(response)
 
   data["questions"] = response["questionnaire"];
 
-  var qeditor = document.getElementById("editor");
-  var conc_value = qeditor.getRootNode().innerHTML;
-  console.log("Conc value: " + conc_value);
+  var conc_value = document.getElementById("conclusion_input").val;
   
   if (conc_value = undefined)
   {
@@ -149,7 +146,7 @@ socket.on("questionnaire request response", function(response)
     {
       base_text += i+1 + ". " + data["questions"][i] + "\n\n";
     }
-    qeditor.getRootNode().innerHTML = base_text;
+    $('#conclusion_input').text(base_text);
   }
   
   try {
@@ -196,7 +193,6 @@ socket.on("questionnaire request response", function(response)
 function ActivateViewerpage(page)
 {
   quest_view = document.getElementById("questionnaire_viewer");
-  console.log("Viewing page " + page);
   var qf = document.createElement('div');
   qf.classList.add("questionnaire_viewer");
   qf.id = "questionnaire_viewer";
@@ -221,7 +217,6 @@ function ActivateViewerpage(page)
 
   qf.appendChild(button_div);
 
-  console.log("Current page: " + currentPage + " max page: " + data["questions"].length);
   if (currentPage > 0)
   {
     back_button.classList.add("valid");
@@ -268,10 +263,8 @@ function ActivateQuestionnaire()
   qf.classList.add("questionnaire_viewer");
   qf.id = "questionnaire_viewer";
 
-  console.log("Creating questions");
   for (var i = 0; i < data["questions"].length; ++i)
   {
-    console.log("Creating question");
     var temp_question = document.createElement('div');
     temp_question.classList.add("conclusion_question");
     temp_question.id = "conclusion_question" + i;

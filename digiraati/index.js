@@ -3,11 +3,13 @@ var util = require('util');
 var SocketIOFile = require('socket.io-file');
 var fs = require('fs');
 var cors = require('cors');
+var crypto = require('crypto');
 
 var server = require('./routes.js');  //All the urls defined
 var app = server["app"];
 var io = server["io"];
 var http = server["http"];
+var user_tokens = [];
 
 //Define the port
 var port = process.env.PORT || 3000;
@@ -36,6 +38,7 @@ let users = new Users();
 let councils = new Councils();
 let logger = new Logger();
 let conclusioner = new Conclusions();
+setInterval(ClearExpiredSessions, 1000 * 60 * 60 * 12);
 
 // Add temporary questionnaire for testing purposes
 //let temp_data = {"council_id": "HW3kprXx14FW", "questions": ["What is tasty?", "Are cats or dogs better?", "I think we'd better get at least one long question in here as well to see just how well the data is formatted if the question is longer. I am tired of these jokes about my giant hand. The first such incident occured in 1956 when..."]};
@@ -117,6 +120,18 @@ fs.readFile(backup_file, function (err, data) {
 
 });
 
+function ClearExpiredSessions()
+{
+  console.log("Clearing expired sessions");
+  for (var i = 0; i < user_tokens.length; ++i)
+  {
+    if (user_tokens[i].expiry_time < new Date())
+    {
+      user_tokens.splice(i, 1);
+    }
+  }
+}
+
 //Start listening to the server:port
 http.listen(port);
 
@@ -156,29 +171,44 @@ io.on('connection', function(socket){
   });
 
   //login check request. Checks the login according to the IP parsed from a socket
-  socket.on('check login', function(){
-    var name = users.get_login_by_ip(ip);
+  socket.on('check login', function(token){
+    var name = false;
+    for (var i = 0; i < user_tokens.length; ++i)
+    {
+      if (user_tokens[i].token == token)
+      {
+        name = user_tokens[i].name;
+      }
+    }
     if(name == false){
       socket.emit('not logged');
     }
     else{
+      console.log("Checked login for " + token + " and it's " + name);
       var uid = users.get_userid_by_username(name);
-      socket.emit('login success', name);
+      socket.emit('login success', name, token);
       update_page();
     }
   });
 
   //login check request. Checks the login according to the IP parsed from a socket
   //Like 'check login' ,but modified for council check
-  socket.on('check login council', function(cid){
-    var name = users.get_login_by_ip(ip);
+  socket.on('check login council', function(token, cid){
+    var name = false;
+    for (var i = 0; i < user_tokens.length; ++i)
+    {
+      if (user_tokens[i].token == token)
+      {
+        name = user_tokens[i].name;
+      }
+    }
     if(name == false){
       console.log("You're not logged in");
       socket.emit('not logged');
     }
     else{
       var uid = users.get_userid_by_username(name);
-      socket.emit('login success', name);
+      socket.emit('login success', name, token);
       socket.join(cid);
       update_page();
     }
@@ -230,7 +260,12 @@ io.on('connection', function(socket){
     }
     else{
       var uid = users.get_userid_by_username(name);
-      socket.emit('login success', name);
+      var user_token = crypto.randomBytes(20).toString('hex');
+      var expiry_time = new Date();
+      expiry_time.setHours(expiry_time.getHours() + 12);
+      console.log("Registering new user token pair: " + user_token + ", " + uid);
+      user_tokens.push({'token': user_token, 'name': name, 'expiry_time': expiry_time});
+      socket.emit('login success', name, user_token);
       logger.AppendLog("e01", uid, new Date().getTime());
       server_log(ip + ": " + uid + " (" + name + ") logged in");
       update_page();
@@ -382,7 +417,16 @@ io.on('connection', function(socket){
   });
 
   //User logged out of the chat
-  socket.on('logout attempt', function(name){
+  socket.on('logout attempt', function(token){
+    var name = ""
+    for (var i = 0; i < user_tokens.length; ++i)
+    {
+      if (user_tokens[i].token == token)
+      {
+        name = user_tokens[i].name;
+        user_tokens.splice(i, 1);
+      }
+    }
     users.logout_user(name);
     server_log(ip + ": " + name + " logged out");
     logger.AppendLog("e02", users.get_userid_by_username(name), new Date().getTime());
@@ -533,15 +577,30 @@ io.on('connection', function(socket){
   });
 
   //request to fetch user data
-  socket.on('request user data', function(){
-    var username = users.get_username_by_ip(ip);
-    var userdata = users.get_user(username);
+  socket.on('request user data', function(token){
+    var name = "";
+    for (var i = 0; i < user_tokens.length; ++i)
+    {
+      if (user_tokens[i].token == token)
+      {
+        name = user_tokens[i].name;
+      }
+    }
+    var userdata = users.get_user(name);
     socket.emit('user data', userdata);
   });
 
   //request to make changes in user data
-  socket.on('request update info', function(data){
-    var name = users.get_username_by_ip(ip);
+  socket.on('request update info', function(token, data){
+    var name = "";
+    
+    for (var i = 0; i < user_tokens.length; ++i)
+    {
+      if (user_tokens[i].token == token)
+      {
+        name = user_tokens[i].name;
+      }
+    }
     var errors = users.update_user_info(name, data);
     if(!errors){
       socket.emit('info update success');
@@ -589,7 +648,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('request questionnaire', function(data){
-    console.log("Received request");
     var returnable = {};
     returnable["questionnaire"] = conclusioner.get_questionnaire_by_council(data["council_id"]);
     returnable["answers"] = conclusioner.get_answers_by_user_id(data["council_id"], data["user_id"]);

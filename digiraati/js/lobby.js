@@ -14,7 +14,9 @@ $(function(){
   $('#footer').load(host + "/html/footer.html");
 
   council = window.location.href.split("/").slice(-2)[0];
-  socket.emit("request council data", council);
+  console.log("token: " + window.sessionStorage.getItem('token'))
+  console.log("user: " + window.sessionStorage.getItem('logged_in'));
+  socket.emit("check login council", window.sessionStorage.getItem('token'), council);
   console.log("Logged in: " + logged_in);
 });
 
