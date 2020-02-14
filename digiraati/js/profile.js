@@ -7,7 +7,7 @@ var avatar_pictures;
 $(function(){
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
-  socket.emit('check login');
+  socket.emit('check login', window.sessionStorage.getItem('token'));
   socket.emit('request user data');
   avatar_pictures = document.querySelectorAll('.avatar_pic');
   $("avatar_container").hide();

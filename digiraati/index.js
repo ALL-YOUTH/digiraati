@@ -178,9 +178,11 @@ io.on('connection', function(socket){
       if (user_tokens[i].token == token)
       {
         name = user_tokens[i].name;
+        console.log("Name found and set.");
       }
     }
     if(name == false){
+      console.log("Emitting false");
       socket.emit('not logged');
     }
     else{
