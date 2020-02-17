@@ -103,7 +103,7 @@ fs.readFile(backup_file, function (err, data) {
       var data = {};
       data["user"] = user;
       data["council"] = council["id"];
-      councils.add_user_to_council(data);
+      councils.recover_user_to_council(data);
     }
     
   }
@@ -580,6 +580,7 @@ io.on('connection', function(socket){
 
   //request to fetch user data
   socket.on('request user data', function(token){
+    console.log("Received " + token);
     var name = "";
     for (var i = 0; i < user_tokens.length; ++i)
     {
@@ -588,6 +589,7 @@ io.on('connection', function(socket){
         name = user_tokens[i].name;
       }
     }
+    console.log("Getting user data for " + name);
     var userdata = users.get_user(name);
     socket.emit('user data', userdata);
   });

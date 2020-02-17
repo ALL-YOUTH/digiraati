@@ -527,10 +527,16 @@ module.exports = class Councils{
       }
     }
   }
+  recover_user_to_council(data){
+    let council = this.get_council_by_id(data["council"]);
+    //console.log("Vertaan salasanoja " + data["password"] + " ja " + council["password"]);
+    var res = council.add_participant(data["user"]);
+    return res;
+  }
 
   add_user_to_council(data){
     let council = this.get_council_by_id(data["council"]);
-    console.log("Vertaan salasanoja " + data["password"] + " ja " + council["password"]);
+    //console.log("Vertaan salasanoja " + data["password"] + " ja " + council["password"]);
     if (council["password"] != "" && (data["password"] != council["password"]))
     {
       return -1

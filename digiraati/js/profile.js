@@ -8,7 +8,7 @@ $(function(){
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
   socket.emit('check login', window.sessionStorage.getItem('token'));
-  socket.emit('request user data');
+  socket.emit('request user data', window.sessionStorage.getItem('token'));
   avatar_pictures = document.querySelectorAll('.avatar_pic');
   $("avatar_container").hide();
 
@@ -57,6 +57,7 @@ $('#save_btn').click(function(){
     var av_data = {};
     av_data["username"] = active_username;
     av_data["avatar"] = selected_avatar;
+    console.log(av_data);
     socket.emit('request avatar change', av_data);
   }
 });
