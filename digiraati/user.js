@@ -207,9 +207,15 @@ module.exports = class Users{
   }
 
   logout_user(name){
-    let user = this.get_user(name);
-    user.set_online_status(false);
-    user.set_ip(null);
+    try{
+      let user = this.get_user(name);
+      user.set_online_status(false);
+      user.set_ip(null);
+    }
+    catch(err)
+    {
+      console.log("tried to log out " + name + " but I was crashing");
+    }
   }
 
   login_user(name, p, ip){

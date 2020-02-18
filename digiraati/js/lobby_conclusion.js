@@ -8,6 +8,8 @@ var allAnswers = [];
 var data = {};
 var currentPage = 0;
 var quest_view;
+var trix_editor;
+var chat_list;
 
 $(function(){
 
@@ -17,11 +19,14 @@ $(function(){
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit("check login council", window.sessionStorage.getItem('token'), council);
   socket.emit("request council data", council);
-  $('#conclusion_editor').hide();
+  socket.emit("request ")
+  $('#conclusion_div').hide();
   $('#questionnaire_container').show();
+  $('#conclusion_chat_content').hide();
   data["council_id"] = council;
   //myAnswers = socket.emit('request answers by userid', data);
   quest_view = document.getElementById('questionnaire_viewer');
+  trix_editor = document.querySelector("trix-editor");
 });
 
 socket.on('receive all council answers', function(data){ // Receives an array of arrays. Each sub-array is an array of a given user's anonymized answers to the final questions. 
@@ -40,11 +45,37 @@ socket.on('receive all council answers', function(data){ // Receives an array of
 
 socket.on('council data', function(data){
   $('#left_menu_title').html(data["name"]);
-  $('#conclusion_input').text(data["conclusion"]);
+  try{
+    trix_editor.editor.loadJSON(JSON.parse(data["conclusion"]));
+  }
+  catch(e)
+  {
+    if (e instanceof SyntaxError)
+    {
+      trix_editor.editor.insertString(data["conclusion"]);
+    }
+
+  else {
+    alert("Loppulausuman lataamisessa tapahtui virhe.");
+    }
+  }
+
+  finally{
+    chat_list = document.getElementById("conclusion_chat_list");
+    var chat_messages = data["messages"];
+    var original_messages = chat_messages.filter(element => element["parent"] == "");
+    console.log("Parsing " + chat_messages.length + " chat messages, " + original_messages.length + " original ones");
+    for(message of original_messages)
+    {
+      ParseChatMessage(message, chat_messages);
+    }
+  }
+  
+  //$('#conclusion_input').text(data["conclusion"]);
 });
 
 $('#questionnaire_btn').click(function(){
-  $('#conclusion_editor').hide();
+  $('#conclusion_div').hide();
   $('#questionnaire_container').show();
   document.getElementById('questionnaire_btn').className = "active";
   document.getElementById('view_answers_btn').className = "inactive";
@@ -52,8 +83,24 @@ $('#questionnaire_btn').click(function(){
   ActivateQuestionnaire();
 });
 
+$('#conclusion_chat_toggle_btn').click(function(){
+    $('#conclusion_chat_toggle_btn').toggleClass('active');
+    $('#conclusion_chat_toggle_btn').toggleClass('inactive');
+    $('#conclusion_chat_content').toggle(5.5);
+    console.log(document.getElementById('conclusion_chat_toggle_btn').innerHTML);
+    if (document.getElementById('conclusion_chat_toggle_btn').innerHTML === "Näytä keskustelu")  
+    { 
+      console.log("Piilotan keskustelun");
+      document.getElementById('conclusion_chat_toggle_btn').innerHTML = "Piilota keskustelu";
+    }
+    else {
+      console.log("No match here")
+      document.getElementById('conclusion_chat_toggle_btn').innerHTML = "Näytä keskustelu";
+    }
+});
+
 $('#view_answers_btn').click(function(){
-  $('#conclusion_editor').hide();
+  $('#conclusion_div').hide();
   $('#questionnaire_container').show();
   document.getElementById('questionnaire_btn').className = "inactive";
   document.getElementById('view_answers_btn').className = "active";
@@ -62,7 +109,7 @@ $('#view_answers_btn').click(function(){
 });
 
 $('#conclusion_btn').click(function(){
-  $('#conclusion_editor').show();
+  $('#conclusion_div').show();
   $('#questionnaire_container').hide();
   document.getElementById('questionnaire_btn').className = "inactive";
   document.getElementById('view_answers_btn').className = "inactive";
@@ -93,7 +140,7 @@ socket.on('conclusion answers updated', function(e){
 $('#save_conclusion_text').click(function(){
   var coun_data = {};
   coun_data["council"] = council;
-  coun_data["text"] = $('#conclusion_input').val();
+  coun_data["text"] = JSON.stringify(trix_editor.editor);
   socket.emit('request conclusion update', coun_data);
 });
 
@@ -189,6 +236,33 @@ socket.on("questionnaire request response", function(response)
 
   ActivateQuestionnaire();
 });
+
+function ParseChatMessage(message, messageList)
+{
+    var temp_message = document.createElement('div');
+    temp_message.classList.add("message_container");
+    var header_line = document.createElement('div');
+    header_line.classList.add("message_header");
+    var message_sender = document.createElement('span');
+    message_sender.classList.add("message_sender");
+    message_sender.innerHTML = message["sender"];
+    var message_timestamp = document.createElement('span');
+    message_timestamp.classList.add("message_timestamp");
+    message_timestamp.innerHTML = message["timestamp"];
+    header_line.appendChild(message_sender); header_line.appendChild(message_timestamp);
+    var message_body = document.createElement('div');
+    message_body.classList.add("message_text");
+    message_body.innerHTML = message["content"];
+    var separator = document.createElement('div');
+    separator.classList.add("msg_separator");
+    temp_message.appendChild(header_line);
+    temp_message.appendChild(message_body);
+    temp_message.appendChild(separator);
+    chat_list.appendChild(temp_message);
+
+    var children_messages = messageList.filter(element => element.parent == message["id"]);
+    children_messages.forEach(element => ParseChatMessage(element, messageList));
+}
 
 function ActivateViewerpage(page)
 {

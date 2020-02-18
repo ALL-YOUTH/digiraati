@@ -25,6 +25,13 @@ body{
   opacity: 1;
 }
 
+#register_disclaimer{
+  font-family: Montserrat;
+  font-size: 16px;
+  padding-bottom: 15px;
+  margin-left: 10px;
+}
+
 #register_hero, #register_hero_text{
   display:none;
 }
@@ -34,13 +41,26 @@ body{
   margin:auto;
 }
 
+#logo_url{
+  margin-top: 15px;
+  width: 123px;
+}
+
+#header_div{
+  height: 50px;
+}
+
 #confirm_register{
   cursor: pointer;
   font-weight: bold;
+  text-align: center;
+  width: 50%;
+  margin-top: 10px;
+  margin-left: 22%;
   border-radius: 5px;
-  padding: 5px 15px;
+  padding: 15px 15px;
   letter-spacing: 0;
-  font-size:10px;
+  font-size:16px;
   line-height: 15px;
   font-family: Montserrat;
   font-weight: bold;
@@ -87,18 +107,10 @@ body{
   cursor:default;
 }
 
-#register_disclaimer{
-  margin-top: 0px;
-  display:inline-block;
-  float:left;
-  margin: 0px 0px 0px 10px;
-}
-
-#policy_agreement_checkbox{
-  display:inline-block;
-  margin-left:20%;
-  margin:20px 20% 20px;
-  float:left;
+#confirm_container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 @media (min-width:800px){

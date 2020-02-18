@@ -6,10 +6,10 @@
 }
 
 #header_div{
+  height: 50px;
   overflow-x: hidden;
   z-index:99;
   padding:10px 0px 20px 0px;
-  background:url("/res/bannerinograffa6.png") no-repeat center center;
 }
 
 #hamburger_div{
@@ -28,7 +28,7 @@
 
 #hamburger_icon{
   position:absolute;
-  top:50%;
+  top:35%;
   left: 50%;
   -webkit-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
@@ -152,6 +152,15 @@
   margin-top:300px;
   margin-left:10px;
   color:rgba(0,96,115,1);
+}
+
+#header_div{
+  height: 100px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  z-index:99;
+  padding:10px 0px 20px 0px;
+  background:url("/res/bannerinograffa6.png") no-repeat center center;
 }
 
 #login_div #separator{

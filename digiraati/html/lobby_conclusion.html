@@ -3,8 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-  <link rel="stylesheet" href="/css/lobby_conclusion.css" type="text/css">
-  <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/trix.css">
+	<link rel="stylesheet" href="/css/lobby_conclusion.css" type="text/css">
+	<script type="text/javascript" src="/js/trix.js"></script>
+  	<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
 
 	<title>Digiraati 2.0</title>
@@ -38,26 +40,35 @@
 					<div class="active" id="questionnaire_btn">Oma kyselysi</div>
 					<div class="inactive" id="view_answers_btn">Tarkastele kyselyn vastauksia</div>
 					<div class="inactive" id="conclusion_btn">Tarkastele loppulausumaa</div>
-				</div>
-				
+				</div>		
 			</div>
 
-			<div id="conclusion_editor">
-				<div id="refresh_conclusion_text" class="fas fa-sync">  Päivitä</div>
-				<textarea id="conclusion_input" tabindex="-1"></textarea>
-				<div id="save_conclusion_text" class="fas fa-save">  Tallenna</div>
-			</div>				
+			<div id="conclusion_div">
+				<div id="conclusion_editor"><!--
+					<div id="refresh_conclusion_text" class="fas fa-sync">  Päivitä</div>
+					<textarea id="conclusion_input" tabindex="-1"></textarea>
+					<div id="save_conclusion_text" class="fas fa-save">  Tallenna</div> -->
+					<form>
+						<input id="conclusion_input" value="Tälle raadille ei ole loppulausumaa." type="hidden" name="conclusion_content">
+						<trix-editor input="conclusion_input"></trix-editor>
+					</form>
+					<div id="save_conclusion_text">TALLENNA</div>
+				</div>				
+				<div id="conclusion_chat">
+					<div id="conclusion_chat_header">
+						<div class="inactive" id="conclusion_chat_toggle_btn">Näytä keskustelu</div>
+					</div>
+					<div id="conclusion_chat_content">
+						<div id="conclusion_chat_list"></div>
+					</div>
+				</div>
+			</div>
 
 			<div id="questionnaire_container">
 				<div id="questionnaire_viewer"></div>
 			</div>		
 		</div>
 
-		<div id="bottom_container">
-			<div id="bottom_container_title">Kyselyn tulokset</div>
-			<div id="bottom_container_navigation"></div>
-			<div id="bottom container_content"></div>
-		</div>
 	</div>
 
   <footer id="footer">

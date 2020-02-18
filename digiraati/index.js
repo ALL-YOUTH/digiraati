@@ -420,6 +420,7 @@ io.on('connection', function(socket){
 
   //User logged out of the chat
   socket.on('logout attempt', function(token){
+    logger.AppendLog("exx", token, new Date().getTime());
     var name = ""
     for (var i = 0; i < user_tokens.length; ++i)
     {
