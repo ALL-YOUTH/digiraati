@@ -5,6 +5,11 @@ var view = "";
 
 var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
+if (typeof(sessionStorage) === undefined)
+{
+  alert("Selaimesi ei tunnu tukevan evästeitä. Digiraati.fi vaatii evästeitä toimiakseen, joten sivusto tuskin toimii selaimessasi. Voit koittaa käyttää toista selainta, tai ottaa yhteyttä opettajaasi tai IT-tukihenkilöösi.");
+}
+
 socket.emit('check login', window.sessionStorage.getItem('token'));
 
 if($(window).width() < 983){
@@ -27,6 +32,7 @@ window.onresize = function(){
 
 $('#Hae_btn').hide();
 $('#Kirjaudu_ulos_btn').hide();
+$('#hamburger_profile').hide();
 
 $("#Etusivu_btn").click(function(){
   goToPage("/");
@@ -80,6 +86,10 @@ $('#hamburger_index').click(function(){
 
 $('#hamburger_register').click(function(){
   goToPage("/register");
+});
+
+$('#hamburger_profile').click(function(){
+  goToPage("/profile");
 });
 
 $('#arrow_left').click(function(){
@@ -149,6 +159,8 @@ socket.on("login success", function(name, user_token){
     $('#login_div').css("display", "none");
     $('#hamburger_signin').hide();
     $('#hamburger_signout').show();
+    $('#hamburger_register').hide();
+    $('#hamburger_profile').show();
     $('#Kirjaudu_btn').hide();
     $('#Kirjaudu_ulos_btn').hide();
     $('#Profile_avatar').hide();

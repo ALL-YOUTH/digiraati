@@ -482,6 +482,7 @@ io.on('connection', function(socket){
   socket.on('request council data', function(id){
     council_data = councils.get_council_data(id);
     if(council_data != -1){
+      console.log(council_data);
       socket.emit('council data', council_data);
     }
     else{

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
 body, html{
   font-family: Montserrat;
@@ -14,9 +15,8 @@ input[type=text]{
 }
 
 /*Everything below is css for desktop view of the website.*/
-@media (min-width:800px){
+@media (min-width:1000px){
   #hero{
-    margin-top:20px;
     height:300px;
     background-image: url("/res/search_hero_image.png");
     position: relative;
@@ -69,35 +69,46 @@ input[type=text]{
   #search_container{
     max-width: 1200px;
     margin:auto;
+    margin-bottom: 20px;
   }
 
-  #search_container input[type=text]{
-    border-radius:3px;
-    border-color:rgba(114,172,255,1);
-    width:100%;
-    height:30px;
+  #search_container input[type=text], input[type=email], input[type=password]{
+    font-size: 14px;
+    font-family: Montserrat;
+    position:relative;
+    border-radius: 3px;
+    height: 30px;
+  }
+
+  #search_container p{
+    position:relative;
+    font-weight: normal;
+    font-family: Montserrat;
+    font-size: 14px;
+    margin-top:14px;
+    margin-bottom:6px;
   }
 
   #search_container_title{
-    margin-top:80px;
-    line-height: 42px;
+    margin-top:50px;
+    margin-bottom:20px;
+    line-height: 20px;
     text-align: left;
     font-family: Montserrat;
     font-style: normal;
     font-weight: bold;
-    font-size: 32px;
+    font-size: 20px;
     color:rgba(32,33,36,1);
   }
 
   #detailed_search_title{
-    margin-top:100px;
+    margin-top:70px;
     font-family:Montserrat;
     font-weight: bold;
     font-size:20px;
-    color:rgba(254,4,86,1);
   }
 
-  #word_search, #people_search{
+  #word_search, #people_search, #tag_search{
     font-family: Montserrat;
     font-size: 14px;
     border-radius: 5px;
@@ -109,13 +120,19 @@ input[type=text]{
     border-color:rgba(235,237,237,1);
   }
 
+  #search_list_btns{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 1200px;
+  }
+
   .search_list_btn{
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
     -moz-user-select: none; /* mozilla browsers */
     -khtml-user-select: none; /* webkit (konqueror) browsers */
     -ms-user-select: none; /* IE10+ */
     display:inline-block;
-    margin-left:50px;
     margin-top:20px;
     width:320px;
     text-align:center;

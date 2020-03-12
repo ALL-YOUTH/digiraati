@@ -36,6 +36,7 @@ function reformatDate(input){
 }
 
 socket.on('council data', function(data){
+  $('#lobby_latest_messages_arrow_up').hide();
   if (data["password"] != "") {council_password = true; }
   if(council_updated){
     clear_child_elements(document.getElementById("lobby_tags"));
@@ -59,10 +60,13 @@ socket.on('council data', function(data){
     startText.innerText = reformatDate(data["startdate"]);
     councilStart.appendChild(startBall); councilStart.appendChild(startText);
 
+    $('#lobby_duration').text("AUKEAA " + reformatDate(data["startdate"]));
+
     if(new Date() > Date.parse(data["startdate"]))
     {
       console.log("Council has started");
       startBall.setAttribute('src', '/res/checkball.png');
+      $('#lobby_duration').text("KÄYNNISSÄ " + reformatDate(data["startdate"]) + " - " + reformatDate(data["enddate"]));
     }
     
     var progressBar = document.createElement('div');
@@ -76,6 +80,7 @@ socket.on('council data', function(data){
     var progressPerc = dateDiff / (Date.parse(data["enddate"]) - Date.parse(data["startdate"]));
 
     console.log("Progress percentage: " + progressPerc);
+    if (progressPerc > 100) {progressPerc = 100};
 
     progress.style.width = progressPerc * 100 + "%";
 
@@ -93,6 +98,7 @@ socket.on('council data', function(data){
     {
       console.log("Council has started");
       endBall.setAttribute('src', '/res/checkball.png');
+      $('#lobby_duration').text("PÄÄTTYNYT " + reformatDate(data["enddate"]));
     }
 
     lb.appendChild(councilStart); lb.appendChild(progressBar); lb.appendChild(councilEnd);
@@ -112,15 +118,15 @@ socket.on('council data', function(data){
     tag.textContent = data["tags"][i];
     document.getElementById("lobby_tags").appendChild(tag);
   }
-  $("#leave_council_btn").css("display", "none");
-  $("#join_council_btn").css("display", "none");
+  $("#leave_council_btn").hide();
+  $("#join_council_btn").hide();
   if(logged_in != ""){
     $("#leave_council_btn").css("display", "none");
     $("#join_council_btn").css("display", "block");
     for(var j = 0; j < data["users"].length; ++j){
       if(logged_in == data["users"][j]){
-        $("#leave_council_btn").css("display", "block");
-        $("#join_council_btn").css("display", "none");
+        $("#leave_council_btn").toggle();
+        $("#join_council_btn").toggle();
         $("#lobby_document_btn").removeClass("disabled");
         $("#lobby_chat_btn").removeClass("disabled");
         $("#lobby_conclusion_btn").removeClass("disabled");
@@ -130,9 +136,11 @@ socket.on('council data', function(data){
     if (logged_in != "")
     {
       var msgs = data["messages"];
+      console.log(data["messages"]);
       try{
         for(var i = 1; i <= 4; ++i){               //Showing the last 4 messages
           var message = document.createElement('div');
+          message.classList.add("lobby_chat_message");
           var msg = msgs[msgs.length-i];        //The last four messages sent to the chat
           var pic = document.createElement('div');
           pic.textContent = msg["sender"][0].toUpperCase();
@@ -153,6 +161,10 @@ socket.on('council data', function(data){
           message.appendChild(msg_text);
 
           document.getElementById("lobby_latest_messages").appendChild(message);
+          var separator = document.createElement('div');
+          separator.classList.add("separator");
+          if (i < 4){ document.getElementById("lobby_latest_messages").appendChild(separator); };
+          
         }
       }
     
@@ -161,6 +173,15 @@ socket.on('council data', function(data){
     }
     }
   }
+});
+
+$('#lobby_latest_messages_title_mobile').click(function(){
+  $('#lobby_latest_messages').slideToggle();
+  $('#lobby_chat_btn_mobile').slideToggle();
+  $('#lobby_latest_messages_arrow_up').toggle();
+  $('#lobby_latest_messages_arrow_down').toggle();
+  $('#lobby_latest_messages_title_mobile').toggleClass("opened");
+  $('#lobby_latest_messages_title_mobile').toggleClass("closed");
 });
 
 $('#join_council_btn').click(function(){
@@ -200,6 +221,10 @@ $('#lobby_home_btn').click(function(){
 });
 
 $('#lobby_chat_btn').click(function(){
+  goToPage("/lobby/" + council + "/chat");
+});
+
+$('#lobby_chat_btn_mobile').click(function(){
   goToPage("/lobby/" + council + "/chat");
 });
 
