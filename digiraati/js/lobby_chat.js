@@ -232,48 +232,55 @@ $(document).on('click', '.mobile_save_button', function(e){
 
 $(document).on('click', ".mobile_edit_btn", function(e)
 {
-  console.log("Button pressed");
-  $('.action_panel_container').remove();
-  var message_id = $(this).parents('.mobile_container').first().attr('id').replace("action_panel", "");
-  console.log("looking for " + message_id);
-  original_message = messages.filter(element => element.id === message_id)[0];
-  console.log("found " + original_message);
+  if ($(this).hasClass('inactive')){
+    alert("Et voi muokata tätä viestiä.");
+    return;
+  }
+  else
+  {
+    console.log("Button pressed");
+    $('.action_panel_container').remove();
+    var message_id = $(this).parents('.mobile_container').first().attr('id').replace("action_panel", "");
+    console.log("looking for " + message_id);
+    original_message = messages.filter(element => element.id === message_id)[0];
+    console.log("found " + original_message);
 
-  var text_entry_panel = document.createElement('div');
-  text_entry_panel.classList.add('mobile_text_entry_panel');
-  text_entry_panel.classList.add('mobile_container');
-  text_entry_panel.id = message_id + "text_panel";
-  document.getElementById('modal_container').appendChild(text_entry_panel);
-  $('.text_entry_panel').hide();
+    var text_entry_panel = document.createElement('div');
+    text_entry_panel.classList.add('mobile_text_entry_panel');
+    text_entry_panel.classList.add('mobile_container');
+    text_entry_panel.id = message_id + "text_panel";
+    document.getElementById('modal_container').appendChild(text_entry_panel);
+    $('.text_entry_panel').hide();
 
-  var close_btn = document.createElement('div');
-  close_btn.classList.add("close_mobile_text_entry_panel_btn");
-  close_btn.innerHTML = '<span class="fas fa-times"></span>';
-  text_entry_panel.appendChild(close_btn);
+    var close_btn = document.createElement('div');
+    close_btn.classList.add("close_mobile_text_entry_panel_btn");
+    close_btn.innerHTML = '<span class="fas fa-times"></span>';
+    text_entry_panel.appendChild(close_btn);
 
-  var text_field = document.createElement('textarea');
-  text_field.classList.add('mobile_text_field');
-  text_field.id = message_id + "textarea";
-  text_field.setAttribute('rows', 10);
-  text_field.setAttribute('autofocus', true);
-  text_field.defaultValue = document.getElementById(message_id + "text").innerHTML;
-  text_entry_panel.appendChild(text_field);
+    var text_field = document.createElement('textarea');
+    text_field.classList.add('mobile_text_field');
+    text_field.id = message_id + "textarea";
+    text_field.setAttribute('rows', 10);
+    text_field.setAttribute('autofocus', true);
+    text_field.defaultValue = document.getElementById(message_id + "text").innerHTML;
+    text_entry_panel.appendChild(text_field);
 
-  var button_container = document.createElement('div');
-  button_container.classList.add("mobile_button_container");
+    var button_container = document.createElement('div');
+    button_container.classList.add("mobile_button_container");
 
-  var cancel_button = document.createElement('div');
-  cancel_button.classList.add('mobile_cancel_button');
-  cancel_button.innerHTML = "PERUUTA";
-  button_container.appendChild(cancel_button);
+    var cancel_button = document.createElement('div');
+    cancel_button.classList.add('mobile_cancel_button');
+    cancel_button.innerHTML = "PERUUTA";
+    button_container.appendChild(cancel_button);
 
-  var send_button = document.createElement('div');
-  send_button.classList.add('mobile_save_button');
-  send_button.innerHTML = "LÄHETÄ";
-  button_container.appendChild(send_button);
+    var send_button = document.createElement('div');
+    send_button.classList.add('mobile_save_button');
+    send_button.innerHTML = "LÄHETÄ";
+    button_container.appendChild(send_button);
 
-  text_entry_panel.appendChild(button_container);
-  $('.text_entry_panel').show();
+    text_entry_panel.appendChild(button_container);
+    $('.text_entry_panel').show();
+  }
 });
 
 /*
@@ -384,67 +391,6 @@ $(document).on('click', ".mobile_message_actions", function(e)
   }
   });*/
 
-$(document).on('click', ".mobile_reaction_button", function(e)
-{
-
-  if(modal_open == false)
-  {
-    modal_open = true;
-
-    var message_id = $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id');
-    original_message = messages.filter(element => element.id === message_id)[0];
-
-    var reaction_panel_container = document.createElement('div');
-    reaction_panel_container.classList.add("reaction_panel_container");
-    reaction_panel_container.classList.add('mobile_container');
-    reaction_panel_container.id = message_id + "reaction_panel";
-    document.getElementById('modal_container').appendChild(reaction_panel_container);
-    $('.reaction_panel_container').hide();
-
-    var close_btn = document.createElement('div');
-    close_btn.classList.add("close_mobile_reaction_panel_btn");
-    close_btn.innerHTML = '<span class="fas fa-times"></span>';
-    reaction_panel_container.appendChild(close_btn);
-
-    var thumbs_up_container = document.createElement('div');
-    thumbs_up_container.classList.add("mobile_thumb_container");
-    var likes_btn = document.createElement('span');
-    likes_btn.classList.add("likes_btn");
-    var likes_number = document.createElement('span');
-    likes_number.classList.add("likes_number");
-    likes_number.id = message_id+"likes_number";
-    likes_number.innerHTML = original_message.likes.length;
-
-    thumbs_up_container.appendChild(likes_btn); thumbs_up_container.appendChild(likes_number); 
-
-    var thumbs_down_container = document.createElement('div');
-    thumbs_down_container.classList.add("mobile_thumb_container");
-    var dislikes_btn = document.createElement('span');
-    dislikes_btn.classList.add("dislikes_btn");
-    var dislikes_number = document.createElement('span');
-    dislikes_number.classList.add("dislikes_number");
-    dislikes_number.id = message_id+"dislikes_number";
-    dislikes_number.innerHTML = original_message.dislikes.length;
-
-    thumbs_down_container.appendChild(dislikes_btn); thumbs_down_container.appendChild(dislikes_number); 
-
-    var goodargs_container = document.createElement('div');
-    goodargs_container.classList.add("mobile_thumb_container");
-    var goodargs_btn = document.createElement('span');
-    goodargs_btn.classList.add("goodargs_btn");
-    var goodargs_number = document.createElement('span');
-    goodargs_number.classList.add("goodargs_number");
-    goodargs_number.id = message_id+"goodargs_number";
-    goodargs_number.innerHTML = original_message.goodargs.length;
-
-    goodargs_container.appendChild(goodargs_btn); goodargs_container.appendChild(goodargs_number); 
-
-    reaction_panel_container.appendChild(thumbs_up_container); reaction_panel_container.appendChild(thumbs_down_container); reaction_panel_container.appendChild(goodargs_container);
-
-  }
-
-});
-
 $(document).on('click', ".mobile_message_actions", function(e)
 {
   if (modal_open == false)
@@ -498,29 +444,34 @@ $(document).on('click', ".mobile_message_actions", function(e)
     goodargs_number.classList.add("goodargs_number");
     goodargs_number.id = message_id+"goodargs_number";
     goodargs_number.innerHTML = original_message.goodargs.length;
-
+    
     goodargs_container.appendChild(goodargs_btn); goodargs_container.appendChild(goodargs_number); 
 
-    reaction_panel_container.appendChild(thumbs_up_container); reaction_panel_container.appendChild(thumbs_down_container); reaction_panel_container.appendChild(goodargs_container);
+    
+    var container_for_buttons = document.createElement('span');
+    container_for_buttons.classList.add("mobile_action_button_container");
+
+    container_for_buttons.appendChild(thumbs_up_container); container_for_buttons.appendChild(thumbs_down_container); container_for_buttons.appendChild(goodargs_container);
 
     var reply_btn = document.createElement('div');
     reply_btn.classList.add('mobile_reply_btn');
-    reply_btn.innerHTML = "VASTAA VIESTIIN";
-    action_panel_container.appendChild(reply_btn);
+    reply_btn.innerHTML = '<span class="fas fa-reply" title="Vastaa viestiin"></span>'
+    container_for_buttons.appendChild(reply_btn);
+  
+    var edit_btn = document.createElement('div');
+    edit_btn.classList.add('mobile_edit_btn');
+    edit_btn.innerHTML = '<span class="far fa-edit" title="Muokkaa viestiä"></span>'
+    if (original_message.sender != window.sessionStorage.getItem('logged_in')) {edit_btn.classList.add("inactive");}
+    container_for_buttons.appendChild(edit_btn);
 
-    if (original_message.sender === window.sessionStorage.getItem('logged_in'))
-    {
-      var edit_btn = document.createElement('div');
-      edit_btn.classList.add('mobile_edit_btn');
-      edit_btn.innerHTML = "MUOKKAA VIESTIÄ";
-      action_panel_container.appendChild(edit_btn);
+    var delete_btn = document.createElement('div');
+    delete_btn.classList.add('mobile_delete_btn');
+    delete_btn.innerHTML = '<span class="far fa-trash-alt" title="Poista viesti"></span>'
+    if (original_message.sender != window.sessionStorage.getItem('logged_in')) {delete_btn.classList.add("inactive");}
+    container_for_buttons.appendChild(delete_btn);
 
-      var delete_btn = document.createElement('div');
-      delete_btn.classList.add('mobile_delete_btn');
-      delete_btn.innerHTML = "POISTA VIESTI";
-      action_panel_container.appendChild(delete_btn);
-    }
-
+    action_panel_container.appendChild(container_for_buttons);
+  
     $('.action_panel_container').toggle("slide", {'direction': 'right'}, 250);
   }
   });
@@ -699,10 +650,10 @@ function create_message(msg, msg_target = 'message_list'){
   var mobile_container = document.createElement('div');
   mobile_container.classList.add("mobile_reaction_container");
 
-  var reaction_button = document.createElement('span');
-  reaction_button.classList.add('mobile_reaction_button');
-  reaction_button.innerHTML = '<span class="far fa-thumbs-up"></span>';
-  mobile_container.appendChild(reaction_button);
+  //var reaction_button = document.createElement('span');
+  //reaction_button.classList.add('mobile_reaction_button');
+  //reaction_button.innerHTML = '<span class="far fa-thumbs-up"></span>';
+  //mobile_container.appendChild(reaction_button);
 
   var replyNumber = document.createElement('span');
   replyNumber.classList.add("reply_number");
@@ -712,13 +663,13 @@ function create_message(msg, msg_target = 'message_list'){
 
   var message_actions = document.createElement('span');
   message_actions.classList.add('mobile_message_actions');
-  message_actions.innerHTML = "<span class='fas fa-ellipsis-v'></span>";
+  message_actions.innerHTML = "<span class='fas fa-comment-alt'></span>";
   mobile_container.appendChild(message_actions);
   
   var bottomContainer = document.createElement("div");
   bottomContainer.classList.add("bottom_container");
 
-  bottomContainer.appendChild(reaction_container); bottomContainer.appendChild(response_container); bottomContainer.appendChild(mobile_container);
+  bottomContainer.appendChild(response_container); bottomContainer.appendChild(mobile_container);
 
   nm.appendChild(bottomContainer);
 
@@ -938,14 +889,20 @@ $(document).on('click', ".message_list_delete", function(e){
 });
 
 $(document).on('click', ".mobile_delete_btn", function(e){
-  if(window.confirm("Oletko varma että haluat poistaa tämän viestin?"))
-  {
-    data = {}
-    data["user_id"] = logged_in;
-    data["council"] = council;
-    data["mid"] = $(this).parents('.mobile_container').first().attr('id').replace("action_panel", "");
-    socket.emit('request delete message', data);
-    window.location.reload();
+  if ($(this).hasClass('inactive')){
+    alert("Et voi poistaa tätä viestiä.");
+    return;
+  }
+  else {
+    if(window.confirm("Oletko varma että haluat poistaa tämän viestin?"))
+    {
+      data = {}
+      data["user_id"] = logged_in;
+      data["council"] = council;
+      data["mid"] = $(this).parents('.mobile_container').first().attr('id').replace("action_panel", "");
+      socket.emit('request delete message', data);
+      window.location.reload();
+    }
   }
 });
 
