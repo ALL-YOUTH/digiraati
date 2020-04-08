@@ -10,7 +10,7 @@ function hash(p){
 
 //Class a single user
 class User{
-  constructor(id, uname, fname, lname, email, h, location, description, picture, testing_number = 999){
+  constructor(id, uname, fname, lname, email, h, location, description, picture, testing_number){
     this.id = id;
     this.testing_number = testing_number;
     this.username = uname;
@@ -76,6 +76,20 @@ module.exports = class Users{
     else{
       return true;
     }
+  }
+
+  update_user_information(data)
+  {
+    var selected_user = this.users.filter(element => element["id"] == data["original_id"])[0];
+    if(selected_user["id"] != data["id"]) {selected_user["id"] = data["id"];};
+    if(selected_user["username"] != data["username"]) {selected_user["username"] = data["username"];};
+    if(selected_user["email"] != data["email"]) {selected_user["email"] = data["email"];};
+    if(selected_user["fname"] != data["fname"]) {selected_user["fname"] = data["fname"];};
+    if(selected_user["lname"] != data["lname"]) {selecteD_user["lname"] = data["lname"];};
+    if(selected_user["description"] != data["description"]) {selected_user["description"] = data["description"];};
+    if(selected_user["location"] != data["location"]) {selected_user["location"] = data["location"];};
+    
+    return true;
   }
 
   add_user(id, uname, testing_number, fname, lname, email, pw, hash){

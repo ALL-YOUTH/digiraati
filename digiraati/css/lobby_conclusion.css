@@ -1,9 +1,16 @@
 @import url("https://use.typekit.net/gbv0ney.css");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+@import url("https://fonts.googleapis.com/css?family=Montserrat Alternates:400,700");
 
 body, html{
   max-width:100%;
   margin:auto;
   height:100%;
+}
+
+.no_question_text{
+  font-family: Montserrat;
+  font-size: 16px;
 }
 
 #conclusion_container{

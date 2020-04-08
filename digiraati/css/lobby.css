@@ -136,7 +136,7 @@ div .inactive{
   border-color: rgb(0,0,0,0.1);
 }
 
-#lobby_description_title{
+#lobby_description_title_mobile{
   margin-left: 20px;
   text-align: left;
   font: Bold 24px/42px Montserrat;
@@ -144,7 +144,7 @@ div .inactive{
   color: rgba(0,96,115,1);
 }
 
-#lobby_description{
+#lobby_description_mobile{
   margin:20px 20px;
   text-align: justify;
   font-family: Montserrat;
@@ -219,7 +219,7 @@ div .inactive{
   margin-top:20px;
 }
 
-#join_council_btn{
+#join_council_btn_mobile{
   margin-left:25%;
   margin-top: 20px;
   padding:5px 15px;
@@ -236,7 +236,7 @@ div .inactive{
   text-align: center;
 }
 
-#leave_council_btn{
+#leave_council_btn_mobile{
   margin-top:20px;
   margin-left: 25%;
   padding:5px 15px;
@@ -485,7 +485,7 @@ div .inactive{
   #lobby_content{
     position:relative;
     margin:auto;
-    width:65%;
+    width:100%;
     padding:20px;
     max-width:90%;
     height:auto;
@@ -580,10 +580,10 @@ div .inactive{
   }
 
   #join_council_btn{
+    width: 10%;
     margin-top:20px;
     padding:5px 15px;
     border-radius:5px;
-    float:left;
     cursor:pointer;
     display:none;
     text-align: center;
@@ -595,10 +595,10 @@ div .inactive{
   }
 
   #leave_council_btn{
+    width: 10%;
     margin-top:20px;
     padding:5px 15px;
     border-radius:5px;
-    float:left;
     cursor:pointer;
     display:none;
     background-color:#FE0456;

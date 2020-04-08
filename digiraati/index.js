@@ -71,7 +71,7 @@ fs.readFile(backup_file, function (err, data) {
     catch(err){
       server_log(err);
     }
-  }
+  } 
 
   for(var i = 0; i <  recover_councils.length; ++i){
     let council = recover_councils[i];
@@ -193,6 +193,36 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on("submit updated council data", function(data){
+    console.log("Received council updated data")
+    if(councils.update_council_information(data) == true)
+    {
+      create_backup();
+      socket.emit("council data updated successfully");
+    }
+
+    else {socket.emit("council data update failed")};
+  });
+
+  socket.on("submit updated user data", function(data){
+    console.log("Received user updated data");
+    if (users.update_user_information(data) == true)
+    {
+      create_backup();
+      socket.emit("user data updated successfully");
+    }
+
+    else { socket.emit("user data update failed")};
+  });
+
+  socket.on('request full data', function(){ // For the administrative panel. Returns all council data, user data and conclusion data.
+    var user_data = users.get_all_users();
+    var council_data = councils.get_councils();
+    var conclusion_data = conclusioner.get_all_data();
+
+    socket.emit('return full data', council_data, user_data, conclusion_data);
+  });
+
   //login check request. Checks the login according to the IP parsed from a socket
   //Like 'check login' ,but modified for council check
   socket.on('check login council', function(token, cid){
@@ -261,7 +291,12 @@ io.on('connection', function(socket){
       return;
     }
     else{
-      var uid = users.get_userid_by_username(name);
+
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(name)) { 
+        console.log("Tried to log in with email");
+        var uid = users.get_user_by_email(name)["id"];
+        name = users.get_user_by_email(name)["username"];}
+      else { var uid = users.get_userid_by_username(name); }
       var user_token = crypto.randomBytes(20).toString('hex');
       var expiry_time = new Date();
       expiry_time.setHours(expiry_time.getHours() + 12);
@@ -287,7 +322,7 @@ io.on('connection', function(socket){
       socket.emit("invalid email");
       return;
     }
-    console.log("Registering user " + data["testing_id"]);
+    console.log("Registering user " + data["testing_id"] + " " + data["id]"]);
     ret_val = users.add_user(data["id"], data["username"], data["testing_id"],
                               data["firstname"], data["lastname"],
                               data["email"], data["password1"]);
@@ -295,7 +330,7 @@ io.on('connection', function(socket){
       socket.emit('register success', data["username"]);
       logger.AppendLog("e12", data["id"], new Date().getTime());
       server_log(ip + ": " + data["username"] + " registered succesfully");
-      create_backup();
+      create_backup(); 
     }
     else{
       socket.emit('invalid nickname');

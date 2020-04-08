@@ -1,7 +1,10 @@
 var socket = io();
 var host = socket["io"]["uri"] + ":" + location.port;
+var current_page = 1;
 
 $(function(){
+  $('#create_container_2').hide();
+  $('#create_container_3').hide();
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
 });
@@ -28,6 +31,40 @@ $('#limit_radiobtn').change(function(){
     document.getElementById('limit_number').style.display = "inline-block";
   }
 });
+
+$('#page_backwards_btn').click(function(){
+  if (current_page > 1)
+  {
+    $('#page_forwards_btn').removeClass("disabled");
+    current_page -= 1;
+    $('#create_container_1').hide();
+    $('#create_container_2').hide();
+    $('#create_container_3').hide();
+    $('#create_container_'+current_page).show();
+
+    if (current_page == 1)
+    {
+      $('#page_backwards_btn').addClass("disabled");
+    }
+  }
+});
+
+$('#page_forwards_btn').click(function(){
+  if (current_page <= 2)
+  {
+    $('#page_backwards_btn').removeClass("disabled");
+    current_page += 1;
+    $('#create_container_1').hide();
+    $('#create_container_2').hide();
+    $('#create_container_3').hide();
+    $('#create_container_'+current_page).show();
+
+    if (current_page == 3)
+    {
+      $('#page_forwards_btn').addClass("disabled");
+    }
+  }
+})
 
 $('#confirm_create').click(function(){
   console.log("Creating a council!");

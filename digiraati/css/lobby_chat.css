@@ -41,7 +41,7 @@ body{
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding:10px;
 }
 
@@ -410,6 +410,14 @@ body{
     width: 15%;
   }
 
+  .mobile_reaction_container{
+    display: none;
+  }
+
+  .mobile_message_actions{
+    display: none;
+  }
+
   .reply_number{
     display: none;
   }
@@ -587,8 +595,8 @@ body{
   #message_input{
     font-family: Montserrat;
     font-size: 14px;
-    width: 95%;
-    height: 60%;
+    width: 97%;
+    height: 55%;
     position:relative;
     resize:none;
     background-color: rgba(245,246,250,1);
@@ -597,8 +605,9 @@ body{
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding:10px;
+    scrollbar-width: thin;
   }
 
   #message_input::-webkit-scrollbar {
@@ -607,6 +616,7 @@ body{
   }
 
   #send_btn{
+    background:url('/res/aeroplane.png') left top;
     position: absolute;
     right: 5px;
     top: 5px;
@@ -614,6 +624,8 @@ body{
     margin:10px;
     margin-top:5px;
     cursor:pointer;
+    width: 21px;
+    height: 18px;
   }
 
   .text-container{
@@ -723,8 +735,9 @@ body{
     white-space: pre-wrap;
   }
 
-  .message_reactions{
-
+  .response_container{
+    display:block;
+    width: 100%;
   }
 
   .likes_num{

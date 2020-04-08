@@ -325,6 +325,22 @@ module.exports = class Councils{
     return this.councils;
   }
 
+  update_council_information(data){
+    var selected_council = this.councils.filter(element => element.get_council_id() == data["original_id"])[0];
+    if (selected_council["id"] != data["id"]) { selected_council["id"] = data["id"];};
+    if (selected_council["description"] != data["description"]) { selected_council["description"] = data["description"]; };
+    if (selected_council["id"] != data["id"]) { selected_council["id"] = data["id"]; };
+    if (selected_council["name"] != data["name"]) {selected_council["name"] = data["name"];};
+    if (selected_council["startdate"] != data["startdate"]) {selected_council["startdate"] = data["startdate"];};
+    if (selected_council["starttime"] != data["starttime"]) {selected_council["starttime"] = data["starttime"];};
+    if (selected_council["enddate"] != data["enddate"]) {selected_council["enddate"] = data["enddate"];};
+    if (selected_council["endtime"] != data["endtime"]) {selected_council["endtime"] = data["endtime"];};
+    if (selected_council["password"] != data["password"]) {selected_council["password"] = data["password"];};
+    if (selected_council["userlimit"] != data["userlimit"]) {selected_council["userlimit"] = data["userlimit"];};
+
+    return true;
+  };
+
   get_council_by_id(id){
     let coucils = this.get_councils();
     for(var i = 0; i < this.councils.length; ++i){

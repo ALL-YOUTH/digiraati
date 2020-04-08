@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 @import url("https://fonts.googleapis.com/css?family=Montserrat Alternates:400,700");
 
-#Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar, #Kirjaudu_ulos_btn{
+#Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar, #hae_btn, #Kirjaudu_ulos_btn{
   display:none;
 }
 
@@ -41,7 +41,7 @@
   width:200px;
   position:fixed;
   right:-200px;
-  background: transparent linear-gradient(180deg, #FFFFFF 0%, #7CE3B2 37%, #01AFC4 100%) 0% 0% no-repeat padding-box;
+  background: white;
   box-shadow: 3px 3px 6px #00000029;
   opacity: 0.9;
   border-radius: 3px;

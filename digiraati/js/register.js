@@ -49,6 +49,14 @@ $('#confirm_register').click(function(){
     return;
   }
 
+  else if(check_testing_id($('#id_input').val()) == false)
+  {
+    color_input_text("#id_input", "red");
+    $('#register_error_text').html("Tarkista kolminumeroinen tunnistekoodisi täyttämästäsi rekisteröitymislomakkeesta.");
+    $('#register_error_text').css("display", "block");
+    return;
+  }
+
   var register = {};
   register["id"] = makeid(8);
   register["username"] = $('#username_input').val();
@@ -61,6 +69,13 @@ $('#confirm_register').click(function(){
   console.log("Registering: " + register["testing_id"]);
   socket.emit("register attempt", register);
 });
+
+function check_testing_id(id)
+{
+  if (length(id) != 3) { return false; }
+  else if (isNaN(id)) { return false; }
+  else { return true } ;
+}
 
 socket.on('register success', function(){
   alert("Rekisteröinti onnistui!");

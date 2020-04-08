@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 @import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates:400,800');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
 html, body{
   padding:0;
@@ -162,7 +163,7 @@ img {
   display: inline-block;
   width: 80%;
   height: 65px;
-  font-family: Montserrat;
+  font-family: Open Sans;
   font-size: 14px;
   margin-top: 10px;
   margin-bottom: 10px;

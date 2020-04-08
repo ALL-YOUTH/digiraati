@@ -14,8 +14,6 @@ $(function(){
   $('#footer').load(host + "/html/footer.html");
 
   council = window.location.href.split("/").slice(-2)[0];
-  console.log("token: " + window.sessionStorage.getItem('token'))
-  console.log("user: " + window.sessionStorage.getItem('logged_in'));
   socket.emit("check login council", window.sessionStorage.getItem('token'), council);
   console.log("Logged in: " + logged_in);
 });
@@ -118,15 +116,15 @@ socket.on('council data', function(data){
     tag.textContent = data["tags"][i];
     document.getElementById("lobby_tags").appendChild(tag);
   }
-  $("#leave_council_btn").hide();
-  $("#join_council_btn").hide();
+  $("#leave_council_btn").css("display", "none");
+  $("#join_council_btn").css("display", "none");
   if(logged_in != ""){
     $("#leave_council_btn").css("display", "none");
     $("#join_council_btn").css("display", "block");
     for(var j = 0; j < data["users"].length; ++j){
       if(logged_in == data["users"][j]){
-        $("#leave_council_btn").toggle();
-        $("#join_council_btn").toggle();
+        $("#join_council_btn").css({"display": "none"});
+        $("#leave_council_btn").css({"display": "block"});
         $("#lobby_document_btn").removeClass("disabled");
         $("#lobby_chat_btn").removeClass("disabled");
         $("#lobby_conclusion_btn").removeClass("disabled");
@@ -135,13 +133,11 @@ socket.on('council data', function(data){
     }
     if (logged_in != "")
     {
-      var msgs = data["messages"];
-      console.log(data["messages"]);
       try{
         for(var i = 1; i <= 4; ++i){               //Showing the last 4 messages
           var message = document.createElement('div');
           message.classList.add("lobby_chat_message");
-          var msg = msgs[msgs.length-i];        //The last four messages sent to the chat
+          var msg = data["messages"][data["messages"].length-i];        //The last four messages sent to the chat
           var pic = document.createElement('div');
           pic.textContent = msg["sender"][0].toUpperCase();
           var c = 0;
@@ -161,9 +157,11 @@ socket.on('council data', function(data){
           message.appendChild(msg_text);
 
           document.getElementById("lobby_latest_messages").appendChild(message);
+          document.getElementById("lobby_latest_messages_mobile").appendChild(message.cloneNode(true));
           var separator = document.createElement('div');
           separator.classList.add("separator");
           if (i < 4){ document.getElementById("lobby_latest_messages").appendChild(separator); };
+          if (i < 4){ document.getElementById("lobby_latest_messages_mobile").appendChild(separator.cloneNode(true)); };
           
         }
       }
@@ -176,7 +174,7 @@ socket.on('council data', function(data){
 });
 
 $('#lobby_latest_messages_title_mobile').click(function(){
-  $('#lobby_latest_messages').slideToggle();
+  $('#lobby_latest_messages_mobile').slideToggle();
   $('#lobby_chat_btn_mobile').slideToggle();
   $('#lobby_latest_messages_arrow_up').toggle();
   $('#lobby_latest_messages_arrow_down').toggle();
@@ -184,7 +182,7 @@ $('#lobby_latest_messages_title_mobile').click(function(){
   $('#lobby_latest_messages_title_mobile').toggleClass("closed");
 });
 
-$('#join_council_btn').click(function(){
+$('#join_council_btn, #join_council_btn_mobile').click(function(){
   if (council_password == true)
   {
     var entered_password = window.prompt("Tämä raati on suojattu salasanalla. Syötä saamasi salasana alle. Jos sinulla ei ole salasanaa, voit pyytää sitä kontaktihenkilöltäsi.");
@@ -197,7 +195,7 @@ $('#join_council_btn').click(function(){
   socket.emit('request join council', data);
 });
 
-$('#leave_council_btn').click(function(){
+$('#leave_council_btn, #leave_council_btn_mobile').click(function(){
   var data = {};
   data["council"] = council;
   data["user"] = logged_in;

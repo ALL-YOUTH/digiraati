@@ -15,6 +15,10 @@
   vertical-align: top;
 }
 
+.nav_button{
+  cursor: pointer;
+}
+
 #footer_logo{
   display:inline-block;
   z-index: 99;

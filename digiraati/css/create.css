@@ -1,3 +1,13 @@
+#container{
+  min-height: 800px;
+}
+
+.create_container
+{
+  width: 80%;
+  margin-left: 5%;
+  margin-bottom: 5%;
+}
 
 body, html{
   font-family: Montserrat;
@@ -7,57 +17,6 @@ body, html{
 
 body{
   overflow-x:hidden;
-}
-
-#hero{
-  margin-top: 20px;
-  height:450px;
-  background-image: url("/res/hero_image_create.png");
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color:white;
-}
-
-#hero_text_area{
-  width:50%;
-  float:right;
-  text-align: center;
-}
-
-#hero_main_text{
-  margin-top:100px;
-  line-height: 57px;
-  font-family: Montserrat Alternates;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 55px;
-  text-shadow: 1px 1px 5px #000000;
-}
-
-#hero_secondary_text{
-  margin-top:20px;
-  line-height: 34px;
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  text-shadow: 1px 1px 5px #000000;
-}
-
-#hero_create_councils_btn{
-  width:100px;;
-  background-color: rgba(254,4,86,1);
-  border-radius: 3px;
-  padding: 10px 20px;
-  font-weight:bold;
-  cursor:pointer;
-  margin:20px auto;
-
-  box-shadow: 1px 1px 5px #000000;
 }
 
 #create_container{
@@ -72,6 +31,19 @@ body{
   height:30px;
 }
 
+.bottom_button_container{
+  width: 80%;
+  margin-left: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.meta_button_container{
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+}
+
 textarea{
   font-family: Montserrat;
   font-size: 14px;
@@ -80,11 +52,12 @@ textarea{
   height:30px;
   border-width: 2px;
   border-style: solid;
-  background-color: rgba(246,248,249,1);
+  background-color: white;
   border-color:rgba(235,237,237,1);
+  resize: none;
 }
 
-#create_container_title{
+.create_container_title{
   margin-top:80px;
   line-height: 42px;
   text-align: left;
@@ -93,6 +66,52 @@ textarea{
   font-weight: bold;
   font-size: 32px;
   color:rgba(32,33,36,1);
+}
+
+.container_button{
+  background-color: rgba(1,175,196,1);
+  border-style: solid;
+  border-radius: 3px;
+  border-color: rgba(1,175,196,1);
+  color: white;
+  font-family: Montserrat;
+  font-size: 13px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  width: 140px;
+  cursor: pointer;
+}
+
+.red{
+  background-color: rgba(254,4,86,1);
+  border-color: rgba(254,4,86,1);
+}
+
+.green{
+  background-color: rgba(211,233,148,1);
+  border-color: rgba(211,233,148,1);
+}
+
+.disabled{
+  background-color: white;
+  border-color: rgba(1,175,196,1);
+  color: rgba(1,175,196,1);
+}
+
+.create_meta_container_hor{
+  display:flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.create_meta_container_ver{
+  font-family: Montserrat;
+  font-size: 12px;
+  width: 25%;
+}
+
+.container_checkbox{
 }
 
 #detailed_create_title{

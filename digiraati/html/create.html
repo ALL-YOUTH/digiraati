@@ -7,50 +7,157 @@
 	<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 	<title>Digiraati 2.0</title>
 	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
+	<script type="text/javascript" src="/js/trix.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/trix.css">
 
 </head>
 <body>
 	<header id="header">
 	</header>
 		<div id="container">
-			<div id="hero">
-				<div id="hero_text_area">
-					<div id="hero_main_text">Luo uusia raateja</div>
-					<div id="hero_secondary_text">Digiraati.fi -palvelussa voit hakea digitaalisia kansalaisraateja</div>
-					<div id="hero_create_councils_btn">Hae raateja</div>
-				</div>
-			</div>
-			<div id="create_container">
-				<form>
-					<div id="create_container_title">LUO UUSI RAATI</div>
+			
+			<div class="create_container" id="create_container_1">
+				<form id="create_form_1">
+					<div class="create_container_title">LUO UUSI RAATI 1/3</div>
 					<div class="create_text" id="create_name_title">Raadin nimi</div>
 					<textarea id="name_input" type="text"></textarea><br>
 					<div class="create_text" id="create_tag_title">Aihepiiri</div>
 					<textarea id="create_tags" type="text"></textarea><br>
 					<div class="create_text" id="create_description_title">Raadin kuvaus</div>
 					<textarea id="create_description_text_input"></textarea><br>
-					<div class="create_text">Raati alkaa</div>
-					<input type="date" id="startdate_input"></input>
-					<input type="time" id="starttime_input"></input>
-					<div class="create_text">Raati päättyy</div>
-					<input type="date" id="enddate_input"></input>
-					<input type="time" id="endtime_input"></input>
 					<div class="create_text" id="crate_open_closed_title">Raadin luonne<br>
 						<input type="radio" name="closed_open" value="Avoin" checked="checked" id="open_radio"> Avoin <br>
 						<input type="radio" name="closed_open" value="Suljettu" id="closed_radio"> Suljettu <br>
 					</div>
 
-					<div class="create_text" id="council_password_title">Syötä halutessasi raadille salasana<br>
-						<textarea id="password_text" type="text"></textarea>
-					</div>
 					<div class="create_text">Osallistujien määrä<br>
 						<input id="no_limit_radiobtn"name="userlimit" type="radio" checked="checked">Ei rajoitettu<br>
 						<input id="limit_radiobtn" name="userlimit" type="radio">Rajoitettu
 						<input id="limit_number" type="number" value="20">
 					</div>
-					<div id="confirm_create">Luo raati</div>
+
+					<div class="create_text" id="council_password_title">Syötä halutessasi raadille salasana<br>
+						<textarea id="password_text" type="text"></textarea>
+					</div>
 				</form>
+
 			</div>
+
+		<div class="create_container" id="create_container_2">
+			<form id="create_form_2">
+				<div class="create_container_title">LUO UUSI RAATI 2/3</div>
+				<span class="create_meta_container_hor">
+					<span class="create_meta_container_ver">
+						<span class="create_text" id="publish_text">Raati julkaistaan<br></span>
+						<input type="date" id="council_publish">
+					</span>
+					<span class="create_meta_container_ver">
+						<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
+						<input id="publish_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox" checked="checked">1 päivä ennen
+						<input id="publish_no_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox">1 viikko ennen
+					</span>
+				</span>
+
+				<span class="create_meta_container_hor">
+					<span class="create_meta_container_ver">
+						<span class="create_text" id="publish_text">Keskustelu aukeaa<br></span>
+						<input type="date" id="council_chat_open">
+					</span>
+					<span class="create_meta_container_ver">
+						<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
+						<input id="chat_open_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox" checked="checked">1 päivä ennen
+						<input id="chat_open_no_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox">1 viikko ennen
+					</span>
+				</span>
+
+				<span class="create_meta_container_hor">
+					<span class="create_meta_container_ver">
+						<span class="create_text" id="publish_text">Keskustelu päättyy<br></span>
+						<input type="date" id="council_chat_close">
+					</span>
+					<span class="create_meta_container_ver">
+						<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
+						<input id="chat_close_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox" checked="checked">1 päivä ennen
+						<input id="chat_close_no_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox">1 viikko ennen
+					</span>
+				</span>
+
+				<span class="create_meta_container_hor">
+					<span class="create_meta_container_ver">
+						<span class="create_text" id="publish_text">Raati päättyy<br></span>
+						<input type="date" id="council_ends">
+					</span>
+					<span class="create_meta_container_ver">
+						<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
+						<input id="council_close_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox" checked="checked">1 päivä ennen
+						<input id="council_close_no_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox">1 viikko ennen
+					</span>
+				</span>
+				<span class="create_text">Loppulausuma
+					<input id="loppulausuma_checkboxbtn" name="loppulausuma" type="checkbox" class="container_checkbox" checked="checked">Loppulausuma
+					<input id="1 viikko ennen_lausumaa_checkboxbtn" name="loppulausuma" type="checkbox" class="container_checkbox">1 viikko ennen loppulausumaa
+				</span>
+
+				<span id="questionnare_meta_container">
+					<span class="create_meta_container_hor">
+						<span class="create_meta_container_ver">
+							<div class="create_text">Loppulausuma valmiiksi</div>
+							<input type="date" id="council_questionnare_date">
+						</span>
+						<span class="create_meta_container_ver">
+							<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
+							<input id="questionnaire_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox" checked="checked">1 päivä ennen
+							<input id="questionnaire_no_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox">1 viikko ennen
+						</span>
+					</span>
+
+					<span class="create_meta_container_hor">
+						<span class="create_meta_container_ver">
+							<div class="create_text">Palautteen anto raadille</div>
+							<input type="date" id="council_feedback_date">
+						</span>
+						<span class="create_meta_container_ver">
+							<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
+							<input id="feedback_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox" checked="checked">1 päivä ennen
+							<input id="feedback_no_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox">1 viikko ennen
+						</span>
+					</span>
+				</span>
+				// TO DO: Aikajana
+			</form>
+		</div>
+
+		<div class="create_container" id="create_container_3">
+			<form id="create_form_3">
+				<div class="create_container_title">LUO UUSI RAATI 3/3</div>
+				<div class="create_container_title">Loppulausumapohja</div>
+
+				<div class="create_meta_container" id="conclusion_questions">
+					<span class="conclusion_question"></span>
+						<div class="create_text">Kirjoita tähän kysymys 1</div>
+						<textarea class="text" id="conclusion_question_1"></textarea>
+					</span>
+				</div>
+				<span class="container_button green" id="add_question_btn"></span>
+
+				<div class="create_meta_container" id="conclusion_base">
+					<div class="create_container_title">Luo loppulausuma</div>
+					<trix-editor input="conclusion_input"></trix-editor>
+				</div>
+			</form>
+		</div>
+
+		<div class="bottom_button_container">
+			<span class="meta_button_container">
+				<span class="container_button" id="save_changes_btn">Tallenna muutokset</span>
+				<span class="container_button red" id="save_as_base_btn">Tallenna pohjaksi</span>
+			</span>
+			<span class="meta_button_container">
+				<span class="container_button disabled" id="page_backwards_btn">Edellinen</span>
+				<span class="container_button" id="page_forwards_btn">Seuraava</span>
+			</span>
+		</div>
+					
 		</div>
 	<footer id="footer">
 	</footer>
