@@ -125,6 +125,20 @@ toggle_dislike(id, liker){
   }
 }
 
+class Base{
+  constructor(description, details)
+  {
+    this.id = makeid()
+    this.description = description;
+    this.details = details;
+  }
+
+  get_id() {return this.id;}
+  get_description() { return this.description; }
+  get_details() { return this.details; }
+
+};
+
 
 class Comment{
   constructor(id, sender, text, time, dimentions){
@@ -168,7 +182,9 @@ class File{
 //Class for one chat room
 class Council{
   constructor(id, name, description, creator, startdate, starttime,
-              enddate, endtime, userlimit, tags, likes, dislikes, conclusion, password){
+              enddate, endtime, chat_open_date, chat_open_time, chat_close_date, chat_close_time, 
+              conclusion_due_date, conclusion_due_time, feedback_due_date, feedback_due_time,
+              userlimit, tags, likes, dislikes, conclusion, password){
     this.id = id;
     this.name = name;
     this.description = description;
@@ -177,11 +193,19 @@ class Council{
     this.starttime = starttime;
     this.enddate = enddate;
     this.endtime = endtime;
+    this.chat_open_date = chat_open_date;
+    this.chat_open_time = chat_open_time;
+    this.chat_close_date = chat_close_date;
+    this.chat_close_time = chat_close_time;
+    this.conclusion_due_date = conclusion_due_date;
+    this.conclusion_due_time = conclusion_due_time;
+    this.feedback_due_date = feedback_due_date;
+    this.feedback_due_time = feedback_due_time;
     this.tags = tags;
     this.userlimit = userlimit;
     this.likes = likes;
     this.dislikes = dislikes;
-
+    
     this.files = [];
     this.users = [];
     this.messages = [];
@@ -205,6 +229,14 @@ class Council{
   get_council_users(){ return this.users; }
   get_council_files(){ return this.files; }
   get_council_password() { return this.password; }
+  get_council_chat_open_date() { return this.chat_open_date; }
+  get_council_chat_open_time() { return this.chat_open_time; }
+  get_council_chat_close_time() { return this.chat_close_time; }
+  get_council_chat_close_date() { return this.chat_close_date; }
+  get_conclusion_due_date() { return this.conclusion_due_date; }
+  get_conclusion_due_time() { return this.conclusion_due_time; }
+  get_feedback_due_date() { return this.feedback_due_date; }
+  get_feedback_due_time() { return this.feedback_due_time; }
 
   add_participant(uid){
     var result = false;
@@ -306,15 +338,45 @@ class Council{
 module.exports = class Councils{
   constructor(){
     this.councils = [];
+    this.bases = [];
+    this.temp_files = [];
   }
 
-  add_council(id, name, description, creator, startdate, starttime, enddate,
-              endtime, userlimit, tags, likes, dislikes, conclusion, password){
+  add_base(description, details)
+  {
+    let new_base = new Base(description, details);
+    this.bases.push(new_base);
+  }
+
+  get_bases()
+  {
+    if (this.bases.length == 0) { return [] }
+    else {return this.bases; }
+  }
+
+  add_council(id, name, description, creator, startdate, starttime, enddate, 
+    endtime, chatopendate, chatopentime, chatclosedate, chatclosetime, conclusion_due_date,
+              conclusion_due_time, feedback_due_date, feedback_due_time,
+              userlimit, tags, likes, dislikes, conclusion, password){
+    
+    if (conclusion_due_date === undefined)
+    {
+        conclusion_due_date = enddate;
+        conclusion_due_time = endtime;
+    }
+
+    if(feedback_due_date === undefined)
+    {
+      feedback_due_date = enddate;
+      feedback_due_time = endtime;
+    }
+
     let new_council = new Council(id, name,
                                   description, creator,
                                   startdate, starttime, enddate,
-                                  endtime, userlimit, tags, likes,
-                                  dislikes, conclusion, password);
+                                  endtime, chatopendate, chatopentime, chatclosedate, chatclosetime,
+                                  conclusion_due_date, conclusion_due_time, feedback_due_date, feedback_due_time,
+                                  userlimit, tags, likes, dislikes, conclusion, password);
     this.councils.push(new_council);
   }
 
@@ -403,7 +465,7 @@ module.exports = class Councils{
   add_file(fileid, filename, council_id, uploader, comments=[]){
     var council = this.get_council_by_id(council_id);
     if(council == -1){
-      return;
+      return -1;
     }
     var file = new File(fileid, filename, uploader, comments);
     council.add_file(file);
@@ -483,7 +545,7 @@ module.exports = class Councils{
     return council.get_conclusion();
   }
 
-  add_counclusion_to_council(cid, text){
+  add_conclusion_to_council(cid, text){
     let council = this.get_council_by_id(cid);
     council.add_conclusion(text);
   }
@@ -520,6 +582,19 @@ module.exports = class Councils{
         return messages[i].toggle_dislike(id, uid);
       }
     }
+  }
+
+  delete_council(cid)
+  {
+    for(let i = 0; i < this.councils.length; i++)
+    {
+      if(this.councils[i].get_council_id() == cid)
+      {
+        this.councils.splice(i, 1);
+        return true;
+      }
+    }
+    return false;
   }
 
   delete_message(cid, mid){

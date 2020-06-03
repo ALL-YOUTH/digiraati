@@ -465,7 +465,7 @@ uploader.on('stream', function(fileInfo) {
   console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
 });
 uploader.on('complete', function(fileInfo) {
-  socket.emit('update files request', council);
+  socket.emit('update files request', council_id);
 });
 uploader.on('error', function(err) {
   console.log('Error!', err);

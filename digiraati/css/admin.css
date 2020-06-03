@@ -7,6 +7,65 @@
     margin-left: 2.5%;
 }
 
+.deleted{
+    color: grey !important; 
+    font-style: italic !important;
+}
+
+.modal_message_title{
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.message_bottom_buttons{
+    width: 25%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 15px;
+    margin-top: 5px;
+}
+
+.narrow{
+    width: 60% !important;
+}
+
+.save_message_btn_small{
+    font-family: Montserrat;
+    font-size: 13px;
+    font-weight: bold;
+    background-color: rgba(1,175,196,1);
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    margin: auto;
+    cursor: pointer;
+}
+
+.delete_message_btn_small{
+    font-family: Montserrat;
+    font-size: 13px;
+    font-weight: bold;
+    background-color:rgba(250, 105, 128,1);
+    color: black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    margin: auto;
+    cursor: pointer;
+}
+
+.disabled{
+    background-color: grey !important;
+    border-color: grey !important;
+    color: black !important;
+}
+
 .modal_additional_actions{
     width: 80%;
     display: flex;
@@ -46,6 +105,8 @@
     font-size: 13px;
     font-weight: bold;
     color: white;
+    margin: auto;
+    cursor: pointer;
 }
 
 #delete_council_btn{
@@ -79,6 +140,23 @@
     cursor: pointer;
     font-family: Montserrat;
     font-size: 16px;
+    font-weight: bold;
+}
+
+.modal_file_entry{
+    width: 
+}
+
+.small_cancel_btn{
+    width: 10%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    background-color: rgba(250, 105, 128,1);
+    color: black;
+    cursor: pointer;
+    font-family: Montserrat;
+    font-size: 13px;
     font-weight: bold;
 }
 

@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<link rel="stylesheet" href="/css/create.css" type="text/css">
 	<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 	<title>Digiraati 2.0</title>
@@ -15,16 +16,17 @@
 	<header id="header">
 	</header>
 		<div id="container">
-			
 			<div class="create_container" id="create_container_1">
 				<form id="create_form_1">
-					<div class="create_container_title">LUO UUSI RAATI 1/3</div>
+					<div class="header_container">
+						<div class="create_container_title">LUO UUSI RAATI 1/3</div>
+					</div>
 					<div class="create_text" id="create_name_title">Raadin nimi</div>
-					<textarea id="name_input" type="text"></textarea><br>
+					<textarea rows="1" id="name_input" type="text" class="required"></textarea><br>
 					<div class="create_text" id="create_tag_title">Aihepiiri</div>
-					<textarea id="create_tags" type="text"></textarea><br>
+					<textarea rows="1" id="create_tags" type="text" class="required"></textarea><br>
 					<div class="create_text" id="create_description_title">Raadin kuvaus</div>
-					<textarea id="create_description_text_input"></textarea><br>
+					<textarea id="create_description_input" class="required"></textarea><br>
 					<div class="create_text" id="crate_open_closed_title">Raadin luonne<br>
 						<input type="radio" name="closed_open" value="Avoin" checked="checked" id="open_radio"> Avoin <br>
 						<input type="radio" name="closed_open" value="Suljettu" id="closed_radio"> Suljettu <br>
@@ -37,7 +39,7 @@
 					</div>
 
 					<div class="create_text" id="council_password_title">Syötä halutessasi raadille salasana<br>
-						<textarea id="password_text" type="text"></textarea>
+						<textarea id="password_text" rows="1" type="text"></textarea>
 					</div>
 				</form>
 
@@ -45,11 +47,14 @@
 
 		<div class="create_container" id="create_container_2">
 			<form id="create_form_2">
-				<div class="create_container_title">LUO UUSI RAATI 2/3</div>
+				<div class="header_container">
+					<div class="create_container_title">LUO UUSI RAATI 2/3</div>
+				</div>
 				<span class="create_meta_container_hor">
 					<span class="create_meta_container_ver">
 						<span class="create_text" id="publish_text">Raati julkaistaan<br></span>
-						<input type="date" id="council_publish">
+						<input type="date" id="council_publish_date" class="required">
+						<input type="time" id="council_publish_time" class="required">
 					</span>
 					<span class="create_meta_container_ver">
 						<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
@@ -61,7 +66,8 @@
 				<span class="create_meta_container_hor">
 					<span class="create_meta_container_ver">
 						<span class="create_text" id="publish_text">Keskustelu aukeaa<br></span>
-						<input type="date" id="council_chat_open">
+						<input type="date" id="council_chat_open_date" class="required">
+						<input type="time" id="council_chat_open_time" class="required">
 					</span>
 					<span class="create_meta_container_ver">
 						<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
@@ -73,7 +79,8 @@
 				<span class="create_meta_container_hor">
 					<span class="create_meta_container_ver">
 						<span class="create_text" id="publish_text">Keskustelu päättyy<br></span>
-						<input type="date" id="council_chat_close">
+						<input type="date" id="council_chat_close_date" class="required">
+						<input type="time" id="council_chat_close_time" class="required">
 					</span>
 					<span class="create_meta_container_ver">
 						<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
@@ -85,7 +92,8 @@
 				<span class="create_meta_container_hor">
 					<span class="create_meta_container_ver">
 						<span class="create_text" id="publish_text">Raati päättyy<br></span>
-						<input type="date" id="council_ends">
+						<input type="date" id="council_ends_date" class="required">
+						<input type="time" id="council_ends_time" class="required">
 					</span>
 					<span class="create_meta_container_ver">
 						<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
@@ -93,16 +101,18 @@
 						<input id="council_close_no_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox">1 viikko ennen
 					</span>
 				</span>
-				<span class="create_text">Loppulausuma
+				<span class="create_meta_container_ver">
+					<span class="create_text">Loppulausuma<br></span>
 					<input id="loppulausuma_checkboxbtn" name="loppulausuma" type="checkbox" class="container_checkbox" checked="checked">Loppulausuma
-					<input id="1 viikko ennen_lausumaa_checkboxbtn" name="loppulausuma" type="checkbox" class="container_checkbox">1 viikko ennen loppulausumaa
+					<input id="ei_loppulausumaa_checkboxbtn" name="loppulausuma" type="checkbox" class="container_checkbox">Ei loppulausumaa
 				</span>
 
-				<span id="questionnare_meta_container">
+				<span id="questionnaire_meta_container">
 					<span class="create_meta_container_hor">
 						<span class="create_meta_container_ver">
 							<div class="create_text">Loppulausuma valmiiksi</div>
-							<input type="date" id="council_questionnare_date">
+							<input type="date" id="conclusion_due_date">
+							<input type="time" id="conclusion_due_time">
 						</span>
 						<span class="create_meta_container_ver">
 							<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
@@ -110,11 +120,13 @@
 							<input id="questionnaire_no_notif_checkbox_btn" name="muistutus_julkaisusta" type="checkbox" class="container_checkbox">1 viikko ennen
 						</span>
 					</span>
-
+				</span>
+				<span id="feedback_meta_container">
 					<span class="create_meta_container_hor">
 						<span class="create_meta_container_ver">
 							<div class="create_text">Palautteen anto raadille</div>
-							<input type="date" id="council_feedback_date">
+							<input type="date" id="feedback_due_date" class="required">
+							<input type="time" id="feedback_due_time" class="required">
 						</span>
 						<span class="create_meta_container_ver">
 							<span class="create_text" id="publish_notification">Lähetä muistutus<br></span>
@@ -129,19 +141,21 @@
 
 		<div class="create_container" id="create_container_3">
 			<form id="create_form_3">
-				<div class="create_container_title">LUO UUSI RAATI 3/3</div>
-				<div class="create_container_title">Loppulausumapohja</div>
-
+				<div class="header_container">
+					<div class="create_container_title">LUO UUSI RAATI 3/3</div>
+					<div class="create_container_title">Loppulausumapohja</div>
+				</div>
 				<div class="create_meta_container" id="conclusion_questions">
-					<span class="conclusion_question"></span>
-						<div class="create_text">Kirjoita tähän kysymys 1</div>
-						<textarea class="text" id="conclusion_question_1"></textarea>
+					<span class="create_text">Kysymykset loppulausumakyselyä varten</span>
+					<div class="conclusion_question_container"></div>
+						<div class="create_text">Kysymys 1</div>
+						<textarea class="text conclusion_question" id="conclusion_question_1" rows="3" placeholder="Kirjoita tähän kysymys 1"></textarea>
 					</span>
 				</div>
-				<span class="container_button green" id="add_question_btn"></span>
+				<div class="container_button green" id="add_question_btn">Lisää kysymys</div>
 
 				<div class="create_meta_container" id="conclusion_base">
-					<div class="create_container_title">Luo loppulausuma</div>
+					<div class="create_container_title">Luo loppulausumapohja</div>
 					<trix-editor input="conclusion_input"></trix-editor>
 				</div>
 			</form>
@@ -149,8 +163,8 @@
 
 		<div class="bottom_button_container">
 			<span class="meta_button_container">
-				<span class="container_button" id="save_changes_btn">Tallenna muutokset</span>
-				<span class="container_button red" id="save_as_base_btn">Tallenna pohjaksi</span>
+				<span class="container_button" id="save_changes_btn">Luo raati</span>
+				<span class="container_button" id="load_base_btn">Lataa valmis pohja</span>
 			</span>
 			<span class="meta_button_container">
 				<span class="container_button disabled" id="page_backwards_btn">Edellinen</span>
@@ -158,11 +172,46 @@
 			</span>
 		</div>
 					
+		<div id ="council_base_container" class="modal_container">
+			<div class="header_container">
+				<div class="create_container_title">VALMIIT RAATIPOHJAT</div>
+			</div>
+			<div class="council_base_meta_container">
+				<div class="create_meta_container" id="council_base_list"></div>
+			</div>
+			<div class="bottom_button_container">
+				<span class="meta_button_container">
+					<span class="container_button" id="close_base_btn">Sulje ikkuna</span>
+				</span>
+			</div>
+		</div>
+
+
+		<div id="file_upload_container" class="modal_container">
+			<div class="header_container">
+				<div class="create_container_title">TIEDOSTOJEN HALLINTA</div>
+			</div>
+			<div class="file_list_meta_container">
+				<div class="create_meta_container">
+					<h2>Nykyiset tiedostot</h2>
+					<div class="create_meta_container" id="file_list">
+					</div>
+				</div>
+				<div class="upload_container">
+					<input type="file" id="file_input"></input>
+					<div id="add_file_btn">LISÄÄ TIEDOSTO</div>
+				</div>
+			</div>
+			<div class="bottom_button_container">
+				<span class="meta_button_container">
+					<span class="container_button" id="save_files_btn">Sulje ikkuna</span>
+				</span>
+			</div>
 		</div>
 	<footer id="footer">
 	</footer>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="/socket.io-file-client.js"></script>
 	<script src="/js/create.js" type="text/javascript"></script>
 	<script src="/js/common.js"></script>
 </body>

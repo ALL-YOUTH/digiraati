@@ -13,7 +13,7 @@
 <body>
 		<div id="container">
 			<div id="content_container">
-				<h4>Tervetuloa Digiraadin hallintosivustolle.</h4>
+				<h1>Tervetuloa Digiraadin hallintosivustolle.</h1>
 				<span id="council_span">
 					<div id="council_dropbox" class="title_bar">
 						<span class="title_text">Hallinnoi raateja</span>
@@ -49,25 +49,9 @@
 			</div>
 		</div>
 
-		<div id="messages_modal_container" class="modal_container">
-			<span class="title_text" id="messages_modal_title">Raadin $raati_id viestit</span>
-			<div class="modal_content_container">
-
-			</div>
-			<span class="modal_bottom_buttons">
-
-			</span>
-		</div>
-
-		<div id="conclusion_modal_container" class="modal_container">
-			<span class="title_text" id="conclusion_modal_title">Raadin $raati_id loppulausuma</span>
-			<div class="modal_content_container">
-				
-			</div>
-		</div>
 
 		<div id="user_modal_container" class="modal_container">
-			<span class="title_text" id="user_modal_title">Käyttäjän hallinnointi</span>
+			<h1>Käyttäjän hallinnointi</h1>
 			<div class="modal_content_container">
 				<span class="modal_line_container">
 					<span class="modal_line_text" id="user_id_text">Käyttäjän ID-tunnus</span>
@@ -113,7 +97,7 @@
 		</div>
 
 		<div id="council_modal_container" class="modal_container">
-			<span class="title_text" id="council_modal_title">Raadin hallinnointi</span>
+			<h1>Raadin hallinnointi</h1>
 			<div class="modal_content_container">
 				<span class="modal_line_container">
 					<span class="modal_line_text" id="council_id_text">Raadin ID-tunnus</span>
@@ -165,6 +149,7 @@
 				</span>
 				<span class="modal_additional_actions">
 					<span class="modal_line_button" id="council_messages_btn">Raadin viestit</span>
+					<span class="modal_line_button" id="council_files_btn">Raadin tiedostot</span>
 					<span class="modal_line_button" id="council_conclusion_btn">Loppulausuma</span>
 					<span class="modal_line_button" id="delete_council_btn">Poista raati</span>
 				</span>
@@ -172,6 +157,29 @@
 					<span class="save_btn" id="save_council_btn">Tallenna muutokset</span>
 					<span class="cancel_btn" id="cancel_council_btn">Sulje tallentamatta</span>
 				</span>
+			</div>
+		</div>
+
+		<div id="modal_file_container" class="modal_container">
+			<h1>Raadin tiedostot</h1>
+			<div class="modal_content_container" id="modal_files_container"></div>
+			<div class="modal_bottom_buttons">
+				<div class="cancel_btn" id="cancel_files_btn">Sulje ikkuna</div>
+			</div>
+		</div>
+
+		<div id="messages_modal_container" class="modal_container">
+			<h1>Raadin viestit</h1>
+			<div class="modal_content_container" id="council_messages_container"></div>
+			<span class="modal_bottom_buttons"></span>
+				<div class="cancel_btn" id="cancel_messages_btn">Sulje ikkuna</div>
+			</span>
+		</div>
+
+		<div id="conclusion_modal_container" class="modal_container">
+			<span class="title_text" id="conclusion_modal_title">Raadin $raati_id loppulausuma</span>
+			<div class="modal_content_container">
+
 			</div>
 		</div>
 

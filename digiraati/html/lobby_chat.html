@@ -10,22 +10,35 @@
 	<title>Digiraati 2.0</title>
 </head>
 <body>
+	<div id="loader_container" class="loader_container">
+		<div id="loader" class="loader"></div>
+		<div id="loader_text" class="loader_text">Lataan sivua...</div>
+	  </div>
 	<header id="header">
 	</header>
 
 	<div id="chat_container">
-		<div id="left_menu">
-		</div>
-
 		<div id="chat_content">
 			<div id="chat_title"></div>
 			<div id="chat_timetable"></div>
 			<div id="chat_description"></div>
 			<div id="lobby_navigation">
-				<div class="inactive" id="lobby_home_btn">Raatisivu</div>
-				<div class="active" id="lobby_chat_btn">Keskustelu</div>
-				<div class="inactive" id="lobby_document_btn">Dokumentit</div>
-				<div class="inactive" id="lobby_conclusion_btn">Loppulausuma</div>
+				<div class="lobby_meta_container">
+					<div class="lobby_home_text" id="lobby_home_btn">Pääsivu</div>
+					<div class="indicator inactive" id="lobby_home_indicator"></div>
+				</div>
+				<div class="lobby_meta_container">
+					<div class="lobby_home_text" id="lobby_chat_btn">Keskustelu</div>
+					<div class="indicator active" id="lobby_chat_indicator"></div>
+				</div>
+				<div class="lobby_meta_container">
+					<div class="lobby_home_text" id="lobby_document_btn">Dokumentit</div>
+					<div class="indicator inactive" id="lobby_document_indicator"></div>
+				</div>
+				<div class="lobby_meta_container">
+					<div class="lobby_home_text" id="lobby_conclusion_btn">Loppulausuma</div>
+					<div class="indicator inactive" id="lobby_conclusion_indicator"></div>
+				</div>
 			</div>
 			<div id="chat">
 				<div id="chat_hashtag"></div>
@@ -54,4 +67,24 @@
 	<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
   <script src="/js/common.js"></script>
   <script src="/js/lobby_chat.js"></script>
+
+<template id="message_template">
+	<div class="chat_message" id="">
+		<div class="sender_container">
+			<div style="background-color: rgb(1, 175, 196);" class="chat_avatar_ball">T</div>
+			<div class="message_list_sender_name"></div><div class="message_list_timestamp"></div>
+		</div>
+		<div id="text" class="message_list_text"></div>
+		<div class="bottom_container">
+			<div class="reaction_container">
+				<div class="likes_btn message_reactions noselect" aria-label="Samaa mieltä" title="Samaa mieltä"></div>
+				<div id="likes" class="likes_number noselect">  0</div><div class="dislikes_btn dislike_reactions noselect" aria-label="Eri mieltä" title="Eri mieltä"></div>
+				<div id="dislikes" class="dislikes_number noselect">   0</div><div class="goodargs_btn goodarg_reactions noselect" aria-label="Hyvin argumentoitu" title="Hyvin argumentoitu"></div>
+				<div id="goodargs" class="goodargs_number noselect">   0</div></div><div class="response_container"><div class="message_list_reply noselect">VASTAA</div>
+				<div class="message_list_delete noselect">POISTA VIESTI</div><div class="message_list_edit noselect">MUOKKAA VIESTIÄ</div></div><div class="mobile_reaction_container">
+				<span class="reply_number"></span><span class="mobile_message_actions"><span class="fas fa-comment-alt"></span></span>
+			</div>
+		</div>
+	</div>
+</template>
 </body>

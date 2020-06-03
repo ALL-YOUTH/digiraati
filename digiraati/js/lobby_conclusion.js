@@ -26,7 +26,7 @@ $(function(){
   data["council_id"] = council;
   //myAnswers = socket.emit('request answers by userid', data);
   quest_view = document.getElementById('questionnaire_viewer');
-  trix_editor = document.querySelector("trix-editor");
+  
 });
 
 socket.on('receive all council answers', function(data){ // Receives an array of arrays. Each sub-array is an array of a given user's anonymized answers to the final questions. 

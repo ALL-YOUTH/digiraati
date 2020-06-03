@@ -32,12 +32,14 @@ var Users = require(path.join(__dirname + "/user.js"));
 var Councils = require(path.join(__dirname + "/councils.js"));
 var Logger = require(path.join(__dirname + "/datalog.js"));
 var Conclusions = require(path.join(__dirname + "/conclusioner.js"));
+var EventHandler = require(path.join(__dirname + "/eventhandler.js"));
 
 //Create objects for user and council
 let users = new Users();
 let councils = new Councils();
 let logger = new Logger();
 let conclusioner = new Conclusions();
+let eventhandler = new EventHandler(councils.get_councils(), users.get_all_users());
 setInterval(ClearExpiredSessions, 1000 * 60 * 60 * 12);
 
 // Add temporary questionnaire for testing purposes
@@ -76,7 +78,6 @@ fs.readFile(backup_file, function (err, data) {
   for(var i = 0; i <  recover_councils.length; ++i){
     let council = recover_councils[i];
     var council_password = council["password"] || "";
-    console.log("Luin salasanan " + council_password);
     councils.add_council( council["id"],
                           council["name"],
                           council["description"],
@@ -85,6 +86,14 @@ fs.readFile(backup_file, function (err, data) {
                           council["starttime"],
                           council["enddate"],
                           council["endtime"],
+                          council["chat_open_date"],
+                          council["chat_open_time"],
+                          council["chat_close_date"],
+                          council["chat_close_time"],
+                          council["conclusion_due_date"],
+                          council["conclusion_due_time"],
+                          council["feedback_due_date"],
+                          council["feedback_due_time"],
                           council["userlimit"],
                           council["tags"],
                           council["likes"],
@@ -105,9 +114,19 @@ fs.readFile(backup_file, function (err, data) {
       data["council"] = council["id"];
       councils.recover_user_to_council(data);
     }
-    
+
+  }  
+
+  if(data["bases"] != undefined)
+  {
+      for(let base of data["bases"])
+      {
+        councils.add_base(base);
+      }
   }
 
+  eventhandler.recover_from_backup(councils.get_councils(), users.get_all_users(), data["events"]);
+  
   try{
     console.log("concs: " + recover_concs.length);
     conclusioner.recover_backup_data(recover_concs);
@@ -355,6 +374,18 @@ io.on('connection', function(socket){
     socket.emit('conclusion answers updated');
   });
 
+  socket.on('request all bases', function(){
+    console.log("List of all council bases requested");
+    let returnable = councils.get_bases();
+    socket.emit('return bases', returnable);
+  });
+
+  socket.on('request add new base', function(data){
+    console.log("adding new base")
+    councils.add_base(data["description"], data["content"]);
+    create_backup();
+  });
+
   //Request to create a new council.
   //TODO: this should also check the user type. Official user should always be able
   //to create a council and those councils should stand out from the normal user
@@ -362,6 +393,7 @@ io.on('connection', function(socket){
   socket.on('request council create', function(info){
     server_log(ip + ": " + info["creator"] + " attempted to create council: " +
                 info["name"]);
+    console.log("INFO: " + JSON.stringify(info));
     ret_val = councils.add_council( info["id"],
                                     info["name"],
                                     info["description"],
@@ -370,6 +402,14 @@ io.on('connection', function(socket){
                                     info["starttime"],
                                     info["enddate"],
                                     info["endtime"],
+                                    info["discussion_open_date"],
+                                    info["discussion_open_time"],
+                                    info["discussion_close_date"],
+                                    info["discussion_close_time"],
+                                    info["conclusion_due_date"],
+                                    info["conclusion_due_time"],
+                                    info["feedback_due_date"],
+                                    info["feedback_due_time"],
                                     info["userlimit"],
                                     info["keywords"],
                                     0,
@@ -380,10 +420,32 @@ io.on('connection', function(socket){
     if(ret_val == -1){
       return;
     }
-    update_page();
-    socket.emit("council create succeess");
+
+    if (info["conclusion_questions"].length > 0)
+    {
+      console.log("Adding conclusion questions");
+      conclusioner.add_questionnaire(info["id"], info["conclusion_questions"]);
+    }
+
+    if (info["conclusion_base"].length > 0)
+    {
+      console.log("Adding conclusion base");
+      councils.add_conclusion_to_council(info["id"], info["conclusion_base"]);
+    }
+
+    if (info["notifications"].length > 0)
+    {
+      let eventInfo = {};
+      eventInfo["council_id"] = info["id"];
+      eventInfo["council_name"] = info["name"];
+      eventInfo["notifications"] = info["notifications"];
+      console.log("Pushing event: " + eventInfo);
+      eventhandler.register_council(eventInfo);
+    }
+
     logger.AppendLog("e13", users.get_userid_by_username(info["creator"]), new Date().getTime(), info["id"]);
     create_backup();
+    socket.emit("council create success");
   });
 
   socket.on('request councils update', function(){
@@ -429,6 +491,7 @@ io.on('connection', function(socket){
   //Request to add a like to a message. If user has already liked this message,
   //the like will be removed.
   socket.on('request add like', function(data){
+    console.log("Requested add like")
     var uid = users.get_userid_by_username(data["liker"]);
     var likes = councils.add_like_to_message(data["council"], data["mid"], uid);
     logger.AppendLog("e09", uid, new Date().getTime(), data["mid"]);
@@ -438,6 +501,7 @@ io.on('connection', function(socket){
     //Request to add a dislike to a message. If user has already liked this message,
   //the like will be removed.
   socket.on('request add dislike', function(data){
+    console.log("Requested add dislike")
     var uid = users.get_userid_by_username(data["liker"]);
     var dislikes = councils.add_dislike_to_message(data["council"], data["mid"], uid);
     logger.AppendLog("e10", uid, new Date().getTime(), data["mid"]);
@@ -447,6 +511,7 @@ io.on('connection', function(socket){
     //Request to add a good argument to a message. If user has already liked this message,
   //the like will be removed.
   socket.on('request add goodarg', function(data){
+    console.log("Requested add goodarg")
     var uid = users.get_userid_by_username(data["liker"]);
     var goodargs = councils.add_goodarg_to_message(data["council"], data["mid"], uid);
     logger.AppendLog("e11", uid, new Date().getTime(), data["mid"]);
@@ -589,6 +654,21 @@ io.on('connection', function(socket){
     logger.AppendLog("e08", users.get_userid_by_username(data["user_id"]), new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('delete message', data["mid"]);
   })
+
+  socket.on('request delete file', function(data){
+    councils.delete_file(data["council"], data["file_id"]);
+  });
+  
+  socket.on('request council delete', function(data){
+    server_log(data["submitter"] + " is deleting council " + data["council_id"]);
+    if(councils.delete_council(data["council_id"]) == true)
+    {
+      create_backup();
+      socket.emit("council data updated successfully");
+    }
+
+    else{ socket.emit("council data update failed");}
+  });
 
   //request to add a response to a comment
   socket.on('request add response', function(data){
@@ -771,6 +851,8 @@ function create_backup(){
       backup_data["councils"].push(councils.get_council_by_id(c["id"]));
     }
     backup_data["conclusions"] = conclusioner.get_all_data();
+    backup_data["events"] = eventhandler.dump_event_data();
+    backup_data["bases"] = councils.get_bases();
     var json_data = JSON.stringify(backup_data);
     fs.writeFile(backup_file, json_data, 'utf8', function (err) {
       if (err) {

@@ -72,7 +72,8 @@ $('#confirm_register').click(function(){
 
 function check_testing_id(id)
 {
-  if (length(id) != 3) { return false; }
+  console.log("Length: " + id.length + ", " + "not a number: " + isNaN(id));
+  if (id.length != 3) { return false; }
   else if (isNaN(id)) { return false; }
   else { return true } ;
 }

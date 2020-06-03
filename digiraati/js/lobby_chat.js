@@ -16,6 +16,7 @@ $(function(){
 
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit("check login council", window.sessionStorage.getItem('token'), council);
+  last_message_sender = "";
 });
 
 socket.on('council data', function(data){
@@ -161,7 +162,7 @@ $(document).on('click', ".mobile_reply_btn", function(e)
 {
   console.log("Button pressed");
   $('.action_panel_container').remove();
-  var message_id = $(this).parents('.mobile_container').first().attr('id').replace("action_panel", "");
+  var message_id = $(this).parents('.action_panel_container').first().attr('id');
   original_message = messages.filter(element => element.id === message_id)[0];
 
   var text_entry_panel = document.createElement('div');
@@ -405,7 +406,7 @@ $(document).on('click', ".mobile_message_actions", function(e)
     var action_panel_container = document.createElement('div');
     action_panel_container.classList.add("action_panel_container");
     action_panel_container.classList.add("mobile_container");
-    action_panel_container.id = message_id + "action_panel";
+    action_panel_container.id = message_id;
     document.getElementById('modal_container').appendChild(action_panel_container);
     $('.action_panel_container').hide();
 
@@ -417,6 +418,7 @@ $(document).on('click', ".mobile_message_actions", function(e)
     var thumbs_up_container = document.createElement('div');
     thumbs_up_container.classList.add("mobile_thumb_container");
     var likes_btn = document.createElement('span');
+    likes_btn.id = message_id;
     likes_btn.classList.add("likes_btn");
     var likes_number = document.createElement('span');
     likes_number.classList.add("likes_number");
@@ -429,6 +431,7 @@ $(document).on('click', ".mobile_message_actions", function(e)
     thumbs_down_container.classList.add("mobile_thumb_container");
     var dislikes_btn = document.createElement('span');
     dislikes_btn.classList.add("dislikes_btn");
+    dislikes_btn.id = message_id;
     var dislikes_number = document.createElement('span');
     dislikes_number.classList.add("dislikes_number");
     dislikes_number.id = message_id+"dislikes_number";
@@ -440,6 +443,7 @@ $(document).on('click', ".mobile_message_actions", function(e)
     goodargs_container.classList.add("mobile_thumb_container");
     var goodargs_btn = document.createElement('span');
     goodargs_btn.classList.add("goodargs_btn");
+    goodargs_btn.id = message_id;
     var goodargs_number = document.createElement('span');
     goodargs_number.classList.add("goodargs_number");
     goodargs_number.id = message_id+"goodargs_number";
@@ -545,20 +549,120 @@ function send_message(){
   document.getElementById('message_input').value = "";
 }
 
+function create_message(msg, msg_target ="message_list"){
+  let ml = document.getElementById(msg_target);
+  let msg_template = document.querySelector('#message_template');
+
+  let clone = document.importNode(msg_template.content, true);
+  clone.querySelector(".chat_message").id = msg["id"];
+  clone.querySelector(".message_list_sender_name").innerHTML = msg["sender"];
+  clone.querySelector(".message_list_timestamp").innerHTML = msg["timestamp"];
+  let c = 0;
+  for(var i = 0; i < msg["sender"].length; ++i){
+  c += msg["sender"].charCodeAt(i);
+  }
+  clone.querySelector(".chat_avatar_ball").textContent = msg["sender"][0].toUpperCase();
+  clone.querySelector(".chat_avatar_ball").backgroundColor = colors[c % colors.length];
+
+  let text_id = clone.getElementById("text");
+  text_id.id = msg["id"] + "text";
+  text_id.innerHTML = msg["content"];
+
+  let likes_number = clone.getElementById("likes");
+  let dislikes_number = clone.getElementById("dislikes");
+  let goodargs_number = clone.getElementById("goodargs");
+
+  likes_number.id = msg["id"] + "likes";
+  likes_number.innerHTML = msg["likes"].length;
+
+  dislikes_number.id = msg["id"] + "dislikes"
+  dislikes_number.innerHTML = msg["dislikes"].length;
+
+  goodargs_number.id = msg["id"] + "goodargs";
+  goodargs_number.innerHTML = msg["goodargs"].length;
+
+  if(logged_in != msg["sender"])
+  {
+    let elem = clone.querySelector(".message_list_delete");
+    elem.parentNode.removeChild(elem);
+
+    let elem_2 = clone.querySelector(".message_list_edit");
+    elem_2.parentNode.removeChild(elem_2);
+  }
+  
+  ml.appendChild(clone);
+  var separator = document.createElement('div');
+  separator.classList.add("separator");
+  ml.appendChild(separator);
+}
+
+function create_reply(msg, level)
+{
+  let ml = document.getElementById("message_list");
+  let msg_template = document.querySelector('#message_template');
+  let clone = document.importNode(msg_template.content, true);
+
+  clone.querySelector(".chat_message").id = msg["id"];
+
+  if (level == 3){ clone.querySelector(".chat_message").className = "second_tier_reply"; }
+  else { clone.querySelector(".chat_message").className = "reply_message"; }
+
+  clone.querySelector(".message_list_sender_name").innerHTML = msg["sender"];
+  clone.querySelector(".message_list_timestamp").innerHTML = msg["timestamp"];
+  let c = 0;
+  for(var i = 0; i < msg["sender"].length; ++i){
+  c += msg["sender"].charCodeAt(i);
+  }
+  clone.querySelector(".chat_avatar_ball").textContent = msg["sender"][0].toUpperCase();
+  clone.querySelector(".chat_avatar_ball").backgroundColor = colors[c % colors.length];
+
+  let text_id = clone.getElementById("text");
+  text_id.id = msg["id"] + "text";
+  text_id.innerHTML = msg["content"];
+
+  let likes_number = clone.getElementById("likes");
+  let dislikes_number = clone.getElementById("dislikes");
+  let goodargs_number = clone.getElementById("goodargs");
+
+  likes_number.id = msg["id"] + "likes";
+  likes_number.innerHTML = msg["likes"].length;
+
+  dislikes_number.id = msg["id"] + "dislikes"
+  dislikes_number.innerHTML = msg["dislikes"].length;
+
+  goodargs_number.id = msg["id"] + "goodargs";
+  goodargs_number.innerHTML = msg["goodargs"].length;
+
+  if(logged_in != msg["sender"])
+  {
+    let elem = clone.querySelector(".message_list_delete");
+    elem.parentNode.removeChild(elem);
+
+    let elem_2 = clone.querySelector(".message_list_edit");
+    elem_2.parentNode.removeChild(elem_2);
+  }
+  
+  ml.appendChild(clone);
+  var separator = document.createElement('div');
+  separator.classList.add("separator");
+  ml.appendChild(separator);
+}
+
+/**
 function create_message(msg, msg_target = 'message_list'){
   var nm = document.createElement('div');
   nm.classList.add("chat_message");
   nm.id = msg["id"];
   if (!msg.hasOwnProperty("timestamp") || msg["timestamp"] == undefined) {var msg_timestamp = ""}
   else {var msg_timestamp = msg["timestamp"] + " "}
-  if(last_message_sender != msg["sender"]){
-    var pic = document.createElement('div');
-    pic.textContent = msg["sender"][0].toUpperCase();
-    var c = 0;
-    for(var i = 0; i < msg["sender"].length; ++i){
-      c += msg["sender"].charCodeAt(i);
-    }
-    pic.style.backgroundColor = colors[c % colors.length];
+  
+  var pic = document.createElement('div');
+  pic.textContent = msg["sender"][0].toUpperCase();
+  var c = 0;
+  for(var i = 0; i < msg["sender"].length; ++i){
+  c += msg["sender"].charCodeAt(i);
+  }
+  pic.style.backgroundColor = colors[c % colors.length];
     pic.classList.add("chat_avatar_ball");
     var senderContainer = document.createElement('div');
     senderContainer.classList.add("sender_container");
@@ -570,17 +674,6 @@ function create_message(msg, msg_target = 'message_list'){
     timeStamp.classList.add("message_list_timestamp");
     senderContainer.appendChild(pic); senderContainer.appendChild(sender); senderContainer.appendChild(timeStamp); 
     nm.appendChild(senderContainer);
-  }
-  else
-  {
-    var senderContainer = document.createElement('div');
-    senderContainer.classList.add("sender_container");
-    var timeStamp = document.createElement('div');
-    timeStamp.innerHTML = msg_timestamp;
-    timeStamp.classList.add("message_list_timestamp");
-    senderContainer.appendChild(timeStamp);
-    nm.appendChild(senderContainer);
-  }
   var text = document.createElement('div'); // Actual text body
   text.id = nm.id + "text";
   //console.log(msg["content"]);
@@ -669,7 +762,7 @@ function create_message(msg, msg_target = 'message_list'){
   var bottomContainer = document.createElement("div");
   bottomContainer.classList.add("bottom_container");
 
-  bottomContainer.appendChild(response_container); bottomContainer.appendChild(mobile_container);
+  bottomContainer.appendChild(reaction_container); bottomContainer.appendChild(response_container); bottomContainer.appendChild(mobile_container); 
 
   nm.appendChild(bottomContainer);
 
@@ -683,7 +776,9 @@ function create_message(msg, msg_target = 'message_list'){
   ml.scrollTop = ml.scrollHeight;
   window.scrollTop = window.scrollHeight;
 }
+ */
 
+/**
 function create_reply(msg, level){
   var nm = document.createElement('div');
   if (level == 3){   nm.classList.add("second_tier_reply"); }
@@ -789,7 +884,7 @@ function create_reply(msg, level){
   ml.appendChild(separator);
   ml.scrollTop = ml.scrollHeight;
   window.scrollTop = window.scrollHeight;
-}
+} */
 
 socket.on('new message', function(msg){
   create_message(msg);
@@ -899,15 +994,17 @@ $(document).on('click', ".mobile_delete_btn", function(e){
       data = {}
       data["user_id"] = logged_in;
       data["council"] = council;
-      data["mid"] = $(this).parents('.mobile_container').first().attr('id').replace("action_panel", "");
+      data["mid"] = $(this).parents('.action_panel_container').first().attr('id');
       socket.emit('request delete message', data);
       window.location.reload();
     }
   }
 });
 
+/**
 $(document).on('click', '.message_reactions', function(e){
   if(logged_in.length < 1){
+    console.log("You clicked something")
     alert("Et voi reagoida viesteihin ellet ole kirjautunut sisään!");
     return;
   }
@@ -916,9 +1013,10 @@ $(document).on('click', '.message_reactions', function(e){
   data["mid"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id');
   data["liker"] = logged_in;
   socket.emit('request add like', data);
-});
+}); */
 
 $(document).on('click', '.likes_btn', function(e){
+  console.log("You clicked like");
   if(logged_in.length < 1){
     alert("Et voi reagoida viesteihin ellet ole kirjautunut sisään!");
     return;
@@ -926,11 +1024,13 @@ $(document).on('click', '.likes_btn', function(e){
   data = {};
   data["council"] = council;
   data["liker"] = logged_in;
-  data["mid"] = $(this).parents('.mobile_container').first().attr('id').replace("reaction_panel", "");
+  data["mid"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply, .action_panel_container').first().attr('id');
+  console.log(data);
   socket.emit('request add like', data);
 });
 
 $(document).on('click', '.dislikes_btn', function(e){
+  console.log("You clicked dislike");
   if(logged_in.length < 1){
     alert("Et voi reagoida viesteihin ellet ole kirjautunut sisään!");
     return;
@@ -938,11 +1038,13 @@ $(document).on('click', '.dislikes_btn', function(e){
   data = {};
   data["council"] = council;
   data["liker"] = logged_in;
-  data["mid"] = $(this).parents('.mobile_container').first().attr('id').replace("reaction_panel", "");
+  data["mid"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply, .action_panel_container').first().attr('id');
+  console.log(data);
   socket.emit('request add dislike', data);
 });
 
 $(document).on('click', '.goodargs_btn', function(e){
+  console.log("You clicked goodarg");
   if(logged_in.length < 1){
     alert("Et voi reagoida viesteihin ellet ole kirjautunut sisään!");
     return;
@@ -950,12 +1052,13 @@ $(document).on('click', '.goodargs_btn', function(e){
   data = {};
   data["council"] = council;
   data["liker"] = logged_in;
-  data["mid"] = $(this).parents('.mobile_container').first().attr('id').replace("reaction_panel", "");
+  data["mid"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply, .action_panel_container').first().attr('id');
+  console.log(data);
   socket.emit('request add goodarg', data);
 });
 
 socket.on('update likes', function(mid, likes){
-  console.log("mid: " + mid);
+  console.log("updaring likes: " + mid + " " + likes);
   var message = document.getElementById(mid+"likes");
   message.textContent = "   "+likes;
   var mobile_message = document.getElementById(mid+"likes_number");
@@ -968,39 +1071,17 @@ socket.on('reload_chat_lobby', function()
   window.location.reload();
 });
 
-$(document).on('click', '.dislike_reactions', function(e){
-  if(logged_in.length < 1){
-    alert("Et voi reagoida viesteihin ellet ole kirjautunut sisään!");
-    return;
-  }
-  data = {};
-  data["council"] = council;
-  data["mid"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id');
-  data["liker"] = logged_in;
-  socket.emit('request add dislike', data);
-});
 
 socket.on('update dislikes', function(mid, dislikes){
+  console.log("updating dislikes");
   var message = document.getElementById(mid+"dislikes");
   message.textContent = "   "+dislikes;
   var mobile_message = document.getElementById(mid+"dislikes_number");
   mobile_message.textContent = "    "+dislikes;
 });
 
-
-$(document).on('click', '.goodarg_reactions', function(e){
-  if(logged_in.length < 1){
-    alert("Et voi reagoida viesteihin ellet ole kirjautunut sisään!");
-    return;
-  }
-  data = {};
-  data["council"] = council;
-  data["mid"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id');
-  data["liker"] = logged_in;
-  socket.emit('request add goodarg', data);
-});
-
 socket.on('update goodargs', function(mid, goodargs){
+  console.log("updating goodargs " + mid + " " + goodargs)
   var message = document.getElementById(mid+"goodargs");
   message.textContent = "   "+goodargs;
   var mobile_message = document.getElementById(mid+"goodargs_number");

@@ -77,10 +77,13 @@ socket.on('council data', function(data){
     var dateDiff = new Date() - Date.parse(data["startdate"]);
     var progressPerc = dateDiff / (Date.parse(data["enddate"]) - Date.parse(data["startdate"]));
 
-    console.log("Progress percentage: " + progressPerc);
-    if (progressPerc > 100) {progressPerc = 100};
+    if (new Date() > Date.parse(data["enddate"])) {progressPerc = 100}
+    else if (dateDiff < 0) { progressPerc = 0}
+    else { progressPerc = progressPerc * 100};
 
-    progress.style.width = progressPerc * 100 + "%";
+    console.log("Progress percentage: " + progressPerc);
+  
+    progress.style.width = progressPerc + "%";
 
     var councilEnd = document.createElement('div');
     councilEnd.classList.add("council_end");
