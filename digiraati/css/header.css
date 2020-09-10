@@ -24,7 +24,7 @@
 
 #logo_url{
   content:url("/res/digiraati_logo.png");
-  width: 123px;
+  height: 26px;
 }
 
 #hamburger_icon{
@@ -155,14 +155,6 @@
   color:rgba(0,96,115,1);
 }
 
-#header_div{
-  height: 50px;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  z-index:90;
-  padding:10px 0px 20px 0px;
-}
-
 #login_div #separator{
   background-color: rgb(255,255,255,0.5);
   height:2px;
@@ -229,12 +221,12 @@
 @media (min-width:1000px){
 
   #header_div{
-    height: 100px;
+    height: 69px;
     overflow-x: hidden;
     overflow-y: hidden;
     z-index:90;
-    padding:10px 0px 20px 0px;
-    background:url("/res/bannerinograffa6.png") no-repeat center center;
+    padding: 0px;
+    margin-bottom: 45px;
   }
 
   #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Kirjaudu_ulos_btn, #Hae_btn{
@@ -251,7 +243,7 @@
 
   #logo_div{
     width: auto;
-    height: auto;
+    height: 26px;
   }
 
   #hamburger_div, #hamburger_menu, #arrow_left{
@@ -267,7 +259,6 @@
     float:right;
     margin-right: 8%;
     font-size: 13px;
-    margin-top:15px;
     font-weight: bold;
     color: rgba(52,54,56,1);
   }

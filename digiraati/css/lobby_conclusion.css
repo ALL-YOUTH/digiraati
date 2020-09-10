@@ -106,21 +106,6 @@ body, html{
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00d6d6d6', endColorstr='#00d6d6d6',GradientType=1 ); /* IE6-9 */
 }
 
-#conclusion_navigator{
-  position: relative;
-  display: inline-block;
-  height: auto;
-  width: 60%;
-  padding: 0px20px;
-}
-
-#conclusion_navigator div{
-  display: inline-block;
-  margin:0px 10px 0px 0px;
-  padding:10px 20px 10px 20px;
-  cursor:pointer;
-}
-
 #conclusion_hashtag{
   background-color:rgba(1,175,196,1);
   font-weight: bold;
@@ -134,7 +119,7 @@ body, html{
   opacity: 1;
 }
 
-#conclusion_title, #conclusion_timetable, #conclusion_description, #lobby_navigation{
+#conclusion_title, #conclusion_timetable, #conclusion_description, #conclusion_navigator{
   margin-top:20px;
   margin-left:50px;
   font-family: Montserrat;
@@ -155,7 +140,7 @@ body, html{
   line-height: 26px;
 }
 
-#lobby_navigation{
+#lobby_navigation, #conclusion_navigator{
   position: relative;
   width:80%;
   margin-bottom: 25px;
@@ -166,19 +151,22 @@ body, html{
 }
 
 .lobby_meta_container{
-  width: 10%;
-  height: 40px;
+  width: auto;
+  height: 60px;
   display: flex;
   flex-direction: column;
   text-align: center;
   cursor: pointer;
 }
 
+.lobby_home_text{
+  padding-bottom: 25px;
+}
+
 
 div .active{
   background-color: rgba(157,224,232,1);
   font-size: 14px;
-  font-weight: bold;
   font-family: Montserrat; 
   height: 15px;
 }
@@ -228,7 +216,6 @@ div .inactive{
 
 div .inactive{
   font-size: 14px;
-  font-weight: bold;
   font-family: Montserrat;
   background-color: rgba(255,255,255,1);
 }

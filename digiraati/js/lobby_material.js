@@ -28,6 +28,7 @@ $(function(){
   $('#footer').load(host + "/html/footer.html");
   $('#comment_view').css("height", $(window).height()-100);
   $('#comment_list_div').css("max-height", $(window).height()-100);
+  $('#navbar').load(host + '/html/navbar.html');
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit('update files request', council);
 });

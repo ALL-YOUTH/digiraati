@@ -30,7 +30,6 @@ socket.on("avatar change complete", function(){
 
 function SelectAvatar(event)
 {
-  console.log("Hey I'm selecting something here: " + event.currentTarget);
   selected_avatar = event.currentTarget.id;
   avatar_pictures.forEach(element => {
     document.getElementById(element.id).classList.remove("selected");
@@ -63,13 +62,23 @@ $('#save_btn').click(function(){
 });
 
 $('#create_new_council').click(function(){
-  document.getElementById('my_councils').className = "inactive";
-  document.getElementById('all_councils').className = "inactive";
-  document.getElementById('followed_councils').className = "inactive";
-  document.getElementById('my_activity').className = "inactive";
-  document.getElementById('tags').className = "inactive";
-  document.getElementById('create_new_council').className = "active";
-  goToPage("/create");
+  let salasana = window.prompt("Tämä sivu vaatii salasanan.");
+  socket.emit("check create password", salasana, function(response){
+    if (response == true)
+    {
+      document.getElementById('my_councils').className = "inactive";
+    document.getElementById('all_councils').className = "inactive";
+    document.getElementById('followed_councils').className = "inactive";
+    document.getElementById('my_activity').className = "inactive";
+    document.getElementById('tags').className = "inactive";
+    document.getElementById('create_new_council').className = "active";
+    goToPage("/create");
+    }
+    else 
+    {
+      alert("Salasana ei ollut oikein.");
+    }
+  })
 });
 
 $('#my_councils').click(function(){

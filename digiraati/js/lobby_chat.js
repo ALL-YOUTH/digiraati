@@ -13,14 +13,22 @@ $(function(){
 
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
+  $('#navbar').load(host + '/html/navbar.html');
 
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit("check login council", window.sessionStorage.getItem('token'), council);
   last_message_sender = "";
 });
 
+socket.on('invalid council id', function(){
+  console.log("Received invalid council id");
+});
+
+socket.on('disconnect', function(){
+  alert("I got disconnected");
+});
+
 socket.on('council data', function(data){
-  $('#left_menu_title').html(data["name"].toUpperCase());
   $('#chat_title').html(data["name"].toUpperCase());
   //$('#chat_description').html(data["description"]);
   $('#chat_hashtag').html("#"+data["name"].toLowerCase().replace(" ", ""));
@@ -32,6 +40,7 @@ socket.on('council data', function(data){
   ml.innerHTML = "";
   ml.id = "message_list";
   messages = data["messages"];
+  console.log("Messages: " + messages.length);
   var original_messages = data["messages"].filter(element => element["parent"] == "");
   
   for(message of original_messages){
@@ -76,9 +85,35 @@ function ParseMessage(message, level)
   
 }
 
-socket.on("login success", function(){
-  socket.emit("request council data", council);
+socket.on("council login success", function(){
+  console.log("Success logging in, requesting council data");
   socket.emit("request socket list", council);
+  socket.emit("request council data", council, function(data){
+    if (data != 'error')
+    {
+    $('#chat_title').html(data["name"].toUpperCase());
+  //$('#chat_description').html(data["description"]);
+  $('#chat_hashtag').html("#"+data["name"].toLowerCase().replace(" ", ""));
+  var h = document.getElementById('chat_content').offsetHeight +
+          document.getElementById('header').offsetHeight;
+  $('#chat_container').css("height", h + "px");
+
+  var ml = document.getElementById('message_list');
+  ml.innerHTML = "";
+  ml.id = "message_list";
+  messages = data["messages"];
+  console.log("Messages: " + messages.length);
+  var original_messages = data["messages"].filter(element => element["parent"] == "");
+  
+  for(message of original_messages){
+    ParseMessage(message, 1);
+  }
+  }
+  else{
+    alert("There was an error.");
+  }
+  });
+  
 });
 
 window.onscroll = function(e){

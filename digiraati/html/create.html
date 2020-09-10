@@ -21,6 +21,11 @@
 					<div class="header_container">
 						<div class="create_container_title">LUO UUSI RAATI 1/3</div>
 					</div>
+					<div class="header_image_container" id="create_council_image" value="default">
+						<div class="create_text" id="image_title">Raadin nostokuva</div>
+						<img id="header_image" class="header_image" src="/res/council_image.png">
+						<div class="container_button" id="change_image_btn">Vaihda kuva</div>
+					</div>
 					<div class="create_text" id="create_name_title">Raadin nimi</div>
 					<textarea rows="1" id="name_input" type="text" class="required"></textarea><br>
 					<div class="create_text" id="create_tag_title">Aihepiiri</div>
@@ -149,7 +154,7 @@
 					<span class="create_text">Kysymykset loppulausumakyselyä varten</span>
 					<div class="conclusion_question_container"></div>
 						<div class="create_text">Kysymys 1</div>
-						<textarea class="text conclusion_question" id="conclusion_question_1" rows="3" placeholder="Kirjoita tähän kysymys 1"></textarea>
+						<textarea class="text conclusion_question_text" id="conclusion_question_1" rows="3" placeholder="Kirjoita tähän kysymys 1"></textarea>
 					</span>
 				</div>
 				<div class="container_button green" id="add_question_btn">Lisää kysymys</div>
@@ -208,6 +213,28 @@
 				</span>
 			</div>
 		</div>
+
+		<div id="image_changer_container" class="modal_container">
+			<div class="header_container">
+				<div class="image_container_title">LÄHETÄ UUSI NOSTOKUVA</div>
+			</div>
+			<div class="file_upload_meta_container">
+				<div class="instruction_container">
+					<div class="create_text">Suositeltu kuvasuhde: 16:9.</div>
+					<div class="create_text">Sallitut tiedostotyypit: .JPG, .PNG</div>
+				</div>
+				<div class="upload_container">
+					<input type="file" id="image_input"></input>
+					<div class="container_button" id="add_image_btn">LÄHETÄ KUVA</div>
+				</div>
+			</div>
+			<div class="bottom_button_container">
+				<span class="meta_button_container">
+					<span class="container_button" id="save_images_btn">Sulje ikkuna</span>
+				</span>
+			</div>
+		</div>
+
 	<footer id="footer">
 	</footer>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

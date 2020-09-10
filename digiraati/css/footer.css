@@ -6,6 +6,7 @@
   width:100%;
   clear:both;
   background-color: rgba(1,175,196,1);
+  z-index: 98;
 }
 
 #footer_container{
@@ -50,7 +51,7 @@
     clear:both;
     background-color: rgba(1,175,196,1);
     bottom:0px;
-    position: static;
+    position: fixed;
   }
 
   #footer_container{

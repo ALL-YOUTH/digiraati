@@ -15,10 +15,42 @@ $(function(){
 
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
+  $('#navbar').load(host + '/html/navbar.html');
+
+  trix_editor = document.querySelector("trix-editor");
 
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit("check login council", window.sessionStorage.getItem('token'), council);
-  socket.emit("request council data", council);
+  socket.emit("request council data", council, function(data){
+    try{
+      trix_editor.editor.loadJSON(JSON.parse(data["conclusion"]));
+    }
+    catch(e)
+    {
+      if (e instanceof SyntaxError)
+      {
+        trix_editor.editor.insertString(data["conclusion"]);
+      }
+  
+    else {
+      alert("Loppulausuman lataamisessa tapahtui virhe.");
+      }
+    }
+  
+    finally{
+      chat_list = document.getElementById("conclusion_chat_list");
+      var chat_messages = data["messages"];
+      var original_messages = chat_messages.filter(element => element["parent"] == "");
+      console.log("Parsing " + chat_messages.length + " chat messages, " + original_messages.length + " original ones");
+      for(message of original_messages)
+      {
+        ParseChatMessage(message, chat_messages);
+      }
+    }
+    
+    //$('#conclusion_input').text(data["conclusion"]);
+  });
+  
   socket.emit("request ")
   $('#conclusion_div').hide();
   $('#questionnaire_container').show();
@@ -43,43 +75,12 @@ socket.on('receive all council answers', function(data){ // Receives an array of
     }
 });
 
-socket.on('council data', function(data){
-  $('#left_menu_title').html(data["name"]);
-  try{
-    trix_editor.editor.loadJSON(JSON.parse(data["conclusion"]));
-  }
-  catch(e)
-  {
-    if (e instanceof SyntaxError)
-    {
-      trix_editor.editor.insertString(data["conclusion"]);
-    }
-
-  else {
-    alert("Loppulausuman lataamisessa tapahtui virhe.");
-    }
-  }
-
-  finally{
-    chat_list = document.getElementById("conclusion_chat_list");
-    var chat_messages = data["messages"];
-    var original_messages = chat_messages.filter(element => element["parent"] == "");
-    console.log("Parsing " + chat_messages.length + " chat messages, " + original_messages.length + " original ones");
-    for(message of original_messages)
-    {
-      ParseChatMessage(message, chat_messages);
-    }
-  }
-  
-  //$('#conclusion_input').text(data["conclusion"]);
-});
-
-$('#questionnaire_btn').click(function(){
+$('#own_btn').click(function(){
   $('#conclusion_div').hide();
   $('#questionnaire_container').show();
-  document.getElementById('questionnaire_btn').className = "active";
-  document.getElementById('view_answers_btn').className = "inactive";
-  document.getElementById('conclusion_btn').className = "inactive";
+  document.getElementById('conclusion_own_indicator').className = "active";
+  document.getElementById('conclusion_answer_indicator').className = "inactive";
+  document.getElementById('conclusion_conclusion_indicator').className = "inactive";
   ActivateQuestionnaire();
 });
 
@@ -99,21 +100,21 @@ $('#conclusion_chat_toggle_btn').click(function(){
     }
 });
 
-$('#view_answers_btn').click(function(){
+$('#answer_btn').click(function(){
   $('#conclusion_div').hide();
   $('#questionnaire_container').show();
-  document.getElementById('questionnaire_btn').className = "inactive";
-  document.getElementById('view_answers_btn').className = "active";
-  document.getElementById('conclusion_btn').className = "inactive";
+  document.getElementById('conclusion_own_indicator').className = "inactive";
+  document.getElementById('conclusion_answer_indicator').className = "active";
+  document.getElementById('conclusion_conclusion_indicator').className = "inactive";
   ActivateViewerpage(currentPage);
 });
 
 $('#conclusion_btn').click(function(){
   $('#conclusion_div').show();
   $('#questionnaire_container').hide();
-  document.getElementById('questionnaire_btn').className = "inactive";
-  document.getElementById('view_answers_btn').className = "inactive";
-  document.getElementById('conclusion_btn').className = "active";
+  document.getElementById('conclusion_own_indicator').className = "inactive";
+  document.getElementById('conclusion_answer_indicator').className = "inactive";
+  document.getElementById('conclusion_conclusion_indicator').className = "active";
 });
 
 $(document).on('click', '.save_conclusion_btn', function(e){

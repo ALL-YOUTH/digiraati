@@ -184,7 +184,7 @@ class Council{
   constructor(id, name, description, creator, startdate, starttime,
               enddate, endtime, chat_open_date, chat_open_time, chat_close_date, chat_close_time, 
               conclusion_due_date, conclusion_due_time, feedback_due_date, feedback_due_time,
-              userlimit, tags, likes, dislikes, conclusion, password){
+              userlimit, tags, likes, dislikes, conclusion, password, header_image){
     this.id = id;
     this.name = name;
     this.description = description;
@@ -213,6 +213,7 @@ class Council{
 
     this.conclusion = conclusion;
     this.password = password;
+    this.header_image = header_image;
   }
 
   get_council_name(){ return this.name; }
@@ -237,6 +238,7 @@ class Council{
   get_conclusion_due_time() { return this.conclusion_due_time; }
   get_feedback_due_date() { return this.feedback_due_date; }
   get_feedback_due_time() { return this.feedback_due_time; }
+  get_header_image() { return this.header_image; }
 
   add_participant(uid){
     var result = false;
@@ -357,7 +359,7 @@ module.exports = class Councils{
   add_council(id, name, description, creator, startdate, starttime, enddate, 
     endtime, chatopendate, chatopentime, chatclosedate, chatclosetime, conclusion_due_date,
               conclusion_due_time, feedback_due_date, feedback_due_time,
-              userlimit, tags, likes, dislikes, conclusion, password){
+              userlimit, tags, likes, dislikes, conclusion, password, header_image){
     
     if (conclusion_due_date === undefined)
     {
@@ -376,7 +378,7 @@ module.exports = class Councils{
                                   startdate, starttime, enddate,
                                   endtime, chatopendate, chatopentime, chatclosedate, chatclosetime,
                                   conclusion_due_date, conclusion_due_time, feedback_due_date, feedback_due_time,
-                                  userlimit, tags, likes, dislikes, conclusion, password);
+                                  userlimit, tags, likes, dislikes, conclusion, password, header_image);
     this.councils.push(new_council);
   }
 

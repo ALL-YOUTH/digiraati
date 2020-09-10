@@ -78,6 +78,7 @@ fs.readFile(backup_file, function (err, data) {
   for(var i = 0; i <  recover_councils.length; ++i){
     let council = recover_councils[i];
     var council_password = council["password"] || "";
+    var council_header = council["header_image"] || "default.png";
     councils.add_council( council["id"],
                           council["name"],
                           council["description"],
@@ -99,7 +100,8 @@ fs.readFile(backup_file, function (err, data) {
                           council["likes"],
                           council["dislikes"],
                           council["conclusion"],
-                          council_password
+                          council_password,
+                          council_header
                         );
     for(let message of council["messages"]){
       councils.add_message(council["id"], message["id"], message["sender"], message["timestamp"], message["content"], message["likes"], message["dislikes"], message["goodargs"], message["parent"]);
@@ -182,11 +184,20 @@ io.on('connection', function(socket){
 
   //uploader for file transfers
   var uploader = new SocketIOFile(socket, {
-    uploadDir: 'files',			// simple directory
+    uploadDir: {
+      images: 'council_images',
+      files: 'files'},
+    rename: function(fileName, fileInfo){
+        var file = path.parse(fileName);
+        var fname = file.name;
+        var ext = file.ext;
+        console.log("Renaming to " + fileInfo["data"]["id"] + ext);
+        return `${fileInfo["data"]["id"]}${ext}`;
+    },			// simple directory
     maxFileSize: 4194304, 	// 4 MB.
     chunkSize: 10240,				// default is 10240(1KB)
     transmissionDelay: 0,		// delay of each transmission, higher value saves more cpu resources, lower upload speed. default is 0(no delay)
-    overwrite: true 				// overwrite file if exists, default is true.
+    overwrite: true	// overwrite file if exists, default is true.
   });
 
   //login check request. Checks the login according to the IP parsed from a socket
@@ -259,7 +270,7 @@ io.on('connection', function(socket){
     }
     else{
       var uid = users.get_userid_by_username(name);
-      socket.emit('login success', name, token);
+      socket.emit('council login success', name, token);
       socket.join(cid);
       update_page();
     }
@@ -393,7 +404,6 @@ io.on('connection', function(socket){
   socket.on('request council create', function(info){
     server_log(ip + ": " + info["creator"] + " attempted to create council: " +
                 info["name"]);
-    console.log("INFO: " + JSON.stringify(info));
     ret_val = councils.add_council( info["id"],
                                     info["name"],
                                     info["description"],
@@ -415,7 +425,8 @@ io.on('connection', function(socket){
                                     0,
                                     0,
                                     "",
-                                    info["password"]);
+                                    info["password"],
+                                    info["header_image"]);
 
     if(ret_val == -1){
       return;
@@ -579,14 +590,25 @@ io.on('connection', function(socket){
   });
 
   //request to fetch all data of a council
-  socket.on('request council data', function(id){
+  socket.on('request council data', function(id, callback){
     council_data = councils.get_council_data(id);
     if(council_data != -1){
-      console.log(council_data);
-      socket.emit('council data', council_data);
+      console.log("Returning council data");
+      callback(council_data);
     }
     else{
-      socket.emit('invalid council id');
+      console.log("Fetched invalid council data");
+      callback('error');
+    }
+  });
+
+  socket.on('check create password', function(password, callback){
+    if (password == "porkkana5")
+    {
+      callback(true);
+    }
+    else{
+      callback(false);
     }
   });
 
@@ -753,7 +775,7 @@ io.on('connection', function(socket){
 
   //request to save changed conclusion
   socket.on('request conclusion update', function(data){
-    councils.add_counclusion_to_council(data["council"], data["text"]);
+    councils.add_conclusion_to_council(data["council"], data["text"]);
     var res = councils.get_council_conclusion(data["council"]);
     create_backup();
     socket.emit('update conclusion');
@@ -794,7 +816,7 @@ io.on('connection', function(socket){
   //////////////////////////////////////////////////////////////////////////////
   ///File upload stuff
   uploader.on('start', (fileInfo) => {
-    server_log(ip + ": " + " started to upload a file: " + fileInfo["data"]["filename"]);
+    server_log(ip + ": " + " started to upload a file: " + fileInfo["data"]["filename"] + " of type " + fileInfo["uploadTo"]);
   });
 
   uploader.on('stream', (fileInfo) => {
@@ -803,19 +825,16 @@ io.on('connection', function(socket){
 
   uploader.on('complete', (fileInfo) => {
     server_log(ip + ": " + " file upload done");
+    if (fileInfo["uploadTo"] == "files")
+    {
     councils.add_file(fileInfo["data"]["id"],
                       fileInfo["data"]["filename"],
                       fileInfo["data"]["council"],
                       fileInfo["data"]["uploader"],
                       []);
+    }
 
     logger.AppendLog("e14", users.get_userid_by_username(fileInfo["data"]["uploader"]), new Date().getTime(), fileInfo["data"]["id"]);
-
-    fs.rename(__dirname + "/files/" + fileInfo["data"]["filename"],
-    __dirname + '/files/' + fileInfo["data"]["id"],
-    function(err) {
-      if ( err ) console.log('ERROR: ' + err);
-    });
   });
 
   uploader.on('error', (err) => {

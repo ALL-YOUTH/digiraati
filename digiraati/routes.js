@@ -93,6 +93,11 @@ app.get('/files/:id', (req, res, next) => {
   return res.sendFile(path.join(__dirname, "/files/" + fid));
 });
 
+app.get('/council_images/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/council_images/") + fid);
+});
+
 app.get('/js/:id', (req, res, next) => {
   var fid = req.params.id;
   return res.sendFile(path.join(__dirname, "/js/" + fid));
@@ -111,6 +116,11 @@ app.get('/css/:id', (req, res, next) => {
 app.get('/res/:id', (req, res, next) => {
   var fid = req.params.id;
   return res.sendFile(path.join(__dirname, "/res/" + fid));
+});
+
+app.get('/images/:id', (req, res, next) => {
+  var fid = req.params.id;
+  return res.sendFile(path.join(__dirname, "/council_images/" + fid));
 });
 
 app.get('/glide/:id', (req, res, next) => {

@@ -51,6 +51,7 @@ body, html{
   position:relative;
   width:100%;
   height:130%;
+  margin-top: 25px;
 }
 
 #left_menu{
@@ -78,7 +79,7 @@ body, html{
   top:0px;
 }
 
-#material_title, #material_timetable, #material_description, #lobby_navigation{
+#material_title, #material_timetable, #material_description{
   margin-top:20px;
   margin-left:50px;
   font-family: Montserrat;
@@ -260,13 +261,18 @@ div .inactive{
 }
 
 .lobby_meta_container{
-  width: 10%;
-  height: 40px;
+  width: auto;
+  height: 60px;
   display: flex;
   flex-direction: column;
   text-align: center;
   cursor: pointer;
 }
+
+.lobby_home_text{
+  padding-bottom: 25px;
+}
+
 
 #material_header{
   margin:auto;

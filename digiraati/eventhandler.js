@@ -19,7 +19,7 @@ module.exports = class EventHandler
         this.councils = councils;
         this.users = users;
         this.events = [];
-        setInterval(() => process_events(this.events), 1000 * 60);
+        //setInterval(() => process_events(this.events), 1000 * 60);
     }
 
     dump_event_data()

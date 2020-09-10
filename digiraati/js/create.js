@@ -9,6 +9,7 @@ var council_id = "";
 var bases = [];
 var submitting = false;
 var submittable;
+var uploaded_header = "default.png";
 
 $(function(){
   $('#create_container_2').hide();
@@ -18,6 +19,7 @@ $(function(){
   trix_editor = document.querySelector("trix-editor");
   $('#file_upload_container').hide();
   $('#council_base_container').hide();
+  $('#image_changer_container').hide();
   council_id = makeid();
 });
 
@@ -69,7 +71,10 @@ $('#add_file_btn').click(function(ev){
   ev.preventDefault();
   var fileEl = document.getElementById('file_input');
   var fn = fileEl.files[0]["name"];
+  let file_id = makeid(8);
   var uploadIds = uploader.upload(fileEl, {
+    uploadTo: "files",
+    rename: file_id,
     data: {
       "id":makeid(8),
       "filename":fn,
@@ -82,6 +87,68 @@ $('#add_file_btn').click(function(ev){
     uploader.abort(uploadIds[0]);
   }, 5000);
 });
+  
+  $('#add_image_btn').click(function(ev){
+    console.log("Uploading image");
+    ev.preventDefault();
+    let imgEl = document.getElementById('image_input');
+    let iname = imgEl.files[0]["name"];
+    let img_id = makeid(8);
+    let imgUploadIds = uploader.upload(imgEl, {
+      uploadTo: "images",
+      rename: img_id,
+      data: {
+        "id" :img_id,
+        "filename": iname,
+        "council": council_id,
+        "uploader": window.sessionStorage.getItem('logged_in')
+      }
+    });
+
+    console.log("Uploading file: " + img_id);
+
+    setTimeout(function() {
+      uploader.abort(imgUploadIds[0]);
+    }, 5000);
+  });
+
+$('#save_images_btn').click(function(ev){
+  console.log("Trying to upload picture");
+  ev.preventDefault();
+  var fileE2 = document.getElementById("image_input");
+  var fn = fileE2.files[0]["name"];
+  let ft = fileE2.files[0]["type"];
+  if (ft != "image/jpeg" && ft != "image/png")
+  {
+    window.alert("Tiedostosi ei vaikuta olevan kuva.\nSallitut tiedostotyypit: JPG, PNG.");
+    return;
+  }
+  let file_id = makeid(8);
+  console.log("Rename set to: " + file_id + "." + fn.split('.')[1]);
+  uploaded_header = file_id + "." + fn.split('.')[1];
+  let uploadIds = uploader.upload(fileE2, {
+    rename: file_id + "." + fn.split('.')[1],
+    uploadTo: "images",
+    data: {
+      "id": file_id,
+      "filename": fn,
+      "council": council_id,
+      "uploader": window.sessionStorage.getItem('logged_in')
+    }
+  });
+
+  setTimeout(function() {
+    uploader.abort(uploadIds[0]);
+  }, 5000);
+});
+
+$('#change_image_btn').click(function(ev){
+  if(modal_open == false)
+  {
+    modal_open = true;
+    $('#image_changer_container').show();
+  }
+});
 
 uploader.on('start', function(fileInfo) {
   console.log('Start uploading', fileInfo);
@@ -90,7 +157,18 @@ uploader.on('stream', function(fileInfo) {
   console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
 });
 uploader.on('complete', function(fileInfo) {
+  console.log(fileInfo);
+  if(fileInfo["uploadTo"] == "files")
+  {
   socket.emit('update files request', council_id);
+  } 
+  else
+  {
+    console.log("Uploaded JPG");
+    document.getElementById("header_image").src = "/council_images/" + fileInfo["name"];
+    uploaded_header = fileInfo["name"];
+    $('#image_changer_container').hide();
+  }
 });
 
 uploader.on('error', function(err) {
@@ -129,7 +207,7 @@ $('#add_question_btn').click(function(){
   temp_question.appendChild(temp_text);
   var temp_text_entry = document.createElement("textarea");
   temp_text_entry.classList.add("text");
-  temp_text_entry.classList.add("conclusion_question")
+  temp_text_entry.classList.add("conclusion_question_text")
   temp_text_entry.id = "conclusion_question_" + number_of_questions;
   temp_text_entry.placeholder = "Kirjoita tähän kysymys " + number_of_questions;
   temp_text_entry.rows = "3";
@@ -228,7 +306,7 @@ function base_selected(base)
       temp_question.appendChild(temp_text);
       var temp_text_entry = document.createElement("textarea");
       temp_text_entry.classList.add("text");
-      temp_text_entry.classList.add("conclusion_question")
+      temp_text_entry.classList.add("conclusion_question_text")
       temp_text_entry.id = "conclusion_question_" + number_of_questions;
       temp_text_entry.placeholder = "Kirjoita tähän kysymys " + number_of_questions;
       temp_text_entry.rows = "3";
@@ -358,10 +436,12 @@ $('#save_changes_btn').click(function(){
   submittable["feedback_due_date"] = document.getElementById("feedback_due_date").value;
   submittable["feedback_due_time"] = document.getElementById("feedback_due_time").value;
   submittable["password"] = document.getElementById("password_text").value;
+  submittable["header_image"] = uploaded_header;
   if ($('#loppulausuma_checkboxbtn').is(':checked'))
   {
     submittable["conclusion_questions"] = []
-    var c_qs = document.getElementsByClassName("conclusion_question");
+    var c_qs = document.getElementsByClassName("conclusion_question_text");
+    console.log("Kysymyksiä: " + c_qs.length)
     for (let i = 0; i < c_qs.length; i++)
     {
       if(c_qs[i].value.length > 0){ submittable["conclusion_questions"].push(c_qs[i].value); }

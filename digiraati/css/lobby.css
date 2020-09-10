@@ -431,30 +431,27 @@ div .inactive{
     display: none;
   }
 
-  .lobby_meta_container{
-    width: 10%;
-    height: 40px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    cursor: pointer;
-  }
+ 
+.lobby_meta_container{
+  width: auto;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
+}
 
-
-  .lobby_meta_container{
-    width: 10%;
-    height: 40px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    cursor: pointer;
-  }
+.lobby_home_text{
+  padding-bottom: 25px;
+}
 
   #container {
     display: inline-block;
     width:100%;
-    min-height: 100%;
+    min-height: 77%;
     overflow-x: hidden;
+    overflow-y: scroll;
+    margin-top: 25px;
     background-color: rgba(246,248,249,1);
   }
 
@@ -476,7 +473,7 @@ div .inactive{
   #lobby_header{
     margin:auto;
     width:100%;
-    padding:0px 5%;
+    padding:0px 10%;
     background-color:white;
   }
 

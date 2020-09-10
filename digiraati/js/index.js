@@ -4,12 +4,14 @@ var socket = io();
 var host = socket["io"]["uri"] + ":" + location.port;
 
 $(function(){
+  console.log("Requested council update");
   $('#header').load(host + "/html/header.html");
   $('#footer').load(host + "/html/footer.html");
   socket.emit('request councils update');
 });
 
 socket.on('councils update', function(all_councils){
+  console.log("Received council update");
   display_councils(all_councils);
 });
 
@@ -26,7 +28,21 @@ function create_council_face(c){
   var res = document.createElement('div');
   res.classList.add('council_box');
   res.id = c["id"];
-  res.appendChild(add_class_innerhtml(["council_picture", "council_btn"], ""));
+  //res.appendChild(add_class_innerhtml(["council_picture", "council_btn"], ""));
+
+  var council_picture = document.createElement('div');
+  council_picture.classList.add("council_picture");
+
+  var actual_image = document.createElement('img');
+  actual_image.classList.add("council_picture");
+  actual_image.src = "/council_images/" + c["header_image"];
+
+  council_picture.appendChild(actual_image);
+  res.appendChild(council_picture);
+
+  var council_btn = document.createElement("div");
+  council_btn.classList.add("council_btn");
+  res.appendChild(council_btn);
   
   var council_title = document.createElement('div');
   council_title.classList.add("council_title");
@@ -87,6 +103,7 @@ function create_council_face(c){
 function display_councils(councils){
   var councils_list = document.getElementById('council_list');
   clear_child_elements(councils_list);
+  councils = councils.reverse();
   for(i = 0; i < councils.length; ++i){
     var new_elem = create_council_face(councils[i]);
     councils_list.appendChild(new_elem);
