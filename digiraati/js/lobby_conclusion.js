@@ -13,9 +13,9 @@ var chat_list;
 
 $(function(){
 
-  $('#header').load(host + "/html/header.html");
-  $('#footer').load(host + "/html/footer.html");
-  $('#navbar').load(host + '/html/navbar.html');
+  $('#header').load(socket["io"]["uri"] + "/html/header.html");
+  $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
+  $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
 
   trix_editor = document.querySelector("trix-editor");
 

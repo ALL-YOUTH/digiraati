@@ -14,8 +14,8 @@ var uploaded_header = "default.png";
 $(function(){
   $('#create_container_2').hide();
   $('#create_container_3').hide();
-  $('#header').load(host + "/html/header.html");
-  $('#footer').load(host + "/html/footer.html");
+  $('#header').load(socket["io"]["uri"] + "/html/header.html");
+  $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
   trix_editor = document.querySelector("trix-editor");
   $('#file_upload_container').hide();
   $('#council_base_container').hide();
@@ -56,6 +56,19 @@ $('#council_ends_date').change(function(){
   $('#feedback_due_date').attr({'min': $(this).val()});
 });
 
+function validateUpload(filename)
+{
+  let parts = filename.split('.');
+  let ext = parts[parts.length-1];
+  switch(ext.toLowerCase())
+  {
+    case 'jpg':
+    case 'png':
+      return true;
+  }
+  return false;
+}
+
 $('textarea').on('keydown', function(e){
 
 }).on('input', function(){
@@ -93,6 +106,8 @@ $('#add_file_btn').click(function(ev){
     ev.preventDefault();
     let imgEl = document.getElementById('image_input');
     let iname = imgEl.files[0]["name"];
+    if (validateUpload(iname) == true)
+    {
     let img_id = makeid(8);
     let imgUploadIds = uploader.upload(imgEl, {
       uploadTo: "images",
@@ -110,6 +125,8 @@ $('#add_file_btn').click(function(ev){
     setTimeout(function() {
       uploader.abort(imgUploadIds[0]);
     }, 5000);
+    }
+    else (alert("Tiedoston täytyy olla JPG- tai PNG-kuvatiedosto."));
   });
 
 $('#save_images_btn').click(function(ev){

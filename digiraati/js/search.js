@@ -3,8 +3,8 @@ var host = socket["io"]["uri"] + ":" + location.port;
 var search_criteria = {};
 
 $(function(){
-  $('#header').load(host + "/html/header.html");
-  $('#footer').load(host + "/html/footer.html");
+  $('#header').load(socket["io"]["uri"] + "/html/header.html");
+  $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
 });
 
 $('#hero_search_councils_btn').click(function(){

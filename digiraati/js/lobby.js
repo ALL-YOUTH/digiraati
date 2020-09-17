@@ -10,9 +10,9 @@ var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 
 $(function(){
-  $('#header').load(host + "/html/header.html");
-  $('#footer').load(host + "/html/footer.html");
-  $('#navbar').load(host + '/html/navbar.html');
+  $('#header').load(socket["io"]["uri"] + "/html/header.html");
+  $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
+  $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
 
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit("check login council", window.sessionStorage.getItem('token'), council);

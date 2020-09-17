@@ -1,12 +1,14 @@
 var socket = io();
-var host = socket["io"]["uri"] + ":" + location.port;
+var host = socket["io"]["uri"];
 var selected_avatar = "";
 var active_username = "";
 var avatar_pictures;
 
 $(function(){
-  $('#header').load(host + "/html/header.html");
-  $('#footer').load(host + "/html/footer.html");
+  console.log("Host: " + host);
+  console.log("Natural host: " + socket["io"]["uri"]);
+  $('#header').load(socket["io"]["uri"] + "/html/header.html");
+  $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
   socket.emit('check login', window.sessionStorage.getItem('token'));
   socket.emit('request user data', window.sessionStorage.getItem('token'));
   avatar_pictures = document.querySelectorAll('.avatar_pic');

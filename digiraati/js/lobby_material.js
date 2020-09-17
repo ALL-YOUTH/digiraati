@@ -24,11 +24,11 @@ var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 $(function(){
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit("check login council", window.sessionStorage.getItem('token'), council);
-  $('#header').load(host + "/html/header.html");
-  $('#footer').load(host + "/html/footer.html");
+  $('#header').load(socket["io"]["uri"] + "/html/header.html");
+  $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
   $('#comment_view').css("height", $(window).height()-100);
   $('#comment_list_div').css("max-height", $(window).height()-100);
-  $('#navbar').load(host + '/html/navbar.html');
+  $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit('update files request', council);
 });

@@ -1,8 +1,8 @@
 var socket = io();
 
 $(function(){
-  $('#header').load(host + "/html/header.html");
-  $('#footer').load(host + "/html/footer.html");
+  $('#header').load(socket["io"]["uri"] + "/html/header.html");
+  $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
 });
 
 function initial_register_text_inputs(){

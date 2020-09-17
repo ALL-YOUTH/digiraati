@@ -132,6 +132,7 @@ $('#login_confirm').click(function(){
 });
 
 socket.on("login success", function(name, user_token){
+  console.log("Header logged in successfully");
   logged_in = name;
   console.log("Success! Logged in: " + logged_in);
   window.sessionStorage.setItem('token', user_token);

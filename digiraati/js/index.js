@@ -1,12 +1,14 @@
 var hamburger_menu_open = false;
 var socket = io();
 
-var host = socket["io"]["uri"] + ":" + location.port;
+var host = socket["io"]["uri"];
 
 $(function(){
   console.log("Requested council update");
-  $('#header').load(host + "/html/header.html");
-  $('#footer').load(host + "/html/footer.html");
+  console.log("Host: " + host);
+  console.log("Host natural " + socket["io"]["uri"])
+  $('#header').load(socket["io"]["uri"] + "/html/header.html");
+  $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
   socket.emit('request councils update');
 });
 
