@@ -22,15 +22,21 @@ var host = socket["io"]["uri"] + ":" + location.port;
 var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 $(function(){
+  $('#material_content').hide();
   council = window.location.href.split("/").slice(-2)[0];
-  socket.emit("check login council", window.sessionStorage.getItem('token'), council);
   $('#header').load(socket["io"]["uri"] + "/html/header.html");
   $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
   $('#comment_view').css("height", $(window).height()-100);
   $('#comment_list_div').css("max-height", $(window).height()-100);
   $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
-  council = window.location.href.split("/").slice(-2)[0];
-  socket.emit('update files request', council);
+  socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(result){
+    if (result == "success")
+        socket.emit('update files request', council, function(file_list)
+          {
+            list_files(file_list);
+          });
+    $('#material_content').show();
+  });
 });
 
 function init() {
@@ -47,7 +53,9 @@ window.addEventListener('resize', function(){
 });
 
 function display_file(file){
-  url = host + "/files/" + file;
+  console.log("file:");
+  console.log(file);
+  url = socket["io"]["uri"] + "/files/" + file;
   currPage = 1;
   pdfjsLib.getDocument(url).promise.then(function(pdf) {
     thePDF = pdf;
@@ -444,10 +452,13 @@ function handlePages(page) {
 $('#add_file_btn').click(function(ev){
   ev.preventDefault();
   var fileEl = document.getElementById('file_input');
+  let file_id = makeid(8);
   var fn = fileEl.files[0]["name"];
   var uploadIds = uploader.upload(fileEl, {
+    uploadTo: "files",
+    rename: file_id,
     data: {
-      "id":makeid(8),
+      "id":file_id,
       "filename":fn,
       "council":council,
       "uploader":logged_in,
@@ -466,17 +477,17 @@ uploader.on('stream', function(fileInfo) {
   console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
 });
 uploader.on('complete', function(fileInfo) {
-  socket.emit('update files request', council_id);
+  console.log("upload complete")
+  socket.emit('update files request', council, function(file_list){
+    list_files(file_list);
+    console.log("received files");
+  });
 });
 uploader.on('error', function(err) {
   console.log('Error!', err);
 });
 uploader.on('abort', function(fileInfo) {
   console.log('Aborted: ', fileInfo);
-});
-
-socket.on('update files', function(files){
-  list_files(files);
 });
 
 function list_files(files){

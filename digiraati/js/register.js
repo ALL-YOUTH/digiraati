@@ -67,7 +67,33 @@ $('#confirm_register').click(function(){
   register["password2"] = $('#password_input2').val();
   register["testing_id"] = $('#id_input').val();
   console.log("Registering: " + register["testing_id"]);
-  socket.emit("register attempt", register);
+  
+  socket.emit("register attempt", register, function(response) // Lähetetään rekisteröitymispyyntö serverille. Serveri palauttaa oletusarvoisesti joko 'success' tai virheilmoituksen, jos käyttäjänimi tai salasana ovat jo käytössä
+  {
+    if (response == 'invalid_username')
+    {
+      $('#register_error_text').html("Käyttäjänimi on varattu");
+      color_input_text("#username_input", "red");
+      $('#register_error_text').css("display", "block");
+    }
+
+    else if (response == 'invalid_email')
+    {
+      $('#register_error_text').html("Sähköposti on jo käytössä");
+      color_input_text("#email_input", "red");
+      $('#register_error_text').css("display", "block");
+    }
+
+    else if (response == 'success')
+    {
+      alert("Rekisteröinti onnistui!");
+      goToPage("/");
+    }
+
+    else {
+      alert("Rekisteröinnissä tapahtui tuntematon virhe.");
+    }
+  });
 });
 
 function check_testing_id(id)
@@ -77,20 +103,3 @@ function check_testing_id(id)
   else if (isNaN(id)) { return false; }
   else { return true } ;
 }
-
-socket.on('register success', function(){
-  alert("Rekisteröinti onnistui!");
-  goToPage("/");
-});
-
-socket.on('invalid username', function(){
-  $('#register_error_text').html("Käyttäjänimi on varattu");
-  color_input_text("#username_input", "red");
-  $('#register_error_text').css("display", "block");
-});
-
-socket.on('invalid email', function(){
-  $('#register_error_text').html("Sähköposti on jo käytössä");
-  color_input_text("#email_input", "red");
-  $('#register_error_text').css("display", "block");
-});

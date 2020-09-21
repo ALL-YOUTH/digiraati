@@ -11,7 +11,6 @@ var original_user_id;
 $(function(){
     $('#user_modal_container').hide();
     $('#council_modal_container').hide();
-    socket.emit('request full data');
     $('#council_content').hide();
     $('#users_content').hide();
     $('#council_angle_down').hide();
@@ -19,6 +18,7 @@ $(function(){
     $('#modal_file_container').hide();
     $('#messages_modal_container').hide();
     $('#conclusion_modal_container').hide();
+    socket.emit('request full data');
 });
 
 $('#council_dropbox').click(function(e){

@@ -126,6 +126,7 @@ $('#hamburger_signout').click(function(){
 });
 
 $('#login_confirm').click(function(){
+  console.log("Logging in");
   var email = $('#login_email').val();
   var password = $('#login_password').val();
   socket.emit('login attempt', email, password);

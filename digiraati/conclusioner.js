@@ -74,7 +74,7 @@ class Questionnaire{
                 if(this.answers[i].get_user_id() == user_id && this.answers[i].get_council_id() == council_id)
                 {
                     console.log("It's a match")
-                    foundAnswers = this.answers[i];
+                    foundAnswers = this.answers[i]['answers'];
                 }
             }
 

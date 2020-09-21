@@ -1,7 +1,7 @@
 
 $(function(){
   console.log("I fired now");
-  $("#footer").css('top', window.innerHeight + "px");
+  //$("#footer").css('top', window.innerHeight + "px");
 });
 
 $("#control_panel").click(function(){

@@ -253,9 +253,10 @@ io.on('connection', function(socket){
     socket.emit('return full data', council_data, user_data, conclusion_data);
   });
 
-  //login check request. Checks the login according to the IP parsed from a socket
+  //login check request. Checks the login according to currently in-use user token and council_id
   //Like 'check login' ,but modified for council check
-  socket.on('check login council', function(token, cid){
+  socket.on('check login council', function(token, cid, callback){
+    console.log("!!!!! CHECKING COUNCIL LOGIN !!!");
     var name = false;
     for (var i = 0; i < user_tokens.length; ++i)
     {
@@ -266,11 +267,11 @@ io.on('connection', function(socket){
     }
     if(name == false){
       console.log("You're not logged in");
-      socket.emit('not logged');
+      callback("not_logged");
     }
     else{
       var uid = users.get_userid_by_username(name);
-      socket.emit('council login success', name, token);
+      callback("success");
       socket.join(cid);
       update_page();
     }
@@ -281,16 +282,19 @@ io.on('connection', function(socket){
     socket.join(cid);
   });
 
-  socket.on('request join council', function(data){
-    //&socket.join(data["user"]);
+  socket.on('request join council', function(data, callback){
+    console.log("Someone's joining a council");
+    socket.emit("blatant test");
     var res = councils.add_user_to_council(data);
     if(res == -1){
-      socket.emit('password incorrect');
+      console.log("incorrect password");
+      callback({"result": "password_error"});
     }
     else{
       if(res)
       {
-        socket.emit('join success');
+        console.log("and it succeeded");
+        callback({"result": "success"});
         logger.AppendLog("e03", users.get_userid_by_username(data["user"]), new Date().getTime(), data["council"]);
         create_backup();
       }
@@ -301,15 +305,15 @@ io.on('connection', function(socket){
   });
 
   //Request to leave a council
-  socket.on('request leave council', function(data){
+  socket.on('request leave council', function(data, callback){
     socket.join(data["user"]);
     var res = councils.remove_user_from_council(data);
     if(res){
       logger.AppendLog("e04", users.get_userid_by_username(data["user"]), new Date().getTime(), data["council"]);
-      socket.emit('leave success');
+      socket.emit('leave success', callback({"result": "success"}));
     }
     else{
-      socket.emit('leave failed');
+      socket.emit('leave failed', callback({"result": "failure"}));
     }
   });
 
@@ -343,13 +347,13 @@ io.on('connection', function(socket){
   //User tries to register a new account.
   //Checks the availability of username and email.
   //TODO: password strength check(?)
-  socket.on('register attempt', function(data){
+  socket.on('register attempt', function(data, callback){
     if(users.get_user(data["username"]) != null){ //Username already in use
-      socket.emit("invalid username");
+      callback('invalid_username');
       return;
     }
     else if(users.get_user_by_email(data["email"]) != null){ // email already in use
-      socket.emit("invalid email");
+      callback('invalid_email');
       return;
     }
     console.log("Registering user " + data["testing_id"] + " " + data["id]"]);
@@ -357,13 +361,13 @@ io.on('connection', function(socket){
                               data["firstname"], data["lastname"],
                               data["email"], data["password1"]);
     if(ret_val != -1){
-      socket.emit('register success', data["username"]);
+      callback('success');
       logger.AppendLog("e12", data["id"], new Date().getTime());
       server_log(ip + ": " + data["username"] + " registered succesfully");
       create_backup(); 
     }
     else{
-      socket.emit('invalid nickname');
+      callback("unknown error");
     }
     update_page();
   });
@@ -377,18 +381,19 @@ io.on('connection', function(socket){
     create_backup();
   });
 
-  socket.on('request save conclusion answers', function(data){
+  socket.on('request save conclusion answers', function(data, callback){
     console.log("received conclusion save request");
+    console.log(data);
     var user_id = users.get_userid_by_username(data["username"]);
     conclusioner.add_conclusion(user_id, data["council_id"], data["answers"]);
     create_backup();
-    socket.emit('conclusion answers updated');
+    callback("success");
   });
 
-  socket.on('request all bases', function(){
+  socket.on('request all bases', function(callback){
     console.log("List of all council bases requested");
     let returnable = councils.get_bases();
-    socket.emit('return bases', returnable);
+    callback(returnable);
   });
 
   socket.on('request add new base', function(data){
@@ -463,14 +468,15 @@ io.on('connection', function(socket){
     update_page();
   });
 
-  socket.on('request message edit', function(msg){
+  socket.on('request message edit', function(msg, callback){
     console.log("Received edit request.");
     if (councils.edit_message(msg["council"], msg["msg_id"], msg["content"]) == true)
     {
         logger.AppendLog("e07", users.get_userid_by_username(msg["user_id"]), new Date().getTime(), msg["msg_id"]);
         create_backup();
-        socket.emit('reload_chat_lobby');
+        callback("success");
     }
+    else { callback("failure"); }
   });
 
   //SENDING A MESSAGE PART
@@ -575,10 +581,10 @@ io.on('connection', function(socket){
 
   }
 
-  socket.on('request userid by username', function(username){
+  socket.on('request userid by username', function(username, callback){
     console.log("Trying to find " + username);
     var returnable =  users.get_userid_by_username(username);
-    socket.emit("userid request response", returnable);
+    callback(returnable);
   });
 
   //request to get the comments
@@ -634,10 +640,10 @@ io.on('connection', function(socket){
   });
 
   //request to get the files of a council
-  socket.on('update files request', function(cid){
+  socket.on('update files request', function(cid, callback){
     var files = councils.get_council_data(cid);
     try{
-      socket.emit("update files", files["files"]);
+      callback(files["files"]);
     }
     catch(err){
       console.log("no files in this council", err);
@@ -768,17 +774,16 @@ io.on('connection', function(socket){
   });
 
   //request to fetch latest conclusion data
-  socket.on('request conclusion refresh', function(cid){
+  socket.on('request conclusion refresh', function(cid, callback){
     var res = councils.get_council_conclusion(cid);
-    socket.emit('update conclusion');
+    callback(res);
   });
 
   //request to save changed conclusion
-  socket.on('request conclusion update', function(data){
+  socket.on('request conclusion update', function(data, callback){
     councils.add_conclusion_to_council(data["council"], data["text"]);
-    var res = councils.get_council_conclusion(data["council"]);
     create_backup();
-    socket.emit('update conclusion');
+    callback("success");
   });
 
   socket.on('request logged in answers', function(){
@@ -790,12 +795,12 @@ io.on('connection', function(socket){
     conclusioner.add_questionnaire(data["council_id"], data["questions"]);
   });
 
-  socket.on('request questionnaire', function(data){
+  socket.on('request questionnaire', function(data, callback){ // Palauttaa halutun käyttäjän loppukyselyn vastaukset halutulle raadille. Kutsutaan luokasta lobby_conclusion.js
     var returnable = {};
     returnable["questionnaire"] = conclusioner.get_questionnaire_by_council(data["council_id"]);
     returnable["answers"] = conclusioner.get_answers_by_user_id(data["council_id"], data["user_id"]);
     returnable["all_answers"] = conclusioner.get_all_answers(data["council_id"]);
-    socket.emit("questionnaire request response", returnable);
+    callback(returnable);
   });
 
   socket.on('request add conclusion answers', function(data){
@@ -825,13 +830,16 @@ io.on('connection', function(socket){
 
   uploader.on('complete', (fileInfo) => {
     server_log(ip + ": " + " file upload done");
-    if (fileInfo["uploadTo"] == "files")
+    console.log(fileInfo);
+    if (fileInfo["uploadDir"].includes("files"))
     {
-    councils.add_file(fileInfo["data"]["id"],
+    console.log("Adding file to councils")
+    if (councils.add_file(fileInfo["data"]["id"],
                       fileInfo["data"]["filename"],
                       fileInfo["data"]["council"],
                       fileInfo["data"]["uploader"],
-                      []);
+                      []) == -1)
+                      {console.log("Council does not exist. Attempted file info: " + fileInfo)};
     }
 
     logger.AppendLog("e14", users.get_userid_by_username(fileInfo["data"]["uploader"]), new Date().getTime(), fileInfo["data"]["id"]);

@@ -16,8 +16,37 @@ $(function(){
   $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
 
   council = window.location.href.split("/").slice(-2)[0];
-  socket.emit("check login council", window.sessionStorage.getItem('token'), council);
-  last_message_sender = "";
+  socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(result){
+    if (result == "success"){
+      console.log("Success logging in, requesting council data");
+      socket.emit("request socket list", council);
+      socket.emit("request council data", council, function(data){
+        if (data != 'error')
+        {
+          $('#chat_title').html(data["name"].toUpperCase());
+          $('#chat_hashtag').html("#"+data["name"].toLowerCase().replace(" ", ""));
+          var h = document.getElementById('chat_content').offsetHeight +
+            document.getElementById('header').offsetHeight;
+          $('#chat_container').css("height", h + "px");
+
+          var ml = document.getElementById('message_list');
+          ml.innerHTML = "";
+          ml.id = "message_list";
+          messages = data["messages"];
+          console.log("Messages: " + messages.length);
+          var original_messages = data["messages"].filter(element => element["parent"] == "");
+      
+          for(message of original_messages){
+            ParseMessage(message, 1);
+          }
+        }
+        else{
+          alert("Raadin tietojen hakemisessa tapahtui virhe.");
+        }
+      });
+      last_message_sender = "";
+  }
+  });
 });
 
 socket.on('invalid council id', function(){
@@ -84,37 +113,6 @@ function ParseMessage(message, level)
   }
   
 }
-
-socket.on("council login success", function(){
-  console.log("Success logging in, requesting council data");
-  socket.emit("request socket list", council);
-  socket.emit("request council data", council, function(data){
-    if (data != 'error')
-    {
-    $('#chat_title').html(data["name"].toUpperCase());
-  //$('#chat_description').html(data["description"]);
-  $('#chat_hashtag').html("#"+data["name"].toLowerCase().replace(" ", ""));
-  var h = document.getElementById('chat_content').offsetHeight +
-          document.getElementById('header').offsetHeight;
-  $('#chat_container').css("height", h + "px");
-
-  var ml = document.getElementById('message_list');
-  ml.innerHTML = "";
-  ml.id = "message_list";
-  messages = data["messages"];
-  console.log("Messages: " + messages.length);
-  var original_messages = data["messages"].filter(element => element["parent"] == "");
-  
-  for(message of original_messages){
-    ParseMessage(message, 1);
-  }
-  }
-  else{
-    alert("There was an error.");
-  }
-  });
-  
-});
 
 window.onscroll = function(e){
   if ($(window).height() + $(window).scrollTop() > $(document).height() - $("#footer").height()) {
@@ -252,7 +250,7 @@ $(document).on('click', '.mobile_send_button', function(e){
   console.log("sending message " + msg);
   socket.emit('request new message', msg);
   modal_open = false;
-  window.location.reload();
+  location.reload();
 });
 
 $(document).on('click', '.mobile_save_button', function(e){
@@ -263,7 +261,10 @@ $(document).on('click', '.mobile_save_button', function(e){
   msg["content"] = document.getElementById(message_id + "textarea").value;
   msg["msg_id"] = original_message.id;
   modal_open = false;
-  socket.emit('request message edit', msg);
+  socket.emit('request message edit', msg, function(reply){
+    if (reply == "failure") { alert("Viestin muokkauksessa tapahtui virhe")}
+    else { location.reload(); }
+  });
 });
 
 $(document).on('click', ".mobile_edit_btn", function(e)
@@ -582,6 +583,7 @@ function send_message(){
   msg["id"] = makeid();
   socket.emit('request new message', msg);
   document.getElementById('message_input').value = "";
+  location.reload();
 }
 
 function create_message(msg, msg_target ="message_list"){
@@ -683,244 +685,6 @@ function create_reply(msg, level)
   ml.appendChild(separator);
 }
 
-/**
-function create_message(msg, msg_target = 'message_list'){
-  var nm = document.createElement('div');
-  nm.classList.add("chat_message");
-  nm.id = msg["id"];
-  if (!msg.hasOwnProperty("timestamp") || msg["timestamp"] == undefined) {var msg_timestamp = ""}
-  else {var msg_timestamp = msg["timestamp"] + " "}
-  
-  var pic = document.createElement('div');
-  pic.textContent = msg["sender"][0].toUpperCase();
-  var c = 0;
-  for(var i = 0; i < msg["sender"].length; ++i){
-  c += msg["sender"].charCodeAt(i);
-  }
-  pic.style.backgroundColor = colors[c % colors.length];
-    pic.classList.add("chat_avatar_ball");
-    var senderContainer = document.createElement('div');
-    senderContainer.classList.add("sender_container");
-    var sender = document.createElement('div');
-    sender.innerHTML = msg["sender"]
-    sender.classList.add("message_list_sender_name");
-    var timeStamp = document.createElement('div');
-    timeStamp.innerHTML = msg_timestamp;
-    timeStamp.classList.add("message_list_timestamp");
-    senderContainer.appendChild(pic); senderContainer.appendChild(sender); senderContainer.appendChild(timeStamp); 
-    nm.appendChild(senderContainer);
-  var text = document.createElement('div'); // Actual text body
-  text.id = nm.id + "text";
-  //console.log(msg["content"]);
-  text.innerHTML = msg["content"];
-  text.classList.add("message_list_text");
-  nm.appendChild(text);
-  
-  var likes_btn = document.createElement('div'); // Beginning of likes?
-  likes_btn.classList.add("likes_btn"); likes_btn.classList.add("message_reactions"); likes_btn.classList.add("noselect");
-  likes_btn.setAttribute("aria-label", "Samaa mieltä"); likes_btn.setAttribute("title", "Samaa mieltä");
-
-  var dislikes_btn = document.createElement('div'); 
-  dislikes_btn.classList.add("dislikes_btn"); dislikes_btn.classList.add("dislike_reactions"); dislikes_btn.classList.add("noselect");
-  dislikes_btn.setAttribute("aria-label", "Eri mieltä"); dislikes_btn.setAttribute("title", "Eri mieltä");
-
-  var goodargs_btn = document.createElement('div');
-  goodargs_btn.classList.add("goodargs_btn"); goodargs_btn.classList.add("goodarg_reactions"); goodargs_btn.classList.add("noselect");
-  goodargs_btn.setAttribute("aria-label", "Hyvin argumentoitu"); goodargs_btn.setAttribute("title", "Hyvin argumentoitu");
-
-  if(msg["likes"] == undefined){ msg["likes"] = 0; }
-  if(msg["dislikes"] == undefined) { msg["dislikes"] = 0;}
-  if(msg["goodargs"] == undefined) { msg["goodargs"] = 0;}
-
-  var likes_number = document.createElement('div');
-  likes_number.id = msg["id"] + "likes";
-  likes_number.classList.add("likes_number"); likes_number.classList.add("noselect");
-
-  var dislikes_number = document.createElement('div');
-  dislikes_number.id = msg["id"] + "dislikes";
-  dislikes_number.classList.add("dislikes_number"); dislikes_number.classList.add("noselect");
-
-  var goodargs_number = document.createElement('div');
-  goodargs_number.id = msg["id"] + 'goodargs';
-  goodargs_number.classList.add("goodargs_number"); goodargs_number.classList.add("noselect");
-
-  likes_number.textContent = "  " + msg["likes"].length;
-  dislikes_number.textContent = "   " + msg["dislikes"].length;
-  goodargs_number.textContent = "   " + msg["goodargs"].length;
-  var reaction_container = document.createElement('div');
-  reaction_container.classList.add("reaction_container");
-  reaction_container.appendChild(likes_btn); reaction_container.appendChild(likes_number); reaction_container.appendChild(dislikes_btn); reaction_container.appendChild(dislikes_number); reaction_container.appendChild(goodargs_btn); reaction_container.appendChild(goodargs_number);
-  
-  var response_container = document.createElement('div');
-  response_container.classList.add("response_container");
-
-  var reply = document.createElement('div');
-  reply.classList.add("message_list_reply"); reply.classList.add("noselect");
-  reply.textContent = "VASTAA";
-  response_container.appendChild(reply);
-
-  console.log("sender: " + msg["sender"] + " logged in " + logged_in);
-  if (msg["sender"] == logged_in)
-  {
-    var deleteMessage = document.createElement('div');
-    deleteMessage.classList.add("message_list_delete"); deleteMessage.classList.add("noselect");
-    deleteMessage.textContent = "POISTA VIESTI";
-    response_container.appendChild(deleteMessage);
-
-    var editMessage = document.createElement('div');
-    editMessage.classList.add("message_list_edit"); editMessage.classList.add("noselect");
-    editMessage.textContent = "MUOKKAA VIESTIÄ";
-    response_container.appendChild(editMessage);
-  }
-
-  var number_of_replies = messages.filter(element => element["parent"] === msg["id"]).length;
-
-  var mobile_container = document.createElement('div');
-  mobile_container.classList.add("mobile_reaction_container");
-
-  //var reaction_button = document.createElement('span');
-  //reaction_button.classList.add('mobile_reaction_button');
-  //reaction_button.innerHTML = '<span class="far fa-thumbs-up"></span>';
-  //mobile_container.appendChild(reaction_button);
-
-  var replyNumber = document.createElement('span');
-  replyNumber.classList.add("reply_number");
-  replyNumber.innerHTML = number_of_replies + " vastausta";
-  if (number_of_replies == 0) { replyNumber.classList.add("no_replies");}
-  mobile_container.appendChild(replyNumber);
-
-  var message_actions = document.createElement('span');
-  message_actions.classList.add('mobile_message_actions');
-  message_actions.innerHTML = "<span class='fas fa-comment-alt'></span>";
-  mobile_container.appendChild(message_actions);
-  
-  var bottomContainer = document.createElement("div");
-  bottomContainer.classList.add("bottom_container");
-
-  bottomContainer.appendChild(reaction_container); bottomContainer.appendChild(response_container); bottomContainer.appendChild(mobile_container); 
-
-  nm.appendChild(bottomContainer);
-
-  console.log("using target " + msg_target);
-  var ml = document.getElementById(msg_target);
-  ml.appendChild(nm);
-  last_message_sender = msg["sender"];
-  var separator = document.createElement('div');
-  separator.classList.add("separator");
-  ml.appendChild(separator);
-  ml.scrollTop = ml.scrollHeight;
-  window.scrollTop = window.scrollHeight;
-}
- */
-
-/**
-function create_reply(msg, level){
-  var nm = document.createElement('div');
-  if (level == 3){   nm.classList.add("second_tier_reply"); }
-  else { nm.classList.add("reply_message"); }
-  nm.id = msg["id"];
-  if (!msg.hasOwnProperty("timestamp") || msg["timestamp"] == undefined) {var msg_timestamp = ""}
-  else {var msg_timestamp = msg["timestamp"] + " "}
-
-  var pic = document.createElement('div');
-  pic.textContent = msg["sender"][0].toUpperCase();
-  var c = 0;
-  for(var i = 0; i < msg["sender"].length; ++i){
-    c += msg["sender"].charCodeAt(i);
-  }
-  pic.style.backgroundColor = colors[c % colors.length];
-  pic.classList.add("chat_avatar_ball");
-  var senderContainer = document.createElement('div');
-  senderContainer.classList.add("sender_container");
-  var sender = document.createElement('div');
-    sender.innerHTML = msg["sender"]
-    sender.classList.add("message_list_sender_name");
-  var timeStamp = document.createElement('div');
-    timeStamp.innerHTML = msg_timestamp;
-    timeStamp.classList.add("message_list_timestamp");
-  senderContainer.appendChild(pic);senderContainer.appendChild(sender); senderContainer.appendChild(timeStamp); 
-  nm.appendChild(senderContainer);
-  
-  var text = document.createElement('div'); // Actual text body
-  //console.log(msg["content"]);
-  text.innerHTML = msg["content"];
-  text.classList.add("message_list_text");
-  text.id = nm.id + ("text");
-  nm.appendChild(text);
-  
-  var likes_btn = document.createElement('div'); // Beginning of likes?
-  likes_btn.classList.add("likes_btn"); likes_btn.classList.add("message_reactions"); likes_btn.classList.add("noselect");
-  likes_btn.setAttribute("aria-label", "Samaa mieltä"); likes_btn.setAttribute("title", "Samaa mieltä");
-
-  var dislikes_btn = document.createElement('div'); 
-  dislikes_btn.classList.add("dislikes_btn"); dislikes_btn.classList.add("dislike_reactions"); dislikes_btn.classList.add("noselect");
-  dislikes_btn.setAttribute("aria-label", "Eri mieltä"); dislikes_btn.setAttribute("title", "Eri mieltä");
-
-  var goodargs_btn = document.createElement('div');
-  goodargs_btn.classList.add("goodargs_btn"); goodargs_btn.classList.add("goodarg_reactions"); goodargs_btn.classList.add("noselect");
-  goodargs_btn.setAttribute("aria-label", "Hyvin argumentoitu"); goodargs_btn.setAttribute("title", "Hyvin argumentoitu");
-
-  if(msg["likes"] == undefined){ msg["likes"] = 0; }
-  if(msg["dislikes"] == undefined) { msg["dislikes"] = 0;}
-  if(msg["goodargs"] == undefined) { msg["goodargs"] = 0;}
-
-  var likes_number = document.createElement('div');
-  likes_number.id = msg["id"] + "likes";
-  likes_number.classList.add("likes_number"); likes_number.classList.add("noselect");
-
-  var dislikes_number = document.createElement('div');
-  dislikes_number.id = msg["id"] + "dislikes";
-  dislikes_number.classList.add("dislikes_number"); dislikes_number.classList.add("noselect");
-
-  var goodargs_number = document.createElement('div');
-  goodargs_number.id = msg["id"] + 'goodargs';
-  goodargs_number.classList.add("goodargs_number"); goodargs_number.classList.add("noselect");
-
-  likes_number.textContent = "  " + msg["likes"].length;
-  dislikes_number.textContent = "   " + msg["dislikes"].length;
-  goodargs_number.textContent = "   " + msg["goodargs"].length;
-  var reaction_container = document.createElement('div');
-  reaction_container.classList.add("reaction_container");
-  reaction_container.appendChild(likes_btn); reaction_container.appendChild(likes_number); reaction_container.appendChild(dislikes_btn); reaction_container.appendChild(dislikes_number); reaction_container.appendChild(goodargs_btn); reaction_container.appendChild(goodargs_number);
-    
-  var response_container = document.createElement('div');
-  response_container.classList.add("response_container");
-
-  var reply = document.createElement('div');
-  reply.classList.add("message_list_reply"); reply.classList.add("noselect");
-  reply.textContent = "VASTAA";
-  response_container.appendChild(reply);
-
-  if (msg["sender"] == logged_in)
-  {
-    var deleteMessage = document.createElement('div');
-    deleteMessage.classList.add("message_list_delete"); deleteMessage.classList.add("noselect");
-    deleteMessage.textContent = "POISTA VIESTI";
-    response_container.appendChild(deleteMessage);
-
-    var editMessage = document.createElement('div');
-    editMessage.classList.add("message_list_edit"); editMessage.classList.add("noselect");
-    editMessage.textContent = "MUOKKAA VIESTIÄ";
-    response_container.appendChild(editMessage);
-  }
-
-  var bottomContainer = document.createElement("div");
-  bottomContainer.classList.add("bottom_container");
-
-  bottomContainer.appendChild(reaction_container); bottomContainer.appendChild(response_container);
-
-  nm.appendChild(bottomContainer);
-
-  var ml = document.getElementById('message_list');
-  ml.appendChild(nm);
-  last_message_sender = msg["sender"];
-  var separator = document.createElement('div');
-  separator.classList.add("separator");
-  ml.appendChild(separator);
-  ml.scrollTop = ml.scrollHeight;
-  window.scrollTop = window.scrollHeight;
-} */
-
 socket.on('new message', function(msg){
   create_message(msg);
 });
@@ -986,7 +750,10 @@ $(document).on('click', '.save_edit_btn', function(e){
   msg["content"] = e.currentTarget.previousElementSibling.value;
   msg["msg_id"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id');
   window_open = false;
-  socket.emit('request message edit', msg);
+  socket.emit('request message edit', msg, function(response){
+    if (response == "failure") { alert("Viestin muokkauksessa tapahtui virhe")}
+    else { location.reload(); }
+  });
 })
 
 $(document).on('click', ".reply_btn", function(e){

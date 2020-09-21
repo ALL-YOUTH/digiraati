@@ -10,6 +10,7 @@ var currentPage = 0;
 var quest_view;
 var trix_editor;
 var chat_list;
+var conclusions = false;
 
 $(function(){
 
@@ -20,59 +21,109 @@ $(function(){
   trix_editor = document.querySelector("trix-editor");
 
   council = window.location.href.split("/").slice(-2)[0];
-  socket.emit("check login council", window.sessionStorage.getItem('token'), council);
-  socket.emit("request council data", council, function(data){
-    try{
-      trix_editor.editor.loadJSON(JSON.parse(data["conclusion"]));
-    }
-    catch(e)
-    {
-      if (e instanceof SyntaxError)
-      {
-        trix_editor.editor.insertString(data["conclusion"]);
-      }
-  
-    else {
-      alert("Loppulausuman lataamisessa tapahtui virhe.");
-      }
-    }
-  
-    finally{
-      chat_list = document.getElementById("conclusion_chat_list");
-      var chat_messages = data["messages"];
-      var original_messages = chat_messages.filter(element => element["parent"] == "");
-      console.log("Parsing " + chat_messages.length + " chat messages, " + original_messages.length + " original ones");
-      for(message of original_messages)
-      {
-        ParseChatMessage(message, chat_messages);
-      }
-    }
+  socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(reply)
+  {
+    if (reply == "success"){
+      data["username"] = window.sessionStorage.getItem('logged_in');
+      socket.emit("request council data", council, function(data){
+        console.log(data);
+        try{  // palautuksena voi tulla joko JSON-formatoitu loppulausuma, joka voidaan ladata sellaisenaan TRIXiin, tai legacy-tapauksissa string, joka pitää erikseen formatoida.
+          trix_editor.editor.loadJSON(JSON.parse(data["conclusion"]));
+        }
+        catch(e)
+        {
+          if (e instanceof SyntaxError)
+          {
+            trix_editor.editor.insertString(data["conclusion"]);
+          }
+      
+        else {
+          alert("Loppulausuman lataamisessa tapahtui virhe.");
+          }
+        }
+      
+        finally{
+          chat_list = document.getElementById("conclusion_chat_list");
+          var chat_messages = data["messages"];
+          var original_messages = chat_messages.filter(element => element["parent"] == "");
+          console.log("Parsing " + chat_messages.length + " chat messages, " + original_messages.length + " original ones");
+          for(message of original_messages)
+          {
+            ParseChatMessage(message, chat_messages);
+          }
+        }
+        
+      });
+
+      socket.emit("request userid by username", window.sessionStorage.getItem("logged_in"), function(user_id)
+      { 
+        data["user_id"] = user_id;
+        socket.emit('request questionnaire', data, function(response){ // Hakee käyttäjän vastaukset raadin loppukyselyyn
+        console.log("Response:")
+        console.log(response);
+
+        data["questions"] = response["questionnaire"];
     
-    //$('#conclusion_input').text(data["conclusion"]);
+        var conc_value = document.getElementById("conclusion_input").val;
+      
+        if (conc_value = undefined)
+        {
+        
+          var base_text = "";
+          for (var i = 0; i < data["questions"].length; i++)
+        {
+          base_text += i+1 + ". " + data["questions"][i] + "\n\n";
+        }
+        $('#conclusion_input').text(base_text);
+      }
+      
+      try {
+        data["answers"] = response["answers"]; // Käyttäjän omat vastaukset kyselyyn
+    
+        if (data["answers"].length > 0) // jos vastauksia on
+        {
+          for (var i = 0; i < data["answers"].length; ++i)
+          {
+            if (data["answers"][i] != "" && data["answers"][i] != 'undefined') // Ja kyseessä ei ole tyhjä arrayn paikka
+            {
+              tempAnswers[i] = data["answers"][i]; // haetaan käyttäjän vastaus editoria varten
+            }
+            else {
+              tempAnswers[i] = "Kirjoita vastauksesi tähän." // jos vastausta ei ole, annetaan avustukseksi helper-arvo
+            }
+          }
+        }
+        }
+      
+      catch{
+    
+        for (var i = 0; i < data["questions"].length; ++i) // Siltä varalta että data on korruptoitunutta
+        {
+          tempAnswers[i] = "Kirjoita vastauksesi tähän";
+        }
+      }
+    
+      try {
+        for (var i = 0; i < response["all_answers"].length; ++i) // Kaikkien käyttäjien vastaukset loppukyselyyn "tarkastele kyselyn vastauksia" -funktionaalisuutta varten
+        {
+          allAnswers[i] = response["all_answers"][i];
+        }
+      }
+    
+      catch(err){
+        console.log("Error parsing all answers: " + err);
+      }
+    });
+    });
+    }
   });
   
-  socket.emit("request ")
   $('#conclusion_div').hide();
   $('#questionnaire_container').show();
   $('#conclusion_chat_content').hide();
   data["council_id"] = council;
-  //myAnswers = socket.emit('request answers by userid', data);
   quest_view = document.getElementById('questionnaire_viewer');
-  
-});
-
-socket.on('receive all council answers', function(data){ // Receives an array of arrays. Each sub-array is an array of a given user's anonymized answers to the final questions. 
-
-    for (var i = 0; i < questionnaire.length; ++i) // Iteroidaan jokaisen kysymyksen yli.
-    {
-      for (var j = 0; j < data.length; ++j)
-      {
-        if (data[j] != "" && data[j] != undefined)
-        {
-          allAnswers[i].push(data[j][i]);
-        }
-      }
-    }
+  ActivateQuestionnaire();  
 });
 
 $('#own_btn').click(function(){
@@ -130,37 +181,39 @@ $(document).on('click', '.save_conclusion_btn', function(e){
   }
 
   data["answers"] = myAnswers;
-  socket.emit('request save conclusion answers', data);
+  socket.emit('request save conclusion answers', data, function(reply)
+  {
+    alert(reply);
+    alert("Vastauksesi on tallennettu");
+    location.reload();
+  });
 });
 
-socket.on('conclusion answers updated', function(e){
-  alert("Vastaukset tallennettu.");
-  window.location.reload();
-});
 
 $('#save_conclusion_text').click(function(){
   var coun_data = {};
   coun_data["council"] = council;
   coun_data["text"] = JSON.stringify(trix_editor.editor);
-  socket.emit('request conclusion update', coun_data);
+  socket.emit('request conclusion update', coun_data, function(result)
+  {
+    if (result == "success")
+    {
+      alert("Loppulausuma on päivitetty");
+      location.reload();
+    }
+  });
 });
 
 $('#refresh_conclusion_text').click(function(){
-  socket.emit('request conclusion refresh', council);
+  socket.emit('request conclusion refresh', council, function(updated_conclusion)
+  {
+    // Toistaiseksi loppulausuman päivitystä ei ole sivuston ominaisuuksissa, mutta jos sellainen halutaan, se voidaan toteuttaa tähän.
+  });
 });
 
 $('#conclusion_input').keydown(function(e){
   var key = e.keyCode;
   return;
-});
-
-socket.on('update conclusion', function(){
-  goToPage("/lobby/" + council + "/conclusion");
-});
-
-socket.on("userid request response", function(user_id){
-  data["user_id"] = user_id;
-  socket.emit('request questionnaire', data);
 });
 
 $(document).on('click', '.back_button', function(e){
@@ -177,65 +230,6 @@ $(document).on('click', '.forw_button', function(e){
     currentPage += 1;
     ActivateViewerpage(currentPage);
   }
-});
-
-socket.on("questionnaire request response", function(response)
-{
-
-  data["questions"] = response["questionnaire"];
-
-  var conc_value = document.getElementById("conclusion_input").val;
-  
-  if (conc_value = undefined)
-  {
-    
-    var base_text = "";
-    for (var i = 0; i < data["questions"].length; i++)
-    {
-      base_text += i+1 + ". " + data["questions"][i] + "\n\n";
-    }
-    $('#conclusion_input').text(base_text);
-  }
-  
-  try {
-    data["answers"] = response["answers"]["answers"];
-
-    if (data["answers"].length > 0)
-    {
-      for (var i = 0; i < data["answers"].length; ++i)
-      {
-        if (data["answers"][i] != "" && data["answers"][i] != undefined)
-        {
-          tempAnswers[i] = data["answers"][i];
-        }
-        else {
-          tempAnswers[i] = "Kirjoita vastauksesi tähän."
-        }
-      }
-    }
-    }
-  
-  catch{
-
-    for (var i = 0; i < data["questions"].length; ++i)
-    {
-      tempAnswers[i] = "Kirjoita vastauksesi tähän";
-    }
-  }
-
-  try {
-    for (var i = 0; i < response["all_answers"].length; ++i)
-    {
-      allAnswers[i] = response["all_answers"][i];
-    }
-  }
-
-  catch(err){
-    console.log("Error parsing all answers: " + err);
-  }
-
-
-  ActivateQuestionnaire();
 });
 
 function ParseChatMessage(message, messageList)
@@ -267,11 +261,15 @@ function ParseChatMessage(message, messageList)
 
 function ActivateViewerpage(page)
 {
+
   quest_view = document.getElementById("questionnaire_viewer");
   var qf = document.createElement('div');
   qf.classList.add("questionnaire_viewer");
   qf.id = "questionnaire_viewer";
-
+  
+  if (typeof data["questions"] != 'undefined' && data["questions"].length > 0)
+  {
+  
   var viewer_title = document.createElement('div');
   viewer_title.classList.add("viewer_question_title");
   viewer_title.innerHTML = data["questions"][page];
@@ -329,6 +327,17 @@ function ActivateViewerpage(page)
 
   qf.appendChild(content_container);
   quest_view.outerHTML = qf.outerHTML;
+  }
+
+  else {
+    
+    var no_questionnaire = document.createElement("div");
+    no_questionnaire.classList.add("no_question_text");
+    no_questionnaire.innerText = "Tälle raadille ei ole luotu loppulausumakyselyä.";
+    quest_view = document.getElementById("questionnaire_viewer");
+    qf.appendChild(no_questionnaire);
+  
+  }
 }
 
 function ActivateQuestionnaire()
@@ -338,29 +347,30 @@ function ActivateQuestionnaire()
   qf.classList.add("questionnaire_viewer");
   qf.id = "questionnaire_viewer";
 
-  for (var i = 0; i < data["questions"].length; ++i)
+  if (typeof data["questions"] != 'undefined' && data["questions"].length > 0)
   {
-    var temp_question = document.createElement('div');
-    temp_question.classList.add("conclusion_question");
-    temp_question.id = "conclusion_question" + i;
-    temp_question.innerText = data["questions"][i];
-    qf.appendChild(temp_question);
+    for (var i = 0; i < data["questions"].length; ++i)
+    {
+      var temp_question = document.createElement('div');
+      temp_question.classList.add("conclusion_question");
+      temp_question.id = "conclusion_question" + i;
+      temp_question.innerText = data["questions"][i];
+      qf.appendChild(temp_question);
+      
+      var answer_box = document.createElement('TEXTAREA');
+      answer_box.classList.add("answer_box");
+      answer_box.id = "answer_box" + i;
+      answer_box.defaultValue = tempAnswers[i];
+      qf.appendChild(answer_box);
+    }
+
     
-    var answer_box = document.createElement('TEXTAREA');
-    answer_box.classList.add("answer_box");
-    answer_box.id = "answer_box" + i;
-    answer_box.defaultValue = tempAnswers[i];
-    qf.appendChild(answer_box);
-  }
 
-  if (data["questions"].length > 0)
-  {
-
-    var save_btn = document.createElement('button');
-    save_btn.classList.add("save_conclusion_btn");
-    save_btn.innerHTML = "Tallenna vastauksesi";
-    qf.appendChild(save_btn);
-  }
+      var save_btn = document.createElement('button');
+      save_btn.classList.add("save_conclusion_btn");
+      save_btn.innerHTML = "Tallenna vastauksesi";
+      qf.appendChild(save_btn);
+    }
 
   else {
     var no_questionnaire = document.createElement("div");
@@ -371,13 +381,6 @@ function ActivateQuestionnaire()
 
   quest_view.outerHTML = qf.outerHTML;
 }
-
-socket.on("login success", function(response){
-  data["username"] = response;
-  socket.emit("request userid by username", response);
-  socket.emit("request socket list", council);
-});
-
 
 function randomize_name()
 {

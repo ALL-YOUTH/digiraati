@@ -15,13 +15,28 @@ $(function(){
   $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
 
   council = window.location.href.split("/").slice(-2)[0];
-  socket.emit("check login council", window.sessionStorage.getItem('token'), council);
-  console.log("Logged in: " + logged_in);
+  socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(result){
+    if (result == "success")
+    {
+      console.log("login success from council.js");
+      logged_in = window.sessionStorage.getItem('logged_in');
+      console.log("Session storage says: " + window.sessionStorage.getItem('logged_in'));
+      socket.emit("request council data", council, function(data){
+      generate_council_info_from_data(data);
+      });
+    }
+    else {
+      socket.emit("request council data", council, function(data){
+      console.log("User is not in the council");
+      generate_council_info_from_data(data);
+      })    
+    }
+  });
 });
 
-socket.on('login success', function(){
-  console.log("success");
-  socket.emit("request council data", council, function(data){
+function generate_council_info_from_data(data)
+{
+  console.log("Generating stuffs, logged in: " + window.sessionStorage.getItem('logged_in'));
     $('#lobby_latest_messages_arrow_up').hide();
     if (data["password"] != "") {council_password = true; }
     if(council_updated){
@@ -109,11 +124,13 @@ socket.on('login success', function(){
     }
     $("#leave_council_btn").css("display", "none");
     $("#join_council_btn").css("display", "none");
-    if(logged_in != ""){
+    if(window.sessionStorage.getItem('logged_in') != ""){
+      console.log("Someone is logged in");
       $("#leave_council_btn").css("display", "none");
       $("#join_council_btn").css("display", "block");
       for(var j = 0; j < data["users"].length; ++j){
-        if(logged_in == data["users"][j]){
+        if(window.sessionStorage.getItem('logged_in') == data["users"][j]){
+          console.log("Apparently this user is in the council");
           $("#join_council_btn").css({"display": "none"});
           $("#leave_council_btn").css({"display": "block"});
           $("#lobby_document_btn").removeClass("disabled");
@@ -122,8 +139,7 @@ socket.on('login success', function(){
           break;
         }
       }
-      if (logged_in != "")
-      {
+      if(window.sessionStorage.getItem('logged_in') == data["users"][j]){
         try{
           for(var i = 1; i <= 4; ++i){               //Showing the last 4 messages
             var message = document.createElement('div');
@@ -162,8 +178,7 @@ socket.on('login success', function(){
       }
       }
     }
-  });
-});
+  }
 
 function reformatDate(input){
   try{
@@ -193,28 +208,28 @@ $('#join_council_btn, #join_council_btn_mobile').click(function(){
   data["council"] = council;
   data["user"] = logged_in;
   data["password"] = entered_password;
-  console.log("yritän liittyä raatiin: " + data["password"]);
-  socket.emit('request join council', data);
+  console.log("yritän liittyä raatiin: " + data["council"]);
+  socket.emit('request join council', data, function(reply){ // Return is {"result": $result_code}, possible values are "password_error" and "success"
+    if(reply["result"] == "password_error")
+    {alert("Salasana ei ollut oikein. Jos et ole varma raadin salasanasta, ota yhteys kontaktihenkilöösi.")}
+    else if(reply["result"] == "success")
+    {
+      location.reload();
+    }
+  });
 });
 
 $('#leave_council_btn, #leave_council_btn_mobile').click(function(){
   var data = {};
   data["council"] = council;
   data["user"] = logged_in;
-  socket.emit('request leave council', data);
+  console.log("Yritän poistua raadista: " + data["council"]);
+  socket.emit('request leave council', data, function(reply) {
+    console.log("Lähdin raadista");
+    location.reload();
+  });
 });
 
-socket.on('password incorrect', function(){
-    window.alert("Salasana ei ollut oikein. Jos et ole varma raadin salasanasta, ota yhteys kontaktihenkilöösi.");
-})
-
-socket.on('join success', function(){
-  location.reload();
-});
-
-socket.on('leave success', function(){
-  location.reload();
-});
 
 $('#lobby_home_btn').click(function(){
   goToPage("/lobby/" + council + "/index");
