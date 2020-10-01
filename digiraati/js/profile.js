@@ -5,30 +5,40 @@ var active_username = "";
 var avatar_pictures;
 
 $(function(){
-  console.log("Host: " + host);
-  console.log("Natural host: " + socket["io"]["uri"]);
   $('#header').load(socket["io"]["uri"] + "/html/header.html");
   $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
-  socket.emit('check login', window.sessionStorage.getItem('token'));
-  socket.emit('request user data', window.sessionStorage.getItem('token'));
-  avatar_pictures = document.querySelectorAll('.avatar_pic');
   $("avatar_container").hide();
+  avatar_pictures = document.querySelectorAll('.avatar_pic');
 
   for (var i = 0; i < avatar_pictures.length; i++){
     avatar_pictures[i].addEventListener('click', SelectAvatar)
   }
-});
 
-socket.on("not logged", function(){
-  goToPage("/");
-});
+  socket.emit('check login', window.sessionStorage.getItem('token'), function(response){ // Check to see if the user is logged in. If not, redirect to the front page.
+    if (response != "not_logged")                                                        // Response is either "not_logged", or an array with the user's username and token ID as the first two items
+    {
+      socket.emit('request user data', window.sessionStorage.getItem('token'), function(data){ // If the user is logged in, request the user's user data
+        console.log("updating user information")
+        $('#profile_real_name').text(data["fname"] + " " + data["lname"]);
+        $('#profile_username').text(data["username"]);
+        $('#profile_description').text(data["description"]);
+        $('#profile_hometown').text(data["location"]);
+        if(data["picture"] != ""){
+          var profile_pic = document.createElement('img');
+          profile_pic.classList.add("picture");
+          profile_pic.setAttribute('src', data["picture"]);
+          profile_pic.setAttribute('x', 150);
+          profile_pic.setAttribute('y', 150);
+          document.getElementById("profile_avatar").appendChild(profile_pic);
+        }
+        else { $('#profile_avatar').text(data["picture"]); }
+        active_username = data["username"];
+      });
+    }
 
-socket.on("avatar change complete", function(){
-  console.log("Avatar changed");
-  document.getElementById('avatar_container').style.display = 'none';
-  window.location.reload();
+    else { goToPage("/");}
+  });
 });
-
 
 function SelectAvatar(event)
 {
@@ -59,7 +69,13 @@ $('#save_btn').click(function(){
     av_data["username"] = active_username;
     av_data["avatar"] = selected_avatar;
     console.log(av_data);
-    socket.emit('request avatar change', av_data);
+    socket.emit('request avatar change', av_data, function(callback){
+      if (callback == "success")
+      {
+        document.getElementById('avatar_container').style.display = 'none';
+        window.location.reload();
+      }
+    });
   }
 });
 
@@ -126,23 +142,6 @@ $('#tags').click(function(){
   document.getElementById('my_activity').className = "inactive";
   document.getElementById('tags').className = "active";
   document.getElementById('create_new_council').className = "inactive";
-});
-
-socket.on('user data', function(data){
-  $('#profile_real_name').text(data["fname"] + " " + data["lname"]);
-  $('#profile_username').text(data["username"]);
-  $('#profile_description').text(data["description"]);
-  $('#profile_hometown').text(data["location"]);
-  if(data["picture"] != ""){
-    var profile_pic = document.createElement('img');
-    profile_pic.classList.add("picture");
-    profile_pic.setAttribute('src', data["picture"]);
-    profile_pic.setAttribute('x', 150);
-    profile_pic.setAttribute('y', 150);
-    document.getElementById("profile_avatar").appendChild(profile_pic);
-  }
-  else { $('#profile_avatar').text(data["picture"]); }
-  active_username = data["username"];
 });
 
 $('#edit_profile').click(function(){

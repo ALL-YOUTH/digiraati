@@ -1,0 +1,1315 @@
+├─ @glidejs/glide@3.4.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/glidejs/glide
+│  ├─ publisher: Jędrzej Chałubek
+│  ├─ email: jedrzej.chalubek@gmail.com
+│  ├─ url: http://jedrzejchalubek.com/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\@glidejs\glide
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\@glidejs\glide\LICENSE
+├─ accepts@1.3.7
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/accepts
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\accepts
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\accepts\LICENSE
+├─ after@0.8.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/Raynos/after
+│  ├─ publisher: Raynos
+│  ├─ email: raynos2@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\after
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\after\LICENCE
+├─ ansi-escapes@4.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/ansi-escapes
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\ansi-escapes
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\ansi-escapes\license
+├─ ansi-regex@4.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/chalk/ansi-regex
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\strip-ansi\node_modules\ansi-regex
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\strip-ansi\node_modules\ansi-regex\license
+├─ ansi-regex@5.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/chalk/ansi-regex
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\ansi-regex
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\ansi-regex\license
+├─ ansi-styles@3.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/chalk/ansi-styles
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\ansi-styles
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\ansi-styles\license
+├─ argparse@1.0.10
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nodeca/argparse
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\argparse
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\argparse\LICENSE
+├─ array-flatten@1.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/blakeembrey/array-flatten
+│  ├─ publisher: Blake Embrey
+│  ├─ email: hello@blakeembrey.com
+│  ├─ url: http://blakeembrey.me
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\array-flatten
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\array-flatten\LICENSE
+├─ arraybuffer-to-string@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/dfcreative/arraybuffer-to-string
+│  ├─ publisher: Dima Yv
+│  ├─ email: dfcreative@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\arraybuffer-to-string
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\arraybuffer-to-string\readme.md
+├─ arraybuffer.slice@0.0.7
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/rase-/arraybuffer.slice
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\arraybuffer.slice
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\arraybuffer.slice\LICENCE
+├─ async-limiter@1.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/strml/async-limiter
+│  ├─ publisher: Samuel Reed
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\async-limiter
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\async-limiter\LICENSE
+├─ backo2@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mokesmokes/backo
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\backo2
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\backo2\Readme.md
+├─ base64-arraybuffer@0.1.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/niklasvh/base64-arraybuffer
+│  ├─ publisher: Niklas von Hertzen
+│  ├─ email: niklasvh@gmail.com
+│  ├─ url: http://hertzen.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\base64-arraybuffer
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\base64-arraybuffer\LICENSE-MIT
+├─ base64id@2.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/faeldt/base64id
+│  ├─ publisher: Kristian Faeldt
+│  ├─ email: faeldt_kristian@cyberagent.co.jp
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\base64id
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\base64id\LICENSE
+├─ better-assert@1.0.2
+│  ├─ licenses: MIT*
+│  ├─ repository: https://github.com/visionmedia/better-assert
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\better-assert
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\better-assert\Readme.md
+├─ bignumber.js@7.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/MikeMcl/bignumber.js
+│  ├─ publisher: Michael Mclaughlin
+│  ├─ email: M8ch88l@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\bignumber.js
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\bignumber.js\LICENCE
+├─ blob@0.0.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/webmodules/blob
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\blob
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\blob\LICENSE
+├─ bluebird@3.4.7
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/petkaantonov/bluebird
+│  ├─ publisher: Petka Antonov
+│  ├─ email: petka_antonov@hotmail.com
+│  ├─ url: http://github.com/petkaantonov/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\bluebird
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\bluebird\LICENSE
+├─ body-parser@1.19.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/expressjs/body-parser
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\body-parser
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\body-parser\LICENSE
+├─ busboy@0.3.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mscdex/busboy
+│  ├─ publisher: Brian White
+│  ├─ email: mscdex@mscdex.net
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\busboy
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\busboy\LICENSE
+├─ bytes@3.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/visionmedia/bytes.js
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ url: http://tjholowaychuk.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\bytes
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\bytes\LICENSE
+├─ callsite@1.0.0
+│  ├─ licenses: MIT*
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\callsite
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\callsite\Readme.md
+├─ chalk@2.4.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/chalk/chalk
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\chalk
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\chalk\license
+├─ chardet@0.7.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/runk/node-chardet
+│  ├─ publisher: Dmitry Shirokov
+│  ├─ email: deadrunk@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\chardet
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\chardet\LICENSE
+├─ cli-cursor@3.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/cli-cursor
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cli-cursor
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cli-cursor\license
+├─ cli-width@2.2.0
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/knownasilya/cli-width
+│  ├─ publisher: Ilya Radchenko
+│  ├─ email: ilya@burstcreations.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cli-width
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cli-width\LICENSE
+├─ clone@2.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/pvorb/node-clone
+│  ├─ publisher: Paul Vorbach
+│  ├─ email: paul@vorba.ch
+│  ├─ url: http://paul.vorba.ch/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\clone
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\clone\LICENSE
+├─ color-convert@1.9.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/Qix-/color-convert
+│  ├─ publisher: Heather Arthur
+│  ├─ email: fayearthur@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\color-convert
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\color-convert\LICENSE
+├─ color-name@1.1.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/dfcreative/color-name
+│  ├─ publisher: DY
+│  ├─ email: dfcreative@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\color-name
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\color-name\LICENSE
+├─ component-bind@1.0.0
+│  ├─ licenses: MIT*
+│  ├─ repository: https://github.com/component/bind
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\component-bind
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\component-bind\Readme.md
+├─ component-emitter@1.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/component/emitter
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\component-emitter
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\component-emitter\LICENSE
+├─ component-emitter@1.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/component/emitter
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io-client\node_modules\component-emitter
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io-client\node_modules\component-emitter\LICENSE
+├─ component-inherit@0.0.3
+│  ├─ licenses: MIT*
+│  ├─ repository: https://github.com/component/inherit
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\component-inherit
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\component-inherit\Readme.md
+├─ content-disposition@0.5.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/content-disposition
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\content-disposition
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\content-disposition\LICENSE
+├─ content-type@1.0.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/content-type
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\content-type
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\content-type\LICENSE
+├─ cookie-session@1.4.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/expressjs/cookie-session
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie-session
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie-session\LICENSE
+├─ cookie-signature@1.0.6
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/visionmedia/node-cookie-signature
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@learnboost.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie-signature
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie-signature\Readme.md
+├─ cookie@0.3.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/cookie
+│  ├─ publisher: Roman Shtylman
+│  ├─ email: shtylman@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie\LICENSE
+├─ cookie@0.4.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/cookie
+│  ├─ publisher: Roman Shtylman
+│  ├─ email: shtylman@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\express\node_modules\cookie
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\express\node_modules\cookie\LICENSE
+├─ cookies@0.8.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/pillarjs/cookies
+│  ├─ publisher: Jed Schmidt
+│  ├─ email: tr@nslator.jp
+│  ├─ url: http://jed.is
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookies
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookies\LICENSE
+├─ core-util-is@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/isaacs/core-util-is
+│  ├─ publisher: Isaac Z. Schlueter
+│  ├─ email: i@izs.me
+│  ├─ url: http://blog.izs.me/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\core-util-is
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\core-util-is\LICENSE
+├─ cors@2.8.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/expressjs/cors
+│  ├─ publisher: Troy Goode
+│  ├─ email: troygoode@gmail.com
+│  ├─ url: https://github.com/troygoode/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cors
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cors\LICENSE
+├─ croppr@2.3.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jamesssooi/Croppr.js
+│  ├─ publisher: James Ooi
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\croppr
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\croppr\LICENSE
+├─ debug@2.6.9
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/visionmedia/debug
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie-session\node_modules\debug
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie-session\node_modules\debug\LICENSE
+├─ debug@3.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/visionmedia/debug
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-client\node_modules\socket.io-parser\node_modules\debug
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-client\node_modules\socket.io-parser\node_modules\debug\LICENSE
+├─ debug@4.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/visionmedia/debug
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\debug
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\debug\LICENSE
+├─ deep-equal@1.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/substack/node-deep-equal
+│  ├─ publisher: James Halliday
+│  ├─ email: mail@substack.net
+│  ├─ url: http://substack.net
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\deep-equal
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\deep-equal\LICENSE
+├─ define-properties@1.1.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/define-properties
+│  ├─ publisher: Jordan Harband
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\define-properties
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\define-properties\LICENSE
+├─ delivery@0.0.6
+│  ├─ licenses: MIT
+│  ├─ repository: git+https://liamks@github.com/liamks/Delivery.js
+│  ├─ publisher: Liam Kaufman
+│  ├─ email: liam.kaufman@gmail.com
+│  ├─ url: http://liamkaufman.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\readme.md
+├─ depd@1.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/dougwilson/nodejs-depd
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\depd
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\depd\LICENSE
+├─ depd@2.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/dougwilson/nodejs-depd
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookies\node_modules\depd
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookies\node_modules\depd\LICENSE
+├─ destroy@1.0.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/stream-utils/destroy
+│  ├─ publisher: Jonathan Ong
+│  ├─ email: me@jongleberry.com
+│  ├─ url: http://jongleberry.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\destroy
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\destroy\LICENSE
+├─ dicer@0.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mscdex/dicer
+│  ├─ publisher: Brian White
+│  ├─ email: mscdex@mscdex.net
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\dicer
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\dicer\LICENSE
+├─ duck@0.1.11
+│  ├─ licenses: BSD*
+│  ├─ repository: https://github.com/mwilliamson/duck.js
+│  ├─ publisher: Michael Williamson
+│  ├─ email: mike@zwobble.org
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\duck
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\duck\LICENSE
+├─ ee-first@1.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jonathanong/ee-first
+│  ├─ publisher: Jonathan Ong
+│  ├─ email: me@jongleberry.com
+│  ├─ url: http://jongleberry.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\ee-first
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\ee-first\LICENSE
+├─ emoji-regex@8.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mathiasbynens/emoji-regex
+│  ├─ publisher: Mathias Bynens
+│  ├─ url: https://mathiasbynens.be/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\emoji-regex
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\emoji-regex\LICENSE-MIT.txt
+├─ encodeurl@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/pillarjs/encodeurl
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\encodeurl
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\encodeurl\LICENSE
+├─ engine.io-client@3.4.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/socketio/engine.io-client
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io-client
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io-client\LICENSE
+├─ engine.io-parser@2.2.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/socketio/engine.io-parser
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io-parser
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io-parser\LICENSE
+├─ engine.io@3.4.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/socketio/engine.io
+│  ├─ publisher: Guillermo Rauch
+│  ├─ email: guillermo@learnboost.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io\LICENSE
+├─ es-abstract@1.17.6
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/es-abstract
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ url: http://ljharb.codes
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\es-abstract
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\es-abstract\LICENSE
+├─ es-to-primitive@1.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/es-to-primitive
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\es-to-primitive
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\es-to-primitive\LICENSE
+├─ escape-html@1.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/component/escape-html
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\escape-html
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\escape-html\LICENSE
+├─ escape-string-regexp@1.0.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/escape-string-regexp
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\escape-string-regexp
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\escape-string-regexp\license
+├─ etag@1.8.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/etag
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\etag
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\etag\LICENSE
+├─ eventemitter3@2.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/primus/eventemitter3
+│  ├─ publisher: Arnout Kazemier
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\eventemitter3
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\eventemitter3\LICENSE
+├─ express-fileupload@1.1.6
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/richardgirges/express-fileupload
+│  ├─ publisher: Richard Girges
+│  ├─ email: richardgirges@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\express-fileupload
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\express-fileupload\LICENSE
+├─ express@4.17.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/expressjs/express
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\express
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\express\LICENSE
+├─ extend@3.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/justmoon/node-extend
+│  ├─ publisher: Stefan Thomas
+│  ├─ email: justmoon@members.fsf.org
+│  ├─ url: http://www.justmoon.net
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\extend
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\extend\LICENSE
+├─ external-editor@3.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mrkmg/node-external-editor
+│  ├─ publisher: Kevin Gravier
+│  ├─ email: kevin@mrkmg.com
+│  ├─ url: https://mrkmg.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\external-editor
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\external-editor\LICENSE
+├─ fast-diff@1.1.2
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/jhchen/fast-diff
+│  ├─ publisher: Jason Chen
+│  ├─ email: jhchen7@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\fast-diff
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\fast-diff\README.md
+├─ figures@3.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/figures
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\figures
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\figures\license
+├─ finalhandler@1.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/pillarjs/finalhandler
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\finalhandler
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\finalhandler\LICENSE
+├─ formidable@1.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/felixge/node-formidable
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\formidable
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\formidable\LICENSE
+├─ forwarded@0.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/forwarded
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\forwarded
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\forwarded\LICENSE
+├─ fresh@0.5.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/fresh
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ url: http://tjholowaychuk.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\fresh
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\fresh\LICENSE
+├─ function-bind@1.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/Raynos/function-bind
+│  ├─ publisher: Raynos
+│  ├─ email: raynos2@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\function-bind
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\function-bind\LICENSE
+├─ has-binary2@1.0.3
+│  ├─ licenses: MIT
+│  ├─ publisher: Kevin Roark
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-binary2
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-binary2\LICENSE
+├─ has-cors@1.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/component/has-cors
+│  ├─ publisher: Nathan Rajlich
+│  ├─ email: nathan@tootallnate.net
+│  ├─ url: http://n8.io/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-cors
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-cors\Readme.md
+├─ has-flag@3.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/has-flag
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-flag
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-flag\license
+├─ has-symbols@1.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/has-symbols
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ url: http://ljharb.codes
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-symbols
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-symbols\LICENSE
+├─ has@1.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/tarruda/has
+│  ├─ publisher: Thiago de Arruda
+│  ├─ email: tpadilha84@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\has
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\has\LICENSE-MIT
+├─ http-errors@1.7.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/http-errors
+│  ├─ publisher: Jonathan Ong
+│  ├─ email: me@jongleberry.com
+│  ├─ url: http://jongleberry.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\http-errors
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\http-errors\LICENSE
+├─ iconv-lite@0.4.24
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ashtuchkin/iconv-lite
+│  ├─ publisher: Alexander Shtuchkin
+│  ├─ email: ashtuchkin@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\iconv-lite
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\iconv-lite\LICENSE
+├─ indexof@0.0.1
+│  ├─ licenses: MIT*
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\indexof
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\indexof\Readme.md
+├─ inherits@2.0.3
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/isaacs/inherits
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\inherits
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\inherits\LICENSE
+├─ inquirer@7.0.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/SBoudrias/Inquirer.js
+│  ├─ publisher: Simon Boudrias
+│  ├─ email: admin@simonboudrias.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\inquirer
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\inquirer\LICENSE
+├─ ipaddr.js@1.9.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/whitequark/ipaddr.js
+│  ├─ publisher: whitequark
+│  ├─ email: whitequark@whitequark.org
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\ipaddr.js
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\ipaddr.js\LICENSE
+├─ is-arguments@1.0.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/is-arguments
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ url: http://ljharb.codes
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-arguments
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-arguments\LICENSE
+├─ is-callable@1.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/is-callable
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ url: http://ljharb.codes
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-callable
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-callable\LICENSE
+├─ is-date-object@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/is-date-object
+│  ├─ publisher: Jordan Harband
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-date-object
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-date-object\LICENSE
+├─ is-fullwidth-code-point@3.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/is-fullwidth-code-point
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-fullwidth-code-point
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-fullwidth-code-point\license
+├─ is-promise@2.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/then/is-promise
+│  ├─ publisher: ForbesLindesay
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-promise
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-promise\LICENSE
+├─ is-regex@1.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/is-regex
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-regex
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-regex\LICENSE
+├─ is-symbol@1.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/inspect-js/is-symbol
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-symbol
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\is-symbol\LICENSE
+├─ isarray@1.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/juliangruber/isarray
+│  ├─ publisher: Julian Gruber
+│  ├─ email: mail@juliangruber.com
+│  ├─ url: http://juliangruber.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\readable-stream\node_modules\isarray
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\readable-stream\node_modules\isarray\README.md
+├─ isarray@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/juliangruber/isarray
+│  ├─ publisher: Julian Gruber
+│  ├─ email: mail@juliangruber.com
+│  ├─ url: http://juliangruber.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-binary2\node_modules\isarray
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\has-binary2\node_modules\isarray\README.md
+├─ jszip@2.5.0
+│  ├─ licenses: MIT*
+│  ├─ repository: https://github.com/Stuk/jszip
+│  ├─ publisher: Stuart Knightley
+│  ├─ email: stuart@stuartk.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\jszip
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\jszip\LICENSE.markdown
+├─ keygrip@1.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/crypto-utils/keygrip
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\keygrip
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\keygrip\LICENSE
+├─ lodash@4.17.20
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/lodash/lodash
+│  ├─ publisher: John-David Dalton
+│  ├─ email: john.david.dalton@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\lodash
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\lodash\LICENSE
+├─ lop@0.4.0
+│  ├─ licenses: BSD*
+│  ├─ repository: https://github.com/mwilliamson/lop
+│  ├─ publisher: Michael Williamson
+│  ├─ email: mike@zwobble.org
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\lop
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\lop\LICENSE
+├─ mammoth@1.4.9
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/mwilliamson/mammoth.js
+│  ├─ publisher: Michael Williamson
+│  ├─ email: mike@zwobble.org
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\mammoth
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\mammoth\LICENSE
+├─ media-typer@0.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/media-typer
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\media-typer
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\media-typer\LICENSE
+├─ merge-descriptors@1.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/component/merge-descriptors
+│  ├─ publisher: Jonathan Ong
+│  ├─ email: me@jongleberry.com
+│  ├─ url: http://jongleberry.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\merge-descriptors
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\merge-descriptors\LICENSE
+├─ methods@1.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/methods
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\methods
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\methods\LICENSE
+├─ mime-db@1.43.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/mime-db
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\mime-db
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\mime-db\LICENSE
+├─ mime-types@2.1.26
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/mime-types
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\mime-types
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\mime-types\LICENSE
+├─ mime@1.6.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/broofa/node-mime
+│  ├─ publisher: Robert Kieffer
+│  ├─ email: robert@broofa.com
+│  ├─ url: http://github.com/broofa
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\send\node_modules\mime
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\send\node_modules\mime\LICENSE
+├─ mime@2.4.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/broofa/node-mime
+│  ├─ publisher: Robert Kieffer
+│  ├─ email: robert@broofa.com
+│  ├─ url: http://github.com/broofa
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\mime
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\mime\LICENSE
+├─ mimic-fn@2.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/mimic-fn
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\mimic-fn
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\mimic-fn\license
+├─ moment@2.24.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/moment/moment
+│  ├─ publisher: Iskren Ivov Chernev
+│  ├─ email: iskren.chernev@gmail.com
+│  ├─ url: https://github.com/ichernev
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\moment
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\moment\LICENSE
+├─ ms@2.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/zeit/ms
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie-session\node_modules\ms
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\cookie-session\node_modules\ms\license.md
+├─ ms@2.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/zeit/ms
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\send\node_modules\ms
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\send\node_modules\ms\license.md
+├─ ms@2.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/zeit/ms
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\ms
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\ms\license.md
+├─ mute-stream@0.0.8
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/isaacs/mute-stream
+│  ├─ publisher: Isaac Z. Schlueter
+│  ├─ email: i@izs.me
+│  ├─ url: http://blog.izs.me/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\mute-stream
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\mute-stream\LICENSE
+├─ mysql@2.17.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mysqljs/mysql
+│  ├─ publisher: Felix Geisendörfer
+│  ├─ email: felix@debuggable.com
+│  ├─ url: http://debuggable.com/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\mysql
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\mysql\License
+├─ negotiator@0.6.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/negotiator
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\negotiator
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\negotiator\LICENSE
+├─ nodemailer@6.4.6
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nodemailer/nodemailer
+│  ├─ publisher: Andris Reinman
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\nodemailer
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\nodemailer\LICENSE
+├─ object-assign@4.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/object-assign
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-assign
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-assign\license
+├─ object-component@0.0.3
+│  ├─ licenses: MIT*
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-component
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-component\Readme.md
+├─ object-inspect@1.8.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/inspect-js/object-inspect
+│  ├─ publisher: James Halliday
+│  ├─ email: mail@substack.net
+│  ├─ url: http://substack.net
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-inspect
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-inspect\LICENSE
+├─ object-is@1.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/es-shims/object-is
+│  ├─ publisher: Jordan Harband
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-is
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-is\LICENSE
+├─ object-keys@1.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/object-keys
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ url: http://ljharb.codes
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-keys
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\object-keys\LICENSE
+├─ object.assign@4.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ljharb/object.assign
+│  ├─ publisher: Jordan Harband
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\object.assign
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\object.assign\LICENSE
+├─ on-finished@2.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/on-finished
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\on-finished
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\on-finished\LICENSE
+├─ on-headers@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/on-headers
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\on-headers
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\on-headers\LICENSE
+├─ onetime@5.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/onetime
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\onetime
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\onetime\license
+├─ option@0.2.4
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/mwilliamson/node-options
+│  ├─ publisher: Michael Williamson
+│  ├─ email: mike@zwobble.org
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\option
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\option\LICENSE
+├─ os-tmpdir@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/os-tmpdir
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\os-tmpdir
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\os-tmpdir\license
+├─ pako@0.2.9
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nodeca/pako
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\pako
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\pako\LICENSE
+├─ parchment@1.1.4
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/quilljs/parchment
+│  ├─ publisher: Jason Chen
+│  ├─ email: jhchen7@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\parchment
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\parchment\LICENSE
+├─ parseqs@0.0.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/get/querystring
+│  ├─ publisher: Gal Koren
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\parseqs
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\parseqs\LICENSE
+├─ parseuri@0.0.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/get/parseuri
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\parseuri
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\parseuri\LICENSE
+├─ parseurl@1.3.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/pillarjs/parseurl
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\parseurl
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\parseurl\LICENSE
+├─ password-hash@1.2.2
+│  ├─ licenses: MIT*
+│  ├─ repository: https://github.com/davidwood/node-password-hash
+│  ├─ publisher: David Wood
+│  ├─ email: bitprobe@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\password-hash
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\password-hash\LICENSE
+├─ path-is-absolute@1.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/path-is-absolute
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\path-is-absolute
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\path-is-absolute\license
+├─ path-to-regexp@0.1.7
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/component/path-to-regexp
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\path-to-regexp
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\path-to-regexp\LICENSE
+├─ process-nextick-args@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/calvinmetcalf/process-nextick-args
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\process-nextick-args
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\process-nextick-args\license.md
+├─ proxy-addr@2.0.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/proxy-addr
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\proxy-addr
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\proxy-addr\LICENSE
+├─ qs@6.7.0
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/ljharb/qs
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\qs
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\qs\LICENSE
+├─ quill-delta@3.6.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/quilljs/delta
+│  ├─ publisher: Jason Chen
+│  ├─ email: jhchen7@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\quill-delta
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\quill-delta\LICENSE
+├─ quill@1.3.7
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/quilljs/quill
+│  ├─ publisher: Jason Chen
+│  ├─ email: jhchen7@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\quill
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\quill\LICENSE
+├─ range-parser@1.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/range-parser
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ url: http://tjholowaychuk.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\range-parser
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\range-parser\LICENSE
+├─ raw-body@2.4.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/stream-utils/raw-body
+│  ├─ publisher: Jonathan Ong
+│  ├─ email: me@jongleberry.com
+│  ├─ url: http://jongleberry.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\raw-body
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\raw-body\LICENSE
+├─ readable-stream@2.3.6
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nodejs/readable-stream
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\readable-stream
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\readable-stream\LICENSE
+├─ regexp.prototype.flags@1.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/es-shims/RegExp.prototype.flags
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\regexp.prototype.flags
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\regexp.prototype.flags\LICENSE
+├─ restore-cursor@3.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/restore-cursor
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\restore-cursor
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\restore-cursor\license
+├─ run-async@2.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/SBoudrias/run-async
+│  ├─ publisher: Simon Boudrias
+│  ├─ email: admin@simonboudrias.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\run-async
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\run-async\LICENSE
+├─ rxjs@6.5.4
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/reactivex/rxjs
+│  ├─ publisher: Ben Lesh
+│  ├─ email: ben@benlesh.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\rxjs
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\rxjs\LICENSE.txt
+├─ safe-buffer@5.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/feross/safe-buffer
+│  ├─ publisher: Feross Aboukhadijeh
+│  ├─ email: feross@feross.org
+│  ├─ url: http://feross.org
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\safe-buffer
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\safe-buffer\LICENSE
+├─ safer-buffer@2.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ChALkeR/safer-buffer
+│  ├─ publisher: Nikita Skovoroda
+│  ├─ email: chalkerx@gmail.com
+│  ├─ url: https://github.com/ChALkeR
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\safer-buffer
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\safer-buffer\LICENSE
+├─ sax@1.1.6
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/isaacs/sax-js
+│  ├─ publisher: Isaac Z. Schlueter
+│  ├─ email: i@izs.me
+│  ├─ url: http://blog.izs.me/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\sax
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\sax\LICENSE
+├─ send@0.17.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/pillarjs/send
+│  ├─ publisher: TJ Holowaychuk
+│  ├─ email: tj@vision-media.ca
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\send
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\send\LICENSE
+├─ serve-static@1.14.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/expressjs/serve-static
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\serve-static
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\serve-static\LICENSE
+├─ setprototypeof@1.1.1
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/wesleytodd/setprototypeof
+│  ├─ publisher: Wes Todd
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\setprototypeof
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\setprototypeof\LICENSE
+├─ signal-exit@3.0.2
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/tapjs/signal-exit
+│  ├─ publisher: Ben Coe
+│  ├─ email: ben@npmjs.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\signal-exit
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\signal-exit\LICENSE.txt
+├─ socket-chat-example@0.0.1
+│  ├─ licenses: UNKNOWN
+│  └─ path: D:\koodaus\repot\digiraati3\digiraati
+├─ socket.io-adapter@1.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/socketio/socket.io-adapter
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-adapter
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-adapter\LICENSE
+├─ socket.io-client@2.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/Automattic/socket.io-client
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-client
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-client\LICENSE
+├─ socket.io-file-client@2.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/rico345100/socket.io-file-client
+│  ├─ publisher: .modernator
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\socket.io-file-client
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\socket.io-file-client\LICENSE
+├─ socket.io-file@2.0.31
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/rico345100/socket.io-file
+│  ├─ publisher: .modernator
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\socket.io-file
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\socket.io-file\LICENSE
+├─ socket.io-parser@3.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/Automattic/socket.io-parser
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-client\node_modules\socket.io-parser
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-client\node_modules\socket.io-parser\LICENSE
+├─ socket.io-parser@3.4.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/socketio/socket.io-parser
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-parser
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io-parser\LICENSE
+├─ socket.io@2.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/socketio/socket.io
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\socket.io\LICENSE
+├─ sprintf-js@1.0.3
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/alexei/sprintf.js
+│  ├─ publisher: Alexandru Marasteanu
+│  ├─ email: hello@alexei.ro
+│  ├─ url: http://alexei.ro/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\sprintf-js
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\sprintf-js\LICENSE
+├─ sqlstring@2.3.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mysqljs/sqlstring
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\sqlstring
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\sqlstring\LICENSE
+├─ statuses@1.5.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/statuses
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\statuses
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\statuses\LICENSE
+├─ streamsearch@0.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mscdex/streamsearch
+│  ├─ publisher: Brian White
+│  ├─ email: mscdex@mscdex.net
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\streamsearch
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\streamsearch\LICENSE
+├─ string-width@4.2.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/string-width
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\string-width
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\string-width\license
+├─ string.prototype.trimend@1.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/es-shims/String.prototype.trimEnd
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\string.prototype.trimend
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\string.prototype.trimend\LICENSE
+├─ string.prototype.trimstart@1.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/es-shims/String.prototype.trimStart
+│  ├─ publisher: Jordan Harband
+│  ├─ email: ljharb@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\string.prototype.trimstart
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\string.prototype.trimstart\LICENSE
+├─ string_decoder@1.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nodejs/string_decoder
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\string_decoder
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\string_decoder\LICENSE
+├─ strip-ansi@5.2.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/chalk/strip-ansi
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\strip-ansi
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\strip-ansi\license
+├─ strip-ansi@6.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/chalk/strip-ansi
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\string-width\node_modules\strip-ansi
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\string-width\node_modules\strip-ansi\license
+├─ supports-color@5.5.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/chalk/supports-color
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\supports-color
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\supports-color\license
+├─ through@2.3.8
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/dominictarr/through
+│  ├─ publisher: Dominic Tarr
+│  ├─ email: dominic.tarr@gmail.com
+│  ├─ url: dominictarr.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\through
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\through\LICENSE.APACHE2
+├─ tmp@0.0.33
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/raszi/node-tmp
+│  ├─ publisher: KARASZI István
+│  ├─ email: github@spam.raszi.hu
+│  ├─ url: http://raszi.hu/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\tmp
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\tmp\LICENSE
+├─ to-array@0.1.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/Raynos/to-array
+│  ├─ publisher: Raynos
+│  ├─ email: raynos2@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\to-array
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\to-array\LICENCE
+├─ toidentifier@1.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/component/toidentifier
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\toidentifier
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\toidentifier\LICENSE
+├─ tslib@1.10.0
+│  ├─ licenses: Apache-2.0
+│  ├─ repository: https://github.com/Microsoft/tslib
+│  ├─ publisher: Microsoft Corp.
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\tslib
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\tslib\LICENSE.txt
+├─ tsscmp@1.0.6
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/suryagh/tsscmp
+│  ├─ publisher: suryagh
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\tsscmp
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\tsscmp\LICENSE
+├─ type-fest@0.8.1
+│  ├─ licenses: (MIT OR CC0-1.0)
+│  ├─ repository: https://github.com/sindresorhus/type-fest
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: sindresorhus.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\type-fest
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\type-fest\license
+├─ type-is@1.6.18
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/type-is
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\type-is
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\type-is\LICENSE
+├─ underscore@1.4.4
+│  ├─ licenses: MIT*
+│  ├─ repository: https://github.com/documentcloud/underscore
+│  ├─ publisher: Jeremy Ashkenas
+│  ├─ email: jeremy@documentcloud.org
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\duck\node_modules\underscore
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\duck\node_modules\underscore\LICENSE
+├─ underscore@1.8.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jashkenas/underscore
+│  ├─ publisher: Jeremy Ashkenas
+│  ├─ email: jeremy@documentcloud.org
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\underscore
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\underscore\LICENSE
+├─ unpipe@1.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/stream-utils/unpipe
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\unpipe
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\unpipe\LICENSE
+├─ util-deprecate@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/TooTallNate/util-deprecate
+│  ├─ publisher: Nathan Rajlich
+│  ├─ email: nathan@tootallnate.net
+│  ├─ url: http://n8.io/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\util-deprecate
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\util-deprecate\LICENSE
+├─ utils-merge@1.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jaredhanson/utils-merge
+│  ├─ publisher: Jared Hanson
+│  ├─ email: jaredhanson@gmail.com
+│  ├─ url: http://www.jaredhanson.net/
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\utils-merge
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\utils-merge\LICENSE
+├─ uuid@3.3.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/kelektiv/node-uuid
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\uuid
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\uuid\LICENSE.md
+├─ vary@1.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/vary
+│  ├─ publisher: Douglas Christopher Wilson
+│  ├─ email: doug@somethingdoug.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\vary
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\vary\LICENSE
+├─ ws@6.1.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/websockets/ws
+│  ├─ publisher: Einar Otto Stangvik
+│  ├─ email: einaros@gmail.com
+│  ├─ url: http://2x.io
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io-client\node_modules\ws
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\engine.io-client\node_modules\ws\LICENSE
+├─ ws@7.3.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/websockets/ws
+│  ├─ publisher: Einar Otto Stangvik
+│  ├─ email: einaros@gmail.com
+│  ├─ url: http://2x.io
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\ws
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\ws\LICENSE
+├─ xmlbuilder@10.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/oozcitak/xmlbuilder-js
+│  ├─ publisher: Ozgur Ozcitak
+│  ├─ email: oozcitak@gmail.com
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\xmlbuilder
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\xmlbuilder\LICENSE
+├─ xmlhttprequest-ssl@1.5.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/mjwwit/node-XMLHttpRequest
+│  ├─ publisher: Michael de Wit
+│  ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\xmlhttprequest-ssl
+│  └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\delivery\node_modules\xmlhttprequest-ssl\LICENSE
+└─ yeast@0.1.2
+   ├─ licenses: MIT
+   ├─ repository: https://github.com/unshiftio/yeast
+   ├─ publisher: Arnout Kazemier
+   ├─ path: D:\koodaus\repot\digiraati3\digiraati\node_modules\yeast
+   └─ licenseFile: D:\koodaus\repot\digiraati3\digiraati\node_modules\yeast\LICENSE
+

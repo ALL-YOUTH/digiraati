@@ -58,13 +58,11 @@ $(function(){
       socket.emit("request userid by username", window.sessionStorage.getItem("logged_in"), function(user_id)
       { 
         data["user_id"] = user_id;
-        socket.emit('request questionnaire', data, function(response){ // Hakee käyttäjän vastaukset raadin loppukyselyyn
-        console.log("Response:")
-        console.log(response);
+        socket.emit('request questionnaire', data, function(response){ // Hakee loppukyselyn kysymykset ja vastaukset
 
-        data["questions"] = response["questionnaire"];
+        data["questions"] = response["questionnaire"]; // Loppukyselyn kysymykset
     
-        var conc_value = document.getElementById("conclusion_input").val;
+        let conc_value = document.getElementById("conclusion_input").val;
       
         if (conc_value = undefined)
         {
@@ -84,7 +82,7 @@ $(function(){
         {
           for (var i = 0; i < data["answers"].length; ++i)
           {
-            if (data["answers"][i] != "" && data["answers"][i] != 'undefined') // Ja kyseessä ei ole tyhjä arrayn paikka
+            if (data["answers"][i] != "" && data["answers"][i] != 'undefined') // Ja kyseessä ei ole tyhjä arrayn paikka joka on päätynyt sinne Jotenkin
             {
               tempAnswers[i] = data["answers"][i]; // haetaan käyttäjän vastaus editoria varten
             }
@@ -113,6 +111,7 @@ $(function(){
       catch(err){
         console.log("Error parsing all answers: " + err);
       }
+      ActivateQuestionnaire();  
     });
     });
     }
@@ -123,7 +122,7 @@ $(function(){
   $('#conclusion_chat_content').hide();
   data["council_id"] = council;
   quest_view = document.getElementById('questionnaire_viewer');
-  ActivateQuestionnaire();  
+  console.log("this happened, activating questionnaire")
 });
 
 $('#own_btn').click(function(){
@@ -342,6 +341,7 @@ function ActivateViewerpage(page)
 
 function ActivateQuestionnaire()
 {
+  console.log("Questionnaire activating")
   quest_view = document.getElementById("questionnaire_viewer");
   var qf = document.createElement('div');
   qf.classList.add("questionnaire_viewer");
@@ -364,8 +364,6 @@ function ActivateQuestionnaire()
       qf.appendChild(answer_box);
     }
 
-    
-
       var save_btn = document.createElement('button');
       save_btn.classList.add("save_conclusion_btn");
       save_btn.innerHTML = "Tallenna vastauksesi";
@@ -373,6 +371,7 @@ function ActivateQuestionnaire()
     }
 
   else {
+    console.log("Ei loppulausumakyselyä.");
     var no_questionnaire = document.createElement("div");
     no_questionnaire.classList.add("no_question_text");
     no_questionnaire.innerText = "Tälle raadille ei ole luotu loppulausumakyselyä.";

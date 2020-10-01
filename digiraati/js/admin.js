@@ -18,7 +18,35 @@ $(function(){
     $('#modal_file_container').hide();
     $('#messages_modal_container').hide();
     $('#conclusion_modal_container').hide();
-    socket.emit('request full data');
+    socket.emit('request full data', function(c_data, u_data, conc_data){
+        council_data = c_data;
+        user_data = u_data;
+        conclusion_data = conc_data;
+        var council_content = document.getElementById("council_content");
+        var user_content = document.getElementById("users_content");
+    
+        council_data.forEach(function(council){
+            var temp_div = document.createElement('div');
+            temp_div.classList.add("council_btn");
+            temp_div.id = council["id"];
+            var header_text = document.createElement('span');
+            header_text.classList.add("header_text");
+            header_text.innerHTML = council["name"] + " (" + council["id"] + ")";
+            temp_div.appendChild(header_text);
+            council_content.appendChild(temp_div);
+        });
+    
+        user_data.forEach(function(user){
+            var temp_user = document.createElement('div');
+            temp_user.classList.add("user_btn");
+            temp_user.id = user["id"];
+            var header_text = document.createElement('span');
+            header_text.classList.add("header_text");
+            header_text.innerHTML = user["username"] + " (" + user["id"] + ")";
+            temp_user.appendChild(header_text);
+            user_content.appendChild(temp_user);
+        });
+    });
 });
 
 $('#council_dropbox').click(function(e){
@@ -37,7 +65,35 @@ $('#lataa').click(function(e){
     console.log("Emptying");
     $("#council_content").empty();
     $("#users_content").empty();
-    socket.emit('request full data');
+    socket.emit('request full data', function(c_data, u_data, conc_data){
+        council_data = c_data;
+        user_data = u_data;
+        conclusion_data = conc_data;
+        var council_content = document.getElementById("council_content");
+        var user_content = document.getElementById("users_content");
+    
+        council_data.forEach(function(council){
+            var temp_div = document.createElement('div');
+            temp_div.classList.add("council_btn");
+            temp_div.id = council["id"];
+            var header_text = document.createElement('span');
+            header_text.classList.add("header_text");
+            header_text.innerHTML = council["name"] + " (" + council["id"] + ")";
+            temp_div.appendChild(header_text);
+            council_content.appendChild(temp_div);
+        });
+    
+        user_data.forEach(function(user){
+            var temp_user = document.createElement('div');
+            temp_user.classList.add("user_btn");
+            temp_user.id = user["id"];
+            var header_text = document.createElement('span');
+            header_text.classList.add("header_text");
+            header_text.innerHTML = user["username"] + " (" + user["id"] + ")";
+            temp_user.appendChild(header_text);
+            user_content.appendChild(temp_user);
+        });
+    });
 });
 
 $('#cancel_council_btn').click(function(e){
@@ -62,34 +118,23 @@ $('#save_council_btn').click(function(e){
     document.getElementById("council_users_entry").value.split(',').forEach(element => { if (element != "") { sub_users.push(element)}});
     submittable["tags"] = sub_users;
     console.log("Submitting " + submittable)
-    socket.emit("submit updated council data", submittable);
+    socket.emit("submit updated council data", submittable, function(response){
+        if (response == 'success')
+        {
+        alert("Raadin tiedot päivitetty.");
+        $('#council_modal_container').hide();
+        modal_open = false;
+        $("#council_content").empty();
+        $("#users_content").empty();
+        location.reload();
+        }
 
-});
+        else if (response == "failed")
+        {
+            alert("Raadin tietojen päivittäminen ei onnistunut.");
+        }
+    });
 
-socket.on("user data updated successfully", function(){
-    alert("Käyttäjän tiedot päivitetty.");
-    $('#user_modal_container').hide();
-    modal_open = false;
-    $("#council_content").empty();
-    $("#users_content").empty();
-    socket.emit('request full data');
-});
-
-socket.on("user data update failed", function(){
-    alert("Käyttäjän tietojen päivitys ei onnistunut.");
-});
-
-socket.on("council data updated successfully", function(){
-    alert("Raadin tiedot päivitetty.");
-    $('#council_modal_container').hide();
-    modal_open = false;
-    $("#council_content").empty();
-    $("#users_content").empty();
-    socket.emit('request full data');
-});
-
-socket.on("council data update failed", function(){
-    alert("Raadin tietojen päivitys ei onnistunut.");
 });
 
 $('#save_user_btn').click(function(e){
@@ -103,7 +148,21 @@ $('#save_user_btn').click(function(e){
     submittable["location"] = document.getElementById("location_entry").value;
     submittable["original_id"] = original_user_id;
     console.log("Submitting " + submittable);
-    socket.emit("submit updated user data", submittable);
+    socket.emit("submit updated user data", submittable, function(response){
+        if (response == 'success')
+        {
+            alert("Käyttäjän tiedot päivitetty.");
+            $('#user_modal_container').hide();
+            modal_open = false;
+            $("#council_content").empty();
+            $("#users_content").empty();
+            location.reload();
+        }   
+        else if (response == 'failed')
+        {
+            alert("Käyttäjätietojen päivitys ei onnistunut");
+        }
+    });
 });
 
 $('#cancel_user_btn').click(function(e){
@@ -186,7 +245,19 @@ $('#delete_council_btn').click(function(){
         let submittable = {};
         submittable["submitter"] = window.sessionStorage.getItem("logged_in");
         submittable["council_id"] = original_council_id;
-        socket.emit("request council delete", submittable);
+        socket.emit("request council delete", submittable, function(response)
+        {
+            if (response == 'success')
+            {
+                alert("Raati poistettu")              
+                location.reload();
+                
+            }
+            else if (response == 'failed')
+            {
+                alert("Raadin poistaminen ei onnistunut");
+            }
+        });
     }
 });
 
@@ -245,6 +316,30 @@ $(document).on('click', '.file_delete_button', function(e){
     }
 });
 
+$(document).on('click', '.delete_message_btn_small', function(e)
+{
+    let data = {};
+    data["council_id"] = original_council_id;
+    data["mid"] = document.getElementById(e.currentTarget.id.replace("save_btn",""));
+    if (confirm("Oletko varma, että haluat poistaa viestin?"))
+    {
+        console.log("Removing message");
+        socket.emit("request delete message", data, function(response)
+        {
+            console.log("received reply");
+            if (response == 'success')
+            {
+                alert("Viesti poistettu")
+                location.reload();
+            }
+            else if (response == 'failed')
+            {
+                alert("Viestin poisto ei onnistunut");
+            }
+        });
+    }
+});
+
 $(document).on('click', '.council_btn', function(e){
     if (modal_open === true)
     {
@@ -267,43 +362,19 @@ $(document).on('click', '.council_btn', function(e){
     $("#council_modal_container").show();
 });
 
-
 $('#tallenna').click(function(e){
     console.log("Saving");
-    socket.emit('request full data save', council_data, user_data, conclusion_data);
+    socket.emit('request full data save', council_data, user_data, conclusion_data, function(response)
+    {
+        if (response == 'success')
+        {
+            alert("Tiedot tallennettu");
+            location.reload();
+        }
+    });
 });
 
 $('#palaa').click(function(e){
     console.log("returning");
     goToPage("/");
-});
-
-socket.on('return full data', function(c_data, u_data, conc_data){
-    council_data = c_data;
-    user_data = u_data;
-    conclusion_data = conc_data;
-    var council_content = document.getElementById("council_content");
-    var user_content = document.getElementById("users_content");
-
-    council_data.forEach(function(council){
-        var temp_div = document.createElement('div');
-        temp_div.classList.add("council_btn");
-        temp_div.id = council["id"];
-        var header_text = document.createElement('span');
-        header_text.classList.add("header_text");
-        header_text.innerHTML = council["name"] + " (" + council["id"] + ")";
-        temp_div.appendChild(header_text);
-        council_content.appendChild(temp_div);
-    });
-
-    user_data.forEach(function(user){
-        var temp_user = document.createElement('div');
-        temp_user.classList.add("user_btn");
-        temp_user.id = user["id"];
-        var header_text = document.createElement('span');
-        header_text.classList.add("header_text");
-        header_text.innerHTML = user["username"] + " (" + user["id"] + ")";
-        temp_user.appendChild(header_text);
-        user_content.appendChild(temp_user);
-    });
 });

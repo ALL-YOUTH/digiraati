@@ -201,7 +201,7 @@ io.on('connection', function(socket){
   });
 
   //login check request. Checks the login according to the IP parsed from a socket
-  socket.on('check login', function(token){
+  socket.on('check login', function(token, callback){
     var name = false;
     for (var i = 0; i < user_tokens.length; ++i)
     {
@@ -212,45 +212,44 @@ io.on('connection', function(socket){
       }
     }
     if(name == false){
-      console.log("Emitting false");
-      socket.emit('not logged');
+      callback("not_logged");
     }
     else{
       console.log("Checked login for " + token + " and it's " + name);
       var uid = users.get_userid_by_username(name);
-      socket.emit('login success', name, token);
+      callback([name, token]);
       update_page();
     }
   });
 
-  socket.on("submit updated council data", function(data){
+  socket.on("submit updated council data", function(data, callback){
     console.log("Received council updated data")
     if(councils.update_council_information(data) == true)
     {
       create_backup();
-      socket.emit("council data updated successfully");
+      callback("success");
     }
 
-    else {socket.emit("council data update failed")};
+    else {callback("failed");}
   });
 
-  socket.on("submit updated user data", function(data){
+  socket.on("submit updated user data", function(data, callback){
     console.log("Received user updated data");
     if (users.update_user_information(data) == true)
     {
       create_backup();
-      socket.emit("user data updated successfully");
+      callback('success');
     }
 
-    else { socket.emit("user data update failed")};
+    else { callback('failed')};
   });
 
-  socket.on('request full data', function(){ // For the administrative panel. Returns all council data, user data and conclusion data.
+  socket.on('request full data', function(callback){ // For the administrative panel. Returns all council data, user data and conclusion data.
     var user_data = users.get_all_users();
     var council_data = councils.get_councils();
     var conclusion_data = conclusioner.get_all_data();
 
-    socket.emit('return full data', council_data, user_data, conclusion_data);
+    callback(council_data, user_data, conclusion_data);
   });
 
   //login check request. Checks the login according to currently in-use user token and council_id
@@ -318,9 +317,9 @@ io.on('connection', function(socket){
   });
 
   //User tries to log in.
-  socket.on('login attempt', function(name, pw){
+  socket.on('login attempt', function(name, pw, callback){
     if(users.login_user(name, pw, ip) == false){
-      socket.emit('invalid login');
+      callback("login failure");
       server_log(ip + ": Failed to login");
       return;
     }
@@ -336,7 +335,7 @@ io.on('connection', function(socket){
       expiry_time.setHours(expiry_time.getHours() + 12);
       console.log("Registering new user token pair: " + user_token + ", " + uid);
       user_tokens.push({'token': user_token, 'name': name, 'expiry_time': expiry_time});
-      socket.emit('login success', name, user_token);
+      callback([name, user_token]);
       logger.AppendLog("e01", uid, new Date().getTime());
       server_log(ip + ": " + uid + " (" + name + ") logged in");
       update_page();
@@ -372,12 +371,12 @@ io.on('connection', function(socket){
     update_page();
   });
 
-  socket.on('request avatar change', function(data){
+  socket.on('request avatar change', function(data, callback){
     console.log("changing avatar");
     var user_id = users.get_userid_by_username(data["username"]);
     users.get_user(data["username"]).set_picture("/res/" + data["avatar"] + ".png");
     logger.AppendLog("e82", data["username"], new Date().getTime(), data["avatar"]);
-    socket.emit('avatar change complete');
+    callback("success");
     create_backup();
   });
 
@@ -406,7 +405,7 @@ io.on('connection', function(socket){
   //TODO: this should also check the user type. Official user should always be able
   //to create a council and those councils should stand out from the normal user
   //created councils.
-  socket.on('request council create', function(info){
+  socket.on('request council create', function(info, callback){
     server_log(ip + ": " + info["creator"] + " attempted to create council: " +
                 info["name"]);
     ret_val = councils.add_council( info["id"],
@@ -461,7 +460,7 @@ io.on('connection', function(socket){
 
     logger.AppendLog("e13", users.get_userid_by_username(info["creator"]), new Date().getTime(), info["id"]);
     create_backup();
-    socket.emit("council create success");
+    callback("success");
   });
 
   socket.on('request councils update', function(){
@@ -536,7 +535,7 @@ io.on('connection', function(socket){
   });
 
   //User logged out of the chat
-  socket.on('logout attempt', function(token){
+  socket.on('logout attempt', function(token, callback){
     logger.AppendLog("exx", token, new Date().getTime());
     var name = ""
     for (var i = 0; i < user_tokens.length; ++i)
@@ -550,7 +549,7 @@ io.on('connection', function(socket){
     users.logout_user(name);
     server_log(ip + ": " + name + " logged out");
     logger.AppendLog("e02", users.get_userid_by_username(name), new Date().getTime());
-    socket.emit('logout success');
+    callback("success");
     update_page();
     logged_in = "";
   });
@@ -647,6 +646,7 @@ io.on('connection', function(socket){
     }
     catch(err){
       console.log("no files in this council", err);
+      callback([]);
     }
   });
 
@@ -687,15 +687,15 @@ io.on('connection', function(socket){
     councils.delete_file(data["council"], data["file_id"]);
   });
   
-  socket.on('request council delete', function(data){
+  socket.on('request council delete', function(data, callback){
     server_log(data["submitter"] + " is deleting council " + data["council_id"]);
     if(councils.delete_council(data["council_id"]) == true)
     {
       create_backup();
-      socket.emit("council data updated successfully");
+      callback('success');
     }
 
-    else{ socket.emit("council data update failed");}
+    else{ callback('failed')}
   });
 
   //request to add a response to a comment
@@ -724,7 +724,7 @@ io.on('connection', function(socket){
   });
 
   //request to fetch user data
-  socket.on('request user data', function(token){
+  socket.on('request user data', function(token, callback){
     console.log("Received " + token);
     var name = "";
     for (var i = 0; i < user_tokens.length; ++i)
@@ -736,7 +736,7 @@ io.on('connection', function(socket){
     }
     console.log("Getting user data for " + name);
     var userdata = users.get_user(name);
-    socket.emit('user data', userdata);
+    callback(userdata);
   });
 
   //request to make changes in user data

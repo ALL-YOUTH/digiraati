@@ -177,7 +177,10 @@ uploader.on('complete', function(fileInfo) {
   console.log(fileInfo);
   if(fileInfo["uploadTo"] == "files")
   {
-  socket.emit('update files request', council_id);
+  socket.emit('update files request', council_id, function(response)
+  {
+    list_files(response);
+  });
   } 
   else
   {
@@ -195,10 +198,6 @@ uploader.on('error', function(err) {
 
 uploader.on('abort', function(fileInfo) {
   console.log('Aborted: ', fileInfo);
-});
-
-socket.on('update files', function(files){
-  list_files(files);
 });
 
 function list_files(files){
@@ -236,11 +235,14 @@ $('#add_question_btn').click(function(){
 $('#load_base_btn').click(function(){
   if (modal_open == false)
   {
-    socket.emit("request all bases");
+    socket.emit("request all bases", function(response)
+    {
+      ProcessBases(response);
+    });
   }
 });
 
-socket.on("return bases", function(data)
+function ProcessBases(data)
 {
   console.log("This just popped");
   $('#council_base_list').empty();
@@ -279,7 +281,7 @@ socket.on("return bases", function(data)
     }
     modal_open = true;
     $('#council_base_container').show();
-});
+}
 
 function base_selected(base)
 {
@@ -418,7 +420,7 @@ $('#page_forwards_btn').click(function(){
   }
 })
 
-$('#save_changes_btn').click(function(){
+$('#save_changes_btn').click(function(){  //Retrieve data from the form and submit it to the server for creation
 
   if (submitting == true)
   {
@@ -498,7 +500,17 @@ $('#save_changes_btn').click(function(){
   if ($('#feedback_no_notif_checkbox_btn').is(':checked')) { feedback["oneweek"] = true} else { feedback["oneweek"] = false};
   submittable["notifications"].push(feedback);
 
-  socket.emit("request council create", submittable);
+  socket.emit("request council create", submittable, function(response){
+    if (response == "success")
+    {
+      AfterCouncilCreation();
+    }
+    else
+    {
+      alert("Raadin luomisessa tapahtui virhe");
+      submitting = false;
+    }
+  });
 });
 
 $('#close_base_btn').click(function(e){
@@ -506,16 +518,14 @@ $('#close_base_btn').click(function(e){
   $('#council_base_container').hide();
 });
 
-socket.on("council create success", function(){
+function AfterCouncilCreation(){ // Called after a council has been successfully created to perform after-action tasks
   if (window.confirm("Haluatko tallentaa raadin pohjaksi?") == true)
   {
     let base_description = window.prompt("Anna pohjalle kuvaus")
     let s_data = {}
     s_data["description"] = base_description;
     s_data["content"] = submittable;
-    console.log("Adding new base");
     socket.emit('request add new base', s_data);
-    console.log("submitted");
   }
 
   if (window.confirm("Haluatko lisätä raatiin tiedostoja?") == true)
@@ -526,9 +536,9 @@ socket.on("council create success", function(){
   else {
     goToPage("/");
   }
-});
+}
 
-function CheckValidInputs()
+function CheckValidInputs() // Checks to see that all required fields are filled, and colours missing / invalid entries in red
 {
   var missingrequired = false;
   var required_inputs = document.getElementsByClassName("required");
@@ -550,7 +560,7 @@ function CheckValidInputs()
   return true;
 };
 
-$('#confirm_create').click(function(){
+$('#confirm_create').click(function(){ // 1.1.2020: Remnant from a previous version? Probably not needed anymore? 
   console.log("Creating a council!");
   let data = {};
   data["id"] = makeid(8);
@@ -575,5 +585,7 @@ $('#confirm_create').click(function(){
   }
   console.log("Salasana: " + data["password"]);
   console.log(data);
-  socket.emit('request council create', data);
+  socket.emit('request council create', data, function(response){
+
+  });
 });

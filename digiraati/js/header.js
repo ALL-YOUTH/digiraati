@@ -10,7 +10,56 @@ if (typeof(sessionStorage) === undefined)
   alert("Selaimesi ei tunnu tukevan evästeitä. Digiraati.fi vaatii evästeitä toimiakseen, joten sivusto tuskin toimii selaimessasi. Voit koittaa käyttää toista selainta, tai ottaa yhteyttä opettajaasi tai IT-tukihenkilöösi.");
 }
 
-socket.emit('check login', window.sessionStorage.getItem('token'));
+socket.emit('check login', window.sessionStorage.getItem('token'), function(reply)
+{
+
+  console.log(reply);
+  if (reply == "not_logged")
+  {
+    window.sessionStorage.clear();
+    logged_in = "";
+    if(view == "desktop"){
+      $('#Profile_avatar').hide();
+      $('#Kirjaudu_btn').show();
+      $('#Kirjaudu_ulos_btn').hide();
+    }
+    else if(view == "mobile"){
+      $('#hamburger_avatar').hide()
+      $('#hamburger_signin').show();
+      $('#hamburger_signout').hide();
+      $('#Kirjaudu_btn').hide();
+      $('#Kirjaudu_ulos_btn').hide();
+    }
+  } 
+  else 
+  {
+    logged_in = reply[0];
+    var c = 0;
+    for(var i = 0; i < name.length; ++i){
+      c += name.charCodeAt(i);
+    }
+    document.getElementById("Profile_avatar").style.backgroundColor = colors[c % colors.length];
+    document.getElementById("Profile_avatar").textContent = reply[0][0].toUpperCase();
+
+    document.getElementById("hamburger_avatar").style.backgroundColor = colors[c % colors.length];
+    document.getElementById("hamburger_avatar").textContent = reply[0][0].toUpperCase();
+    if(view == "desktop"){
+      $('#login_div').css("display", "none");
+      $('#Profile_avatar').show();
+      $('#Kirjaudu_btn').hide();
+      $('#Kirjaudu_ulos_btn').show();
+    }
+    else if(view == "mobile"){
+      $('#hamburger_avatar').show()
+      $('#login_div').css("display", "none");
+      $('#hamburger_signin').hide();
+      $('#hamburger_signout').show();
+      $('#Kirjaudu_btn').hide();
+      $('#Kirjaudu_ulos_btn').hide();
+      $('#Profile_avatar').hide();
+    }
+  }
+});
 
 if($(window).width() < 983){
   view = "mobile";
@@ -118,7 +167,15 @@ $('#Kirjaudu_btn').click(function(){
 });
 
 $('#Kirjaudu_ulos_btn').click(function(){
-  socket.emit('logout attempt', sessionStorage.getItem('token'));
+  socket.emit('logout attempt', sessionStorage.getItem('token'), function(reply)
+  {
+    if (reply == 'success')
+    {
+      sessionStorage.clear();
+      logged_in = "";
+      goToPage("/");
+    }
+  });
 });
 
 $('#hamburger_signout').click(function(){
@@ -129,71 +186,50 @@ $('#login_confirm').click(function(){
   console.log("Logging in");
   var email = $('#login_email').val();
   var password = $('#login_password').val();
-  socket.emit('login attempt', email, password);
-});
+  socket.emit('login attempt', email, password, function(reply){
+      if (reply == 'login failure')
+      {
+        alert("Kirjautuminen epäonnistui. Tarkista käyttäjänimesi ja salasanasi.")
+      }
 
-socket.on("login success", function(name, user_token){
-  console.log("Header logged in successfully");
-  logged_in = name;
-  console.log("Success! Logged in: " + logged_in);
-  window.sessionStorage.setItem('token', user_token);
-  window.sessionStorage.setItem('logged_in', name);
-  var c = 0;
-  for(var i = 0; i < name.length; ++i){
-    c += name.charCodeAt(i);
-  }
-  document.getElementById("Profile_avatar").style.backgroundColor = colors[c % colors.length];
-  document.getElementById("Profile_avatar").textContent = name[0].toUpperCase();
+      else
+        {
+        logged_in = reply[0];
+        console.log("Success! Logged in: " + logged_in);
+        window.sessionStorage.setItem('token', reply[1]);
+        window.sessionStorage.setItem('logged_in', reply[0]);
+        var c = 0;
+        for(var i = 0; i < name.length; ++i){
+          c += name.charCodeAt(i);
+        }
+        document.getElementById("Profile_avatar").style.backgroundColor = colors[c % colors.length];
+        document.getElementById("Profile_avatar").textContent = logged_in[0].toUpperCase();
 
-  document.getElementById("hamburger_avatar").style.backgroundColor = colors[c % colors.length];
-  document.getElementById("hamburger_avatar").textContent = name[0].toUpperCase();
-  if(view == "desktop"){
-    $('#login_div').css("display", "none");
-    $('#Profile_avatar').show();
-    $('#Kirjaudu_btn').hide();
-    $('#Kirjaudu_ulos_btn').show();
-    $('#Rekistroidy_btn').hide();
-    $('#Hae_btn').show();
+        document.getElementById("hamburger_avatar").style.backgroundColor = colors[c % colors.length];
+        document.getElementById("hamburger_avatar").textContent = logged_in[0].toUpperCase();
+        if(view == "desktop"){
+          $('#login_div').css("display", "none");
+          $('#Profile_avatar').show();
+          $('#Kirjaudu_btn').hide();
+          $('#Kirjaudu_ulos_btn').show();
+          $('#Rekistroidy_btn').hide();
+          $('#Hae_btn').show();
 
-  }
-  else if(view == "mobile"){
-    $('#hamburger_avatar').show()
-    $('#login_div').css("display", "none");
-    $('#hamburger_signin').hide();
-    $('#hamburger_signout').show();
-    $('#hamburger_register').hide();
-    $('#hamburger_profile').show();
-    $('#Kirjaudu_btn').hide();
-    $('#Kirjaudu_ulos_btn').hide();
-    $('#Profile_avatar').hide();
-  }
-});
+        }
+        else if(view == "mobile"){
+          $('#hamburger_avatar').show()
+          $('#login_div').css("display", "none");
+          $('#hamburger_signin').hide();
+          $('#hamburger_signout').show();
+          $('#hamburger_register').hide();
+          $('#hamburger_profile').show();
+          $('#Kirjaudu_btn').hide();
+          $('#Kirjaudu_ulos_btn').hide();
+          $('#Profile_avatar').hide();
+        }
 
-socket.on('invalid login', function(){
-  alert("Kirjautuminen epäonnistui");
-});
-
-socket.on('logout success', function(){
-  console.log("Cleared session storage.");
-  sessionStorage.clear();
-  logged_in = "";
-  goToPage("/");
-});
-
-socket.on('not logged', function(){
-  logged_in = "";
-  if(view == "desktop"){
-    $('#Profile_avatar').hide();
-    $('#Kirjaudu_btn').show();
-    $('#Kirjaudu_ulos_btn').hide();
-  }
-  else if(view == "mobile"){
-    $('#hamburger_avatar').hide()
-    $('#hamburger_signin').show();
-    $('#hamburger_signout').hide();
-    $('#Kirjaudu_btn').hide();
-    $('#Kirjaudu_ulos_btn').hide();
-  }
+      }
+  });
 });
 
 socket.on("login reload", function(){

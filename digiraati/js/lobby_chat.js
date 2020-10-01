@@ -644,13 +644,13 @@ function create_reply(msg, level)
   if (level == 3){ clone.querySelector(".chat_message").className = "second_tier_reply"; }
   else { clone.querySelector(".chat_message").className = "reply_message"; }
 
-  clone.querySelector(".message_list_sender_name").innerHTML = msg["sender"];
+  clone.querySelector(".message_list_sender_name").innerHTML = msg["sender"] || "tuntematon";
   clone.querySelector(".message_list_timestamp").innerHTML = msg["timestamp"];
   let c = 0;
   for(var i = 0; i < msg["sender"].length; ++i){
   c += msg["sender"].charCodeAt(i);
   }
-  clone.querySelector(".chat_avatar_ball").textContent = msg["sender"][0].toUpperCase();
+  clone.querySelector(".chat_avatar_ball").textContent = msg["sender"][0].toUpperCase() || "T";
   clone.querySelector(".chat_avatar_ball").backgroundColor = colors[c % colors.length];
 
   let text_id = clone.getElementById("text");
