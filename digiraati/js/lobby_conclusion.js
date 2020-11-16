@@ -26,7 +26,7 @@ $(function(){
     if (reply == "success"){
       data["username"] = window.sessionStorage.getItem('logged_in');
       socket.emit("request council data", council, function(data){
-        console.log(data);
+        //console.log(data);
         try{  // palautuksena voi tulla joko JSON-formatoitu loppulausuma, joka voidaan ladata sellaisenaan TRIXiin, tai legacy-tapauksissa string, joka pitää erikseen formatoida.
           trix_editor.editor.loadJSON(JSON.parse(data["conclusion"]));
         }
@@ -46,7 +46,7 @@ $(function(){
           chat_list = document.getElementById("conclusion_chat_list");
           var chat_messages = data["messages"];
           var original_messages = chat_messages.filter(element => element["parent"] == "");
-          console.log("Parsing " + chat_messages.length + " chat messages, " + original_messages.length + " original ones");
+          //console.log("Parsing " + chat_messages.length + " chat messages, " + original_messages.length + " original ones");
           for(message of original_messages)
           {
             ParseChatMessage(message, chat_messages);
@@ -64,7 +64,7 @@ $(function(){
     
         let conc_value = document.getElementById("conclusion_input").val;
       
-        if (conc_value = undefined)
+        if (conc_value == undefined)
         {
         
           var base_text = "";
@@ -82,14 +82,22 @@ $(function(){
         {
           for (var i = 0; i < data["answers"].length; ++i)
           {
-            if (data["answers"][i] != "" && data["answers"][i] != 'undefined') // Ja kyseessä ei ole tyhjä arrayn paikka joka on päätynyt sinne Jotenkin
+            if (data["answers"][i] != "" && data["answers"][i] != undefined) // Ja kyseessä ei ole tyhjä arrayn paikka joka on päätynyt sinne Jotenkin
             {
+              //console.log(i + ": " + data["answers"][i]);
               tempAnswers[i] = data["answers"][i]; // haetaan käyttäjän vastaus editoria varten
             }
             else {
               tempAnswers[i] = "Kirjoita vastauksesi tähän." // jos vastausta ei ole, annetaan avustukseksi helper-arvo
             }
           }
+        }
+        else
+        {
+          for (var i = 0; i < data["questions"].length; ++i) // Siltä varalta että data on korruptoitunutta
+        {
+          tempAnswers[i] = "Kirjoita vastauksesi tähän";
+        }
         }
         }
       
@@ -109,7 +117,7 @@ $(function(){
       }
     
       catch(err){
-        console.log("Error parsing all answers: " + err);
+        //console.log("Error parsing all answers: " + err);
       }
       ActivateQuestionnaire();  
     });
@@ -122,7 +130,7 @@ $(function(){
   $('#conclusion_chat_content').hide();
   data["council_id"] = council;
   quest_view = document.getElementById('questionnaire_viewer');
-  console.log("this happened, activating questionnaire")
+  //console.log("this happened, activating questionnaire")
 });
 
 $('#own_btn').click(function(){
@@ -138,14 +146,14 @@ $('#conclusion_chat_toggle_btn').click(function(){
     $('#conclusion_chat_toggle_btn').toggleClass('active');
     $('#conclusion_chat_toggle_btn').toggleClass('inactive');
     $('#conclusion_chat_content').toggle(5.5);
-    console.log(document.getElementById('conclusion_chat_toggle_btn').innerHTML);
+    //console.log(document.getElementById('conclusion_chat_toggle_btn').innerHTML);
     if (document.getElementById('conclusion_chat_toggle_btn').innerHTML === "Näytä keskustelu")  
     { 
-      console.log("Piilotan keskustelun");
+      //console.log("Piilotan keskustelun");
       document.getElementById('conclusion_chat_toggle_btn').innerHTML = "Piilota keskustelu";
     }
     else {
-      console.log("No match here")
+      //console.log("No match here")
       document.getElementById('conclusion_chat_toggle_btn').innerHTML = "Näytä keskustelu";
     }
 });
@@ -341,7 +349,7 @@ function ActivateViewerpage(page)
 
 function ActivateQuestionnaire()
 {
-  console.log("Questionnaire activating")
+  //console.log("Questionnaire activating")
   quest_view = document.getElementById("questionnaire_viewer");
   var qf = document.createElement('div');
   qf.classList.add("questionnaire_viewer");
@@ -371,7 +379,7 @@ function ActivateQuestionnaire()
     }
 
   else {
-    console.log("Ei loppulausumakyselyä.");
+    //console.log("Ei loppulausumakyselyä.");
     var no_questionnaire = document.createElement("div");
     no_questionnaire.classList.add("no_question_text");
     no_questionnaire.innerText = "Tälle raadille ei ole luotu loppulausumakyselyä.";

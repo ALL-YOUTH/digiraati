@@ -60,18 +60,6 @@ body{
 }
 
 #chat_message_input{
-  position: relative;
-  width: 90%;
-  font-family: Montserrat;
-  font-size:14px;
-  height:90%;
-  background-color: rgba(245,246,250,1);
-  margin:10px;
-  border-radius:5px;
-  border-color:rgba(112,112,112,0.263);
-  border-style: solid;
-  border-width: 2px;
-  z-index: 20;
 }
 
 #message_input{
@@ -125,7 +113,7 @@ body{
   justify-content: space-evenly;
 }
 
-.mobile_send_button, .mobile_save_button{
+.mobile_send_button, .mobile_save_button, .message_send_button{
   font-size: 14px;
   font-weight: bold;
   width: 30%;
@@ -446,9 +434,28 @@ body{
 }
 
 
+.new_message_button{
+  position: relative;
+  float: right;
+  margin-right: 10%;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: bold;
+  width: 15%;
+  height: 25px;
+  padding: 15px 15px;
+  color: white;
+  background-color: rgba(1,175,196,1);
+  text-align: center;
+}
+
+
 @media (min-width: 1000px)
 {
 
+.new_message_button{
+  margin-right: 0px;
+}
   
 #logo_div{
   display:inline-block;
@@ -470,6 +477,7 @@ body{
   
   .lobby_home_text{
     padding-bottom: 25px;
+    font-weight: bold;
   }
   
   
@@ -556,7 +564,7 @@ body{
 
   #lobby_navigation{
     position: relative;
-    width:80%;
+    width:100%;
     margin-bottom: 25px;
     display: flex;
     justify-content: space-evenly;
@@ -597,17 +605,6 @@ body{
 
   #chat_message_input{
     position: relative;
-    width: 90%;
-    font-family: Montserrat;
-    font-size:14px;
-    height:90%;
-    background-color: rgba(245,246,250,1);
-    margin:10px;
-    border-radius:5px;
-    border-color:rgba(112,112,112,0.263);
-    border-style: solid;
-    border-width: 2px;
-    z-index: 20;
   }
 
   .reply_box{

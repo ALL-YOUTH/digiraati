@@ -10,9 +10,15 @@ if (typeof(sessionStorage) === undefined)
   alert("Selaimesi ei tunnu tukevan evästeitä. Digiraati.fi vaatii evästeitä toimiakseen, joten sivusto tuskin toimii selaimessasi. Voit koittaa käyttää toista selainta, tai ottaa yhteyttä opettajaasi tai IT-tukihenkilöösi.");
 }
 
-socket.emit('check login', window.sessionStorage.getItem('token'), function(reply)
-{
+$(function(){
+  socket.emit('check login', window.sessionStorage.getItem('token'), function(reply)
+  {
+    processLoginCheckReply(reply);
+  });
+})
 
+function processLoginCheckReply(reply)
+{
   console.log(reply);
   if (reply == "not_logged")
   {
@@ -59,7 +65,7 @@ socket.emit('check login', window.sessionStorage.getItem('token'), function(repl
       $('#Profile_avatar').hide();
     }
   }
-});
+}
 
 if($(window).width() < 983){
   view = "mobile";
@@ -70,11 +76,15 @@ else{
 
 window.onresize = function(){
   if(view == "desktop" && $(window).width() < 983){
-    socket.emit('check login', window.sessionStorage.getItem('token'));
+    socket.emit('check login', window.sessionStorage.getItem('token'), function(reply){
+      processLoginCheckReply(reply);
+    });
     view = "mobile";
   }
   else if(view == "mobile" && $(window).width() >= 983){
-    socket.emit('check login', window.sessionStorage.getItem('token'));
+    socket.emit('check login', window.sessionStorage.getItem('token'), function(reply){
+      processLoginCheckReply(reply);
+    });
     view = "desktop";
   }
 }
@@ -179,7 +189,14 @@ $('#Kirjaudu_ulos_btn').click(function(){
 });
 
 $('#hamburger_signout').click(function(){
-  socket.emit('logout attempt', sessionStorage.getItem('token'));
+  socket.emit('logout attempt', sessionStorage.getItem('token'), function(reply){
+    if (reply == 'success')
+    {
+      sessionStorage.clear();
+      logged_in = "";
+      goToPage("/");
+    }
+  });
 });
 
 $('#login_confirm').click(function(){
@@ -233,5 +250,5 @@ $('#login_confirm').click(function(){
 });
 
 socket.on("login reload", function(){
-  location.reaload();
+  location.reload();
 });

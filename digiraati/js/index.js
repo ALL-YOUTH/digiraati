@@ -5,16 +5,12 @@ var host = socket["io"]["uri"];
 
 $(function(){
   console.log("Requested council update");
-  console.log("Host: " + host);
-  console.log("Host natural " + socket["io"]["uri"])
   $('#header').load(socket["io"]["uri"] + "/html/header.html");
   $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
-  socket.emit('request councils update');
-});
-
-socket.on('councils update', function(all_councils){
-  console.log("Received council update");
-  display_councils(all_councils);
+  socket.emit('request councils update', function(response){
+    console.log("Received council update");
+    display_councils(response);  
+  });
 });
 
 function add_class_innerhtml(c, html){

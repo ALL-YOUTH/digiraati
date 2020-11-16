@@ -52,10 +52,10 @@ window.addEventListener('resize', function(){
   cw.style.width = "70%";
 });
 
-function display_file(file){
-  console.log("file:");
-  console.log(file);
-  url = socket["io"]["uri"] + "/files/" + file;
+function display_file(file, title){
+  let file_ext = title.split(".").slice(-1)[0];
+  //console.log("file:" + file + "." + file_ext);
+  url = socket["io"]["uri"] + "/files/" + file + "." + file_ext;
   currPage = 1;
   pdfjsLib.getDocument(url).promise.then(function(pdf) {
     thePDF = pdf;
@@ -173,22 +173,20 @@ function request_add_comment(){
   comment_data["text"] = document.getElementById('comment_text_input').value;
   comment_data["council"] = council;
   comment_data["file"] = current_file;
-  socket.emit("request add comment", comment_data);
+  socket.emit("request add comment", comment_data, function(data){
+    var c = document.getElementById(current_comment_id);
+    c.classList.remove("temp_comment");
+    c.classList.add("comment");
+    while(c.childNodes.length > 0){
+      c.removeChild(c.childNodes[0]);
+    }
+    c.id = data["id"];
+    c.classList.add(data["id"]);
+    current_comment_id = null;
+
+   create_comment(data);
+  });
 }
-
-socket.on('comment add success', function(data){
-  var c = document.getElementById(current_comment_id);
-  c.classList.remove("temp_comment");
-  c.classList.add("comment");
-  while(c.childNodes.length > 0){
-    c.removeChild(c.childNodes[0]);
-  }
-  c.id = data["id"];
-  c.classList.add(data["id"]);
-  current_comment_id = null;
-
-  create_comment(data);
-});
 
 function create_comment(data){
   var nc = document.createElement('div');
@@ -279,11 +277,13 @@ function send_reply(e){
   data["timestamp"] = timestamp();
   data["council"] = council;
   data["file"] = current_file;
-  socket.emit('request add response', data);
+  socket.emit('request add response', data, function(data){
+    addResponse(data);
+  });
   document.getElementById(id+"replyinput").value = "";
 }
 
-socket.on('comment data', function(data){
+function addResponse(data){
   var list = document.getElementById(data["id"] + "replylist");
   clear_child_elements(list);
   for(var i = 0; i < data["responses"].length; ++i){
@@ -298,12 +298,12 @@ socket.on('comment data', function(data){
     }
     pic.style.backgroundColor = colors[c % colors.length];
     pic.textContent = r["sender"][0].toUpperCase();
-    console.log(pic);
+    //console.log(pic);
     response.appendChild(pic);
     response.textContent = r["text"];
     list.appendChild(response);
   }
-});
+}
 
 function open_reply_view(){
     document.getElementById(current_comment_open + "reply_area").style.display = "block";
@@ -392,7 +392,9 @@ function open_comment(id){
   data["id"] = id;
   data["council"] = council;
   data["file"] = current_file;
-  socket.emit("request comment data", data);
+  socket.emit("request comment data", data, function(response){
+
+  });
 }
 
 function get_comment_id(e){
@@ -471,23 +473,23 @@ $('#add_file_btn').click(function(ev){
 });
 
 uploader.on('start', function(fileInfo) {
-  console.log('Start uploading', fileInfo);
+  //console.log('Start uploading', fileInfo);
 });
 uploader.on('stream', function(fileInfo) {
-  console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
+  //console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
 });
 uploader.on('complete', function(fileInfo) {
-  console.log("upload complete")
+  //console.log("upload complete")
   socket.emit('update files request', council, function(file_list){
     list_files(file_list);
-    console.log("received files");
+    //console.log("received files");
   });
 });
 uploader.on('error', function(err) {
-  console.log('Error!', err);
+  //console.log('Error!', err);
 });
 uploader.on('abort', function(fileInfo) {
-  console.log('Aborted: ', fileInfo);
+  //console.log('Aborted: ', fileInfo);
 });
 
 function list_files(files){
@@ -536,11 +538,13 @@ function file_clicked(e){
   clear_child_elements(document.getElementById("comment_list"));
   clear_child_elements(document.getElementById("pdf"));
   current_file = e.id;
-  display_file(e.id);
-  socket.emit('request file comments', council, e.id);
+  display_file(e.id, e.textContent);
+  socket.emit('request file comments', council, e.id, function(data){
+    processComments(data);
+  });
 }
 
-socket.on('file comments', function(comments){
+function processComments(comments){
   for(var i = 0; i < comments.length; ++i){
     var data = comments[i];
     if(data["sender"] == ""){
@@ -563,8 +567,7 @@ socket.on('file comments', function(comments){
     }
     cl.appendChild(c);
   }
-
-});
+}
 
 $('#lobby_home_btn').click(function(){
   goToPage("/lobby/" + council + "/index");

@@ -502,9 +502,10 @@ img {
   }
 
   .council_time_box{
-    margin-left: 37px;
+    text-align: center;
+    margin: auto;
     display: inline-block;
-    width: 80%;
+    width: 100%;
     font-family: Montserrat;
     font-size: 16px;
     font-style: italic;

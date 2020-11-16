@@ -18,16 +18,14 @@ $(function(){
   socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(result){
     if (result == "success")
     {
-      console.log("login success from council.js");
       logged_in = window.sessionStorage.getItem('logged_in');
-      console.log("Session storage says: " + window.sessionStorage.getItem('logged_in'));
       socket.emit("request council data", council, function(data){
       generate_council_info_from_data(data);
       });
     }
     else {
       socket.emit("request council data", council, function(data){
-      console.log("User is not in the council");
+      //console.log("User is not in the council");
       generate_council_info_from_data(data);
       })    
     }
@@ -36,7 +34,7 @@ $(function(){
 
 function generate_council_info_from_data(data)
 {
-  console.log("Generating stuffs, logged in: " + window.sessionStorage.getItem('logged_in'));
+  //console.log("Generating stuffs, logged in: " + window.sessionStorage.getItem('logged_in'));
     $('#lobby_latest_messages_arrow_up').hide();
     if (data["password"] != "") {council_password = true; }
     if(council_updated){
@@ -65,7 +63,7 @@ function generate_council_info_from_data(data)
   
       if(new Date() > Date.parse(data["startdate"]))
       {
-        console.log("Council has started");
+        //console.log("Council has started");
         startBall.setAttribute('src', '/res/checkball.png');
         $('#lobby_duration').text("KÄYNNISSÄ " + reformatDate(data["startdate"]) + " - " + reformatDate(data["enddate"]));
       }
@@ -84,7 +82,7 @@ function generate_council_info_from_data(data)
       else if (dateDiff < 0) { progressPerc = 0}
       else { progressPerc = progressPerc * 100};
   
-      console.log("Progress percentage: " + progressPerc);
+      //console.log("Progress percentage: " + progressPerc);
     
       progress.style.width = progressPerc + "%";
   
@@ -100,7 +98,7 @@ function generate_council_info_from_data(data)
   
       if(new Date() > Date.parse(data["enddate"]))
       {
-        console.log("Council has started");
+        //console.log("Council has started");
         endBall.setAttribute('src', '/res/checkball.png');
         $('#lobby_duration').text("PÄÄTTYNYT " + reformatDate(data["enddate"]));
       }
@@ -125,12 +123,12 @@ function generate_council_info_from_data(data)
     $("#leave_council_btn").css("display", "none");
     $("#join_council_btn").css("display", "none");
     if(window.sessionStorage.getItem('logged_in') != ""){
-      console.log("Someone is logged in");
+      //console.log("Someone is logged in");
       $("#leave_council_btn").css("display", "none");
       $("#join_council_btn").css("display", "block");
       for(var j = 0; j < data["users"].length; ++j){
         if(window.sessionStorage.getItem('logged_in') == data["users"][j]){
-          console.log("Apparently this user is in the council");
+          //console.log("Apparently this user is in the council");
           $("#join_council_btn").css({"display": "none"});
           $("#leave_council_btn").css({"display": "block"});
           $("#lobby_document_btn").removeClass("disabled");
@@ -139,7 +137,8 @@ function generate_council_info_from_data(data)
           break;
         }
       }
-      if(window.sessionStorage.getItem('logged_in') == data["users"][j]){
+      if(window.sessionStorage.getItem('logged_in') != "" && window.sessionStorage.getItem('logged_in') != null && data["users"].includes(window.sessionStorage.getItem('logged_in'))){
+        //console.log("User " + window.sessionStorage.getItem('logged_in') + " is logged in and appears to be in the council")
         try{
           for(var i = 1; i <= 4; ++i){               //Showing the last 4 messages
             var message = document.createElement('div');
@@ -152,7 +151,7 @@ function generate_council_info_from_data(data)
               c += msg["sender"].charCodeAt(j);
             }
             pic.style.backgroundColor = colors[c % colors.length];
-            console.log("Picked colour " + colors[c % colors.length]);
+            //console.log("Picked colour " + colors[c % colors.length]);
             pic.classList.add("chat_avatar_ball");
             var sender = document.createElement('div');
             sender.textContent = msg["sender"];
@@ -174,7 +173,7 @@ function generate_council_info_from_data(data)
         }
       
         catch(error){
-          console.log("lol", error);
+          //console.log("Error fetching messages: ", error);
       }
       }
     }
@@ -208,7 +207,7 @@ $('#join_council_btn, #join_council_btn_mobile').click(function(){
   data["council"] = council;
   data["user"] = logged_in;
   data["password"] = entered_password;
-  console.log("yritän liittyä raatiin: " + data["council"]);
+  //console.log("yritän liittyä raatiin: " + data["council"]);
   socket.emit('request join council', data, function(reply){ // Return is {"result": $result_code}, possible values are "password_error" and "success"
     if(reply["result"] == "password_error")
     {alert("Salasana ei ollut oikein. Jos et ole varma raadin salasanasta, ota yhteys kontaktihenkilöösi.")}
@@ -223,9 +222,9 @@ $('#leave_council_btn, #leave_council_btn_mobile').click(function(){
   var data = {};
   data["council"] = council;
   data["user"] = logged_in;
-  console.log("Yritän poistua raadista: " + data["council"]);
+  //console.log("Yritän poistua raadista: " + data["user"] + ", " + data["council"]);
   socket.emit('request leave council', data, function(reply) {
-    console.log("Lähdin raadista");
+    //console.log("Leave result: " + reply["result"]);
     location.reload();
   });
 });

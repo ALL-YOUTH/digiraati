@@ -68,7 +68,7 @@ fs.readFile(backup_file, function (err, data) {
                           user["location"],
                           user["description"],
                           user["picture"],
-                          user["testing_id"]);
+                          user["testing_number"]);
     }
     catch(err){
       server_log(err);
@@ -463,8 +463,10 @@ io.on('connection', function(socket){
     callback("success");
   });
 
-  socket.on('request councils update', function(){
+  socket.on('request councils update', function(callback){
     update_page();
+    let all_councils = councils.get_councils();
+    callback(all_councils);
   });
 
   socket.on('request message edit', function(msg, callback){
@@ -506,32 +508,35 @@ io.on('connection', function(socket){
 
   //Request to add a like to a message. If user has already liked this message,
   //the like will be removed.
-  socket.on('request add like', function(data){
+  socket.on('request add like', function(data, callback){
     console.log("Requested add like")
     var uid = users.get_userid_by_username(data["liker"]);
     var likes = councils.add_like_to_message(data["council"], data["mid"], uid);
     logger.AppendLog("e09", uid, new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('update likes', data["mid"], likes);
+    callback(data["mid"], likes);
   });
 
     //Request to add a dislike to a message. If user has already liked this message,
   //the like will be removed.
-  socket.on('request add dislike', function(data){
+  socket.on('request add dislike', function(data, callback){
     console.log("Requested add dislike")
     var uid = users.get_userid_by_username(data["liker"]);
     var dislikes = councils.add_dislike_to_message(data["council"], data["mid"], uid);
     logger.AppendLog("e10", uid, new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('update dislikes', data["mid"], dislikes);
+    callback(data["mid"], dislikes);
   });
 
     //Request to add a good argument to a message. If user has already liked this message,
   //the like will be removed.
-  socket.on('request add goodarg', function(data){
+  socket.on('request add goodarg', function(data, callback){
     console.log("Requested add goodarg")
     var uid = users.get_userid_by_username(data["liker"]);
     var goodargs = councils.add_goodarg_to_message(data["council"], data["mid"], uid);
     logger.AppendLog("e11", uid, new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('update goodargs', data["mid"], goodargs);
+    callback(data["mid"], goodargs);
   });
 
   //User logged out of the chat
@@ -663,11 +668,11 @@ io.on('connection', function(socket){
   });
 
   //request to add a comment to a file
-  socket.on('request add comment', function(data){
+  socket.on('request add comment', function(data, callback){
     server_log(ip + ": " + "attempting to add a comment: " + data["id"] + " to a council " + data["council"]);
     var res = councils.add_comment_to_file(data);
     if(res != -1){
-      socket.emit("comment add success", data);
+      callback(data);
       logger.AppendLog("e15", users.get_userid_by_username(data["sender"]), new Date().getTime(), data["file"]);
       create_backup();
     }
@@ -708,9 +713,9 @@ io.on('connection', function(socket){
   });
 
   //request to fetch comment data
-  socket.on("request comment data", function(data){
+  socket.on("request comment data", function(data, callback){
     var res = councils.get_comment_data(data);
-    socket.emit('comment data', res);
+    callback(res);
   });
 
   //request to fetch files comments

@@ -226,7 +226,6 @@
     overflow-y: hidden;
     z-index:90;
     padding: 0px;
-    margin-bottom: 45px;
   }
 
   #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Kirjaudu_ulos_btn, #Hae_btn{

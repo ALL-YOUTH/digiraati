@@ -443,6 +443,7 @@ div .inactive{
 
 .lobby_home_text{
   padding-bottom: 25px;
+  font-weight: bold;
 }
 
   #container {
@@ -499,7 +500,7 @@ div .inactive{
 
   #lobby_navigation{
     position: relative;
-    width:80%;
+    width:100%;
     margin-bottom: 25px;
     display: flex;
     justify-content: space-evenly;

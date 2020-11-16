@@ -440,7 +440,7 @@ $('#save_changes_btn').click(function(){  //Retrieve data from the form and subm
   submittable["name"] = document.getElementById("name_input").value;
   submittable["keywords"] = document.getElementById("create_tags").value;
   submittable["description"] = document.getElementById("create_description_input").value;
-  if($('#open_radio').is(':checked')) { submittable["userlimit"] = document.getElementById("limit_number").value}
+  if($('#limit_radiobtn').is(':checked')) { submittable["userlimit"] = document.getElementById("limit_number").value}
   else { submittable["userlimit"] = -1}
   submittable["startdate"] = document.getElementById("council_publish_date").value;
   submittable["starttime"] = document.getElementById("council_publish_time").value;
