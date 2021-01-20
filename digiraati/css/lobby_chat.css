@@ -1,6 +1,17 @@
 @import url("https://use.typekit.net/gbv0ney.css");
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
+.grey_fadeout_layer{
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(112,112,112,0.8);
+  z-index: 97;
+}
+
 .loader_container{
   position: absolute;
   top: 0px;
@@ -113,7 +124,7 @@ body{
   justify-content: space-evenly;
 }
 
-.mobile_send_button, .mobile_save_button, .message_send_button{
+.mobile_send_button, .mobile_save_button, .message_send_button, .reply_send_button, .edit_send_btn{
   font-size: 14px;
   font-weight: bold;
   width: 30%;
@@ -452,6 +463,14 @@ body{
 
 @media (min-width: 1000px)
 {
+
+.mobile_text_entry_panel
+{
+  width: 60%;
+  height: 60%;
+  left: 20%;
+  top: 20%;
+}
 
 .new_message_button{
   margin-right: 0px;

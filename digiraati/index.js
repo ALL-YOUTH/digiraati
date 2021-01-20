@@ -12,7 +12,7 @@ var http = server["http"];
 var user_tokens = [];
 
 //Define the port
-var port = process.env.PORT || 443;
+var port = process.env.PORT || 3000;
 
 //Define the backup file
 var backup_file = path.join(__dirname, "backup.json");
@@ -470,7 +470,6 @@ io.on('connection', function(socket){
   });
 
   socket.on('request message edit', function(msg, callback){
-    console.log("Received edit request.");
     if (councils.edit_message(msg["council"], msg["msg_id"], msg["content"]) == true)
     {
         logger.AppendLog("e07", users.get_userid_by_username(msg["user_id"]), new Date().getTime(), msg["msg_id"]);
@@ -482,7 +481,7 @@ io.on('connection', function(socket){
 
   //SENDING A MESSAGE PART
   //Request to send a message to a council
-  socket.on('request new message', function(msg){
+  socket.on('request new message', function(msg, callback){
     var userid = users.get_userid_by_username(msg["sender"]);
     if (msg["parent"] != undefined && msg["parent"] != "") { var parent = (msg["parent"]); }
     else { var parent = ""; }
@@ -499,7 +498,8 @@ io.on('connection', function(socket){
                           msg["goodargs"],
                           parent);
 
-    io.to(msg["council"]).emit('new message', msg);
+    callback(msg);
+    //io.to(msg["council"]).emit('new message', msg);
     if (parent == "") { logger.AppendLog("e05", users.get_userid_by_username(msg["sender"]), new Date().getTime(), msg["id"]); }
     else {logger.AppendLog("e06", users.get_userid_by_username(msg["sender"]), new Date().getTime(), parent);}
     

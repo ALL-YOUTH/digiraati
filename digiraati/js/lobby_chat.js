@@ -10,7 +10,7 @@ var original_message;
 var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 $(function(){
-
+  $('.grey_fadeout_layer').hide();
   $('#header').load(socket["io"]["uri"] + "/html/header.html");
   $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
   $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
@@ -50,10 +50,6 @@ $(function(){
 
 socket.on('invalid council id', function(){
   //console.log("Received invalid council id");
-});
-
-socket.on('disconnect', function(){
-  alert("I got disconnected");
 });
 
 socket.on('council data', function(data){
@@ -182,6 +178,7 @@ $(document).on('click', ".new_message_button", function(e){
   button_container.appendChild(send_button);
 
   text_entry_panel.appendChild(button_container);
+  $('.grey_fadeout_layer').show();
   $('.text_entry_panel').show();
 });
 
@@ -199,6 +196,7 @@ function removeModalWindow(e)
 }
 
 $(document).on('click', ".close_mobile_text_entry_panel_btn, .mobile_cancel_button", function(e){
+  $('.grey_fadeout_layer').hide();
   $('.mobile_text_entry_panel').toggle("slide", {"direction": "right"}, 250, function(){
     $('.mobile_text_entry_panel').remove();
     modal_open = false;
@@ -274,6 +272,7 @@ $(document).on('click', ".mobile_reply_btn", function(e)
   button_container.appendChild(send_button);
 
   text_entry_panel.appendChild(button_container);
+  $('.grey_fadeout_layer').show();
   $('.text_entry_panel').show();
 });
 
@@ -291,9 +290,12 @@ $(document).on('click', '.mobile_send_button', function(e){
   msg["id"] = makeid();
   msg["parent"] = original_message.id;
   //console.log("sending message " + msg);
-  socket.emit('request new message', msg);
-  modal_open = false;
-  location.reload();
+  socket.emit('request new message', msg, function(message){
+    create_message(message);
+    $('.grey_fadeout_layer').hide();
+    $('.text_entry_panel').hide();
+    modal_open = false;
+  });
 });
 
 $(document).on('click', '.message_send_button', function(e){
@@ -307,11 +309,14 @@ $(document).on('click', '.message_send_button', function(e){
   msg["content"] = textbox.value;
   msg["timestamp"] = msg_timestamp;
   msg["id"] = makeid();
-  msg["parent"] = original_message;
+  msg["parent"] = original_message.id;
   //console.log("sending message " + msg);
-  socket.emit('request new message', msg);
-  modal_open = false;
-  location.reload();
+  socket.emit('request new message', msg, function(message){
+    create_message(message);
+    $('.grey_fadeout_layer').hide();
+    $('.text_entry_panel').hide();
+    modal_open = false;
+  });
 });
 
 $(document).on('click', '.mobile_save_button', function(e){
@@ -377,6 +382,7 @@ $(document).on('click', ".mobile_edit_btn", function(e)
     button_container.appendChild(send_button);
 
     text_entry_panel.appendChild(button_container);
+    $('.grey_fadeout_layer').show();
     $('.text_entry_panel').show();
   }
 });
@@ -757,10 +763,12 @@ socket.on('new reply', function(msg){
 
 $(document).on('click', ".message_list_edit", function(e)
 {
+  console.log("Editing");
   if (modal_open == false)
   {
-    window_open = true;
+    modal_open = true;
     original_message = document.getElementById($(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id'));
+    console.log("Original message: " + original_message.id);
     modal_open = true;
   $('.action_panel_container').remove();
   var message_id = makeid();
@@ -783,6 +791,7 @@ $(document).on('click', ".message_list_edit", function(e)
   text_field.id = message_id + "textarea";
   text_field.setAttribute('rows', 10);
   text_field.setAttribute('autofocus', true);
+  text_field.value = document.getElementById(original_message.id + "text").innerHTML;
   text_entry_panel.appendChild(text_field);
 
   var button_container = document.createElement('div');
@@ -794,13 +803,15 @@ $(document).on('click', ".message_list_edit", function(e)
   button_container.appendChild(cancel_button);
 
   var send_button = document.createElement('div');
-  send_button.classList.add('edit_send_button');
+  send_button.classList.add('edit_send_btn');
   send_button.innerHTML = "TALLENNA";
   send_button.setAttribute('parent', original_message);
-  send_button.setAttribute('original_message', original_message);
+  send_button.setAttribute('original_message', original_message.id);
   button_container.appendChild(send_button);
 
   text_entry_panel.appendChild(button_container);
+  $('.grey_fadeout_layer').show();
+  $('.text_entry_panel').show(); 
   }
 })
 
@@ -849,6 +860,7 @@ $(document).on('click', ".message_list_reply", function(e)
   button_container.appendChild(send_button);
 
   text_entry_panel.appendChild(button_container);
+  $('.grey_fadeout_layer').show();
   $('.text_entry_panel').show(); 
   }
 });
@@ -862,11 +874,13 @@ $(document).on('click', '.edit_send_btn', function(e){
   msg["sender"] = window.sessionStorage.getItem('logged_in');
   msg["council"] = council;
   msg["content"] = textbox.value;
-  msg["id"] = original_message;
-  //console.log("sending message " + msg);
+  msg["msg_id"] = original_message.id;
+  console.log("sending message " + msg);
   socket.emit('request message edit', msg, function(response){
     if (response == "failure") { alert("Viestin muokkauksessa tapahtui virhe")}
-    else { $('document').getElementById(original_message + "text").innerHTML = msg["content"] }
+    else { document.getElementById(original_message.id + "text").innerHTML = msg["content"] }
+    $('.grey_fadeout_layer').hide();
+    $('.text_entry_panel').hide();
     modal_open = false;
   });
 })
@@ -882,11 +896,9 @@ $(document).on('click', ".reply_send_button", function(e){
   msg["content"] = textbox.value;
   msg["timestamp"] = msg_timestamp;
   msg["id"] = makeid();
-  //console.log("sending message " + msg);
+  msg["parent"] = original_message.id;
   socket.emit('request new message', msg, function(response){
-    if (response == "failure") { alert("Viestin muokkauksessa tapahtui virhe")}
-    else { $('document').getElementById(original_message + "text").innerHTML = msg["content"] }
-    modal_open = false;
+    location.reload();
   });
 });
 

@@ -190,7 +190,6 @@ $(document).on('click', '.save_conclusion_btn', function(e){
   data["answers"] = myAnswers;
   socket.emit('request save conclusion answers', data, function(reply)
   {
-    alert(reply);
     alert("Vastauksesi on tallennettu");
     location.reload();
   });
