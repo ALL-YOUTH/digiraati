@@ -12,7 +12,7 @@ var http = server["http"];
 var user_tokens = [];
 
 //Define the port
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 443;
 
 //Define the backup file
 var backup_file = path.join(__dirname, "backup.json");
@@ -157,7 +157,7 @@ function ClearExpiredSessions()
 http.listen(port);
 
 var corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:80',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 

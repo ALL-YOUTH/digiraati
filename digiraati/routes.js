@@ -1,10 +1,16 @@
 var app = require('express')();
+var fs = require('fs');
 var express = require('express');
 var path = require('path');
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var http = require('https').createServer({
+        key: fs.readFileSync('./ssl/privkey.pem'),
+        cert: fs.readFileSync('./ssl/cert.pem'),
+        ca: fs.readFileSync('./ssl/chain.pem')}, app);;
 
 var SocketIOFile = require('socket.io-file');
+
+var io = require('socket.io')(http);
+
 
 //app.use(express.static(path.join(__dirname, '/public')));
 
