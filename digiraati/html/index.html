@@ -86,9 +86,18 @@
 		<div id="council_container">
 			<div id="filter">
 				<div id="selector">
-					<div class="active selector_btn" id="ongoing">KÄYNNISSÄ</div>
-					<div class="inactive selector_btn" id="newest">UUSIMMAT</div>
-					<div class="inactive selector_btn" id="popularest">SUOSITUIMMAT</div>
+					<div class="lobby_meta_container">
+						<div class="selector_btn" id="ongoing">KÄYNNISSÄ</div>
+						<div class="indicator inactive" id="lobby_ongoing_indicator"></div>
+					</div>
+					<div class="lobby_meta_container">
+						<div class="selector_btn" id="newest">UUSIMMAT</div>
+						<div class="indicator inactive" id="lobby_newest_indicator"></div>
+					</div>
+					<div class="lobby_meta_container">
+						<div class="selector_btn" id="popularest">SUOSITUIMMAT</div>
+						<div class="indicator inactive" id="lobby_popular_indicator"></div>
+					</div>
 				</div>
 				<div id="sorter">
 					<div class="fas fa-list sorter_active sorter_btn" id="list"></div>
@@ -110,6 +119,25 @@
 	<script src="/js/index.js" type="text/javascript"></script>
 	<script src="/js/common.js"></script>
 	<script src="/glide/glide.min.js"></script>
+
+	<div id="cookie_container">
+		<div id="cookie_background"></div>
+		<div id="cookie_popup">
+			<div class="popup_container">
+				<div class="popup_header">
+					<h2>Tietoa evästeistä</h2>
+				</div>
+				<div class="popup_text_container">
+					<div class="popup_text">Digiraati.fi käyttää evästeitä. Sivusto käyttää ainoastaan istuntokohtaisia evästeitä, jotka tuhoutuvat, kun selain suljetaan. Evästeitä käytetään ainoastaan sivuston teknisen toiminnan kannalta välttämättömällä tavalla, eikä niitä luovuteta tai välitetä kolmansille osapuolille.</div>
+					<div class="popup_text">Eväste on pieni, käyttäjän tietokoneelle lähetetävä ja siellä säilytettävä tekstitiedosto, joka ei vahingoita käyttäjän tietonoetta tai tiedostoja. Digiraati.fi-palvelun käyttäminen vaatii evästeiden hyväksymistä.</div>
+				</div>
+				<div class="popup_button_container">
+					<div class="popup_button" id="accept_cookies_button">Hyväksy evästeet</div>
+					<div class="popup_button" id="reject_cookies_button">Poistu sivulta</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script>
   		new Glide('.glide', {

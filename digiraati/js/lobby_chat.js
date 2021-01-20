@@ -137,11 +137,13 @@ $("#message_input").keypress(function (e) {
 });
 
 $('#send_btn').click(function(e){
+  modal_open = false;
   e.preventDefault();
   send_message();
 });
 
 $(document).on('click', ".new_message_button", function(e){
+  modal_open = true;
   //console.log("Opening new message window");
   $('.action_panel_container').remove();
   var message_id = makeid();
@@ -305,6 +307,7 @@ $(document).on('click', '.message_send_button', function(e){
   msg["content"] = textbox.value;
   msg["timestamp"] = msg_timestamp;
   msg["id"] = makeid();
+  msg["parent"] = original_message;
   //console.log("sending message " + msg);
   socket.emit('request new message', msg);
   modal_open = false;
@@ -754,70 +757,123 @@ socket.on('new reply', function(msg){
 
 $(document).on('click', ".message_list_edit", function(e)
 {
-  if (window_open == false)
+  if (modal_open == false)
   {
     window_open = true;
     original_message = document.getElementById($(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id'));
-    var editContainer = document.createElement('div');
-    editContainer.setAttribute('data-parent', $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id'));
-    editContainer.classList.add("text-container");
-    editContainer.id = makeid();
-    var editBox = document.createElement('TEXTAREA');
-    editBox.id = editContainer.id + "editbox";
-    editContainer.setAttribute('data-editbox', editBox.id);
-    editBox.classList.add("edit_box");
-    var saveButton = document.createElement('div');
-    saveButton.innerHTML = '<i class="fas fa-arrow-circle-right fa-2x"></i>';
-    saveButton.classList.add('noselect'); saveButton.classList.add("save_edit_btn");
-    saveButton.id = editContainer.id + "saveButton";
-    editBox.defaultValue = document.getElementById($(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id')+"text").innerHTML;
-    editContainer.appendChild(editBox); editContainer.appendChild(saveButton);
-    original_message.innerHTML = editContainer.innerHTML;
+    modal_open = true;
+  $('.action_panel_container').remove();
+  var message_id = makeid();
+
+  var text_entry_panel = document.createElement('div');
+  text_entry_panel.classList.add('mobile_text_entry_panel');
+  text_entry_panel.classList.add('text_entry_panel');
+  text_entry_panel.classList.add('mobile_container');
+  text_entry_panel.id = message_id + "text_panel";
+  document.getElementById('modal_container').appendChild(text_entry_panel);
+  $('.text_entry_panel').hide();
+
+  var close_btn = document.createElement('div');
+  close_btn.classList.add("close_mobile_text_entry_panel_btn");
+  close_btn.innerHTML = '<span class="fas fa-times"></span>';
+  text_entry_panel.appendChild(close_btn);
+
+  var text_field = document.createElement('textarea');
+  text_field.classList.add('mobile_text_field');
+  text_field.id = message_id + "textarea";
+  text_field.setAttribute('rows', 10);
+  text_field.setAttribute('autofocus', true);
+  text_entry_panel.appendChild(text_field);
+
+  var button_container = document.createElement('div');
+  button_container.classList.add("mobile_button_container");
+
+  var cancel_button = document.createElement('div');
+  cancel_button.classList.add('mobile_cancel_button');
+  cancel_button.innerHTML = "PERUUTA";
+  button_container.appendChild(cancel_button);
+
+  var send_button = document.createElement('div');
+  send_button.classList.add('edit_send_button');
+  send_button.innerHTML = "TALLENNA";
+  send_button.setAttribute('parent', original_message);
+  send_button.setAttribute('original_message', original_message);
+  button_container.appendChild(send_button);
+
+  text_entry_panel.appendChild(button_container);
   }
 })
 
 $(document).on('click', ".message_list_reply", function(e)
 {
-  if (window_open == false)
+  if (modal_open == false)
   {
-    window_open = true;
-    original_message = document.getElementById($(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id'));
-    var replyContainer = document.createElement('div');
-    replyContainer.classList.add("text-container");
-    replyContainer.setAttribute('data-parent', $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id'));
-    replyContainer.id = makeid();
-    var separator = document.createElement('div');
-    separator.classList.add("separator");
-    replyContainer.appendChild(separator);
-    var replyBox = document.createElement('TEXTAREA');
-    replyBox.id = replyContainer.id + "replybox";
-    replyBox.classList.add("reply_box");
-    var replyButton = document.createElement('div');
-    replyButton.innerHTML = '<i class="fas fa-arrow-circle-right fa-2x"></i>';
-    replyButton.classList.add("noselect"); replyButton.classList.add("reply_btn");
-    replyButton.id = replyContainer.id + "replyButton";
-    replyContainer.appendChild(replyBox);
-    replyContainer.appendChild(replyButton);
-    original_message.insertAdjacentElement('afterend', replyContainer);
+  original_message = document.getElementById($(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id'));
+  
+  modal_open = true;
+  $('.action_panel_container').remove();
+  var message_id = makeid();
+
+  var text_entry_panel = document.createElement('div');
+  text_entry_panel.classList.add('mobile_text_entry_panel');
+  text_entry_panel.classList.add('text_entry_panel');
+  text_entry_panel.classList.add('mobile_container');
+  text_entry_panel.id = message_id + "text_panel";
+  document.getElementById('modal_container').appendChild(text_entry_panel);
+  $('.text_entry_panel').hide();
+
+  var close_btn = document.createElement('div');
+  close_btn.classList.add("close_mobile_text_entry_panel_btn");
+  close_btn.innerHTML = '<span class="fas fa-times"></span>';
+  text_entry_panel.appendChild(close_btn);
+
+  var text_field = document.createElement('textarea');
+  text_field.classList.add('mobile_text_field');
+  text_field.id = message_id + "textarea";
+  text_field.setAttribute('rows', 10);
+  text_field.setAttribute('autofocus', true);
+  text_entry_panel.appendChild(text_field);
+
+  var button_container = document.createElement('div');
+  button_container.classList.add("mobile_button_container");
+
+  var cancel_button = document.createElement('div');
+  cancel_button.classList.add('mobile_cancel_button');
+  cancel_button.innerHTML = "PERUUTA";
+  button_container.appendChild(cancel_button);
+
+  var send_button = document.createElement('div');
+  send_button.classList.add('reply_send_button');
+  send_button.innerHTML = "LÄHETÄ";
+  send_button.setAttribute('parent', original_message);
+  button_container.appendChild(send_button);
+
+  text_entry_panel.appendChild(button_container);
+  $('.text_entry_panel').show(); 
   }
 });
 
-$(document).on('click', '.save_edit_btn', function(e){
-  var msg = {}
-  msg["user_id"] = window.sessionStorage.getItem('logged_in');
+$(document).on('click', '.edit_send_btn', function(e){
+  var message_id = $(this).parents('.mobile_container').first().attr('id').replace("text_panel", "");
+  var textbox = document.getElementById(message_id + "textarea");
+  var msg_time = new Date();
+  var msg_timestamp = msg_time.getDate() + "." + (msg_time.getMonth() + 1) + "." + msg_time.getFullYear() + " " + ("0" + msg_time.getHours()).slice(-2) + ":" + ("0" + msg_time.getMinutes()).slice(-2) + ":" + ("0" + msg_time.getSeconds()).slice(-2);
+  var msg = {};
+  msg["sender"] = window.sessionStorage.getItem('logged_in');
   msg["council"] = council;
-  msg["content"] = e.currentTarget.previousElementSibling.value;
-  msg["msg_id"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id');
-  window_open = false;
+  msg["content"] = textbox.value;
+  msg["id"] = original_message;
+  //console.log("sending message " + msg);
   socket.emit('request message edit', msg, function(response){
     if (response == "failure") { alert("Viestin muokkauksessa tapahtui virhe")}
-    else { location.reload(); }
+    else { $('document').getElementById(original_message + "text").innerHTML = msg["content"] }
+    modal_open = false;
   });
 })
 
-$(document).on('click', ".reply_btn", function(e){
-  var textbox = document.getElementById($(this).parents('.text-container').first().attr('id') + "replybox");
-  //console.log("Trying to find " + textbox);
+$(document).on('click', ".reply_send_button", function(e){
+  var message_id = $(this).parents('.mobile_container').first().attr('id').replace("text_panel", "");
+  var textbox = document.getElementById(message_id + "textarea");
   var msg_time = new Date();
   var msg_timestamp = msg_time.getDate() + "." + (msg_time.getMonth() + 1) + "." + msg_time.getFullYear() + " " + ("0" + msg_time.getHours()).slice(-2) + ":" + ("0" + msg_time.getMinutes()).slice(-2) + ":" + ("0" + msg_time.getSeconds()).slice(-2);
   var msg = {};
@@ -826,10 +882,12 @@ $(document).on('click', ".reply_btn", function(e){
   msg["content"] = textbox.value;
   msg["timestamp"] = msg_timestamp;
   msg["id"] = makeid();
-  msg["parent"] = (e.currentTarget.parentElement.getAttribute('data-parent'));
-  socket.emit('request new message', msg);
-  window_open = false;
-  window.location.reload();
+  //console.log("sending message " + msg);
+  socket.emit('request new message', msg, function(response){
+    if (response == "failure") { alert("Viestin muokkauksessa tapahtui virhe")}
+    else { $('document').getElementById(original_message + "text").innerHTML = msg["content"] }
+    modal_open = false;
+  });
 });
 
 $(document).on('click', ".message_list_delete", function(e){

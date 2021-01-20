@@ -29,6 +29,11 @@ app.get('/chat', function(req, res){
   res.sendFile(__dirname + '/html/chat.html');
 });
 
+//Data protection
+app.get('/dataprot', function(req, res){
+  res.sendFile(__dirname + '/html/dataprot.html');
+});
+
 //Register page
 app.get('/register', function(req, res){
   res.sendFile(__dirname + '/html/register.html');

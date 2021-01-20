@@ -301,7 +301,9 @@ trix-editor .attachment__metadata {
     white-space: nowrap; }
 @charset "UTF-8";
 .trix-content {
-  line-height: 1.5; }
+  line-height: 1.5;
+  max-height: 800px !important;
+  overflow-y: auto !important; }
   .trix-content * {
     box-sizing: border-box; }
   .trix-content h1 {

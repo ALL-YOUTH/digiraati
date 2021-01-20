@@ -2,6 +2,9 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat+Alternates:400,800');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
+#cookie_popup{
+  display: none;
+}
 
 .loader_container{
   position: absolute;
@@ -259,6 +262,98 @@ img {
 
 /*Everything below is css for desktop view of the website.*/
 @media (min-width:1000px){
+
+#cookie_popup{
+  position: fixed;
+  left: 25%;
+  top: 25%;
+  display:block;
+  width: 50%;
+  height: 40%;
+  background-color: white;
+  box-shadow: 2px 2px rgba(32,33,36,1);
+  font-family: Montserrat;
+  z-index: 97;
+}
+
+#cookie_background{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(32,33,36,0.9);
+  z-index: 96;
+}
+
+.popup_container{
+  margin-left: 5%;
+  margin-top: 3%;
+  width: 90%;
+  height: 90%;
+  display: block;
+  background-color: white;
+}
+
+.popup_text{
+  margin-top: 3%;
+  margin-bottom: 3%;
+  font-family: Montserrat;
+  font-size: 13pt;
+}
+
+.popup_button_container{
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin-top: 15%;
+  margin-left: 50%;
+  height: 50px;
+}
+
+.popup_button{
+  width: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: rgba(1,175,196,1);
+  color: rgba(255,255,255,1);
+  height: 50px;
+  margin-right: 5%;
+  cursor: pointer;
+}
+  
+.lobby_meta_container{
+  width: auto;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
+}
+
+.lobby_home_text{
+  padding-bottom: 25px;
+  font-weight: bold;
+}
+
+.active{
+  background-color: rgba(157,224,232,1);
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Montserrat;
+  height: 15px;  
+  opacity: 1;
+}
+
+.inactive{
+  font-size: 14px;
+  font-family: Montserrat;
+  font-weight: normal;
+  background-color: rgba(255,255,255,1);
+  opacity: 0;
+  height: 15px;
+}
+
   #main_text_mobile, #secondary_text_mobile, .mobile-header{
     display:none;
   }
@@ -355,54 +450,31 @@ img {
     width:90%;
     font-weight: bold;
   }
-
-  #selector, #sorter, #search{
+  
+  #sorter, #search{
     float:left;
     cursor: pointer;
   }
 
-  #sorter{
-    margin-left:10%;
+  #selector{
+    float: left;
+    display: flex;
+    justify-content: space-evenly;
+    cursor: pointer;
   }
 
-  .selector_btn{
-    position:relative;
-    margin-right: 40px;
-    font-size:10px;
-    line-height: 15px;
-    font-family: Montserrat;
-    font-weight: bold;
-    color: #FFFFFF;
-    opacity: 1;
-    float:left;
+
+  #sorter{
+    margin-left:10%;
   }
 
   #ongoing, #newest, #popularest{
     padding:5px 15px;
   }
 
-  .selector_btn:hover{
-    box-shadow: 1px 1px 5px rgba(254,4,86,1);
-  }
-
-
-  .inactive{
-    padding:5px;
-    border: solid;
-    border-width: 2px;
-    border-radius: 5px;
-    border-color: rgba(254,4,86,1);
-    color: rgba(254,4,86,1);
-  }
-
-  .active {
-    padding:5px;
-    background: rgba(254,4,86,1);
-    color:white;
-    border-radius: 5px;
-    border-width: 1px;
-    border:solid;
-    border-color: rgba(254,4,86,1);
+  .selector_btn{
+  padding-bottom: 25px;
+  font-weight: bold;
   }
 
   #sorter #list, #small_grid, #large_grid{
