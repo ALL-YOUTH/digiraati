@@ -104,7 +104,10 @@ fs.readFile(backup_file, function (err, data) {
                           council_header
                         );
     for(let message of council["messages"]){
+      if(message["sender"] != null)
+      {
       councils.add_message(council["id"], message["id"], message["sender"], message["timestamp"], message["content"], message["likes"], message["dislikes"], message["goodargs"], message["parent"]);
+      }
     }
     for(let file of council["files"]){
       councils.add_file(file["id"], file["path"], council["id"], file["sender"], file["comments"]);
@@ -488,6 +491,8 @@ io.on('connection', function(socket){
     msg["likes"] = [];
     msg["dislikes"] = [];
     msg["goodargs"] = [];
+    console.log("Adding message:");
+    console.log(msg);
     councils.add_message( msg["council"],
                           msg["id"],
                           msg["sender"],

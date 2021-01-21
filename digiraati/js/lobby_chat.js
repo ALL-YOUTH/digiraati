@@ -301,6 +301,7 @@ $(document).on('click', '.mobile_send_button', function(e){
 $(document).on('click', '.message_send_button', function(e){
   var message_id = $(this).parents('.mobile_container').first().attr('id').replace("text_panel", "");
   var textbox = document.getElementById(message_id + "textarea");
+  console.log("Trying to find " + textbox);
   var msg_time = new Date();
   var msg_timestamp = msg_time.getDate() + "." + (msg_time.getMonth() + 1) + "." + msg_time.getFullYear() + " " + ("0" + msg_time.getHours()).slice(-2) + ":" + ("0" + msg_time.getMinutes()).slice(-2) + ":" + ("0" + msg_time.getSeconds()).slice(-2);
   var msg = {};
@@ -308,8 +309,7 @@ $(document).on('click', '.message_send_button', function(e){
   msg["council"] = council;
   msg["content"] = textbox.value;
   msg["timestamp"] = msg_timestamp;
-  msg["id"] = makeid();
-  msg["parent"] = original_message.id;
+  msg["id"] = makeid();  
   //console.log("sending message " + msg);
   socket.emit('request new message', msg, function(message){
     create_message(message);
@@ -662,11 +662,17 @@ function create_message(msg, msg_target ="message_list"){
   clone.querySelector(".message_list_sender_name").innerHTML = msg["sender"];
   clone.querySelector(".message_list_timestamp").innerHTML = msg["timestamp"];
   let c = 0;
+  try{
   for(var i = 0; i < msg["sender"].length; ++i){
   c += msg["sender"].charCodeAt(i);
-  }
   clone.querySelector(".chat_avatar_ball").textContent = msg["sender"][0].toUpperCase();
   clone.querySelector(".chat_avatar_ball").backgroundColor = colors[c % colors.length];
+  }
+  }
+  catch{
+    console.log("Error:")
+    console.log(msg);
+  }
 
   let text_id = clone.getElementById("text");
   text_id.id = msg["id"] + "text";
