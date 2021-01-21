@@ -8,6 +8,76 @@ body{
   overflow-x:hidden;
 }
 
+.popup_container{
+  position:fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%
+}
+
+.popup_box{
+  position: fixed;
+  left: 15%;
+  top: 5%;
+  display:block;
+  width: 70%;
+  height: 80%;
+  background-color: white;
+  box-shadow: 2px 2px rgba(32,33,36,1);
+  font-family: Montserrat;
+  z-index: 97;
+}
+
+.grey_fadeout_layer{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(32,33,36,0.9);
+  z-index: 96;
+}
+
+#popup_container{
+  margin-left: 5%;
+  margin-top: 3%;
+  width: 90%;
+  height: 90%;
+  display: block;
+  background-color: white;
+}
+
+.header_text{
+  margin-top: 3%;
+  margin-bottom: 3%;
+  font-family: Montserrat;
+  font-size: 18pt;
+  font-weight: bold;
+}
+
+.popup_button_container{
+  display: flex;
+  justify-content: center;
+  width: 40%;
+  margin-top: 5%;
+  margin-left: 50%;
+  height: 50px;
+  bottom: 5%;
+  position: inherit;
+}
+
+.popup_button{
+  width: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: rgba(1,175,196,1);
+  color: rgba(255,255,255,1);
+  height: 50px;
+  margin-right: 5%;
+  cursor: pointer;
+}
+
 #register_error_text{
   display:none;
   color:red;

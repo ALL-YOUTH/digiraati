@@ -1,6 +1,7 @@
 var socket = io();
 
 $(function(){
+  $('.popup_container').hide();
   $('#header').load(socket["io"]["uri"] + "/html/header.html");
   $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
 });
@@ -29,11 +30,11 @@ $('#confirm_register').click(function(){
   if($('#username_input').val() == ""){ color_input_text('#username_input', "red"); }
   if($('#firstname_input').val() == ""){ color_input_text('#firstname_input', "red"); }
   if($('#lastname_input').val() == ""){ color_input_text('#lastname_input', "red"); }
-  if($('#id_input').val() == ""){ color_input_text('#id_input', "red"); }
+  //if($('#id_input').val() == ""){ color_input_text('#id_input', "red"); }
   if($('#email_input').val() == ""){ color_input_text('#email_input', "red"); }
   if($('#password_input').val() == ""){ color_input_text('#password_input', "red"); }
   if($('#password_input2').val() == ""){ color_input_text('#password_input2', "red"); }
-  if(!$('#policy_agreement_checkbox').is(':checked')){ $('#policy_agreement_checkbox').css("outline", "1px solid red"); }
+  //if(!$('#policy_agreement_checkbox').is(':checked')){ $('#policy_agreement_checkbox').css("outline", "1px solid red"); }
   if( $('#username_input').val() == "" ||
       $('#firstname_input').val() == "" ||
       $('#lastname_input').val() == "" ||
@@ -49,15 +50,25 @@ $('#confirm_register').click(function(){
     return;
   }
 
-  else if(check_testing_id($('#id_input').val()) == false)
-  {
-    color_input_text("#id_input", "red");
-    $('#register_error_text').html("Tarkista kolminumeroinen tunnistekoodisi täyttämästäsi rekisteröitymislomakkeesta.");
-    $('#register_error_text').css("display", "block");
-    return;
+  // else if(check_testing_id($('#id_input').val()) == false)
+  // {
+  //   color_input_text("#id_input", "red");
+  //   $('#register_error_text').html("Tarkista kolminumeroinen tunnistekoodisi täyttämästäsi rekisteröitymislomakkeesta.");
+  //   $('#register_error_text').css("display", "block");
+  //   return;
+  // }
+  else{
+    $('#rules_popup_container').show();
   }
+});
 
-  var register = {};
+  $(document).on('click', '#cancel_registration_button', function(){
+    goToPage('/');
+  });
+  
+
+  $(document).on('click', '#accept_registration_button', function(){
+    var register = {};
   register["id"] = makeid(8);
   register["username"] = $('#username_input').val();
   register["firstname"] = $('#firstname_input').val();
@@ -65,7 +76,7 @@ $('#confirm_register').click(function(){
   register["email"] = $('#email_input').val();
   register["password1"] = $('#password_input').val();
   register["password2"] = $('#password_input2').val();
-  register["testing_id"] = $('#id_input').val();
+  register["testing_id"] = -1
   console.log("Registering: " + register["testing_id"]);
   
   socket.emit("register attempt", register, function(response) // Lähetetään rekisteröitymispyyntö serverille. Serveri palauttaa oletusarvoisesti joko 'success' tai virheilmoituksen, jos käyttäjänimi tai salasana ovat jo käytössä
@@ -94,8 +105,9 @@ $('#confirm_register').click(function(){
       alert("Rekisteröinnissä tapahtui tuntematon virhe.");
     }
   });
-});
+  });
 
+  
 function check_testing_id(id)
 {
   console.log("Length: " + id.length + ", " + "not a number: " + isNaN(id));

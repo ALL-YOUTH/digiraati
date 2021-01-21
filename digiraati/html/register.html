@@ -29,8 +29,8 @@
         <div id="register_title">REKISTERÖIDY</div><br><br><br><br><br>
         <p class="regular_text">Käyttäjänimi *</p>
         <input id="username_input" type="text" required></input>
-        <p class="regular_text">Kolminumeroinen tunnistekoodi *</p>
-        <input id="id_input" type="text" required></input>
+        <!-- <p class="regular_text">Kolminumeroinen tunnistekoodi *</p>
+        <input id="id_input" type="text" required></input> -->
         <p class="regular_text">Etunimi *</p>
         <input id="firstname_input" type="text" required></input>
         <p class="regular_text">Sukunimi *</p>
@@ -42,10 +42,6 @@
         <p class="regular_text">Salasana uudelleen *</p>
         <input id="password_input2" type="password" required></input>
         <br>
-        <div id="confirm_container">
-          <input id="policy_agreement_checkbox" type="checkbox"></input>
-          <div id="register_disclaimer">Olen lukenut ja hyväksyn palvelun <a href="">käyttösäännöt</a></div><br>
-        </div>
         <div id="confirm_register">LUO PROFIILI</div>
       </div>
     </div>
@@ -54,4 +50,30 @@
 	</div>
   <script src="../js/common.js"></script>
   <script src="../js/register.js"></script>
+
+  <div id="rules_popup_container" class="popup_container">
+    <div id="grey_fadeout_layer" class="grey_fadeout_layer"></div>
+    <div id="rules_popup_box" class="popup_box">
+      <div id="popup_container">
+        <div id="rules_header_text" class="header_text">Käyttösäännöt</div>
+        <div id="rules_body_text" class="regular_text">
+          <p>KÄYTTÖSÄÄNNÖT<br>Seuraavat käyttösäännöt koskevat Digiraati-palvelun käyttöä. Rekisteröitymällä palveluun hyväksyt seuraavat säännöt.</p>
+          <p>RAATIKESKUSTELUN SÄÄNNÖT</p>
+          <p>1. Noudata hyviä tapoja:<ul><li>Kirjoita kohteliaasti toisia kunnioittaen.</li><li>Asioista saa kirjoittaa kriittisesti, mutta selkeät asiattomuudet ja henkilökohtaiset loukkaukset ovat kiellettyjä. Herjaavat tai asiattomat viestit koskien ketä tahansa henkilöä voidaan poistaa raadin ylläpidon toimesta.</li></ul></p>
+          <p>2. Jokainen keskustelija on vastuussa omista kirjoituksistaan ja niiden sisällöstä. Vaikka kirjoitat nimimerkillä, voidaan lähettäjä tarvittaessa selvittää poliisitutkinnan avulla. </p>
+          <p>3. Noudata voimassaolevaa lainsäädäntöä:<ul><li>Älä kerro kirjoituksissa omia tai muiden henkilötietoja, mukaan lukien sähköpostiosoitteita. Harkitse myös, mitä henkilökohtaisia asioita kirjoitat, erityisesti jos raati ei ole yksityinen (vaatii salasanan). Älä kopioi kirjoituksiin henkilökohtaisia sähköpostiviestejä ilman lähettäjän lupaa. (Henkilötietolaki)</li><li>Keskusteluissa ei saa levittää laitonta tai säädytöntä materiaalia. Myös rasismi ja siihen rinnastettava jonkin ihmisryhmän halventaminen on kielletty. (Rikoslaki)</li><li>Ilmoita lähde selvästi, jos lainaat tekstiä tai kuvaa artikkelista, kirjasta, blogista tms. (Tekijänoikeuslaki)</li></ul></p>
+          <p>4. Mainostaminen on kirjoituksissa kielletty. Myös keskusteluun liittymätön, poliittinen ja uskonnollinen mainostaminen on kielletty.  </p>
+          <p>5. Käytä kirjoittaessasi tehosteita hillitysti. Vältä HUUTAMISTA.</p>
+          <p>VALVONTA- JA MODEROINTISÄÄNNÖT<br>Yksittäisen raadin ylläpitäjä ja raatikohtaisesti osoitetut henkilöt valvovat raadin keskustelua. Jokainen keskustelija on itse vastuussa asiattomien viestien poistamisesta. Tarvittaessa Digiraadin ylläpito voi poistaa asiattomat viestit tai asiattomasti toimineen käyttäjän palvelusta.</p>
+          <p>TIETOTURVA<br>Digiraati on <a href="https://www.allyouthstn.fi/" target="_blank">ALL-YOUTH-tutkimushankkeessa</a> kehitettävä verkkopalvelun prototyyppi. Vaikka palvelua kehitetään jatkuvasti, ALL-YOUTH ei voi taata palvelun täydellistä tietoturvaa. ALL-YOUTH ei ole vastuussa Digiraadin keskustelujen sisällöstä. </p>
+        </div>
+      
+      <div id="bottom_button_container" class="popup_button_container">
+        <div id="cancel_registration_button" class="popup_button">Peruuta rekisteröityminen</div>
+        <div id="accept_registration_button" class="popup_button">Hyväksyn säännöt</div>
+      </div>
+    </div>
+    </div>
+  </div>
 </body>
+
