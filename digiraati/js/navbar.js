@@ -28,21 +28,51 @@ $(function()
 });
 
 $('#lobby_home_btn').click(function(){
+  if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+  {
     goToPage("/lobby/" + council + "/index");
+  }
+  else{
+    alert("Sivulle ei ole pääsyä raadin ulkopuolisilla henkilöillä")
+  }
   });
   
   $('#lobby_chat_btn').click(function(){
+    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+    {
     goToPage("/lobby/" + council + "/chat");
+    }
+    else{
+      alert("Sivulle ei ole pääsyä raadin ulkopuolisilla henkilöillä")
+    }
   });
   
   $('#lobby_chat_btn_mobile').click(function(){
+    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+  {
     goToPage("/lobby/" + council + "/chat");
+  }
+  else{
+    alert("Sivulle ei ole pääsyä raadin ulkopuolisilla henkilöillä")
+  }
   });
   
   $('#lobby_document_btn').click(function(){
+    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+  {
     goToPage("/lobby/" + council + "/material");
+  }
+  else{
+    alert("Sivulle ei ole pääsyä raadin ulkopuolisilla henkilöillä")
+  }
   });
   
   $('#lobby_conclusion_btn').click(function(){
+    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+  {
     goToPage("/lobby/" + council + "/conclusion");
+  }
+  else{
+    alert("Sivulle ei ole pääsyä raadin ulkopuolisilla henkilöillä")
+  }
   });

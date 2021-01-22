@@ -16,6 +16,10 @@ $("#dataprot_button").click(function(){
   goToPage("/dataprot");
 });
 
+$("#rules_button").click(function(){
+  goToPage("/rules");
+});
+
 $("#home_button").click(function(){
   goToPage("");
 })

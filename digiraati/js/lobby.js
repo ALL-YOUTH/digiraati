@@ -10,6 +10,7 @@ var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 
 $(function(){
+  sessionStorage.setItem('in_council', false);
   $('#header').load(socket["io"]["uri"] + "/html/header.html");
   $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
   $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
@@ -134,9 +135,19 @@ function generate_council_info_from_data(data)
           $("#lobby_document_btn").removeClass("disabled");
           $("#lobby_chat_btn").removeClass("disabled");
           $("#lobby_conclusion_btn").removeClass("disabled");
+          sessionStorage.setItem('in_council', true);
           break;
         }
       }
+
+      if (new Date() > Date.parse(data["enddate"])) // If the council has already closed
+      {
+        console.log("raati on päättynyt");
+        $("#join_council_btn").addClass('disabled_button');
+        $("#join_council_btn").off('click');
+        $('#join_council_btn').text("Raati on päättynyt");
+      }
+
       if(window.sessionStorage.getItem('logged_in') != "" && window.sessionStorage.getItem('logged_in') != null && data["users"].includes(window.sessionStorage.getItem('logged_in'))){
         //console.log("User " + window.sessionStorage.getItem('logged_in') + " is logged in and appears to be in the council")
         try{

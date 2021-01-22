@@ -75,6 +75,11 @@ app.get('/editprofile', function(req, res){
   res.sendFile(__dirname + '/html/editprofile.html');
 });
 
+//Digiraati rules page
+app.get('/rules', function(req, res){
+  res.sendFile(__dirname + '/html/rules.html');
+});
+
 //Council page
 app.get('/lobby/:id/material', function(req, res){
   res.sendFile(__dirname + '/html/lobby_material.html');

@@ -806,4 +806,10 @@ div .inactive{
   #lobby_people_icon{
     background:url("/res/person.png") no-repeat;
   }
+  
+.disabled_button{
+  background-color: lightgray !important;
+  color: rgba(0,0,0,0.5) !important;
+}
+
 }
