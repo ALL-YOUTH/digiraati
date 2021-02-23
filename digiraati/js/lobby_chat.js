@@ -914,7 +914,7 @@ $(document).on('click', ".message_list_delete", function(e){
     data = {}
     data["user_id"] = window.sessionStorage.getItem('logged_in');
     data["council"] = council;
-    data["mid"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().id;
+    data["mid"] = $(this).parents('.chat_message, .reply_message, .second_tier_reply').first().attr('id');
     socket.emit('request delete message', data);
     window.location.reload();
   }

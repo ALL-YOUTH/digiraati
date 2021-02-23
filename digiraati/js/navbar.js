@@ -1,9 +1,12 @@
 var socket = io();
+let council_id = "";
 
 $(function()
 {
     let page = window.location.href.split("/").slice(5)[0];
-    console.log("page: " + page)
+    council_id = window.location.href.split("/").slice(-2)[0];
+    //console.log("page: " + page)
+    //console.log("council:")
    switch (page)
    {
        case "index":
@@ -28,8 +31,9 @@ $(function()
 });
 
 $('#lobby_home_btn').click(function(){
-  if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+  if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') == 'true')
   {
+    socket.emit("check in user", {"username": sessionStorage.getItem('logged_in'), "council_id": council_id});
     goToPage("/lobby/" + council + "/index");
   }
   else{
@@ -38,8 +42,9 @@ $('#lobby_home_btn').click(function(){
   });
   
   $('#lobby_chat_btn').click(function(){
-    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') == 'true')
     {
+    socket.emit("check in user", {"username": sessionStorage.getItem('logged_in'), "council_id": council_id});
     goToPage("/lobby/" + council + "/chat");
     }
     else{
@@ -48,8 +53,9 @@ $('#lobby_home_btn').click(function(){
   });
   
   $('#lobby_chat_btn_mobile').click(function(){
-    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') == 'true')
   {
+    socket.emit("check in user", {"username": sessionStorage.getItem('logged_in'), "council_id": council_id});
     goToPage("/lobby/" + council + "/chat");
   }
   else{
@@ -58,8 +64,9 @@ $('#lobby_home_btn').click(function(){
   });
   
   $('#lobby_document_btn').click(function(){
-    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') == 'true')
   {
+    socket.emit("check in user", {"username": sessionStorage.getItem('logged_in'), "council_id": council_id});
     goToPage("/lobby/" + council + "/material");
   }
   else{
@@ -68,8 +75,9 @@ $('#lobby_home_btn').click(function(){
   });
   
   $('#lobby_conclusion_btn').click(function(){
-    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') === true)
+    if(sessionStorage.getItem('logged_in') != null && sessionStorage.getItem('in_council') == 'true')
   {
+    socket.emit("check in user", {"username": sessionStorage.getItem('logged_in'), "council_id": council_id});
     goToPage("/lobby/" + council + "/conclusion");
   }
   else{

@@ -3,6 +3,8 @@
 }
 
 #footer {
+  position: absolute !important;
+  bottom: 0px !important;
   width:100%;
   clear:both;
   background-color: rgba(1,175,196,1);
@@ -14,6 +16,7 @@
   width:90%;
   margin:0px 5%;
   vertical-align: top;
+  z-index: 98;
 }
 
 .nav_button{

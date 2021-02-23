@@ -449,9 +449,9 @@ div .inactive{
   #container {
     display: inline-block;
     width:100%;
-    min-height: 77%;
+    height: calc(100% - 175px - 69px - 60px - 50px);
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-top: 25px;
     background-color: rgba(246,248,249,1);
   }

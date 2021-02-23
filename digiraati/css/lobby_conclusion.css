@@ -13,6 +13,13 @@
   z-index: 98;
 }
 
+.warning_header{
+  text-align: center;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 16px;
+}
+
 .loader {
   position: absolute;
   top: 15%;
@@ -60,7 +67,9 @@ body, html{
 #conclusion_container{
   position:relative;
   width:100%;
-  height:130%;
+  height: calc(100% - 175px - 69px - 60px - 50px);
+  overflow-y: auto;
+  overflow-x: hidden;
   color:white;
 }
 

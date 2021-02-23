@@ -529,9 +529,11 @@ body{
   #chat_container{
     position:relative;
     width:100%;
-    height: 110% !important;
+    height: calc(100% - 369px) !important;
     color:white;
     padding-top: 25px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
     #chat_content{

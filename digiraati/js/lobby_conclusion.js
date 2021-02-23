@@ -354,10 +354,16 @@ function ActivateQuestionnaire()
   qf.classList.add("questionnaire_viewer");
   qf.id = "questionnaire_viewer";
 
+  let warning_div = document.createElement('div');
+      warning_div.classList.add('warning_header');
+      warning_div.innerHTML = "Antamasi vastaukset näkyvät kaikille pseudonymisoituina. Älä siis kirjoita mitään liian henkilökohtaista!"
+      qf.appendChild(warning_div);
+
   if (typeof data["questions"] != 'undefined' && data["questions"].length > 0)
   {
     for (var i = 0; i < data["questions"].length; ++i)
     {
+
       var temp_question = document.createElement('div');
       temp_question.classList.add("conclusion_question");
       temp_question.id = "conclusion_question" + i;

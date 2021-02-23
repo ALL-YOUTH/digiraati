@@ -33,6 +33,7 @@ var Councils = require(path.join(__dirname + "/councils.js"));
 var Logger = require(path.join(__dirname + "/datalog.js"));
 var Conclusions = require(path.join(__dirname + "/conclusioner.js"));
 var EventHandler = require(path.join(__dirname + "/eventhandler.js"));
+var PresentUsers = require(path.join(__dirname + "/presentUsers.js"));
 
 //Create objects for user and council
 let users = new Users();
@@ -40,6 +41,7 @@ let councils = new Councils();
 let logger = new Logger();
 let conclusioner = new Conclusions();
 let eventhandler = new EventHandler(councils.get_councils(), users.get_all_users());
+let presentUsers = new PresentUsers();
 setInterval(ClearExpiredSessions, 1000 * 60 * 60 * 12);
 
 // Add temporary questionnaire for testing purposes
@@ -144,6 +146,12 @@ fs.readFile(backup_file, function (err, data) {
 
 });
 
+function CheckInUser(username, council_id) // Checks in a given user to a given council, needed for the "what users are present right now" functionality
+{
+    console.log("Checking in");
+    presentUsers.UserCheckIn(username, council_id);
+}
+
 function ClearExpiredSessions()
 {
   console.log("Clearing expired sessions");
@@ -203,6 +211,11 @@ io.on('connection', function(socket){
     overwrite: true	// overwrite file if exists, default is true.
   });
 
+  //check in user for the purposes of "who is logged in" functionality. No callback.
+  socket.on("check in user", function(data){
+    CheckInUser(data["username"], data["council_id"]);
+  });
+
   //login check request. Checks the login according to the IP parsed from a socket
   socket.on('check login', function(token, callback){
     var name = false;
@@ -245,6 +258,11 @@ io.on('connection', function(socket){
     }
 
     else { callback('failed')};
+  });
+
+  socket.on('request present users', function(council_id, callback){
+    let returnable = presentUsers.GetPresentUsers(council_id); // Fetches list of currently active users in a given council
+    callback(returnable); // and returns it
   });
 
   socket.on('request full data', function(callback){ // For the administrative panel. Returns all council data, user data and conclusion data.
@@ -504,6 +522,7 @@ io.on('connection', function(socket){
                           parent);
 
     callback(msg);
+    CheckInUser(msg["sender"], msg["council"]);
     //io.to(msg["council"]).emit('new message', msg);
     if (parent == "") { logger.AppendLog("e05", users.get_userid_by_username(msg["sender"]), new Date().getTime(), msg["id"]); }
     else {logger.AppendLog("e06", users.get_userid_by_username(msg["sender"]), new Date().getTime(), parent);}
@@ -519,6 +538,7 @@ io.on('connection', function(socket){
     var likes = councils.add_like_to_message(data["council"], data["mid"], uid);
     logger.AppendLog("e09", uid, new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('update likes', data["mid"], likes);
+    CheckInUser(data["liker"], data["council"]);
     callback(data["mid"], likes);
   });
 
@@ -530,6 +550,7 @@ io.on('connection', function(socket){
     var dislikes = councils.add_dislike_to_message(data["council"], data["mid"], uid);
     logger.AppendLog("e10", uid, new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('update dislikes', data["mid"], dislikes);
+    CheckInUser(data["liker"], data["council"]);
     callback(data["mid"], dislikes);
   });
 
@@ -541,6 +562,7 @@ io.on('connection', function(socket){
     var goodargs = councils.add_goodarg_to_message(data["council"], data["mid"], uid);
     logger.AppendLog("e11", uid, new Date().getTime(), data["mid"]);
     io.to(data["council"]).emit('update goodargs', data["mid"], goodargs);
+    CheckInUser(data["liker"], data["council"]);
     callback(data["mid"], goodargs);
   });
 
@@ -674,6 +696,7 @@ io.on('connection', function(socket){
 
   //request to add a comment to a file
   socket.on('request add comment', function(data, callback){
+    CheckInUser(data["sender"], data["council"]);
     server_log(ip + ": " + "attempting to add a comment: " + data["id"] + " to a council " + data["council"]);
     var res = councils.add_comment_to_file(data);
     if(res != -1){
@@ -687,6 +710,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('request delete message', function(data){
+    CheckInUser(data["user_id"], data["council"]);
     server_log(ip + ": " + "attempting to delete message: " + data["mid"] + " in council " + data["council"]);
     councils.delete_message(data["council"], data["mid"]);
     logger.AppendLog("e08", users.get_userid_by_username(data["user_id"]), new Date().getTime(), data["mid"]);

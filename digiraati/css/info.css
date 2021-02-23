@@ -18,7 +18,7 @@ body{
   margin:auto;
 }
 
-#info_title{
+.info_title{
   text-align: left;
   font: Bold 32px/48px Montserrat;
   letter-spacing: 0;
@@ -27,12 +27,16 @@ body{
   margin-left: 20px;
 }
 
-#info_text{
+.info_text{
   font-family: Montserrat;
   font-size: 16px;
   line-height: 30px;
   margin-left: 20px;
   margin-right: 20px;
+}
+
+.video_frame{
+  margin-left: 20px;
 }
 
 #hero{
@@ -89,6 +93,14 @@ body{
   #main_text_desktop, #secondary_text_desktop, #hero_search_councils_btn_desktop, #filter, #council_title{
     display:inline-block;
   }
+
+  
+  #container{
+    height: calc(100% - 69px - 175px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
 
   #hero_text{
     position:relative;

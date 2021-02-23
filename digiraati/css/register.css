@@ -28,6 +28,7 @@ body{
   box-shadow: 2px 2px rgba(32,33,36,1);
   font-family: Montserrat;
   z-index: 97;
+  overflow-y: auto;
 }
 
 .grey_fadeout_layer{
@@ -183,6 +184,14 @@ body{
   #register_hero, #register_hero_text{
     display:block;
   }
+
+  
+  #container{
+    height: calc(100% - 69px - 175px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
 
   #register_hero{
     padding:0px;

@@ -283,7 +283,8 @@ div .inactive{
 }
 
 #container{
-  min-height: 100%;
+  height: calc(100% - 60px - 69px - 175px - 50px);
+  overflow-y: hidden;
 }
 
 .noselect{

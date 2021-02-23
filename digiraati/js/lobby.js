@@ -20,6 +20,7 @@ $(function(){
     if (result == "success")
     {
       logged_in = window.sessionStorage.getItem('logged_in');
+      socket.emit("check in user", {"username": window.sessionStorage.getItem('logged_in'), "council_id": council});
       socket.emit("request council data", council, function(data){
       generate_council_info_from_data(data);
       });
@@ -30,6 +31,11 @@ $(function(){
       generate_council_info_from_data(data);
       })    
     }
+
+    socket.emit("request present users", council, function(result){
+      console.log("Fetched present users:")
+      console.log(result);
+    })
   });
 });
 
@@ -123,12 +129,12 @@ function generate_council_info_from_data(data)
     }
     $("#leave_council_btn").css("display", "none");
     $("#join_council_btn").css("display", "none");
-    if(window.sessionStorage.getItem('logged_in') != ""){
+    if(window.sessionStorage.getItem('logged_in') != "" && window.sessionStorage.getItem('logged_in') != null){
       //console.log("Someone is logged in");
       $("#leave_council_btn").css("display", "none");
       $("#join_council_btn").css("display", "block");
       for(var j = 0; j < data["users"].length; ++j){
-        if(window.sessionStorage.getItem('logged_in') == data["users"][j]){
+        if(window.sessionStorage.getItem('logged_in').toLowerCase() == data["users"][j].toLowerCase()){
           //console.log("Apparently this user is in the council");
           $("#join_council_btn").css({"display": "none"});
           $("#leave_council_btn").css({"display": "block"});
