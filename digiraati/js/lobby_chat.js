@@ -293,7 +293,7 @@ $(document).on('click', '.mobile_send_button', function(e){
   socket.emit('request new message', msg, function(message){
     create_message(message);
     $('.grey_fadeout_layer').hide();
-    $('.text_entry_panel').hide();
+    $('.mobile_text_entry_panel').hide();
     modal_open = false;
   });
 });

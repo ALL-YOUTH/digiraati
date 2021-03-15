@@ -67,7 +67,7 @@ body, html{
 #conclusion_container{
   position:relative;
   width:100%;
-  height: calc(100% - 175px - 69px - 60px - 50px);
+  height: calc(100% - 0px - 69px - 60px - 50px);
   overflow-y: auto;
   overflow-x: hidden;
   color:white;

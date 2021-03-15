@@ -139,6 +139,10 @@ $('#hamburger_close').click(function(){
   close_hamburger_menu();
 });
 
+$('#hamburger_info').click(function(){
+  goToPage("/info");
+});
+
 $('#hamburger_index').click(function(){
   goToPage("/");
 });

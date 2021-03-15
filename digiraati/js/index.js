@@ -27,6 +27,10 @@ function add_class_innerhtml(c, html){
   return e;
 }
 
+function resizeIframe(obj) {
+  obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+}
+
 function create_council_face(c){
   var res = document.createElement('div');
   res.classList.add('council_box');

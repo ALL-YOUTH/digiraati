@@ -58,7 +58,7 @@ body{
   max-width: 100%;
   margin: auto;
 }
-#chat_title, #chat_timetable, #chat_description, #lobby_navigation, #left_menu, .reply_message, .second_tier_reply, #chat_hashtag{
+#chat_title, #chat_timetable, #chat_description, #lobby_navigation, #left_menu, #chat_hashtag{
   display: none;
 }
 
@@ -529,7 +529,7 @@ body{
   #chat_container{
     position:relative;
     width:100%;
-    height: calc(100% - 369px) !important;
+    height: calc(100% - 221px) !important;
     color:white;
     padding-top: 25px;
     overflow-y: auto;

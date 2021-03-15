@@ -19,7 +19,7 @@ body{
 
 .popup_box{
   position: fixed;
-  left: 15%;
+  left: 5%;
   top: 5%;
   display:block;
   width: 70%;
@@ -28,7 +28,7 @@ body{
   box-shadow: 2px 2px rgba(32,33,36,1);
   font-family: Montserrat;
   z-index: 97;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .grey_fadeout_layer{
@@ -187,7 +187,7 @@ body{
 
   
   #container{
-    height: calc(100% - 69px - 175px);
+    height: calc(100% - 69px - 0px);
     overflow-x: hidden;
     overflow-y: auto;
   }

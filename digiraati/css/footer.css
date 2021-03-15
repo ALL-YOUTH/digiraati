@@ -9,10 +9,11 @@
   clear:both;
   background-color: rgba(1,175,196,1);
   z-index: 98;
+  display: none;
 }
 
 #footer_container{
-  max-height: 175px;
+  max-height: 0px;
   width:90%;
   margin:0px 5%;
   vertical-align: top;
@@ -50,11 +51,12 @@
 @media (min-width:1000px){
 
   #footer {
-    height: 175px;
+    height: 0px;
     clear:both;
     background-color: rgba(1,175,196,1);
     bottom:0px;
     position: relative;
+    display: none;
   }
 
   #footer_container{
