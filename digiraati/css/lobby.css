@@ -1,6 +1,6 @@
 @import url("https://use.typekit.net/gbv0ney.css");
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap');
-
+@import url("https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css");
 
 .loader_container{
   position: absolute;
@@ -431,6 +431,53 @@ div .inactive{
     display: none;
   }
 
+#present_users_container{
+  margin-top: 20px;
+  border-color: rgb(0,0,0,0.1);
+  border-style: dashed none none none;
+}
+
+#present_users_title{
+  text-align: left;
+  margin-top: 20px;
+  padding-bottom: 10px;
+  font: Bold 16px/26px Montserrat;
+  letter-spacing: 0;
+  color: #202124;
+  opacity: 1;
+}
+
+#present_users{
+  
+}
+
+.userlist-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 80%;
+  padding-bottom: 5px;
+  height: 24px;
+}
+
+.userlist-username{
+  width: 80%;
+  font-family: Montserrat;
+  font-size: 14px;
+  color: rgba(0,0,0,1);
+}
+
+.active_indicator{
+  width: 20%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+}
+
+.sleeping_indicator{
+  width: 20%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0H24V24H0z'/%3E%3Cpath d='M11 11v2l-5.327 6H11v2H3v-2l5.326-6H3v-2h8zm10-8v2l-5.327 6H21v2h-8v-2l5.326-6H13V3h8z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+}
  
 .lobby_meta_container{
   width: auto;

@@ -16,13 +16,22 @@ $(function(){
   $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
 
   council = window.location.href.split("/").slice(-2)[0];
-  socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(result){
-    if (result == "success")
+  socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(result){ // Checks if the currently logged in user is in the council
+    if (result == "success") // If so, the user is checked in and council data is requested
     {
       logged_in = window.sessionStorage.getItem('logged_in');
       socket.emit("check in user", {"username": window.sessionStorage.getItem('logged_in'), "council_id": council});
       socket.emit("request council data", council, function(data){
       generate_council_info_from_data(data);
+      
+      socket.emit("request present users", council, function(result){ // Retrieve the list of users currently active in the council
+        console.log("Fetched present users:")
+        let current_time = new Date().getTime();
+        let activeUsers = result.filter(i => current_time - i.last_checkin_time <= 12000); // Filter the list of present users to those active (last checkin two minutes ago)
+        let sleepyUsers = result.filter(i => current_time - i.last_checkin_time > 12000); // And those on the verge of going inactive
+        generate_present_user_list(activeUsers); // and generate the HTML required to display them
+        generate_present_user_list(sleepyUsers);
+      })
       });
     }
     else {
@@ -31,13 +40,39 @@ $(function(){
       generate_council_info_from_data(data);
       })    
     }
-
-    socket.emit("request present users", council, function(result){
-      console.log("Fetched present users:")
-      console.log(result);
-    })
   });
 });
+
+function generate_present_user_list(userdata) // Generates the HTML for the list of present users
+{
+  let current_time = new Date().getTime();
+  for (let i = 0; i < userdata.length; i++)
+  {
+    let temp_user = document.createElement("div");
+    temp_user.classList.add("userlist-container");
+
+    let temp_username = document.createElement("div");
+    temp_username.classList.add("userlist-username");
+    temp_username.innerHTML = userdata[i].user_id;
+
+    let temp_usericon = document.createElement("div");
+    if(current_time - userdata[i].last_checkin_time < 12000) // User has done something within the past 2 minutes
+    {
+      temp_usericon.classList.add("active_indicator");
+    }
+
+    else
+    {
+      temp_usericon.classList.add("sleeping_indicator");
+    }
+
+    temp_user.appendChild(temp_username);
+    temp_user.appendChild(temp_usericon);
+
+    document.getElementById("present_users").appendChild(temp_user);
+  }
+
+}
 
 function generate_council_info_from_data(data)
 {

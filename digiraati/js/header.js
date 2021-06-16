@@ -219,6 +219,7 @@ $('#login_confirm').click(function(){
         console.log("Success! Logged in: " + logged_in);
         window.sessionStorage.setItem('token', reply[1]);
         window.sessionStorage.setItem('logged_in', reply[0]);
+        window.sessionStorage.setItem('userID', reply[2]);
         var c = 0;
         for(var i = 0; i < name.length; ++i){
           c += name.charCodeAt(i);

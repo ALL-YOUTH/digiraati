@@ -18,7 +18,7 @@ $(function(){
     $('#modal_file_container').hide();
     $('#messages_modal_container').hide();
     $('#conclusion_modal_container').hide();
-    socket.emit('request full data', function(c_data, u_data, conc_data){
+    socket.emit('request full data', window.sessionStorage.getItem('userID'), function(c_data, u_data, conc_data){
         council_data = c_data;
         user_data = u_data;
         conclusion_data = conc_data;

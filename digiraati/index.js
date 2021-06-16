@@ -34,6 +34,7 @@ var Logger = require(path.join(__dirname + "/datalog.js"));
 var Conclusions = require(path.join(__dirname + "/conclusioner.js"));
 var EventHandler = require(path.join(__dirname + "/eventhandler.js"));
 var PresentUsers = require(path.join(__dirname + "/presentUsers.js"));
+var RightsManager = require(path.join(__dirname + "/rightsManager.js"));
 
 //Create objects for user and council
 let users = new Users();
@@ -42,6 +43,7 @@ let logger = new Logger();
 let conclusioner = new Conclusions();
 let eventhandler = new EventHandler(councils.get_councils(), users.get_all_users());
 let presentUsers = new PresentUsers();
+let rightsManager = new RightsManager();
 setInterval(ClearExpiredSessions, 1000 * 60 * 60 * 12);
 
 // Add temporary questionnaire for testing purposes
@@ -58,6 +60,7 @@ fs.readFile(backup_file, function (err, data) {
   var recover_users = data["users"];
   var recover_councils = data["councils"];
   var recover_concs = data["conclusions"];
+  rightsManager.recover_from_backup(data["userrights"]);
   for(var i = 0; i < recover_users.length; ++i){
     let user = recover_users[i];
     try{
@@ -265,7 +268,9 @@ io.on('connection', function(socket){
     callback(returnable); // and returns it
   });
 
-  socket.on('request full data', function(callback){ // For the administrative panel. Returns all council data, user data and conclusion data.
+  socket.on('request full data', function(user_id, callback){ // For the administrative panel. Returns all council data, user data and conclusion data.
+
+
     var user_data = users.get_all_users();
     var council_data = councils.get_councils();
     var conclusion_data = conclusioner.get_all_data();
@@ -356,7 +361,7 @@ io.on('connection', function(socket){
       expiry_time.setHours(expiry_time.getHours() + 12);
       console.log("Registering new user token pair: " + user_token + ", " + uid);
       user_tokens.push({'token': user_token, 'name': name, 'expiry_time': expiry_time});
-      callback([name, user_token]);
+      callback([name, user_token, uid]);
       logger.AppendLog("e01", uid, new Date().getTime());
       server_log(ip + ": " + uid + " (" + name + ") logged in");
       update_page();
@@ -503,6 +508,10 @@ io.on('connection', function(socket){
   //SENDING A MESSAGE PART
   //Request to send a message to a council
   socket.on('request new message', function(msg, callback){
+    if (msg["sender"] == null)
+    {
+      msg["sender"] = "unknown_sender";
+    }
     var userid = users.get_userid_by_username(msg["sender"]);
     if (msg["parent"] != undefined && msg["parent"] != "") { var parent = (msg["parent"]); }
     else { var parent = ""; }
@@ -914,6 +923,7 @@ function create_backup(){
     backup_data["conclusions"] = conclusioner.get_all_data();
     backup_data["events"] = eventhandler.dump_event_data();
     backup_data["bases"] = councils.get_bases();
+    backup_data["userrights"] = rightsManager.backup_contents();
     var json_data = JSON.stringify(backup_data);
     fs.writeFile(backup_file, json_data, 'utf8', function (err) {
       if (err) {

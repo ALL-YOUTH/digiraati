@@ -11,6 +11,29 @@ var SocketIOFile = require('socket.io-file');
 
 var io = require('socket.io')(http);
 
+let passwordList = [];
+
+function checkPassword(username, password)
+{
+  for (let i = 0; i < passwordList.length; i++)
+  {
+    if (passwordList[i]["username"] == username && passwordList[i]["password"] == password)
+    {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+fs.readFile('passwords.json', function(err, data){
+  if(err){
+    console.log("Error reading password file");
+    return;
+  }
+
+  passwordList = JSON.parse(data);
+});
 
 //app.use(express.static(path.join(__dirname, '/public')));
 
@@ -145,7 +168,30 @@ app.get('/glide/:id', (req, res, next) => {
 });
 
 app.get('/admin', function(req, res){
-  res.sendFile(__dirname + '/html/admin.html');
+  const reject = () => {
+    res.setHeader('www-authenticate', 'Basic')
+    res.sendStatus(401);
+  };
+
+  let authorization = req.headers.authorization;
+
+  if (!authorization)
+  {
+    return reject()
+  }
+
+  let [username, password] = Buffer.from(authorization.replace('Basic ', ''), 'base64').toString().split(':');
+  
+  if(checkPassword(username, password) == true) {
+    console.log("User " + username + " logged in to admin page at " + Date.now());
+    res.sendFile(__dirname + '/html/admin.html');
+  }
+
+  else {
+    console.log("User " + username + " tried to log in to admin page with incorrect password at " + Date.now());
+    return reject();
+  }
+
 });
 
 
