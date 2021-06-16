@@ -250,19 +250,19 @@ $(document).on('click', '.unban_button', function(e){
 });
 
 $(document).on('click', '#context_council', function(e){
-    document.querySelector("#context_council").classList.remove("inactive");
-    document.querySelector("#context_council").classList.add("active");
-    document.querySelector("#context_users").classList.remove("active");
-    document.querySelector("#context_users").classList.add("inactive");
+    document.querySelector("#context_council").classList.remove("lob_inactive");
+    document.querySelector("#context_council").classList.add("lob_active");
+    document.querySelector("#context_users").classList.remove("lob_active");
+    document.querySelector("#context_users").classList.add("lob_inactive");
     $('#users_content').hide();
     $('#council_content').show();
 });
 
 $(document).on('click', '#context_users', function(e){
-    document.querySelector("#context_users").classList.remove("inactive");
-    document.querySelector("#context_users").classList.add("active");
-    document.querySelector("#context_council").classList.remove("active");
-    document.querySelector("#context_council").classList.add("inactive");
+    document.querySelector("#context_users").classList.remove("lob_inactive");
+    document.querySelector("#context_users").classList.add("lob_active");
+    document.querySelector("#context_council").classList.remove("lob_active");
+    document.querySelector("#context_council").classList.add("lob_inactive");
     $('#council_content').hide();
     $('#users_content').show();
 });

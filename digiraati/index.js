@@ -873,6 +873,22 @@ io.on('connection', function(socket){
   //////////////////////////////////////////////////////////////////////////////
   //// Rights management stuff ////
 
+  socket.on('check admin access', function(token, council, callback){
+    let user_id = "";
+    user_id = token_to_user_id(token);
+    
+    let user_status = rightsManager.check_user_rights_in_council(user_id, council);
+    if (user_status["role"] == "admin" || "moderator") // User is an administrator and has moderation rights on every council
+    {
+      callback(user_status);
+    }
+
+    else 
+    {
+      callback(user_status);
+    }
+  });
+
   socket.on('check council privileges', function(token, council, callback){
     let user_id = "";
     user_id = token_to_user_id(token);
