@@ -6,6 +6,7 @@ var cors = require('cors');
 var crypto = require('crypto');
 
 var server = require('./routes.js');  //All the urls defined
+const { on } = require('events');
 var app = server["app"];
 var io = server["io"];
 var http = server["http"];
@@ -60,7 +61,7 @@ fs.readFile(backup_file, function (err, data) {
   var recover_users = data["users"];
   var recover_councils = data["councils"];
   var recover_concs = data["conclusions"];
-  rightsManager.recover_from_backup(data["userrights"]);
+  rightsManager.recover_from_backup(data["userrights"] || []);
   for(var i = 0; i < recover_users.length; ++i){
     let user = recover_users[i];
     try{
@@ -861,6 +862,146 @@ io.on('connection', function(socket){
       socket.emit("index answers request", returnable);
     });
 
+  socket.on("request make user admin", function(data, callback){
+      if (rightsManager.add_user_to_admins(data) == "success"){
+        callback("success");
+        create_backup();
+      }
+      else (callback("failure"));
+  });
+
+  //////////////////////////////////////////////////////////////////////////////
+  //// Rights management stuff ////
+
+  socket.on('check council privileges', function(token, council, callback){
+    let user_id = "";
+    user_id = token_to_user_id(token);
+    
+    let user_status = rightsManager.check_user_rights(user_id);
+    if (user_status["role"] == "admin") // User is an administrator and has moderation rights on every council
+    {
+
+      let returnable = {};
+      let council_data = councils.get_council_data(council);
+      returnable["messages"] = council_data["messages"];
+      returnable["users"] = [];
+      for (let i = 0; i < council_data["users"].length; i++)
+      {
+        let fetched_data = users.get_user(council_data["users"][i]);
+        if (fetched_data != null)
+        {
+          let temp_user = {};
+          temp_user["user_id"] = fetched_data["id"];
+          temp_user["username"] = fetched_data["username"];
+          let role = rightsManager.check_user_rights_in_council(fetched_data["id"], council);
+          temp_user["role"] = role["role"];
+          returnable["users"].push(temp_user);
+        }      
+      }
+
+      callback(returnable);
+    }
+
+    else if(user_status["role"] == "moderator" || user_status["councils"].includes(council)) // User is a moderator on the queried council
+    {
+
+      let returnable = {};
+
+    }
+  });
+
+  socket.on("request make user mod", function(user_id, promoter_token, council, callback){
+    let promoter_id = token_to_user_id(promoter_token);
+    let user_rights = rightsManager.check_user_rights_in_council(promoter_id, council);
+    if (user_rights["role"] == "admin" || user_rights["role"] == "moderator") 
+    {
+      if (rightsManager.add_user_to_council_mods(user_id, council) == "success" || "already_mod")
+      {
+        console.log("User " + promoter_id + " promoted user " + user_id + " as mod in " + council);
+        create_backup();
+        callback("success");
+      }
+    }
+
+    else {
+      console.log("User " + banner_id + " tried to promote user " + user_id + " as mod in " + council_id + " but had no rights.");
+      callback("no_rights");
+    }
+  });
+
+  socket.on("request remove user as mod", function(user_id, promoter_token, council, callback){
+    let promoter_id = token_to_user_id(promoter_token);
+    let user_rights = rightsManager.check_user_rights_in_council(promoter_id, council);
+    if (user_rights["role"] == "admin" || user_rights["role"] == "moderator") 
+    {
+      if (rightsManager.remove_user_from_council_mods(user_id, council) == "success" || "not_a_mod")
+      {
+        console.log("User " + promoter_id + " removed user " + user_id + " from a mod in " + council);
+        create_backup();
+        callback("success");
+      }
+    }
+
+    else {
+      console.log("User " + banner_id + " tried to remove user " + user_id + " from a mod in " + council_id + " but had no rights.");
+      callback("no_rights");
+    }
+  });
+
+  socket.on('request ban user', function(user_id, banner_token, council, callback){
+    let banner_id = token_to_user_id(banner_token);
+    let user_rights = rightsManager.check_user_rights_in_council(banner_id, council);
+    if (user_rights["role"] == "admin" || user_rights["role"] == "moderator") 
+    {
+      if (rightsManager.ban_user_from_council(user_id, council) == "success")
+      {
+        console.log("User " + banner_id + " banned user " + user_id + " from council " + council);
+        create_backup();
+        callback("success");
+      }
+    }
+
+    else {
+      console.log("User " + banner_id + " tried to ban user " + user_id + " from council " + council_id + " but had no rights.");
+      callback("no_rights");
+    }
+  });
+
+  socket.on("request unban user", function(user_id, banner_token, council, callback){
+    let banner_id = token_to_user_id(banner_token);
+    let user_rights = rightsManager.check_user_rights_in_council(banner_id, council);
+    if (user_rights["role"] == "admin" || user_rights["role"] == "moderator") 
+    {
+      if (rightsManager.unban_user_from_council(user_id, council) == "success" || "not_banned")
+      {
+        console.log("User " + banner_id + " unbanned user " + user_id + " from council " + council);
+        create_backup();
+        callback("success");
+      }
+    }
+
+    else {
+      console.log("User " + banner_id + " tried to unban user " + user_id + " from council " + council_id + " but had no rights.");
+      callback("no_rights");
+    }
+  });
+
+  socket.on("request admin delete message", function(message_id, deleter_token, council, callback){
+    let deleter_id = token_to_user_id(deleter_token);
+    let user_rights = rightsManager.check_user_rights_in_council(deleter_id, council);
+    if (user_rights["role"] == "admin" || user_rights["role"] == "moderator") 
+    {
+      councils.admin_delete_message(council, message_id);
+      create_backup();
+      callback("success");
+    }
+    else {
+      console.log("User " + banner_id + " tried to unban user " + user_id + " from council " + council_id + " but had no rights.");
+      callback("no_rights");
+    }
+  });
+
+
   //////////////////////////////////////////////////////////////////////////////
   ///File upload stuff
   uploader.on('start', (fileInfo) => {
@@ -898,6 +1039,21 @@ io.on('connection', function(socket){
 
   /////////////////////////////////////////////////////////////////////////////
 });
+
+function token_to_user_id(token)
+{
+
+  let user_id = "";
+  for (var i = 0; i < user_tokens.length; ++i)
+    {
+      if (user_tokens[i].token == token)
+      {
+        user_id = users.get_userid_by_username(user_tokens[i].name);  
+      }
+    }
+    
+  return user_id;
+}
 
 function update_page(){
   update_councils();

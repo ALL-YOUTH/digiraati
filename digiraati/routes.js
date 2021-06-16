@@ -119,6 +119,9 @@ app.get('/lobby/:id/stats', function(req, res){
 app.get('/lobby/:id/conclusion', function(req, res){
   res.sendFile(__dirname + '/html/lobby_conclusion.html');
 });
+app.get('/lobby/:id/admin', function(req, res){
+  res.sendFile(__dirname + '/html/lobby_admin.html');
+});
 
 app.get('/socket.io.js', (req, res, next) => {
   return res.sendFile(__dirname + '/node_modules/socket.io-client/dist/socket.io.js');

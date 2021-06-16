@@ -600,12 +600,28 @@ module.exports = class Councils{
   }
 
   delete_message(cid, mid){
+    console.log("Trying to delete message " + mid + " from council " + cid);
     let council = this.get_council_by_id(cid);
     var messages = council.get_council_messages();
     for(var i = 0; i < messages.length; ++i)
     {
       if(messages[i].get_id() == mid){
+        console.log("success");
         messages[i].set_content("<em>Käyttäjä on poistanut tämän viestin.</em>");
+      }
+    }
+  }
+
+  
+  admin_delete_message(cid, mid){
+    console.log("Trying to delete message " + mid + " from council " + cid);
+    let council = this.get_council_by_id(cid);
+    var messages = council.get_council_messages();
+    for(var i = 0; i < messages.length; ++i)
+    {
+      if(messages[i].get_id() == mid){
+        console.log("success");
+        messages[i].set_content("<em>Ylläpitäjä on poistanut tämän viestin.</em>");
       }
     }
   }

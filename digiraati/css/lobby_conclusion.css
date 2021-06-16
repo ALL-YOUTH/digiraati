@@ -186,6 +186,18 @@ div .inactive{
   height: 15px;
 }
 
+.user{
+
+}
+
+.admin{
+
+}
+
+.moderator{
+  
+}
+
 .question_nav_container{
   width: 100%;
   display: flex;

@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0, shrink-to-fit=no">
 	<link rel="stylesheet" type="text/css" href="/css/trix.css">
-	<link rel="stylesheet" href="/css/lobby_conclusion.css" type="text/css">
+	<link rel="stylesheet" href="/css/lobby_admin.css" type="text/css">
 	<script type="text/javascript" src="/js/trix.js"></script>
   	<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 	<link rel="icon" type="image/png" sizes="32x32" href="/res/favicon1.png">
@@ -21,16 +21,18 @@
 
 	<div id="admin_container">
         <div id="admin_context">
-            <div id="context_selector">
-                <div id="context_users" class="active">Hallinnoi käyttäjiä</div>
-                <div id="context_council" class="inactive">Hallinnoi raatia</div>
+            <div id="context_selector" class="selector_bar">
+                <div id="context_users" class="context_button active">Hallinnoi käyttäjiä</div>
+                <div id="context_council" class="context_button inactive">Hallinnoi raatia</div>
             </div>
-            <div id="admin_content">
-                <div class="admin_content_frame" id="users_content">
+            <div id="admin_content" class="admin_content_frame">
+                <div id="users_content">
+                    <div id="council_users_header" class="header_text">Raadin käyttäjät</div>
                     <div id="council_users">
-                        <div id="list_of_users"></div>
-                        <div id="list_of_actions"></div>
+                        <div id="list_of_users" class="user_list_container"></div>
+                        <div id="list_of_actions" class="user_list_container"></div>
                     </div>
+                    <div id="council_users_header" class="header_text">Bännätyt käyttäjät</div>
                     <div id="banned_users">
                         <div id="list_of_banned_users"></div>
                     </div>
@@ -38,8 +40,11 @@
                 <div class="admin_content_frame" id="council_content">
                     <div id="council_information">
                     </div>
-                    <div id="council_messages">
+                    <div id="messages_content">
+                        <div id="council_messages_header" class="header_text">Raadin viestit</div>
+                        <div id="council_messages">
                         <div id="list_of_messages"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,8 +57,8 @@
 
   <template id="user_actions">
       <div class="user_action_buttons">
-          <div class="ban_button" id=""></div>
-          <div class="promote_button" id=""></div>
+          <div class="promote_button"id="">Ylennä käyttäjä moderaattoriksi</div>
+          <div class="ban_button " id="">Bännää käyttäjä</div>
       </div>
   </template>
 

@@ -171,6 +171,29 @@ $('#cancel_user_btn').click(function(e){
     modal_open = false;
 });
 
+$('#make_user_admin').click(function(e){
+    socket.emit("request make user admin", document.getElementById("user_id_entry").value, function(response){
+        if (response == "success"){
+            if (window.confirm("Käyttäjä on ylennetty hallinnoijaksi"))
+            {
+                $('#user_modal_container').hide();
+                modal_open = false;
+                $("#council_content").empty();
+                $("#users_content").empty();
+            }
+        }
+        else {
+            if (window.confirm("Käyttäjätietojen päivitys ei onnistunut"))
+            {
+                $('#user_modal_container').hide();
+                modal_open = false;
+                $("#council_content").empty();
+                $("#users_content").empty();
+            }
+        }
+    });
+});
+
 $(document).on('click', '.user_btn', function(e){
     if (modal_open === true)
     {
