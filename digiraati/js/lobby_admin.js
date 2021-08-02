@@ -3,6 +3,7 @@ var host = socket["io"]["uri"] + ":" + location.port;
 var council = "";
 var council_users;
 var council_messages;
+var alternator = 0;
 
 $(function(){
     $('.grey_fadeout_layer').hide();
@@ -27,7 +28,9 @@ $(function(){
                     council_users = result["users"];
 
                     let user_element = document.getElementById("list_of_users");
+                    let banned_element = document.getElementById("list_of_banned_users");
                     let action_list = document.getElementById("list_of_actions");
+                    let banned_action_list = document.getElementById("list_of_banned_actions");
                     let messages_element = document.getElementById("list_of_messages");
                     let action_template = document.querySelector("#user_actions");
 
@@ -35,6 +38,12 @@ $(function(){
                     {
                         let temp_meta = document.createElement("div");
                         temp_meta.classList.add("user_meta_container");
+                        if (alternator == 1)
+                        {
+                            console.log("It should be grey");
+                            temp_meta.classList.add("grey_background");
+                        }
+
                         
                         let temp_icon_container = document.createElement("div");
                         temp_icon_container.classList.add("icon_container");
@@ -48,7 +57,12 @@ $(function(){
 
                         else if (council_users[i]["role"] == "moderator")
                         {
-                            temp_icon.classList.add("gg-user-add");
+                            temp_icon.classList.add("gg-dice-2");
+                        }
+
+                        else if (council_users[i]["role"] == "super_mod")
+                        {
+                            temp_icon.classList.add("gg-dice-3")
                         }
 
                         else if (council_users[i]["role"] == "banned")
@@ -57,7 +71,7 @@ $(function(){
                         }
 
                         else {
-                            temp_icon.classList.add("gg-user");
+                            temp_icon.classList.add("gg-dice-1");
                         }
 
                         temp_icon_container.appendChild(temp_icon);
@@ -74,27 +88,46 @@ $(function(){
 
                         temp_meta.appendChild(temp_user);
 
-                        user_element.appendChild(temp_meta);
-
                         let temp_actions = document.importNode(action_template.content, true);
+                        if (alternator == 1)
+                        {
+                            temp_actions.querySelector(".user_action_buttons").classList.add("grey_background");
+                            alternator = 0;
+                        }
+
+                        else {
+                            alternator = 1;
+                        }
+
                         temp_actions.querySelector(".ban_button").id = temp_user.id + "banbutton";
                         if(council_users[i]["role"] == "banned")
                         {
                             temp_actions.querySelector(".ban_button").id = temp_user.id + "unbanbutton";
                             temp_actions.querySelector(".ban_button").classList.add("unban_button");
                             temp_actions.querySelector(".ban_button").classList.remove("ban_button");
-                            temp_actions.querySelector(".unban_button").innerHTML = "Poista bännit";
+                            temp_actions.querySelector(".unban_button").innerHTML = "Palauta käyttöoikeudet";
+                            let promote_button = temp_actions.querySelector(".promote_button");
+                            promote_button.parentNode.removeChild(promote_button);
                         }
-                        temp_actions.querySelector(".promote_button").id = temp_user.id + "promotebutton";
-                        if(council_users[i]["role"] == "moderator")
+                        else {
+                            temp_actions.querySelector(".promote_button").id = temp_user.id + "promotebutton";
+                            if(council_users[i]["role"] == "moderator")
+                            {
+                                temp_actions.querySelector(".promote_button").id = temp_user.id + "demotebutton";
+                                temp_actions.querySelector(".promote_button").classList.add("demote_button");
+                                temp_actions.querySelector(".promote_button").classList.remove("promote_button");
+                                temp_actions.querySelector(".demote_button").innerHTML = "Poista moderaattorioikeudet";
+                            }
+                        }
+                        if(council_users[i]["role"] == "banned")
                         {
-                            temp_actions.querySelector(".promote_button").id = temp_user.id + "demotebutton";
-                            temp_actions.querySelector(".promote_button").classList.add("demote_button");
-                            temp_actions.querySelector(".promote_button").classList.remove("promote_button");
-                            temp_actions.querySelector(".demote_button").innerHTML = "Poista moderaattorioikeudet";
+                            banned_element.appendChild(temp_meta);
+                            banned_action_list.appendChild(temp_actions);
                         }
-
-                        action_list.appendChild(temp_actions);
+                        else{
+                            user_element.appendChild(temp_meta);
+                            action_list.appendChild(temp_actions);
+                        }
                     }
 
                     for (let i = 0; i < council_messages.length; i++)
@@ -157,7 +190,7 @@ $(document).on('click', '.council_message_delete_button', function(e){
 });
 
 $(document).on('click', '.ban_button', function(e){
-    if (window.confirm("Oletko varma, että haluat bännätä tämän käyttäjän?"))
+    if (window.confirm("Oletko varma, että haluat estää tämän käyttäjän pääsyn raatiin?"))
     {
         let user_id = $(this).attr('id').replace("banbutton", "");
         let council_id = window.location.href.split("/").slice(-2)[0];
@@ -227,7 +260,7 @@ $(document).on('click', '.demote_button', function(e){
 });
 
 $(document).on('click', '.unban_button', function(e){
-    if (window.confirm("Oletko varma, että haluat poistaa käyttäjän bännit?"))
+    if (window.confirm("Oletko varma, että haluat palauttaa käyttäjän kirjoitusoikeudet raatiin?"))
     {
         let user_id = $(this).attr('id').replace("unbanbutton", "");
         let council_id = window.location.href.split("/").slice(-2)[0];

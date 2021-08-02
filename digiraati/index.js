@@ -271,12 +271,12 @@ io.on('connection', function(socket){
 
   socket.on('request full data', function(user_id, callback){ // For the administrative panel. Returns all council data, user data and conclusion data.
 
-
+    var admins = rightsManager.get_all_admins();
     var user_data = users.get_all_users();
     var council_data = councils.get_councils();
     var conclusion_data = conclusioner.get_all_data();
 
-    callback(council_data, user_data, conclusion_data);
+    callback(admins, council_data, user_data, conclusion_data);
   });
 
   //login check request. Checks the login according to currently in-use user token and council_id

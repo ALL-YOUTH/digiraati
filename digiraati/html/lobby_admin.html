@@ -28,13 +28,20 @@
             <div id="admin_content" class="admin_content_frame">
                 <div id="users_content">
                     <div id="council_users_header" class="header_text">Raadin käyttäjät</div>
+                    <div id="role_instructions" class="role_instruction_text">
+                        Raadin käyttäjät on jaettu kolmeen tasoon:<br/><br/>
+                        <b>Käyttäjät</b> ovat tavallisia käyttäjiä, joilla ei ole mitään sen ihmeellisempiä erityisoikeuksia. Mikäli käyttäjä <b>estetään</b>, tämä ei voi enää kirjoittaa raatiin viestejä, reagoida sen viesteihin, vastata loppukyselyyn tai muutenkaan osallistua raadin toimintaan.<br/><br/>
+                        <b>Moderaattoreilla</b> on oikeus poistaa käyttäjien viestejä ja estää näiden pääsy raatiin.<br/><br/>
+                        <b>Hallinnoijilla</b> on moderaattorien oikeudet, mutta myös lisäksi oikeus nimittää uusia moderaattoreita tai poistaa käyttäjiltä moderaattorin oikeudet.<br/><br/>
+                    </div>
                     <div id="council_users">
                         <div id="list_of_users" class="user_list_container"></div>
                         <div id="list_of_actions" class="user_list_container"></div>
                     </div>
-                    <div id="council_users_header" class="header_text">Bännätyt käyttäjät</div>
+                    <div id="council_users_header" class="header_text">Estetyt käyttäjät</div>
                     <div id="banned_users">
-                        <div id="list_of_banned_users"></div>
+                        <div id="list_of_banned_users" class="user_list_container"></div>
+                        <div id="list_of_banned_actions" class="user_list_container"></div>
                     </div>
                 </div>
                 <div class="admin_content_frame" id="council_content">
@@ -58,7 +65,7 @@
   <template id="user_actions">
       <div class="user_action_buttons">
           <div class="promote_button"id="">Ylennä käyttäjä moderaattoriksi</div>
-          <div class="ban_button " id="">Bännää käyttäjä</div>
+          <div class="ban_button " id="">Estä käyttäjä</div>
       </div>
   </template>
 

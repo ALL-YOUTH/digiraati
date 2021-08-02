@@ -3,7 +3,7 @@ module.exports = class RightsManager{
     {
         this.admins = []; // Straight up array of user ids for admins.
         this.politicians = []; // Straight up array of user ids for politicians / "global moderators"
-        this.councils = []; // Array of dictionaries in the format {"council_id", ["user_ids"], ["banned_ids"], ["moderators"]}
+        this.councils = []; // Array of dictionaries in the format {"council_id", ["user_ids"], ["banned_ids"], ["moderators"], ["super_mods"]}
     }
 
     backup_contents(){ // Returns all the contents in JSON objects for local backups
@@ -82,6 +82,11 @@ module.exports = class RightsManager{
 
     }
 
+    get_list_of_admins()
+    {
+        return this.admins;
+    }
+
     add_user_to_politicians(user_id){
         if(this.politicians.includes(user_id))
         {
@@ -117,6 +122,30 @@ module.exports = class RightsManager{
 
     }
 
+    add_user_to_council_supermods(user_id, council_id)
+    {
+        for (let c = 0; c < this.councils.length; c++)
+        {
+            if (this.councils[c]["council_id"] == council_id)
+            {
+                if (this.councils[c]["super_mods"].includes(user_id))
+                {
+                    return "already_mod";
+                }
+
+                else {
+                    this.councils[c]["super_mods"].push(user_id);
+                    return "success";
+
+                }
+            }
+        }
+
+        let new_council = {"council_id": council_id, "moderators": [], "banned_ids": [], "super_mods": [user_id]};
+        this.councils.push(new_council);
+        return 1;
+    }
+
     remove_user_from_council_mods(user_id, council_id)
     {
         for (let c = 0; c < this.councils.length; c++)
@@ -132,6 +161,29 @@ module.exports = class RightsManager{
 
                 else {
                     return "not_a_mod";
+                }
+            }
+        }
+
+        return "council_not_found";
+
+    }
+
+    remove_user_from_council_supermods(user_id, council_id)
+    {
+        for (let c = 0; c < this.councils.length; c++)
+        {
+            if (this.councils[c]["council_id"] == council_id)
+            {
+                if (this.councils[c]["super_mods"].includes(user_id))
+                {
+                    let index = this.councils[c]["super_mods"].indexOf(user_id);
+                    this.councils[c]["super_mods"].splice(index, 1);
+                    return "success";
+                }
+
+                else {
+                    return "not_a_supermod";
                 }
             }
         }
@@ -166,8 +218,14 @@ module.exports = class RightsManager{
 
                 if(this.councils[c]["banned_ids"].includes(user_id))
                 {
-                    console.log("Returning bannged")
+                    console.log("Returning banned")
                     returnable["role"] = "banned";
+                }
+
+                else if(this.councils[c]["super_mods"].includes(user_id))
+                {
+                    console.log("Returning supermod")
+                    returnable["role"] = "supermod";
                 }
 
                 else if (this.councils[c]["moderators"].includes(user_id))

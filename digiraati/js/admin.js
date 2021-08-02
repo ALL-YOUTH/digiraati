@@ -4,6 +4,7 @@ var host = socket["io"]["uri"] + ":" + location.port;
 var council_data;
 var user_data;
 var conclusion_data;
+var admin_data;
 var modal_open = false;
 var original_council_id;
 var original_user_id;
@@ -18,10 +19,12 @@ $(function(){
     $('#modal_file_container').hide();
     $('#messages_modal_container').hide();
     $('#conclusion_modal_container').hide();
-    socket.emit('request full data', window.sessionStorage.getItem('userID'), function(c_data, u_data, conc_data){
+    socket.emit('request full data', window.sessionStorage.getItem('userID'), function(a_data, c_data, u_data, conc_data){
         council_data = c_data;
         user_data = u_data;
         conclusion_data = conc_data;
+        admin_data = a_data;
+
         var council_content = document.getElementById("council_content");
         var user_content = document.getElementById("users_content");
     
@@ -46,6 +49,7 @@ $(function(){
             temp_user.appendChild(header_text);
             user_content.appendChild(temp_user);
         });
+
     });
 });
 
