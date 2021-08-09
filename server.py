@@ -55,6 +55,7 @@ clients = {}
 addresses = {}
 all_messages = []
 
+
 HOST = "192.168.1.100"
 PORT = 33000
 BUFSIZ = 1024
