@@ -10,6 +10,7 @@ var bases = [];
 var submitting = false;
 var submittable;
 var uploaded_header = "default.png";
+var uploading = false;
 
 $(function(){
   $('#create_container_2').hide();
@@ -81,6 +82,9 @@ $('textarea').on('keydown', function(e){
     });
 
 $('#add_file_btn').click(function(ev){
+  if (uploading == false)
+  {
+    uploading = true;
   ev.preventDefault();
   var fileEl = document.getElementById('file_input');
   var fn = fileEl.files[0]["name"];
@@ -99,6 +103,11 @@ $('#add_file_btn').click(function(ev){
   setTimeout(function() {
     uploader.abort(uploadIds[0]);
   }, 5000);
+  }
+  else
+  {
+    alert("Tiedoston lähetys on jo käynnissä");
+  }
 });
   
   $('#add_image_btn').click(function(ev){
@@ -175,6 +184,7 @@ uploader.on('stream', function(fileInfo) {
 });
 
 uploader.on('complete', function(fileInfo) {
+  uploading = false;
   console.log(fileInfo);
   if(fileInfo["uploadTo"] == "files")
   {

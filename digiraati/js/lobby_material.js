@@ -16,6 +16,7 @@ var currPage = 1;
 var thePDF = null;
 var scale = 0.1;
 var current_comment_open = "";
+var uploading = false;
 
 var host = socket["io"]["uri"] + ":" + location.port;
 
@@ -455,6 +456,9 @@ function handlePages(page) {
 }
 
 $('#add_file_btn').click(function(ev){
+  if (uploading == false)
+  {
+    uploading = true;
   ev.preventDefault();
   var fileEl = document.getElementById('file_input');
   let file_id = makeid(8);
@@ -473,6 +477,12 @@ $('#add_file_btn').click(function(ev){
   setTimeout(function() {
     uploader.abort(uploadIds[0]);
   }, 5000);
+  }
+
+  else 
+  {
+    alert("Tiedosto on jo lähetyksessä");
+  }
 });
 
 uploader.on('start', function(fileInfo) {
@@ -483,12 +493,15 @@ uploader.on('stream', function(fileInfo) {
 });
 uploader.on('complete', function(fileInfo) {
   //console.log("upload complete")
+  alert("Tiedoston lähetys onnistui");
+  uploading = false;
   socket.emit('update files request', council, function(file_list){
     list_files(file_list);
     //console.log("received files");
   });
 });
 uploader.on('error', function(err) {
+  alert("Tiedoston lähetys epäonnistui");
   //console.log('Error!', err);
 });
 uploader.on('abort', function(fileInfo) {
@@ -523,6 +536,11 @@ $('#all_documents_btn').click(function(){
 });
 
 function file_clicked(e){
+  let maximum_length = 23; // Pisin tiedostonnimi, joka näytetään
+  let tiedostonimi = e.innerHTML;
+  let trimmedString = tiedostonimi.length > maximum_length ? 
+                    tiedostonimi.substring(0, maximum_length - 3) + "..." : 
+                    tiedostonimi;
   if(e.id == showing){return;}
   scale = 0.1;
   var w = document.getElementById('comment_view').style.width + "px";
@@ -533,7 +551,7 @@ function file_clicked(e){
   $('#current_document').css("width", "39%");
   $('#current_document').css("transition", "width 1s");
   $('#current_document').css("display", "inline-block");
-  $('#current_document').text(e.innerHTML);
+  $('#current_document').text(trimmedString);
   $("html,body").animate({"scrollTop": $("#lobby_navigation").offset().top},1000);
   currPage = 1;
   thePDF = null;
