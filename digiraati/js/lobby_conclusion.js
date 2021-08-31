@@ -13,7 +13,7 @@ var chat_list;
 var conclusions = false;
 
 $(function(){
-
+  window.sessionStorage.removeItem("in_council");
   $('#header').load(socket["io"]["uri"] + "/html/header.html");
   $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
   $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
@@ -24,6 +24,7 @@ $(function(){
   socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(reply)
   {
     if (reply == "success"){
+      window.sessionStorage.setItem("in_council", true);
       data["username"] = window.sessionStorage.getItem('logged_in');
       socket.emit("request council data", council, function(data){
         //console.log(data);

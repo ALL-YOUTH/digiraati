@@ -268,6 +268,20 @@ class Council{
     this.files.push(file);
   }
 
+  delete_file(file_id)
+  {
+    for (let i = 0; i < this.files.length; i++)
+    {
+      if (this.files[i]["id"] == file_id)
+      {
+        this.files.splice(i,1);
+        return "success";
+      }
+    }
+
+    return "failure";
+  }
+
   add_msg(msg){
     this.messages.push(msg);
   }
@@ -471,6 +485,19 @@ module.exports = class Councils{
     }
     var file = new File(fileid, filename, uploader, comments);
     council.add_file(file);
+  }
+
+  delete_file(council_id, file_id)
+  {
+    let council = this.get_council_by_id(council_id);
+    if (council == -1)
+    {
+      return "failure";
+    }
+
+    else{
+      return council.delete_file(file_id);
+    }
   }
 
   add_comment_to_file(data){

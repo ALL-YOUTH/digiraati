@@ -10,13 +10,19 @@ var original_message;
 var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 $(function(){
+  window.sessionStorage.removeItem("in_council");
   $('.grey_fadeout_layer').hide();
+  $('.new_message_button').hide();
   $('#header').load(socket["io"]["uri"] + "/html/header.html");
   $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
   $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
   council = window.location.href.split("/").slice(-2)[0];
   socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(result){
+    console.log("result:");
+    console.log(result);
     if (result == "success"){
+      window.sessionStorage.setItem("in_council", true);
+      $('.new_message_button').show();
       socket.emit("request present users", council, function(result){ // Retrieve the list of users currently active in the council
         console.log("Fetched present users:")
         let current_time = new Date().getTime();
@@ -53,6 +59,9 @@ $(function(){
         }
       });
       last_message_sender = "";
+  }
+  else {
+    window.sessionStorage.removeItem("in_council");
   }
   });
 });

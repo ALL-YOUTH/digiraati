@@ -173,12 +173,14 @@ uploader.on('start', function(fileInfo) {
 uploader.on('stream', function(fileInfo) {
   console.log('Streaming... sent ' + fileInfo.sent + ' bytes.');
 });
+
 uploader.on('complete', function(fileInfo) {
   console.log(fileInfo);
   if(fileInfo["uploadTo"] == "files")
   {
   socket.emit('update files request', council_id, function(response)
   {
+    alert("Tiedoston lähetys onnistui")
     list_files(response);
   });
   } 

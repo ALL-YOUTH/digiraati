@@ -223,3 +223,60 @@
     font-weight: bold;
     color: white;
 }
+
+.modal_supermod_content_container{
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    height: 95%;
+    font-size: 16px;
+}
+
+.modal_half_div{
+    width: 50%;
+    justify-content: space-evenly;
+    height: 95%;
+    column-gap: 5px;
+}
+
+.right_side_meta_container{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    height: auto;
+}
+
+.supermod_userlist_item{
+    display: block;
+    margin-bottom: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: center;
+};
+
+.supermod_userlist_role_container{
+    width: 40%;
+    margin-bottom: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.supermod_userlist_promote{
+    width: 40%;
+    background-color: rgb(12, 192, 93);
+    margin-bottom: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.supermod_userlist_demote{
+    width: 40%;
+    background-color: rgb(192, 12, 81);
+    margin-bottom: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    text-align: center;
+    cursor: pointer;
+}

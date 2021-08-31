@@ -6,6 +6,7 @@ var council_messages;
 var alternator = 0;
 
 $(function(){
+    window.sessionStorage.removeItem("in_council");
     $('.grey_fadeout_layer').hide();
     $('#header').load(socket["io"]["uri"] + "/html/header.html");
     $('#footer').load(socket["io"]["uri"] + "/html/footer.html");
@@ -16,6 +17,7 @@ $(function(){
 
     socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(result){
         if (result == "success"){   
+            window.sessionStorage.setItem("in_council", true);
             socket.emit("check council privileges", window.sessionStorage.getItem('token'), council, function(result){
                 console.log("RESULT:");
                     console.log(result);
@@ -43,7 +45,6 @@ $(function(){
                             console.log("It should be grey");
                             temp_meta.classList.add("grey_background");
                         }
-
                         
                         let temp_icon_container = document.createElement("div");
                         temp_icon_container.classList.add("icon_container");
@@ -110,15 +111,25 @@ $(function(){
                             promote_button.parentNode.removeChild(promote_button);
                         }
                         else {
+
+                            if(result["role"] == "supermod" || result["role"] == "admin"){ // Jos aktiivinen käyttäjä on raadin tai koko digiraadin ylläpitäjä, näytetään moderaattorinapit
+
                             temp_actions.querySelector(".promote_button").id = temp_user.id + "promotebutton";
-                            if(council_users[i]["role"] == "moderator")
-                            {
-                                temp_actions.querySelector(".promote_button").id = temp_user.id + "demotebutton";
-                                temp_actions.querySelector(".promote_button").classList.add("demote_button");
-                                temp_actions.querySelector(".promote_button").classList.remove("promote_button");
-                                temp_actions.querySelector(".demote_button").innerHTML = "Poista moderaattorioikeudet";
+                                if(council_users[i]["role"] == "moderator")
+                                {
+                                    temp_actions.querySelector(".promote_button").id = temp_user.id + "demotebutton";
+                                    temp_actions.querySelector(".promote_button").classList.add("demote_button");
+                                    temp_actions.querySelector(".promote_button").classList.remove("promote_button");
+                                    temp_actions.querySelector(".demote_button").innerHTML = "Poista moderaattorioikeudet";
+                                    //temp_actions.querySelector(".demote_button").classList.add("")
+                                }
                             }
+                            else { // Ei näytetä nappia
+                                temp_actions.querySelector(".promote_button").remove();
+                            }
+                        
                         }
+                        
                         if(council_users[i]["role"] == "banned")
                         {
                             banned_element.appendChild(temp_meta);

@@ -14,6 +14,28 @@ module.exports = class RightsManager{
         return returnable;
     }
 
+    get_council_user_rights(council_id)
+    {
+        let returnable = {};
+        returnable["admins"] = this.admins;
+        returnable["council"] = {};
+        for (let i = 0; i < this.councils.length; i++)
+        {
+            if (this.councils[i]["council_id"] == council_id)
+            {
+                returnable["council"] = this.councils;
+                return returnable;
+            }
+        }
+
+        return returnable;
+    }
+
+    get_all_admins()
+    {
+        return this.admins;
+    }
+
     add_user_to_admins(user_id)
     {
         if(this.admins.includes(user_id))
@@ -24,6 +46,21 @@ module.exports = class RightsManager{
         else {
             this.admins.push(user_id);
             return "success";
+        }
+    }
+
+    remove_user_from_admins(user_id)
+    {
+        if(this.admins.includes(user_id))
+        {
+            let index = this.admins.indexOf(user_id);
+            this.admins.splice(index, 1);
+
+            return "success"
+        }
+
+        else{
+            return "not_admin"
         }
     }
 
@@ -50,7 +87,7 @@ module.exports = class RightsManager{
         }
 
         console.log("The council ID was not found");
-        let new_council = {"council_id": council_id, "banned_ids": [user_id], "moderators":[]};
+        let new_council = {"council_id": council_id, "banned_ids": [user_id], "moderators":[], "super_mods": []};
         this.councils.push(new_council);
         return "success";
 
@@ -116,7 +153,7 @@ module.exports = class RightsManager{
             }
         }
 
-        let new_council = {"council_id": council_id, "moderators": [user_id], "banned_ids": []};
+        let new_council = {"council_id": council_id, "moderators": [user_id], "banned_ids": [], "super_mods":[]};
         this.councils.push(new_council);
         return 1;
 
@@ -130,7 +167,7 @@ module.exports = class RightsManager{
             {
                 if (this.councils[c]["super_mods"].includes(user_id))
                 {
-                    return "already_mod";
+                    return "already_supermod";
                 }
 
                 else {
@@ -196,7 +233,26 @@ module.exports = class RightsManager{
     {
         this.admins = data["admins"] || [];
         this.politicians = data["politicians"] || [];
+
         this.councils = data["councils"] || [];
+
+        for (let i = 0; i < this.councils.length; i++) // Varmistetaan, että kaikissa raadeissa on tarvittavat avaimet eri käyttäjäluokille, tämän voinee deaktivoida myöhemmin ellei raateihin ole lisätty uusia käyttäjäluokkia
+        {
+            if ("moderators" in this.councils[i] == false)
+            {
+                this.councils[i]["moderators"] = []
+            }
+
+            if ("super_mods" in this.councils[i] == false)
+            {
+                this.councils[i]["super_mods"] = []
+            }
+
+            if ("banned_ids" in this.councils[i] == false)
+            {
+                this.councils[i]["banned_ids"] = []
+            }
+        }
     }
 
     check_user_rights_in_council(user_id, council_id)
@@ -239,7 +295,7 @@ module.exports = class RightsManager{
         return returnable;
     }
 
-    check_user_rights(user_id)
+    check_user_rights(user_id) // Ei tällä hetkellä käytössä, koska raatikohtainen kysely taitaa olla parempi. 
     {
         console.log("Tuli tämmönen kysely: " + user_id)
         let returnable = {"role": "user"};

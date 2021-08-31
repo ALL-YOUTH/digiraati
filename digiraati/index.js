@@ -296,10 +296,16 @@ io.on('connection', function(socket){
       callback("not_logged");
     }
     else{
-      var uid = users.get_userid_by_username(name);
-      callback("success");
-      socket.join(cid);
-      update_page();
+      if (councils.is_user_joined(cid, name) == true)
+      {
+        var uid = users.get_userid_by_username(name);
+        callback("success");
+        socket.join(cid);
+        update_page();
+      }
+      else{
+        callback("not_member");
+      }
     }
   });
 
@@ -727,8 +733,10 @@ io.on('connection', function(socket){
     io.to(data["council"]).emit('delete message', data["mid"]);
   })
 
-  socket.on('request delete file', function(data){
-    councils.delete_file(data["council"], data["file_id"]);
+  socket.on('request delete file', function(data, callback){
+    let response = councils.delete_file(data["council"], data["file_id"]);
+    create_backup();
+    callback(response);
   });
   
   socket.on('request council delete', function(data, callback){
@@ -889,16 +897,22 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on('request council rights', function(council_id, callback){
+    let user_rights = rightsManager.get_council_user_rights(council_id);
+    callback(user_rights);
+  });
+
   socket.on('check council privileges', function(token, council, callback){
     let user_id = "";
     user_id = token_to_user_id(token);
     
-    let user_status = rightsManager.check_user_rights(user_id);
+    let user_status = rightsManager.check_user_rights_in_council(user_id, council);
     if (user_status["role"] == "admin") // User is an administrator and has moderation rights on every council
     {
 
       let returnable = {};
       let council_data = councils.get_council_data(council);
+      returnable["role"] = "admin"
       returnable["messages"] = council_data["messages"];
       returnable["users"] = [];
       for (let i = 0; i < council_data["users"].length; i++)
@@ -918,10 +932,29 @@ io.on('connection', function(socket){
       callback(returnable);
     }
 
-    else if(user_status["role"] == "moderator" || user_status["councils"].includes(council)) // User is a moderator on the queried council
+    else if((user_status["role"] == "moderator" || user_status["role"] == "supermod") && user_status["councils"].includes(council)) // User is a moderator or supermod on the queried council
     {
 
       let returnable = {};
+      let council_data = councils.get_council_data(council);
+      returnable["role"] = user_status["role"]
+      returnable["messages"] = council_data["messages"];
+      returnable["users"] = [];
+      for (let i = 0; i < council_data["users"].length; i++)
+      {
+        let fetched_data = users.get_user(council_data["users"][i]);
+        if (fetched_data != null)
+        {
+          let temp_user = {};
+          temp_user["user_id"] = fetched_data["id"];
+          temp_user["username"] = fetched_data["username"];
+          let role = rightsManager.check_user_rights_in_council(fetched_data["id"], council);
+          temp_user["role"] = role["role"];
+          returnable["users"].push(temp_user);
+        }      
+      }
+
+      callback(returnable);
 
     }
   });
@@ -943,6 +976,30 @@ io.on('connection', function(socket){
       console.log("User " + banner_id + " tried to promote user " + user_id + " as mod in " + council_id + " but had no rights.");
       callback("no_rights");
     }
+  });
+
+  socket.on('request make user supermod', function(user_id, council_id, callback){
+    if (rightsManager.add_user_to_council_supermods(user_id, council_id) == "success" || "already_supermod")
+    {
+      create_backup();
+      callback("success");
+    }
+
+    else {
+      callback("failure");
+    }    
+  });
+  
+  socket.on('request remove user as supermod', function(user_id, council_id, callback){
+    if (rightsManager.remove_user_from_council_supermods(user_id, council_id) == "success" || "not_a_supermod")
+    {
+      create_backup();
+      callback("success");
+    }
+
+    else {
+      callback("failure");
+    }    
   });
 
   socket.on("request remove user as mod", function(user_id, promoter_token, council, callback){

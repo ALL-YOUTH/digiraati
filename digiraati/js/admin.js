@@ -8,9 +8,12 @@ var admin_data;
 var modal_open = false;
 var original_council_id;
 var original_user_id;
+var sorted_user_data;
 
 $(function(){
     $('#user_modal_container').hide();
+    $('#modal_supermod_container').hide();
+    $('#admin_modal_container').hide();
     $('#council_modal_container').hide();
     $('#council_content').hide();
     $('#users_content').hide();
@@ -20,6 +23,7 @@ $(function(){
     $('#messages_modal_container').hide();
     $('#conclusion_modal_container').hide();
     socket.emit('request full data', window.sessionStorage.getItem('userID'), function(a_data, c_data, u_data, conc_data){
+        console.log(conc_data);
         council_data = c_data;
         user_data = u_data;
         conclusion_data = conc_data;
@@ -49,6 +53,8 @@ $(function(){
             temp_user.appendChild(header_text);
             user_content.appendChild(temp_user);
         });
+
+        sorted_user_data = user_data.sort(dynamicSort("username"));
 
     });
 });
@@ -101,9 +107,140 @@ $('#lataa').click(function(e){
 });
 
 $('#cancel_council_btn').click(function(e){
-        console.log("closing council");
+    console.log("closing council");
     $('#council_modal_container').hide();
     modal_open = false;
+});
+
+$('#council_supermods_btn').click(function(e){
+
+    let supermod_user_list = document.getElementById("supermod_names_list");
+    let right_side_meta = document.getElementById("supermod_status_list");
+
+    console.log("Opening supermods")
+    let council_user_rights = {};
+    socket.emit('request council rights', original_council_id, function(reply){
+        console.log("Received user rights");
+        council_user_rights = reply;
+        console.log(council_user_rights);
+    
+    for (let i = 0; i < sorted_user_data.length; i++)
+    {
+
+        console.log("Processing: " + sorted_user_data[i].username + " (" + sorted_user_data[i]["id"] +")");
+        let temp_user_data = document.createElement('div');
+        temp_user_data.classList.add("supermod_userlist_item");
+        temp_user_data.id = sorted_user_data[i]["id"];
+        temp_user_data.innerHTML = sorted_user_data[i]["username"];
+
+        let right_side_container = document.createElement('div');
+        right_side_container.classList.add("right_side_meta_container");
+        
+        let temp_user_actions = document.createElement('div');
+        temp_user_actions.classList.add("supermod_userlist_promote");
+        temp_user_actions.id = sorted_user_data[i]["id"] + "actionbuttons";
+
+        let user_role_container = document.createElement("div");
+        user_role_container.id = sorted_user_data[i]["id"] + "userrole";
+        user_role_container.classList.add("supermod_userlist_role_container");
+                
+        if (council_user_rights.admins.includes(sorted_user_data[i].id)) // Käyttäjä on koko Digiraadin hallinnoija
+        {
+            console.log("Löytyi admin");
+            user_role_container.innerHTML = "Digiraadin hallinnoija";
+            temp_user_actions.innerHTML = "Dixu-admineihin ei voi koskea";
+            temp_user_actions.classList.add("disabled");
+        }
+
+        else if (council_user_rights["council"][0].super_mods.includes(sorted_user_data[i].id)) // Käyttäjä on raadin hallinnoija
+        {
+            user_role_container.innerHTML = "Raadin hallinnoija";
+            temp_user_actions.innerHTML = "Poista hallinnoijan oikeudet";
+            temp_user_actions.classList.remove("supermod_userlist_promote");
+            temp_user_actions.classList.add("supermod_userlist_demote");
+        }
+
+        else if (council_user_rights["council"][0].moderators.includes(sorted_user_data[i].id)) // Käyttäjä on raadin moderaattori
+        {
+            user_role_container.innerHTML = "Raadin moderaattori";
+            temp_user_actions.innerHTML = "Ylennä käyttäjä hallinnoijaksi";
+        }
+
+        else if ((council_user_rights["council"][0].banned_ids.includes(sorted_user_data[i].id))) // Käyttäjä on bännätty raadista
+        {
+            user_role_container.innerHTML = "Bännätty raadista";
+            temp_user_actions.innerHTML = "Estettyä käyttäjää ei voi ylentää";
+            temp_user_actions.classList.add("disabled");
+        }
+
+        else { // käyttäjä on tavallinen käyttäjä
+            user_role_container.innerHTML = "Raadin käyttäjä";
+            temp_user_actions.innerHTML = "Ylennä käyttäjä hallinnoijaksi";            
+        }
+
+        right_side_container.appendChild(user_role_container);
+        right_side_container.appendChild(temp_user_actions);
+
+        supermod_user_list.appendChild(temp_user_data);
+        right_side_meta.appendChild(right_side_container);
+    }
+
+    });
+
+    $('#modal_supermod_container').show();
+});
+
+$(document).on('click', '.supermod_userlist_promote', function(e){
+    let user_id = e.currentTarget.id.replace('actionbuttons', '');
+
+    if ("disabled" in e.currentTarget.classList)
+    {
+        alert("Estettyä käyttäjää ei voi ylentää");
+    }
+    
+    else 
+    {
+        socket.emit('request make user supermod', user_id, original_council_id, function(response){
+            if (response == "success" || "already_a_supermod")
+            {
+                if (confirm("Käyttäjä on ylennetty hallinnoijaksi"))
+                {
+                    location.reload();
+                }
+
+            }
+
+            else{
+                alert("Käyttäjän ylentäminen ei onnistunut");
+            }
+        });
+    }
+});
+
+$(document).on('click', '.supermod_userlist_demote', function(e){
+    let user_id = e.currentTarget.id.replace('actionbuttons', '');
+
+    if ("disabled" in e.currentTarget.classList)
+    {
+        alert("Estettyä käyttäjää ei voi ylentää");
+    }
+    
+    else 
+    {
+        socket.emit('request remove user as supermod', user_id, original_council_id, function(response){
+            if (response == "success" || "not_a_supermod")
+            {
+                if (confirm("Käyttäjän hallinnoijan oikeudet on poistettu"))
+                {
+                    location.reload();
+                }
+            }
+
+            else{
+                alert("Käyttäjän alentaminen ei onnistunut");
+            }
+        });
+    }
 });
 
 $('#save_council_btn').click(function(e){
@@ -139,6 +276,10 @@ $('#save_council_btn').click(function(e){
         }
     });
 
+});
+
+$('#cancel_supermods_btn').click(function(e){
+    $('#modal_supermod_container').hide();
 });
 
 $('#save_user_btn').click(function(e){
@@ -266,6 +407,10 @@ $(document).on('click', '#council_messages_btn', function(e){
     $('#messages_modal_container').show();
 });
 
+$('#council_supermods_btn').click(function(){
+
+});
+
 $('#delete_council_btn').click(function(){
     if(window.confirm("Oletko varma, että haluat poistaa raadin?\nTätä toimintoa ei voi perua!") == true)
     {
@@ -335,7 +480,16 @@ $(document).on('click', '.file_delete_button', function(e){
         var data = {};
         data["council"] = original_council_id;
         data["file_id"] = e.currentTarget.id.replace("deletebutton", "");
-        //socket.emit("request delete file", data);
+        socket.emit("request delete file", data, function(reply){
+            if (reply == "success")
+            {
+                alert("Tiedosto poistettu");
+            }
+
+            else {
+                alert("Tiedoston poistossa tapahtui virhe");
+            }
+        });
 
         var container = document.getElementById(e.currentTarget.id.replace("deletebutton",""));
         container.classList.add("deleted");
@@ -405,3 +559,20 @@ $('#palaa').click(function(e){
     console.log("returning");
     goToPage("/");
 });
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+
+    return function (a,b) {
+        if(sortOrder == -1){
+            return b[property].localeCompare(a[property]);
+        }else{
+            return a[property].localeCompare(b[property]);
+        }        
+    }
+}

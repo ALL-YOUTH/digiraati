@@ -22,6 +22,7 @@ var host = socket["io"]["uri"] + ":" + location.port;
 var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
 $(function(){
+  window.sessionStorage.removeItem("in_council");
   $('#material_content').hide();
   council = window.location.href.split("/").slice(-2)[0];
   $('#header').load(socket["io"]["uri"] + "/html/header.html");
@@ -30,12 +31,14 @@ $(function(){
   $('#comment_list_div').css("max-height", $(window).height()-100);
   $('#navbar').load(socket["io"]["uri"] + '/html/navbar.html');
   socket.emit("check login council", window.sessionStorage.getItem('token'), council, function(result){
-    if (result == "success")
+    if (result == "success"){
+        window.sessionStorage.setItem("in_council", true);
         socket.emit('update files request', council, function(file_list)
           {
             list_files(file_list);
           });
     $('#material_content').show();
+    }
   });
 });
 
