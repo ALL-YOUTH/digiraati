@@ -5,5 +5,8 @@ req/*
 data
 node_modules
 *.rar
+*.pem
 digiraati/council_images
 digiraati/ssl
+digiraati/backup.json
+digiraati/files
