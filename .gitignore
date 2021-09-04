@@ -10,3 +10,4 @@ digiraati/council_images
 digiraati/ssl
 digiraati/backup.json
 digiraati/files
+digiraati/*.pem
