@@ -23,7 +23,14 @@
     "socket.io-file": "^2.0.31",
     "socket.io-file-client": "^2.0.2"
   },
-  "scripts": {
+{
+  "name": "nodemon",
+  "homepage": "http://nodemon.io",
+  "nodemonConfig": {
+    "ignore": ["files/*", "*.json", "images/*", "logs/*", "*.txt"],
+    "delay": 2500
+  },
+ "scripts": {
     "dev": "nodemon ./index.js localhost 1443",
     "start": "node index.js"
   },
