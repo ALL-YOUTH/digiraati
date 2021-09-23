@@ -634,7 +634,7 @@ module.exports = class Councils{
     {
       if(messages[i].get_id() == mid){
         console.log("success");
-        messages[i].set_content("<em>Käyttäjä on poistanut tämän viestin.</em>");
+        messages[i].set_content("*** Käyttäjä on poistanut tämän viestin. ***");
       }
     }
   }
