@@ -23,7 +23,7 @@
     "socket.io-file": "^2.0.31",
     "socket.io-file-client": "^2.0.2"
   },
- "scripts": {
+  "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
