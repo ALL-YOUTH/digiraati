@@ -681,6 +681,22 @@ function open_mobile_reply_panel(msg_id){
   $('.reply_panel_container').toggle(250);
 }
 
+function urlify(text) {
+  var urlRegex = /(https?:\/\/[^\s]+)/g;
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#x27;',
+  };
+  const reg = /[&<>']/ig;
+  let text2 = text.replace(reg, (match)=>(map[match]));
+  return text2.replace(urlRegex, function(url) {
+    return '<a href="' + url + '">' + url + '</a>';
+  });
+
+}
+
 function send_message(){
   if(document.getElementById('message_input').value.length < 1){
     return;
@@ -725,7 +741,8 @@ function create_message(msg, msg_target ="message_list"){
 
   let text_id = clone.getElementById("text");
   text_id.id = msg["id"] + "text";
-  text_id.innerHTML = msg["content"];
+  text_id.innerHTML = urlify(msg["content"]);
+
 
   let likes_number = clone.getElementById("likes");
   let dislikes_number = clone.getElementById("dislikes");
@@ -777,7 +794,7 @@ function create_reply(msg, level)
 
   let text_id = clone.getElementById("text");
   text_id.id = msg["id"] + "text";
-  text_id.innerHTML = msg["content"];
+  text_id.innerHTML = urlify(msg["content"]);
 
   let likes_number = clone.getElementById("likes");
   let dislikes_number = clone.getElementById("dislikes");
