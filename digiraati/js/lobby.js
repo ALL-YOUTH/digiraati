@@ -8,6 +8,21 @@ var progress_updated = false;
 
 var colors = ["#FE0456", "#CBE781", "#01AFC4", "#FFCE4E"];
 
+function urlify(text) {
+  var urlRegex = /(https?:\/\/[^\s]+)/g;
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    "'": '&#x27;',
+  };
+  const reg = /[&<>']/ig;
+  let text2 = text.replace(reg, (match)=>(map[match]));
+  return text2.replace(urlRegex, function(url) {
+    return '<a href="' + url + '">' + url + '</a>';
+  });
+
+}
 
 $(function(){
   sessionStorage.setItem('in_council', false);
@@ -209,7 +224,7 @@ function generate_council_info_from_data(data)
             sender.textContent = msg["sender"];
             sender.classList.add("message_list_sender_name");
             var msg_text = document.createElement('div');
-            msg_text.innerHTML = msg["content"];
+            msg_text.innerHTML = urlify(msg["content"]);
             msg_text.classList.add("message_text");
             message.appendChild(pic); message.appendChild(sender);
             message.appendChild(msg_text);
