@@ -54,15 +54,18 @@ function processLoginCheckReply(reply)
       $('#Profile_avatar').show();
       $('#Kirjaudu_btn').hide();
       $('#Kirjaudu_ulos_btn').show();
+      $('#Rekistroidy_btn').hide();
     }
     else if(view == "mobile"){
       $('#hamburger_avatar').show()
       $('#login_div').css("display", "none");
       $('#hamburger_signin').hide();
       $('#hamburger_signout').show();
+      $('#hamburger_register').hide();
       $('#Kirjaudu_btn').hide();
       $('#Kirjaudu_ulos_btn').hide();
       $('#Profile_avatar').hide();
+      $('#Rekistroidy_btn').hide();
     }
   }
 }
@@ -236,6 +239,7 @@ $('#login_confirm').click(function(){
           $('#Kirjaudu_ulos_btn').show();
           $('#Rekistroidy_btn').hide();
           $('#Hae_btn').show();
+          $('#Rekistroidy_btn').hide();
 
         }
         else if(view == "mobile"){
@@ -248,6 +252,7 @@ $('#login_confirm').click(function(){
           $('#Kirjaudu_btn').hide();
           $('#Kirjaudu_ulos_btn').hide();
           $('#Profile_avatar').hide();
+          $('#Rekistroidy_btn').hide();
         }
 
       }
