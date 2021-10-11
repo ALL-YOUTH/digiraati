@@ -228,10 +228,14 @@
     padding: 0px;
   }
 
-  #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Kirjaudu_ulos_btn, #Hae_btn{
+  #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Kirjaudu_ulos_btn {
     display:inline-block;
     margin-left: 40px;
   }
+/* Hiding search */
+   #Hae_btn{
+  display: none;
+   }
 
   #Profile_avatar{
     height: 25px;

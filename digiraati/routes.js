@@ -82,8 +82,9 @@ app.get("/info", function (req, res) {
 });
 
 //Council search page
+// Hiding search
 app.get("/search", function (req, res) {
-  res.sendFile(__dirname + "/html/search.html");
+  res.sendFile(__dirname + "/html/index.html"); // /html/search.html -> /html/index.html
 });
 
 //Create council page
