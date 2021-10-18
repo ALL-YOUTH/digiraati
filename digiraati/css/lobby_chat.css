@@ -460,6 +460,17 @@ body{
   text-align: center;
 }
 
+/* Scrollbar/chat adjusts 18102021 */
+
+@media (max-width: 999px)
+{
+  .new_message_button{
+    margin-top: -850px;
+    position: relative;
+    margin-right: 120px;
+
+  }
+}
 
 @media (min-width: 1000px)
 {

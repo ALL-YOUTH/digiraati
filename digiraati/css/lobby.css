@@ -492,13 +492,13 @@ div .inactive{
   padding-bottom: 25px;
   font-weight: bold;
 }
-
+  /* Scrollbar/chat adjusts 18102021 */
   #container {
     display: inline-block;
     width:100%;
     height: calc(100% - 0px - 69px - 60px - 50px);
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
+    /* overflow-y: auto; */
     margin-top: 25px;
     background-color: rgba(246,248,249,1);
   }

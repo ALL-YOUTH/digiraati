@@ -4,10 +4,11 @@
 #Etusivu_btn, #Info_btn, #Rekistroidy_btn, #Kirjaudu_btn, #Profile_avatar, #hae_btn, #Kirjaudu_ulos_btn{
   display:none;
 }
+/* Scrollbar/chat adjusts 18102021 */
 
 #header_div{
   height: 50px;
-  overflow-x: hidden;
+  overflow: hidden;
   z-index:90;
   padding:10px 0px 20px 0px;
 }

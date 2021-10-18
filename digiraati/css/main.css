@@ -110,12 +110,16 @@ html, body{
   overflow-y: scroll;
 }
 
+/* Scrollbar/chat adjusts 18102021; added to html over-flow: y + in body overflow-y: auto */
+
 html{
   background-size: cover;
+  overflow-y: hidden;
 }
 
 body{
   overflow-x: hidden;
+  overflow-y: auto;
   min-height: 150%;
   background-color: #F6F8F9;
 
