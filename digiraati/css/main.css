@@ -320,7 +320,15 @@ img {
   float:left;
   display:inline-block;
 }
+/* Scrollbar mainiin 19102021 */
 
+@media (max-width: 999px)
+{
+  html{
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
 /*Everything below is css for desktop view of the website.*/
 @media (min-width:1000px){
 
