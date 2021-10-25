@@ -590,11 +590,11 @@ body{
     margin:auto;
     height:100%;
   }
-
+  /* Scrollbar/chat adjusts 26102021  width 100% -> 99%, height 100% -> 99%*/
   #chat_container{
     position:relative;
-    width:100%;
-    height: calc(100% - 221px) !important;
+    width:99%;
+    height: calc(99% - 221px) !important;
     color:white;
     padding-top: 25px;
     overflow-y: auto;
@@ -670,9 +670,10 @@ body{
     color: #FFFFFF;
     opacity: 1;
   }
+  /* Scrollbar/chat adjusts 26102021 750px -> 50%*/
 
   #message_list{
-    height: 750px;
+    height: 50%;
     overflow-y:scroll;
     margin-bottom: 50px;
   }
