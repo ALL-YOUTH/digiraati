@@ -60,6 +60,14 @@ function display_file(file, title){
   let file_ext = title.split(".").slice(-1)[0];
   //console.log("file:" + file + "." + file_ext);
   url = socket["io"]["uri"] + "/files/" + file + "." + file_ext;
+
+  // JPG Support 07122021
+
+  if (file_ext == "jpg" | "jpeg") {
+    // console.log("URL:" + url + "file" + file);
+    pdf_div.innerHTML="<img src=\""+url+"\">";
+  } else {
+
   currPage = 1;
   pdfjsLib.getDocument(url).promise.then(function(pdf) {
     thePDF = pdf;
@@ -67,6 +75,7 @@ function display_file(file, title){
     pdf.getPage(currPage).then(handlePages);
   });
   showing = file;
+  }
 }
 
 function wheel(){
