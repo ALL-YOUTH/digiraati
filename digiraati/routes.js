@@ -71,6 +71,11 @@ app.get("/dataprot", function (req, res) {
   res.sendFile(__dirname + "/html/dataprot.html");
 });
 
+//Help files
+app.get("/help", function (req, res) {
+  res.sendFile(__dirname + "/html/help.html");
+});
+
 //Register page
 app.get("/register", function (req, res) {
   res.sendFile(__dirname + "/html/register.html");
