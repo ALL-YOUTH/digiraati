@@ -4,6 +4,7 @@ req/*
 .idea/*
 data
 node_modules
+node_modules/*
 *.rar
 *.pem
 digiraati/council_images
