@@ -538,8 +538,15 @@ img {
     margin-left:10%;
   }
 
-  #ongoing, #newest, #popularest{
+  #ongoing, #newest, #popularest, #helper{
     padding:5px 15px;
+    color: #000;
+    text-decoration: none;
+  }
+
+  a.helper{
+    color: #000;
+    text-decoration: none;
   }
 
   .selector_btn{
