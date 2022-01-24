@@ -100,6 +100,134 @@ body{
   border-color: rgba(254,4,86,1);
 }
 
+
+/* Collapsible menu 24012022 */
+
+input[type='checkbox'] {
+  display: none;
+}
+
+.lbl-toggle {
+  display: block;
+
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  text-align: center;
+
+  padding: 1rem;
+
+  color: #000;
+  background: #13b0c5;
+
+  cursor: pointer;
+
+  border-radius: 7px;
+  transition: all 0.25s ease-out;
+}
+
+.lbl-toggle:hover {
+  color: #FFF;
+}
+
+.lbl-toggle::before {
+  content: ' ';
+  display: inline-block;
+
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid currentColor;
+
+  vertical-align: middle;
+  margin-right: .7rem;
+  transform: translateY(-2px);
+
+  transition: transform .2s ease-out;
+}
+
+.collapsible-content {
+  max-height: 0px;
+  overflow: hidden;
+
+  transition: max-height .25s ease-in-out;
+}
+
+.toggle:checked + .lbl-toggle + .collapsible-content {
+  max-height: 100vh;
+}
+
+.toggle:checked + .lbl-toggle::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+
+.toggle:checked + .lbl-toggle {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* collapsible2 */
+
+.lbl-toggle2 {
+  display: block;
+
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  text-align: center;
+
+  padding: 1rem;
+
+  color: #000;
+  background: #13b0c5;
+
+  cursor: pointer;
+
+  border-radius: 7px;
+  transition: all 0.25s ease-out;
+}
+
+.lbl-toggle2:hover {
+  color: #FFF;
+}
+
+.lbl-toggle2::before {
+  content: ' ';
+  display: inline-block;
+
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid currentColor;
+
+  vertical-align: middle;
+  margin-right: .7rem;
+  transform: translateY(-2px);
+
+  transition: transform .2s ease-out;
+}
+
+.collapsible-content2 {
+  max-height: 0px;
+  overflow: hidden;
+
+  transition: max-height .25s ease-in-out;
+}
+
+.toggle2:checked + .lbl-toggle2 + .collapsible-content2 {
+  max-height: 100%;
+}
+
+.toggle2:checked + .lbl-toggle2::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+
+.toggle2:checked + .lbl-toggle2 {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+
 /*Everything below is css for desktop view of the website.*/
 @media (min-width:1000px){
   #main_text_mobile, #secondary_text_mobile{
@@ -185,4 +313,6 @@ body{
     text-transform: uppercase;
     opacity: 1;
   }
+
+
 }
