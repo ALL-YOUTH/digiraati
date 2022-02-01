@@ -227,6 +227,127 @@ input[type='checkbox'] {
   border-bottom-left-radius: 0;
 }
 
+/* collapsible3 */
+
+.lbl-toggle3 {
+  display: block;
+
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  text-align: center;
+
+  padding: 1rem;
+
+  color: #000;
+  background: #13b0c5;
+
+  cursor: pointer;
+
+  border-radius: 7px;
+  transition: all 0.25s ease-out;
+}
+
+.lbl-toggle3:hover {
+  color: #FFF;
+}
+
+.lbl-toggle3::before {
+  content: ' ';
+  display: inline-block;
+
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid currentColor;
+
+  vertical-align: middle;
+  margin-right: .7rem;
+  transform: translateY(-2px);
+
+  transition: transform .2s ease-out;
+}
+
+.collapsible-content3 {
+  max-height: 0px;
+  overflow: hidden;
+
+  transition: max-height .25s ease-in-out;
+}
+
+.toggle3:checked + .lbl-toggle3 + .collapsible-content3 {
+  max-height: 100%;
+}
+
+.toggle3:checked + .lbl-toggle3::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+
+.toggle3:checked + .lbl-toggle3 {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* collapsible4 */
+
+.lbl-toggle4 {
+  display: block;
+
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  text-align: center;
+
+  padding: 1rem;
+
+  color: #000;
+  background: #13b0c5;
+
+  cursor: pointer;
+
+  border-radius: 7px;
+  transition: all 0.25s ease-out;
+}
+
+.lbl-toggle4:hover {
+  color: #FFF;
+}
+
+.lbl-toggle4::before {
+  content: ' ';
+  display: inline-block;
+
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid currentColor;
+
+  vertical-align: middle;
+  margin-right: .7rem;
+  transform: translateY(-2px);
+
+  transition: transform .2s ease-out;
+}
+
+.collapsible-content4 {
+  max-height: 0px;
+  overflow: hidden;
+
+  transition: max-height .25s ease-in-out;
+}
+
+.toggle4:checked + .lbl-toggle4 + .collapsible-content4 {
+  max-height: 100%;
+}
+
+.toggle4:checked + .lbl-toggle4::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+
+.toggle4:checked + .lbl-toggle4 {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
 
 /*Everything below is css for desktop view of the website.*/
 @media (min-width:1000px){
