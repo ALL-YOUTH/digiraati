@@ -29,8 +29,8 @@
 				</div>
 				<div id="all_documents_container">
 					<div id="file_filter">
-						<div id="newest_files_sorter">Uusimmat</div>
-						<div id="popularest_files_sorter">Kommentoiduimmat</div><br>
+						<div id="newest_files_sorter">Uusimmat</div><br>
+						<!-- Hiding comments <div id="popularest_files_sorter">Kommentoiduimmat</div><br> -->
 						<!-- Hiding search <div id="search_icon" class="fas fa-search"></div> -->
 						<input type="text" id="file_search"></input>
 					</div>
@@ -43,26 +43,28 @@
 				<div id="document_container">
 			    <div id="comment_view">
 			      <div id="pdf_div">
-							<div id="comment_layer"></div>
-							<div id="pdf"></div>
-						</div>
-					</div>
-					<div id="comment_list_div" class="noselect">
-						<div id="comment_list_navigation">
+					  <!-- <div id="comment_layer"></div> changed to text-layer -->
+
+					  <div id="pdf"></div>
+					  <div id=""text-layer">
+				  </div>
+			  </div>
+					<div id="comment_list_div"> <!-- removed class="noselect"  -->
+						<!-- Hiding comments <div id="comment_list_navigation">
 							<div id="new_comments">UUSIMMAT<br>KOMMENTIT</div>
 							<div id="all_comments">KAIKKI<br>KOMMENTIT</div>
 							<div id="close_comment_list">SULJE X</div>
-						</div>
+						</div> -->
 						<div id="comment_list"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-    <footer id="footer">
-  	</footer>
-  </div>
-	<script src="/socket.io-file-client.js"></script>
-  <script src="/js/common.js"></script>
-  <script src="/js/lobby_material.js"></script>
-</body>
+	  </div>
+	  <footer id="footer">
+	  </footer>
+	  </div>
+	  <script src="/socket.io-file-client.js"></script>
+	  <script src="/js/common.js"></script>
+	  <script src="/js/lobby_material.js"></script>
+	  </body>

@@ -44,9 +44,9 @@ $(function(){
 });
 
 function init() {
-  pdf_div.addEventListener('mousedown', mouseDown, false);
-  pdf_div.addEventListener('mouseup', mouseUp, false);
-  pdf_div.addEventListener('mousemove', mouseMove, false);
+  // pdf_div.addEventListener('mousedown', mouseDown, false);
+  // pdf_div.addEventListener('mouseup', mouseUp, false);
+  // pdf_div.addEventListener('mousemove', mouseMove, false);
   document.getElementById('comment_view').addEventListener('scroll', wheel);
 }
 
@@ -448,6 +448,8 @@ function handlePages(page) {
   canvas.height = viewport.height;
   canvas.width = viewport.width;
   canvas.classList.add("page");
+  $("#text-layer").css({ left: canvas_offset.left + 'px', top: canvas_offset.top + 'px', height: canvas_height + 'px', width: canvas_width + 'px' }); // Added text-layer
+
 
   //Draw it on the canvas
   page.render({canvasContext: context, viewport: viewport});
