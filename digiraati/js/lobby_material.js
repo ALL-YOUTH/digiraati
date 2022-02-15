@@ -448,8 +448,6 @@ function handlePages(page) {
   canvas.height = viewport.height;
   canvas.width = viewport.width;
   canvas.classList.add("page");
-  $("#text-layer").css({ left: canvas_offset.left + 'px', top: canvas_offset.top + 'px', height: canvas_height + 'px', width: canvas_width + 'px' }); // Added text-layer
-
 
   //Draw it on the canvas
   page.render({canvasContext: context, viewport: viewport});
