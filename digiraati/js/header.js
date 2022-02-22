@@ -232,6 +232,7 @@ $('#login_confirm').click(function(){
 
         document.getElementById("hamburger_avatar").style.backgroundColor = colors[c % colors.length];
         document.getElementById("hamburger_avatar").textContent = logged_in[0].toUpperCase();
+        reload = location.reload(); // Refresh automatically after Login
         if(view == "desktop"){
           $('#login_div').css("display", "none");
           $('#Profile_avatar').show();
