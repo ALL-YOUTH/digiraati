@@ -534,6 +534,7 @@ function list_files(files){
 
 $('#all_documents_btn').click(function(){
   showing = 0;
+  reload = location.reload(); // fixed previously viewed JPG showing over PDFs
   $('#all_documents_container').css("display", "block");
   $('#document_container').css("display", "none");
   $('#all_documents_btn').css("width", "80%");
