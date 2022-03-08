@@ -293,7 +293,15 @@ div .inactive{
   font-weight: bold;
 }
 
-
+#latauspainike {
+  padding: 3px;
+  margin: 10px 2px 2px 2x;
+  background-color: rgba(1,175,196,1);
+  color: white;
+  border:none;
+  border-radius:10px;
+  cursor: pointer;
+}
 #material_header{
   margin:auto;
   width:100%;
@@ -472,6 +480,11 @@ div .inactive{
   margin: 15px 15px 15px 50px;
   padding:0px;
   width:70%;
+
+  height: calc(70% - 221px) !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: absolute;
 }
 
 #add_file_btn{

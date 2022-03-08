@@ -522,12 +522,33 @@ function list_files(files){
   var filelist = document.getElementById('file_list');
   clear_child_elements(filelist);
   for(var i = 0; i < files.length; ++i){
+
+    var tiedostoN = files[i].path;
+    var tietomuoto = tiedostoN.slice((tiedostoN.lastIndexOf('.') -1 >>> 0) + 2);
+
+   if(tietomuoto == "pdf"){
+      var downl = document.createElement('form');
+      downl.method = "get";
+      downl.action = "/files/"+files[i]["id"]+".pdf";
+      downl.innerHTML = "<button id=\"latauspainike\" type=\"submit\">Lataa PDF -tiedosto laitteellesi</button>";
+      filelist.appendChild(downl);
+    }
+
+   /* if(tietomuoto == "pdf"){
+      var downl = document.createElement('a');
+      downl.href = "/files/"+files[i]["id"]+".pdf";
+      downl.download = "/files/"+files[i]["id"]+".pdf";
+      downl.textContent = "Lataa PDF laitteellesi"
+      filelist.appendChild(downl);
+    }
+*/
     var el = document.createElement('div');
     el.id = files[i]["id"];
     el.textContent = files[i]["path"];
     el.onclick = function(){
       file_clicked(this);
     }
+
     filelist.appendChild(el);
   }
 }
