@@ -1,6 +1,8 @@
 # Digiraati
 
-One Paragraph of project description goes here
+Digiraati is a open source (MIT license) "Virtual Council" software developed at Tampere University as a part of ALL-YOUTH -project. ALL-YOUTH itself is funded by Strategic Research Council (SRC) under the Academy of Finland. The package in this repository is a working early prototype of Ministry of Justice's current Digiraati -service which has, however, a different codebase.
+
+For more information about ALL-YOUTH -project, please refer to https://www.allyouthstn.fi/
 
 ## Getting Started
 
@@ -8,20 +10,26 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+What is needed to install the software
 
 ```
-Give examples
+Software: 
+-compatible Linux/*IX Operating System (tested under Ubuntu 20.04)
+-nodejs
+
+Hardware (recommended):
+-3GB RAM
+-2GB Diskspace (SSD for optimal speed)
 ```
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
+Step 1
 
 ```
-Give the example
+Example
 ```
 
 And repeat
@@ -32,49 +40,24 @@ until finished
 
 End with an example of getting some data out of the system or using it for a little demo
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+* [Node.js](https://nodejs.org/en/) - JavaScript runtime environment
+* [npm](https://www.npmjs.com) - Package management
+* [Express](https://expressjs.com) - Web application framework
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+### Current developers 
+* **Petri Louhenheimo** - *Maintaining Repository* - [louhenheimo](https://github.com/louhenheimo)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+### Previous developers
+* **Miikka Lehtonen** - *Development* - [soralapio](https://github.com/soralapio)
+* **Aleksi Hiltunen** - *Initial Work & Development* - [tekopakka](https://github.com/tekopakka)
 
 ## License
 
@@ -82,6 +65,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Jari Varsaluoma (Tampere University)
+* WP3 Group of ALL-YOUTH -project (Tampere University)
+* Strategic Research Council (Academy of Finland)
