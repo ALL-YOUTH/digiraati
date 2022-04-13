@@ -19,30 +19,38 @@ Software:
 
 Hardware (recommended):
 -3GB RAM
--2GB Diskspace (SSD for optimal speed)
+-2GB Diskspace (SSD for optimal performance)
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+A step by step series of examples that tell you how to get a development env running.
 
-Step 1
-
-```
-Example
-```
-
-And repeat
+After cloning repository, do (under digiraati/digiraati/ -directory):
 
 ```
-until finished
+npm install
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+After that, install your mandatory SSL certificate
 
-## Deployment
+```
+You *need* the following cert files: privkey.pem, cert.pem, chain.pem.
+If your ISP/web hosting company doesn't provide these, check out the free certbot -service: https://certbot.eff.org
+```
+Make the logs directory
 
-Additional notes about how to deploy this on a live system
+```
+mkdir logs
+```
+You can now start the Digiraati at dev mode
+
+```
+npm run dev
+```
+Digiraati is now running at https://localhost:1443
+
+Congratulations! :)
 
 ## Built With
 
