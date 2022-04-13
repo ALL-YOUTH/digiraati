@@ -55,7 +55,7 @@ Additional notes about how to deploy this on a live system
 ### Current developers 
 * **Petri Louhenheimo** - *Maintaining Repository* - [louhenheimo](https://github.com/louhenheimo)
 
-### Previous developers
+### Past developers
 * **Miikka Lehtonen** - *Development* - [soralapio](https://github.com/soralapio)
 * **Aleksi Hiltunen** - *Initial Work & Development* - [tekopakka](https://github.com/tekopakka)
 
@@ -66,5 +66,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Jari Varsaluoma (Tampere University)
-* WP3 Group of ALL-YOUTH -project (Tampere University)
+* ALL-YOUTH subproject 3: Digital Solutions for Digital Generation (Tampere University)
 * Strategic Research Council (Academy of Finland)
