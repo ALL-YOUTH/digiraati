@@ -12,3 +12,4 @@ digiraati/ssl
 digiraati/backup.json
 digiraati/files
 digiraati/*.pem
+digiraati/passwords.json
