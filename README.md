@@ -2,8 +2,6 @@
 
 Digiraati is a open source (MIT license) "Virtual Council" software developed at Tampere University as a part of ALL-YOUTH -project. ALL-YOUTH itself is funded by Strategic Research Council (SRC) under the Academy of Finland. The package in this repository is a working early prototype of Ministry of Justice's current Digiraati -service which has, however, a different codebase.
 
-For more information about ALL-YOUTH -project, please refer to https://www.allyouthstn.fi/
-
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -36,7 +34,7 @@ After that, install your mandatory SSL certificate
 
 ```
 You *need* the following cert files: privkey.pem, cert.pem, chain.pem.
-If your ISP/web hosting company doesn't provide these, check out the free certbot -service: https://certbot.eff.org
+If your ISP/web hosting company doesn't provide these, check out the free certbot -service
 ```
 Make the logs directory
 
