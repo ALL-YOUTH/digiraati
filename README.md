@@ -2,6 +2,8 @@
 
 Digiraati is a open source (MIT license) "Virtual Council" software developed at Tampere University as a part of ALL-YOUTH -project. ALL-YOUTH itself is funded by Strategic Research Council (SRC) under the Academy of Finland. The package in this repository is a working early prototype of Ministry of Justice's current Digiraati -service which has, however, a different codebase.
 
+NOTICE: This repository is currently in ARCHIVE (Read-Only) mode, as it is no longer in development.
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -59,9 +61,11 @@ Congratulations! :)
 ## Authors
 
 ### Current developers 
-* **Petri Louhenheimo** - *Maintaining Repository* - [louhenheimo](https://github.com/louhenheimo)
+
+Not in active development. This repository is in ARCHIVE (Read-Only) mode.
 
 ### Past developers
+* **Petri Louhenheimo** - *Maintaining Repository* - [louhenheimo](https://github.com/louhenheimo)
 * **Miikka Lehtonen** - *Development* - [soralapio](https://github.com/soralapio)
 * **Aleksi Hiltunen** - *Initial Work & Development* - [tekopakka](https://github.com/tekopakka)
 
